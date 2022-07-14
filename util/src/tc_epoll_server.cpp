@@ -32,6 +32,8 @@
 namespace tars
 {
 
+using namespace std;
+
 void TC_EpollServer::RecvContext::parseIpPort() const
 {
 	if (_ip.empty())

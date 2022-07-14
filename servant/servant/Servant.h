@@ -256,7 +256,7 @@ protected:
 class CallbackThreadData //: public TC_ThreadPool::ThreadData
 {
 public:
-    static thread_local shared_ptr<CallbackThreadData> g_sp;
+    static thread_local std::shared_ptr<CallbackThreadData> g_sp;
 
     /**
      * 构造函数

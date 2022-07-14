@@ -21,7 +21,6 @@
 #include "servant/Application.h"
 
 using namespace tars;
-using namespace std;
 
 /**
  *

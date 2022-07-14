@@ -242,12 +242,12 @@ public:
     /*
     * func: tars.s.1 =>> MTT s  1
     */
-    static bool divison2SetInfo(const std::string& str, vector<string>& vtSetInfo);
+    static bool divison2SetInfo(const std::string& str, vector<std::string>& vtSetInfo);
 
     /*
     * func: tars.xxxServer =>> xxxServer
     */
-    static std::string getServerName(string sModuleName);
+    static std::string getServerName(std::string sModuleName);
 
 private:
 

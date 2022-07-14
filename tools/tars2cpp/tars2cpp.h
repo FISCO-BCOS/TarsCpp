@@ -38,7 +38,7 @@ public:
      * 生成
      * @param file
      */
-    void createFile(const std::string &file);//, const std::vector<string> &vsCoder);
+    void createFile(const std::string &file);//, const std::vector<std::string> &vsCoder);
 
     /**
      * 设置生成文件的目录
@@ -59,7 +59,7 @@ public:
     /**
      * 根据命令选项设置是否需要生成xml支持
      */
-    void setXmlSupport(bool bXmlSupport, const std::vector<string>& vXmlIntf)
+    void setXmlSupport(bool bXmlSupport, const std::vector<std::string>& vXmlIntf)
     {
         _bXmlSupport = bXmlSupport;
         _vXmlIntf = vXmlIntf;
@@ -73,7 +73,7 @@ public:
     /**
      * 根据命令选项设置是否需要生成json支持
      */
-    void setJsonSupport(const std::vector<string>& vJsonIntf) { _vJsonIntf = vJsonIntf; }
+    void setJsonSupport(const std::vector<std::string>& vJsonIntf) { _vJsonIntf = vJsonIntf; }
 
     /**
      * 设置是否只生成struct
@@ -104,7 +104,7 @@ protected:
      *
      * @return std::string
      */
-	string writeToXml(const TypeIdPtr &pPtr) const;
+	std::string writeToXml(const TypeIdPtr &pPtr) const;
 
     /**
      * 生成xml
@@ -112,7 +112,7 @@ protected:
      *
      * @return std::string
      */
-	string readFromXml(const TypeIdPtr &pPtr, bool bIsRequire = true) const;
+	std::string readFromXml(const TypeIdPtr &pPtr, bool bIsRequire = true) const;
 
     /**
      * 生成sql
@@ -120,7 +120,7 @@ protected:
      *
      * @return std::string
      */
-	string writeToSql(const TypeIdPtr &pPtr) const;
+	std::string writeToSql(const TypeIdPtr &pPtr) const;
 
     /**
      * 生成sql
@@ -128,7 +128,7 @@ protected:
      *
      * @return std::string
      */
-	string readFromSql(const TypeIdPtr &pPtr, bool bIsRequire = true) const;
+	std::string readFromSql(const TypeIdPtr &pPtr, bool bIsRequire = true) const;
 
     /**
      * 生成json
@@ -510,8 +510,8 @@ private:
 
     bool _bJsonSupport;
 
-    std::vector<string>  _vJsonIntf;
-    std::vector<string>  _vXmlIntf;
+    std::vector<std::string>  _vJsonIntf;
+    std::vector<std::string>  _vXmlIntf;
 
 
     std::string _namespace ;

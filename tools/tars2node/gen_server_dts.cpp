@@ -15,7 +15,7 @@
  */
 
 #include "code_generator.h"
-
+using namespace std;
 string CodeGenerator::generateDTSServer(const NamespacePtr &nPtr, const InterfacePtr &pPtr)
 {
     vector<OperationPtr> &vOperation = pPtr->getAllOperationPtr();

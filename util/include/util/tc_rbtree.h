@@ -25,7 +25,7 @@
 #include "util/tc_pack.h"
 #include "util/tc_mem_chunk.h"
 
-using namespace std;
+
 
 namespace tars
 {
@@ -270,7 +270,7 @@ public:
          *          TC_RBTree::RT_OK, 正常
          *          其他异常
          */
-        int get(string &s);
+        int get(std::string &s);
 
         /**
          * 设置数据
@@ -278,7 +278,7 @@ public:
          * @param iDatalen
          * @param vtData, 淘汰的数据
          */
-        int set(const std::string& k, const std::string& v, bool bNewBlock, bool bOnlyKey, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, bool bNewBlock, bool bOnlyKey, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 是否是脏数据
@@ -372,7 +372,7 @@ public:
          *
          * @return int,
          */
-        int allocate(uint32_t iDataLen, vector<TC_RBTree::BlockData> &vtData);
+        int allocate(uint32_t iDataLen, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -381,7 +381,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<uint32_t> chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<uint32_t> chunks);
 
         /**
          * 分配n个chunk地址, 注意释放内存的时候不能释放正在分配的对象
@@ -390,7 +390,7 @@ public:
          * @param vtData, 淘汰的数据
          * @return int
          */
-        int allocateChunk(uint32_t fn, vector<uint32_t> &chunks, vector<TC_RBTree::BlockData> &vtData);
+        int allocateChunk(uint32_t fn, std::vector<uint32_t> &chunks, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 获取数据长度
@@ -532,7 +532,7 @@ public:
          *
          * @return TC_MemChunk::tagChunkHead
          */
-        vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
+        std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
 
         /**
          * 内存大小
@@ -551,9 +551,9 @@ public:
         /**
          * 每种block中的chunk个数(每种block中的chunk个数相同)
          *
-         * @return vector<size_t>
+         * @return std::vector<size_t>
          */
-        vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
+        std::vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
 
         /**
          * 所有block的chunk个数
@@ -569,7 +569,7 @@ public:
          * @param vtData, 返回释放的内存块数据
          * @return uint32_t, 相对地址,0表示没有空间可以分配
          */
-        uint32_t allocateMemBlock(uint32_t &iAllocSize, vector<TC_RBTree::BlockData> &vtData);
+        uint32_t allocateMemBlock(uint32_t &iAllocSize, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 为地址为iAddr的Block分配一个chunk
@@ -579,13 +579,13 @@ public:
          * @param vtData 返回释放的内存块数据
          * @return uint32_t, 相对地址,0表示没有空间可以分配
          */
-        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, vector<TC_RBTree::BlockData> &vtData);
+        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 释放Block
          * @param v
          */
-        void deallocateMemBlock(const vector<uint32_t> &v);
+        void deallocateMemBlock(const std::vector<uint32_t> &v);
 
         /**
          * 释放Block
@@ -690,7 +690,7 @@ public:
          *          其他值, 异常
          *
          */
-        int get(string& k, std::string& v);
+        int get(std::string& k, std::string& v);
 
         /**
          * 获取值
@@ -698,7 +698,7 @@ public:
          *          RT_OK:数据获取OK
          *          其他值, 异常
          */
-        int get(string& k);
+        int get(std::string& k);
 
         /**
          * 数据块相对地址
@@ -716,7 +716,7 @@ public:
          * @param vtData, 淘汰的数据
          * @return int
          */
-        int set(const std::string& k, const std::string& v, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, bool bNewBlock, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 设置Key, 无数据
@@ -725,7 +725,7 @@ public:
          *
          * @return int
          */
-        int set(const std::string& k, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, bool bNewBlock, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          *
@@ -1289,9 +1289,9 @@ public:
     /**
      * 获取每种大小内存块的头部信息
      *
-     * @return vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
+     * @return std::vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
      */
-    vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
+    std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
 
     /**
      * 所有block中chunk的个数
@@ -1303,9 +1303,9 @@ public:
     /**
      * 每种block中chunk的个数(不同大小内存块的个数相同)
      *
-     * @return vector<size_t>
+     * @return std::vector<size_t>
      */
-    vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
+    std::vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
 
     /**
      * 元素的个数
@@ -1507,7 +1507,7 @@ public:
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const std::string& k, const std::string& v, bool bDirty, vector<BlockData> &vtData);
+    int set(const std::string& k, const std::string& v, bool bDirty, std::vector<BlockData> &vtData);
 
     /**
      * 设置key, 但无数据
@@ -1520,7 +1520,7 @@ public:
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const std::string& k, vector<BlockData> &vtData);
+    int set(const std::string& k, std::vector<BlockData> &vtData);
 
     /**
      * 删除数据
@@ -1846,10 +1846,10 @@ protected:
      * 淘汰iNowAddr之外的数据(根据淘汰策略淘汰)
      * @param iNowAddr, 当前Block不能正在分配空间, 不能被淘汰
      *                  0表示做直接根据淘汰策略淘汰
-     * @param vector<BlockData>, 被淘汰的数据
+     * @param std::vector<BlockData>, 被淘汰的数据
      * @return uint32_t,淘汰的数据个数
      */
-    uint32_t eraseExcept(uint32_t iNowAddr, vector<BlockData> &vtData);
+    uint32_t eraseExcept(uint32_t iNowAddr, std::vector<BlockData> &vtData);
 
     /**
      * 根据key获得最后一个大于当前key的block

@@ -290,12 +290,12 @@ protected:
     /**
      * 同步到远程
      */
-    void sync2remote(const vector<string> &buffer);
+    void sync2remote(const vector<std::string> &buffer);
 
     /**
      * 染色日志同步到远程
      */
-    void sync2remoteDyeing(const vector<string> &buffer);
+    void sync2remoteDyeing(const vector<std::string> &buffer);
 
 protected:
     /**
@@ -414,7 +414,7 @@ protected:
      * 记录错误文件
      * @param buffer
      */
-    void writeError(const vector<string> &buffer);
+    void writeError(const vector<std::string> &buffer);
 
     /**
      * 记录错误文件
@@ -832,7 +832,7 @@ public:
      * @param key
      * @return bool
      */
-    static bool getDyeingKey(string & sDyeingkey);
+    static bool getDyeingKey(std::string & sDyeingkey);
 
     /**
      * 启用染色日志

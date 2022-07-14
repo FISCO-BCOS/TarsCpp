@@ -51,39 +51,39 @@ public:
 	void createFile(const std::string &file);
 
 private:
-	string generatePython(const ConstPtr &pPtr, const std::string &sNamespace);
+	std::string generatePython(const ConstPtr &pPtr, const std::string &sNamespace);
 
-	string generatePython(const EnumPtr &pPtr, const std::string &sNamespace);
+	std::string generatePython(const EnumPtr &pPtr, const std::string &sNamespace);
 
-	string generatePython(const StructPtr & pPtr, const NamespacePtr &nPtr);
+	std::string generatePython(const StructPtr & pPtr, const NamespacePtr &nPtr);
 
-	string generatePython(const NamespacePtr &pPtr);
+	std::string generatePython(const NamespacePtr &pPtr);
 
-	string generatePython(const InterfacePtr &pPtr);
+	std::string generatePython(const InterfacePtr &pPtr);
 
-	string toFunctionName(const TypeIdPtr & pPtr, const std::string & sName);
+	std::string toFunctionName(const TypeIdPtr & pPtr, const std::string & sName);
 
-	string getDataType(const TypePtr & pPtr);
+	std::string getDataType(const TypePtr & pPtr);
 
-	string getDefault(const TypeIdPtr & pPtr, const std::string &sDefault, const std::string & sCurStruct);
+	std::string getDefault(const TypeIdPtr & pPtr, const std::string &sDefault, const std::string & sCurStruct);
 
-	string makeDataType(const TypePtr & pPtr);
+	std::string makeDataType(const TypePtr & pPtr);
 
-	string getFilePath() const;
+	std::string getFilePath() const;
 
-	void getNamespace(const std::string & sFile, std::set<string> & vec);
+	void getNamespace(const std::string & sFile, std::set<std::string> & vec);
 
 	void makePackages();
 
 	void generatePython(const ContextPtr &pPtr) ;
 
-	string makeParams(const OperationPtr &pPtr);
+	std::string makeParams(const OperationPtr &pPtr);
 
-	string makeOperations(const OperationPtr &pPtr);
+	std::string makeOperations(const OperationPtr &pPtr);
        std::string tostrEnum(const EnumPtr &pPtr);
 private:
     std::string _packagePrefix;
-	string _baseDir;
+	std::string _baseDir;
 };
 
 #endif

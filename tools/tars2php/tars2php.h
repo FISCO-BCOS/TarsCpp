@@ -34,7 +34,7 @@ public:
      *
      * @param file
      */
-    void createFile(const std::string &file, const vector<string> &vsCoder);
+    void createFile(const std::string &file, const std::vector<std::string> &vsCoder);
 
 
     /**

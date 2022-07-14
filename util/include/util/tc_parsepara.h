@@ -20,7 +20,7 @@
 #include <map>
 #include <string>
 
-using namespace std;
+
 
 namespace tars
 {
@@ -65,7 +65,7 @@ public:
     * @param : name=value&name=value字符串
     * @param : Types such as name=value&name=value std::string
     */
-    TC_Parsepara(const std::map<string, std::string> &mpParam);
+    TC_Parsepara(const std::map<std::string, std::string> &mpParam);
 
     /**
     * @brief  copy contructor
@@ -105,7 +105,7 @@ public:
     * @param 参数值
     * @param : parameter values
     */
-    typedef int (*TC_ParseparaTraverseFunc)(string, std::string, void *);
+    typedef int (*TC_ParseparaTraverseFunc)(std::string, std::string, void *);
 
     /**
     *@brief  重载[], 获取参数值
@@ -132,7 +132,7 @@ public:
     * @param mpParam:String function
     * @return void
     */
-    void load(const std::map<string, std::string> &mpParam);
+    void load(const std::map<std::string, std::string> &mpParam);
 
     /**
     * @brief  转成字符串
@@ -171,18 +171,18 @@ public:
     /**
     * @brief  引用方式获取参数map
     * @brief  Getting parameter map by reference
-    * @return std::map<string,string>& 返回参数map
-    * @return std::map<string,string>& return parameter map
+    * @return std::map<std::string,string>& 返回参数map
+    * @return std::map<std::string,string>& return parameter map
     */
-    std::map<string,string> &toMap();
+    std::map<std::string,std::string> &toMap();
 
     /**
     * @brief  引用方式获取参数map
     * @brief  Getting parameter map by reference
-    * @return std::map<string,string>& 返回参数map
-    * @return std::map<string,string>& return parameter map
+    * @return std::map<std::string,string>& 返回参数map
+    * @return std::map<std::string,string>& return parameter map
     */
-    const std::map<string,string> &toMap() const;
+    const std::map<std::string,std::string> &toMap() const;
 
     /**
     * @brief  遍历每个参数值对
@@ -227,7 +227,7 @@ protected:
     * @param mpParam map
     * @return void
     */
-    void decodeMap(const std::string &sParam, std::map<string, std::string> &mpParam) const;
+    void decodeMap(const std::string &sParam, std::map<std::string, std::string> &mpParam) const;
 
     /**
     * @brief  map转换成字符串
@@ -236,7 +236,7 @@ protected:
     * @return std::string, 转换后的字符串
     * @return std::string, Converted std::string
     */
-    std::string encodeMap(const std::map<string, std::string> &mpParam) const;
+    std::string encodeMap(const std::map<std::string, std::string> &mpParam) const;
 
     /**
     * @brief  "%xx" 转换为字符
@@ -250,7 +250,7 @@ protected:
 
 protected:
 
-    std::map<string, std::string> _param;
+    std::map<std::string, std::string> _param;
 };
 
 }

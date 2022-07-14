@@ -15,7 +15,7 @@
  */
 
 #include "code_generator.h"
-
+using namespace std;
 #define INVOKE_RETURN(protocol, prefix, params) \
     str << TAB << "return this._worker." << TC_Common::lower(protocol) << "_invoke(\"" << oPtr->getId() << "\", "; \
     str << prefix << "." << TC_Common::lower(protocol) << "Encoder"; \

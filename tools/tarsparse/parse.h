@@ -31,8 +31,6 @@
 #include "util/tc_common.h"
 #include "util/tc_autoptr.h"
 
-using namespace std;
-
 /**
  * Tars文件解析类
  *
@@ -326,7 +324,7 @@ public:
      * @param fileName
      * @return
      */
-	string getFileName(const std::string &fileName);
+	std::string getFileName(const std::string &fileName);
 
 	/**
 	 * replace ext
@@ -334,7 +332,7 @@ public:
 	 * @param ext
 	 * @return
 	 */
-	string replaceFileName(const std::string &fileName, const std::string &ext);
+	std::string replaceFileName(const std::string &fileName, const std::string &ext);
 
 	/**
 	 * get absolute filename
@@ -342,7 +340,7 @@ public:
 	 * @param fileName
 	 * @return
 	 */
-	string getAbsoluteFileName(const std::string &baseDir, const std::string &fileName);
+	std::string getAbsoluteFileName(const std::string &baseDir, const std::string &fileName);
 
 protected:
     /**

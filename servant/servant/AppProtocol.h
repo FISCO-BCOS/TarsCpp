@@ -126,7 +126,7 @@ public:
 // typedef std::function<vector<char>(RequestPacket&, TC_Transceiver *)>
 // request_protocol;
 
-typedef std::function<shared_ptr<TC_NetWorkBuffer::Buffer>(RequestPacket &,
+typedef std::function<std::shared_ptr<TC_NetWorkBuffer::Buffer>(RequestPacket &,
                                                            TC_Transceiver *)>
     request_protocol;
 

@@ -5,6 +5,7 @@
 #include <list>
 
 using namespace tars;
+using namespace std;
 
 void usage()
 {

@@ -17,6 +17,8 @@
 #include "util/tc_file.h"
 #include "tars2cs.h"
 
+using namespace std;
+
 void usage()
 {
     cout << "Usage : tars2cs [OPTION] tarsfile" << endl;

@@ -550,7 +550,7 @@ extern "C"
 struct include_file_state
 {
     YY_BUFFER_STATE state;
-    string file;
+    std::string file;
 };
 
 #define MAX_INCLUDE_DEPTH 200
@@ -858,7 +858,7 @@ YY_RULE_SETUP
         g_parse->error("Includes nested too deeply" );
     }
 
-    string file;
+    std::string file;
     bool b = g_parse->getFilePath( yytext, file);
     g_parse->currentContextPtr()->addInclude(file);
 
@@ -935,7 +935,7 @@ YY_RULE_SETUP
 {
     // C comment
     bool e = false;
-    string comment = yytext + 2;
+    std::string comment = yytext + 2;
     while(!e)
     {
         int input = yyinput();
@@ -1022,38 +1022,38 @@ YY_RULE_SETUP
     	    }
     	    case '\n':
     	    {
-    	        g_parse->error("newline in string");
+    	        g_parse->error("newline in std::string");
     	        break;
     	    }
     	    case EOF:
     	    {
-    	        g_parse->error("EOF in string");
+    	        g_parse->error("EOF in std::string");
     	        break;
     	    }
     	    case '\\':
     	    {
-    	        static string specialChars = "nrtvfab?";
-    	        static string octalChars = "0123";
+    	        static std::string specialChars = "nrtvfab?";
+    	        static std::string octalChars = "0123";
     	        
     	        char nextInput = static_cast<char>(yyinput());
     	        if(nextInput == '\\' || nextInput == '"' || nextInput == '\'')
     	        {
     	            str->v += nextInput;
     	        }
-    	        else if(specialChars.find(nextInput) != string::npos)
+    	        else if(specialChars.find(nextInput) != std::string::npos)
                 {
                     str->v += '\\';
                     str->v += nextInput;
                 }
-                else if(octalChars.find(nextInput) != string::npos)
+                else if(octalChars.find(nextInput) != std::string::npos)
                 {
-                    static string octalDigits = "01234567";
+                    static std::string octalDigits = "01234567";
                     
                     unsigned short us = nextInput - '0';
-                    if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != string::npos)
+                    if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != std::string::npos)
                     {
                         us = us * 8 + nextInput - '0';
-                        if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != string::npos)
+                        if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != std::string::npos)
                         {
                             us = us * 8 + nextInput - '0';
                         }
@@ -1069,7 +1069,7 @@ YY_RULE_SETUP
 
                     if(us == 0)
                     {
-                        g_parse->error("illegal NUL character in string constant");
+                        g_parse->error("illegal NUL character in std::string constant");
                     }
                     str->v += static_cast<char>(us);
                 }
@@ -1097,7 +1097,7 @@ YY_RULE_SETUP
 
                     if(ull == 0)
                     {
-                        g_parse->error("illegal NUL character in string constant");
+                        g_parse->error("illegal NUL character in std::string constant");
                     }
                     str->v += static_cast<char>(ull);
                 }
@@ -1127,7 +1127,7 @@ YY_RULE_SETUP
     IntergerGrammarPtr ptr = new IntergerGrammar;
     yylval = ptr;
     
-    string value = yytext;
+    std::string value = yytext;
     const char* beg = value.c_str();
     char* e = 0;
 
@@ -1135,7 +1135,7 @@ YY_RULE_SETUP
     if(!(errno == 0 && beg != e))
     {
         assert(ptr->v != 0);
-        string err = "integer constant `";
+        std::string err = "integer constant `";
         err += value;
         err += "' out of range";
         g_parse->error(err);
@@ -1152,7 +1152,7 @@ YY_RULE_SETUP
     FloatGrammarPtr ptr = new FloatGrammar;
     yylval = ptr;
     
-    string value(yytext);
+    std::string value(yytext);
     
     char lastChar = value[value.size() - 1];
     if(lastChar == 'f' || lastChar == 'F')
@@ -1163,14 +1163,14 @@ YY_RULE_SETUP
     ptr->v = strtod(value.c_str(), 0);
     if((errno == ERANGE) && (ptr->v == HUGE_VAL || ptr->v == -HUGE_VAL))
     {
-        string err = "float point constant `";
+        std::string err = "float point constant `";
         err += value;
         err += "' too large (overflow)";
         g_parse->error(err);
     }
     else if(errno == ERANGE && ptr->v == 0)
     {
-        string err = "float point constant `";
+        std::string err = "float point constant `";
         err += value;
         err += "' too small (underflow)";
         g_parse->error(err);
@@ -1195,11 +1195,11 @@ YY_RULE_SETUP
 {
     if(yytext[0] < 32 || yytext[0] > 126)
     {
-        stringstream s;
+        std::stringstream s;
         s << "illegal input character: '\\";
         s.width(3);
         s.fill('0');
-        s << oct << static_cast<int>(static_cast<unsigned char>(yytext[0]));
+        s << std::oct << static_cast<int>(static_cast<unsigned char>(yytext[0]));
         s << "'";
         
         g_parse->error(s.str());

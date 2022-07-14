@@ -22,7 +22,7 @@ int oi_symmetry_encrypt2_len(int nInBufLen);
 void oi_symmetry_encrypt2(const char *pInBuf, int nInBufLen, const char *pKey, char *pOutBuf, size_t *pOutBufLen);
 bool oi_symmetry_decrypt2(const char *pInBuf, int nInBufLen, const char *pKey, char *pOutBuf, size_t *pOutBufLen);
 
-void TC_Tea::encrypt(const char *key, const char *sIn, size_t iLength, vector<char> &buffer)
+void TC_Tea::encrypt(const char *key, const char *sIn, size_t iLength, std::vector<char> &buffer)
 {
     size_t outlen = oi_symmetry_encrypt2_len(iLength);
 
@@ -36,7 +36,7 @@ void TC_Tea::encrypt(const char *key, const char *sIn, size_t iLength, vector<ch
     buffer.resize(outlen);
 }
 
-bool TC_Tea::decrypt(const char *key, const char *sIn, size_t iLength, vector<char> &buffer)
+bool TC_Tea::decrypt(const char *key, const char *sIn, size_t iLength, std::vector<char> &buffer)
 {
     size_t outlen = iLength;
 

@@ -47,14 +47,14 @@ public:
     void setBasePackage(const std::string& prefix);
 
     /**
-    * 默认将非byte的vector转list 加上该参数后转数组
+    * 默认将非byte的std::vector转list 加上该参数后转数组
     */
     void setForceArray(bool bArray) { _bForceArray = bArray; }
 
     void setCheckDefault(bool bCheck) { _bCheckDefault = bCheck; }
 
     /*支持自定义字符集*/
-    void setCharset(string charset) { _sCharset = charset; }
+    void setCharset(std::string charset) { _sCharset = charset; }
     /*支持javabean规范*/
     void setWithJbr(bool bJbr) { _bWithJbr = bJbr;}
     /*去掉属性的read write方法、 cloneable、equals、hashCode、clone、display*/
@@ -77,7 +77,7 @@ public:
 
 // 增加的接口定义
     std::string generateConstructor(const TypePtr& vType) const;
-    std::string generateAndroidJavaParams(const vector<ParamDeclPtr>& vParamDecl, bool needParamType, bool needOutParam) const;
+    std::string generateAndroidJavaParams(const std::vector<ParamDeclPtr>& vParamDecl, bool needParamType, bool needOutParam) const;
     std::string generateAndroidStub(const InterfacePtr& pPtr, const NamespacePtr& nPtr) const;
     
     /**
@@ -186,7 +186,7 @@ protected:
      */
     std::string tostrBuiltin(const BuiltinPtr& pPtr) const;
     /**
-     * 生成vector的字符串描述
+     * 生成std::vector的字符串描述
      * @param pPtr
      *
      * @return std::string

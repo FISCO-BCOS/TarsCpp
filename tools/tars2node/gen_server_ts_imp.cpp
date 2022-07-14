@@ -15,7 +15,7 @@
  */
 
 #include "code_generator.h"
-
+using namespace std;
 void CodeGenerator::generateTSServerImp(const ContextPtr &cPtr)
 {
     string sFileName = TC_File::excludeFileExt(_sToPath + TC_File::extractFileName(cPtr->getFileName())) + "Imp.ts";

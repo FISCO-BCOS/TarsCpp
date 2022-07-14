@@ -18,6 +18,7 @@
 #include "util/tc_common.h"
 #include "tars2oc.h"
 
+using namespace std;
 
 void usage()
 {

@@ -555,7 +555,7 @@ private:
         set<EndpointInfo> inactive;
     };
 
-    shared_ptr<OutterUpdate>    _outterUpdate;
+    std::shared_ptr<OutterUpdate>    _outterUpdate;
 
 };
 

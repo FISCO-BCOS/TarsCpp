@@ -9,8 +9,8 @@
 
 namespace tars
 {
-void addGrpcPrefix(string& body, bool compressed);
-bool RemoveGrpcPrefix(string& body, bool* compressed);
+void addGrpcPrefix(std::string& body, bool compressed);
+bool RemoveGrpcPrefix(std::string& body, bool* compressed);
 
 class TC_GrpcServer : public TC_Http2Server
 {
@@ -33,7 +33,7 @@ public:
 	 * @param out
 	 * @return
 	 */
-	int encodeResponse(const std::shared_ptr<Http2Context> &context, std::string gStatus, vector<char> &out);
+	int encodeResponse(const std::shared_ptr<Http2Context> &context, std::string gStatus, std::vector<char> &out);
 
 	/**
 	 *
@@ -42,17 +42,17 @@ public:
 	 * @param body
 	 * @return
 	 */
-    void packGrpcResponse(shared_ptr<TC_GrpcServer::Http2Context> &context, const int status, const std::string &body);
+    void packGrpcResponse(std::shared_ptr<TC_GrpcServer::Http2Context> &context, const int status, const std::string &body);
 
     static std::shared_ptr<TC_GrpcServer> getHttp2(uint32_t uid);
     static void addHttp2(uint32_t uid, const std::shared_ptr<TC_GrpcServer> &ptr);
     static void delHttp2(uint32_t uid);
-    static TC_NetWorkBuffer::PACKET_TYPE parseGrpc(TC_NetWorkBuffer&in, vector<char> &out);
+    static TC_NetWorkBuffer::PACKET_TYPE parseGrpc(TC_NetWorkBuffer&in, std::vector<char> &out);
 
 protected:
 
     static TC_SpinLock _mutex;
-    static unordered_map<int32_t, std::shared_ptr<TC_GrpcServer>> _http2;
+    static std::unordered_map<int32_t, std::shared_ptr<TC_GrpcServer>> _http2;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -76,9 +76,9 @@ public:
      * parse response
      * @param in
      */
-    TC_NetWorkBuffer::PACKET_TYPE parseResponse(TC_NetWorkBuffer &in, pair<int, std::shared_ptr<TC_HttpResponse>> &out);
+    TC_NetWorkBuffer::PACKET_TYPE parseResponse(TC_NetWorkBuffer &in, std::pair<int, std::shared_ptr<TC_HttpResponse>> &out);
 
-	//    int submit(const std::string &method, const std::string &path, const map<string, std::string> &header, const vector<char> &buff);
+	//    int submit(const std::string &method, const std::string &path, const map<string, std::string> &header, const std::vector<char> &buff);
 	int submit(const TC_HttpRequest &request);
 		/**
 	 * @brief response

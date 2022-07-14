@@ -16,6 +16,7 @@
 
 #include "code_generator.h"
 
+using namespace std;
 string CodeGenerator::generateDTSProxy(const InterfacePtr &pPtr)
 {
     vector<OperationPtr> &vOperation = pPtr->getAllOperationPtr();
