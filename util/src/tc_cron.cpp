@@ -1,14 +1,16 @@
 ﻿#include "util/tc_cron.h"
 #include "util/tc_platform.h"
-
+#include <string>
 
 namespace tars
 {
 
+using namespace std;
+
 const std::vector<std::string> TC_Cron::DAYS = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 const std::vector<std::string> TC_Cron::MONTHS = { "NIL", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
 
-TC_Cron TC_Cron::makecron(const string& expr)
+TC_Cron TC_Cron::makecron(const std::string& expr)
 {
     TC_Cron cron;
 

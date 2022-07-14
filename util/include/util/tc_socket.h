@@ -46,7 +46,6 @@ typedef int SOCKET_LEN_TYPE;
 #include <string>
 #include "util/tc_ex.h"
 #include "util/tc_common.h"
-using namespace std;
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -64,8 +63,8 @@ class TC_Endpoint;
 */
 struct TC_Socket_Exception : public TC_Exception
 {
-    TC_Socket_Exception(const string &buffer) : TC_Exception(buffer){};
-    TC_Socket_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_Socket_Exception(const std::string &buffer) : TC_Exception(buffer){};
+    TC_Socket_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_Socket_Exception() throw() {};
 };
 
@@ -74,8 +73,8 @@ struct TC_Socket_Exception : public TC_Exception
  */
 struct TC_SocketConnect_Exception : public TC_Socket_Exception
 {
-    TC_SocketConnect_Exception(const string &buffer) : TC_Socket_Exception(buffer){};
-    TC_SocketConnect_Exception(const string &buffer, int err) : TC_Socket_Exception(buffer, err){};
+    TC_SocketConnect_Exception(const std::string &buffer) : TC_Socket_Exception(buffer){};
+    TC_SocketConnect_Exception(const std::string &buffer, int err) : TC_Socket_Exception(buffer, err){};
     ~TC_SocketConnect_Exception() throw() {};
 };
 
@@ -100,7 +99,7 @@ public:
     virtual ~TC_Socket();
 
     //定义客户端地址
-    typedef pair<shared_ptr<sockaddr>, SOCKET_LEN_TYPE> addr_type;
+    typedef std::pair<std::shared_ptr<sockaddr>, SOCKET_LEN_TYPE> addr_type;
 
     /**
      * @brief  初始化. 
@@ -167,7 +166,7 @@ public:
     * @throws              TC_Socket_Exception
     * @return
     */
-    void getPeerName(string &sPeerAddress, uint16_t &iPeerPort) const;
+    void getPeerName(std::string &sPeerAddress, uint16_t &iPeerPort) const;
 
 #if TARGET_PLATFORM_LINUX||TARGET_PLATFORM_IOS
 
@@ -178,14 +177,14 @@ public:
     * @throws           TC_Socket_Exception
     * @return
     */
-    void getPeerName(string &sPathName) const;
+    void getPeerName(std::string &sPathName) const;
     /**
      * @brief  获取socket文件路径,对AF_LOCAL的socket有效.
      *
      * @param sPathName
      * @param TC_Socket_Exception
      */
-    void getSockName(string &sPathName) const;
+    void getSockName(std::string &sPathName) const;
 
     /**
      * @brief  绑定域套接字,对AF_LOCAL的socket有效.
@@ -220,7 +219,7 @@ public:
     * @throws              TC_Socket_Exception
     * @return
     */
-    void getSockName(string &sSockAddress, uint16_t &iSockPort) const;
+    void getSockName(std::string &sSockAddress, uint16_t &iSockPort) const;
 
     /**
     * @brief  修改socket选项. 
@@ -262,7 +261,7 @@ public:
     * @throws              TC_Socket_Exception
     * @return 
     */
-    void bind(const string &sServerAddr, int port);
+    void bind(const std::string &sServerAddr, int port);
 
     /**
     * @brief  连接其他服务,对AF_INET的socket有效(同步连接). 
@@ -272,7 +271,7 @@ public:
     * @throws             TC_Socket_Exception
     * @return
     */
-    void connect(const string &sServerAddr, uint16_t port);
+    void connect(const std::string &sServerAddr, uint16_t port);
 
     /**
      * @brief 发起连接，连接失败的状态不通过异常返回, 
@@ -283,7 +282,7 @@ public:
      *                     其他错误还是通过异常返回(例如),例如地址错误
      * @return int
      */
-    int connectNoThrow(const string &sServerAddr, uint16_t port);
+    int connectNoThrow(const std::string &sServerAddr, uint16_t port);
 
     /**
      * @brief 发起连接，连接失败的状态不通过异常返回, 
@@ -343,7 +342,7 @@ public:
     * @param iFlag      标示
     * @return int       接收了的数据长度
     */
-    int recvfrom(void *pvBuf, size_t iLen, string &sFromAddr, uint16_t &iFromPort, int iFlags = 0);
+    int recvfrom(void *pvBuf, size_t iLen, std::string &sFromAddr, uint16_t &iFromPort, int iFlags = 0);
 
     /**
     * @brief  接收数据(一般用于udp). 
@@ -367,7 +366,7 @@ public:
     * @param iFlag    标示
     * @return          int : >0 发送的数据长度 ;<=0, 出错
     */
-    int sendto(const void *pvBuf, size_t iLen, const string &sToAddr, uint16_t iToPort, int iFlags = 0);
+    int sendto(const void *pvBuf, size_t iLen, const std::string &sToAddr, uint16_t iToPort, int iFlags = 0);
 
     /**
     * @brief  发送数据(一般用于udp). 
@@ -484,7 +483,7 @@ public:
      * @param host
      * @param port
      */
-    static void parseAddr(const addr_type& addr, string& host, uint16_t &port);
+    static void parseAddr(const addr_type& addr, std::string& host, uint16_t &port);
 
     /**
     * @brief 设置socket方式.
@@ -502,7 +501,7 @@ public:
      * @throws TC_Socket_Exception
      * @return 本地所有ip
      */
-    static vector<string> getLocalHosts(int domain = AF_INET);
+    static std::vector<std::string> getLocalHosts(int domain = AF_INET);
 
     /**
      * @brief 生成管道,抛出异常时会关闭fd. 
@@ -520,7 +519,7 @@ public:
     * @throws        TC_Socket_Exception
     * @return
     */
-    static void parseAddr(const string &sAddr, struct in_addr &stAddr);
+    static void parseAddr(const std::string &sAddr, struct in_addr &stAddr);
 
     /**
     * @brief 解析地址, 从字符串(ipv6或域名), 解析到in6_addr结构. 
@@ -530,7 +529,7 @@ public:
     * @throws        TC_Socket_Exception
     * @return
     */
-    static void parseAddr(const string &sAddr, struct in6_addr &stAddr);
+    static void parseAddr(const std::string &sAddr, struct in6_addr &stAddr);
 
 	/**
 	 * @brief: Determine whether an address is ipv6 by including the character ':'
@@ -538,10 +537,10 @@ public:
 	 * @param addr: ip address or domain name
 	 * @return: return true if addr is ipv6, false by ipv4, and default by domain name
 	 */
-	static bool addressIsIPv6(const string& addr)
+	static bool addressIsIPv6(const std::string& addr)
 	{
 #define IPv6_ADDRESS_CHAR ':'
-		return (addr.find(IPv6_ADDRESS_CHAR) != string::npos) ? true : false;
+		return (addr.find(IPv6_ADDRESS_CHAR) != std::string::npos) ? true : false;
 #undef IPv6_ADDRESS_CHAR
 	}
 
@@ -560,8 +559,8 @@ public:
     * @throws        TC_Socket_Exception
     * @return
     */
-	static void parseAddrWithPort(const string& host, int port, struct sockaddr_in& addr);
-	static void parseAddrWithPort(const string& host, int port, struct sockaddr_in6& addr);
+	static void parseAddrWithPort(const std::string& host, int port, struct sockaddr_in& addr);
+	static void parseAddrWithPort(const std::string& host, int port, struct sockaddr_in6& addr);
 
 	/**
     * @brief 判断当前socket是否处于EAGAIN/WSAEWOULDBLOCK(异步send/recv函数返回值时判断)

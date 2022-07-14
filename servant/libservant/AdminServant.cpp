@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 AdminServant::AdminServant()
 {
 }

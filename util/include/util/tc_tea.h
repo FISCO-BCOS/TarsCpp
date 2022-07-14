@@ -27,7 +27,7 @@ namespace tars
  */            
 struct TC_Tea_Exception : public TC_Exception
 {
-    TC_Tea_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_Tea_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_Tea_Exception() throw(){};
 };
 
@@ -44,9 +44,9 @@ public:
      * @param key       加密的key, 16个字节 
      * @param sIn       输入buffer 
      * @param iLength   输入buffer长度 
-     * @param buffer    vector<char>, 加密后二进制串
+     * @param buffer    std::vector<char>, 加密后二进制串
      */
-    static void encrypt(const char *key, const char *sIn, size_t iLength, vector<char> &buffer);
+    static void encrypt(const char *key, const char *sIn, size_t iLength, std::vector<char> &buffer);
 
     /**
      * @brief 解密.
@@ -54,10 +54,10 @@ public:
      * @param key      解密的key, 16个字节 
      * @param sIn      需要解密的buffer 
      * @param iLength  buffer长度 
-     * @param buffer   vector<char>, 解密后二进制串
+     * @param buffer   std::vector<char>, 解密后二进制串
      * @return bool,   成功失败
      */
-    static bool decrypt(const char *key, const char *sIn, size_t iLength, vector<char> &buffer);
+    static bool decrypt(const char *key, const char *sIn, size_t iLength, std::vector<char> &buffer);
 };
 
 }

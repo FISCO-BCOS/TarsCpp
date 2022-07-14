@@ -35,7 +35,7 @@ public:
      * 生成
      * @param file
      */
-    void createFile(const string &file);
+    void createFile(const std::string &file);
 
 
     /**
@@ -61,33 +61,33 @@ protected:
      * 生成某类型的解码源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string writeTo(const TypeIdPtr &pPtr,const string& namespaceId = "") const;
+    std::string writeTo(const TypeIdPtr &pPtr,const std::string& namespaceId = "") const;
 
     /**
      * 生成某类型的编码源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string readFrom(const TypeIdPtr &pPtr, bool bIsRequire = true,const string& namespaceId="") const;
+    std::string readFrom(const TypeIdPtr &pPtr, bool bIsRequire = true,const std::string& namespaceId="") const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string display(const TypeIdPtr &pPtr) const;
+    std::string display(const TypeIdPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string displaySimple(const TypeIdPtr &pPtr, bool bSep) const;
+    std::string displaySimple(const TypeIdPtr &pPtr, bool bSep) const;
 
     // 下面是类型描述的源码生成
 protected:
@@ -95,75 +95,75 @@ protected:
      * 生成某类型的字符串描述源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostr(const TypePtr &pPtr) const;
+    std::string tostr(const TypePtr &pPtr) const;
 
     /**
      * 生成内建类型的字符串源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrBuiltin(const BuiltinPtr &pPtr) const;
+    std::string tostrBuiltin(const BuiltinPtr &pPtr) const;
     /**
      * 生成vector的字符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrVector(const VectorPtr &pPtr) const;
+    std::string tostrVector(const VectorPtr &pPtr) const;
 
     /**
      * 生成map的字符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrMap(const MapPtr &pPtr) const;
+    std::string tostrMap(const MapPtr &pPtr) const;
 
     /**
      * 生成某种结构的符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrStruct(const StructPtr &pPtr) const;
+    std::string tostrStruct(const StructPtr &pPtr) const;
 
 
     /**
      * 生成某种枚举的符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrEnum(const EnumPtr &pPtr) const;
+    std::string tostrEnum(const EnumPtr &pPtr) const;
 
     /**
      * 生成接口名称
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
 
-    string toFuncName(const TypePtr &pPtr) const;
+    std::string toFuncName(const TypePtr &pPtr) const;
 
-    string toClassName(const TypePtr &pPtr) const;
+    std::string toClassName(const TypePtr &pPtr) const;
     /**
      * 生成类型变量的解码源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string decode(const TypeIdPtr &pPtr) const;
+    std::string decode(const TypeIdPtr &pPtr) const;
 
     /**
      * 生成类型变量的编码源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string encode(const TypeIdPtr &pPtr) const;
+    std::string encode(const TypeIdPtr &pPtr) const;
 
     // 以下是h和c文件的具体生成
 protected:
@@ -171,146 +171,146 @@ protected:
      * 结构的md5
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string MD5(const StructPtr &pPtr) const;
+    std::string MD5(const StructPtr &pPtr) const;
 
     /**
      * 生成结构的头文件内容
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const StructPtr &pPtr, const string& namespaceId) const;
+    std::string generateH(const StructPtr &pPtr, const std::string& namespaceId) const;
 
     /**
      * 生成结构的cpp文件内容
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateC(const StructPtr &pPtr, const string& namespaceId) const;
+    std::string generateC(const StructPtr &pPtr, const std::string& namespaceId) const;
 
     /**
      * 生成容器的头文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const ContainerPtr &pPtr) const;
+    std::string generateH(const ContainerPtr &pPtr) const;
 
     /**
      * 生成容器的c源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateCpp(const ContainerPtr &pPtr) const;
+    std::string generateCpp(const ContainerPtr &pPtr) const;
 
     /**
      * 生成参数声明的头文件内容
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const ParamDeclPtr &pPtr) const;
+    std::string generateH(const ParamDeclPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateOutH(const ParamDeclPtr &pPtr) const;
+    std::string generateOutH(const ParamDeclPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      * @param cn
      *
-     * @return string
+     * @return std::string
      */
-    //string generateAsyncResponseCpp(const OperationPtr &pPtr, const string &cn) const;
+    //string generateAsyncResponseCpp(const OperationPtr &pPtr, const std::string &cn) const;
 
     /**
      * 生成参数声明的cpp文件内容
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateCpp(const ParamDeclPtr &pPtr) const;
+    std::string generateCpp(const ParamDeclPtr &pPtr) const;
 
     /**
      * 生成作操作的proxy的cpp文件内容
      * @param pPtr
      * @param cn
      *
-     * @return string
+     * @return std::string
      */
-    string generateCpp(const OperationPtr &pPtr, const string &cn) const;
+    std::string generateCpp(const OperationPtr &pPtr, const std::string &cn) const;
 
     /**
      * 生成操作的servant的头文件源码
      * @param pPtr
      * @param bVirtual
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const OperationPtr &pPtr, bool bVirtual, const string& interfaceId) const;
+    std::string generateH(const OperationPtr &pPtr, bool bVirtual, const std::string& interfaceId) const;
 
     /**
      * 生成接口的头文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const InterfacePtr &pPtr) const;
+    std::string generateH(const InterfacePtr &pPtr) const;
 
     /**
      * 生的接口的cpp文件的源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateCpp(const InterfacePtr &pPtr, const NamespacePtr &nPtr) const;
+    std::string generateCpp(const InterfacePtr &pPtr, const NamespacePtr &nPtr) const;
 
     /**
      * 生成枚举的头文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const EnumPtr &pPtr, const string& namespaceId) const;
+    std::string generateH(const EnumPtr &pPtr, const std::string& namespaceId) const;
 
     /**
      * 生成常量头文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const ConstPtr &pPtr) const;
+    std::string generateH(const ConstPtr &pPtr) const;
 
     /**
      * 生成名字空间的头文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const NamespacePtr &pPtr) const;
+    std::string generateH(const NamespacePtr &pPtr) const;
 
     /**
      * 生成名字空间cpp文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateC(const NamespacePtr &pPtr) const;
+    std::string generateC(const NamespacePtr &pPtr) const;
 
     /**
      * 生成名字空间的头文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
     void generateH(const ContextPtr &pPtr) const;
 
@@ -318,7 +318,7 @@ protected:
      * 生成名字空间cpp文件源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
     void generateC(const ContextPtr &pPtr) const;
 
@@ -330,7 +330,7 @@ protected:
      * 
      * @return StructPtr 
      */
-    StructPtr findStruct(const ContextPtr &pPtr,const string &id);
+    StructPtr findStruct(const ContextPtr &pPtr,const std::string &id);
 
     std::string m_sBaseDir;
 

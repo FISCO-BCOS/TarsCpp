@@ -43,7 +43,7 @@ namespace tars
 */
 struct TC_Mysql_Exception : public TC_Exception
 {
-    TC_Mysql_Exception(const string &sBuffer) : TC_Exception(sBuffer){};
+    TC_Mysql_Exception(const std::string &sBuffer) : TC_Exception(sBuffer){};
     ~TC_Mysql_Exception() throw(){};    
 };
 
@@ -57,30 +57,30 @@ struct TC_DBConf
     * 主机地址
     * Host Address
     */
-    string _host;
+    std::string _host;
 
     /**
     * 用户名
     * User name
     */
-    string _user;
+    std::string _user;
 
     /**
     * 密码
     */
-    string _password;
+    std::string _password;
 
     /**
     * 数据库
     * Database
     */
-    string _database;
+    std::string _database;
 
     /**
      * 字符集
      * Character Set
      */
-    string _charset;
+    std::string _charset;
 
     /**
     * 端口
@@ -133,9 +133,9 @@ struct TC_DBConf
     *        dbport:端口
     *        dbport:port
     */
-    void loadFromMap(const map<string, string> &mpParam)
+    void loadFromMap(const std::map<std::string, std::string> &mpParam)
     {
-        map<string, string> mpTmp = mpParam;
+        std::map<std::string, std::string> mpTmp = mpParam;
 
         _host               = mpTmp["dbhost"];
         _user               = mpTmp["dbuser"];
@@ -209,7 +209,7 @@ public:
     * @param iFlag        客户端标识
     * @param iFlag        Client Identity
     */
-    TC_Mysql(const string& sHost, const string& sUser = "", const string& sPasswd = "", const string& sDatabase = "", const string &sCharSet = "", int port = 0, int iFlag = 0);
+    TC_Mysql(const std::string& sHost, const std::string& sUser = "", const std::string& sPasswd = "", const std::string& sDatabase = "", const std::string &sCharSet = "", int port = 0, int iFlag = 0);
 
     /**
     * @brief 构造函数. 
@@ -245,7 +245,7 @@ public:
     * @return 无
     * @return none
     */
-    void init(const string& sHost, const string& sUser  = "", const string& sPasswd  = "", const string& sDatabase = "", const string &sCharSet = "", int port = 0, int iFlag = 0);
+    void init(const std::string& sHost, const std::string& sUser  = "", const std::string& sPasswd  = "", const std::string& sDatabase = "", const std::string &sCharSet = "", int port = 0, int iFlag = 0);
 
     /**
     * @brief 初始化. 
@@ -289,7 +289,7 @@ public:
      * @return 数据库变量
      * @return Database Variables
      */
-    string getVariables(const string &sName);
+    std::string getVariables(const std::string &sName);
 
     /**
     *  @brief 直接获取数据库指针. 
@@ -305,13 +305,13 @@ public:
     *  @brief Character escape, need to connect to database, consider character set
     *  
     * @param sFrom  源字符串
-    * @param sFrom  Source string
+    * @param sFrom  Source std::string
     * @param sTo    输出字符串
-    * @param sTo    Output string
+    * @param sTo    Output std::string
     * @return       输出字符串
-    * @return       Output string
+    * @return       Output std::string
     */
-    string realEscapeString(const string& sFrom);
+    std::string realEscapeString(const std::string& sFrom);
 
     /**
     * @brief 更新或者插入数据. 
@@ -322,7 +322,7 @@ public:
     * @throws      TC_Mysql_Exception
     * @return
     */
-    void execute(const string& sSql);
+    void execute(const std::string& sSql);
 
     /**
      *  @brief mysql的一条记录
@@ -337,7 +337,7 @@ public:
          *  
          * @param record
          */
-        MysqlRecord(const map<string, string> &record);
+        MysqlRecord(const std::map<std::string, std::string> &record);
 
         /**
          * @brief 获取数据，s一般是指数据表的某个字段名 
@@ -347,9 +347,9 @@ public:
          * @return  符合查询条件的记录的s字段名
          * @return  s field name of the record that meets the query criteria
          */
-        const string& operator[](const string &s);
+        const std::string& operator[](const std::string &s);
     protected:
-        const map<string, string> &_record;
+        const std::map<std::string, std::string> &_record;
     };
 
     /**
@@ -363,9 +363,9 @@ public:
          * @brief 所有数据.
          * @brief All data.
          * 
-         * @return vector<map<string,string>>&
+         * @return  std::vector<std::map<std::string,string>>&
          */
-        vector<map<string, string> >& data();
+         std::vector<std::map<std::string, std::string> >& data();
 
         /**
          * 数据的记录条数
@@ -387,7 +387,7 @@ public:
         MysqlRecord operator[](size_t i);
 
     protected:
-        vector<map<string, string> > _data;
+         std::vector<std::map<std::string, std::string> > _data;
     };
 
     /**
@@ -399,20 +399,20 @@ public:
     * @return     MysqlData类型的数据，可以根据字段获取相关信息
     * @return     MysqlData type of data, you can get information based on the field
     */
-    MysqlData queryRecord(const string& sSql);
+    MysqlData queryRecord(const std::string& sSql);
 
     /**
     * @brief Query Record.
     *
     * @param sSql sql语句
     * @param sSql SQL statement
-    * @param pdatarsunc ，函数参数为map<string,string> ,key为column 名，value为数据
-    * @param pdatarsunc , Function parameter is map<string, string>, key is column name, value is data
+    * @param pdatarsunc ，函数参数为std::map<std::string,string> ,key为column 名，value为数据
+    * @param pdatarsunc , Function parameter is std::map<std::string, std::string>, key is column name, value is data
     * @throws TC_Mysql_Exception
     * @return MysqlData类型的数据，可以根据字段获取相关信息
     * @return MysqlData type of data, you can get information based on the field
     */
-    size_t travelRecord(const string& sSql, const std::function<void(const map<string,string> &)> & pdatarsunc);
+    size_t travelRecord(const std::string& sSql, const std::function<void(const std::map<std::string,std::string> &)> & pdatarsunc);
 
     /**
      * @brief 定义字段类型， 
@@ -432,7 +432,7 @@ public:
      * 数据记录
      * Data Rercord
      */
-    typedef map<string, pair<FT, string> > RECORD_DATA;
+    typedef std::map<std::string, std::pair<FT, std::string> > RECORD_DATA;
 
     /**
     * @brief 更新记录. 
@@ -448,7 +448,7 @@ public:
     * @return           size_t 影响的行数
     * @return           Number of rows affected by size_t
     */
-    size_t updateRecord(const string &sTableName, const map<string, pair<FT, string> > &mpColumns, const string &sCondition);
+    size_t updateRecord(const std::string &sTableName, const std::map<std::string, std::pair<FT, std::string> > &mpColumns, const std::string &sCondition);
 
     /**
     * @brief 插入记录. 
@@ -462,7 +462,7 @@ public:
     * @return           size_t 影响的行数
     * @return           Number of rows affected by size_t
     */
-    size_t insertRecord(const string &sTableName, const map<string, pair<FT, string> > &mpColumns);
+    size_t insertRecord(const std::string &sTableName, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
 
     /**
     * @brief 插入记录(一次插入多条). 
@@ -476,7 +476,7 @@ public:
     * @return           size_t 影响的行数
     * @return           Number of rows affected by size_t 
     */    
-    size_t insertRecord(const string &sTableName, const map<string, pair<FT,vector<string>>> &mpColumns);
+    size_t insertRecord(const std::string &sTableName, const std::map<std::string, std::pair<FT,std::vector<std::string>>> &mpColumns);
 
     /**
     * @brief 替换记录. 
@@ -490,7 +490,7 @@ public:
     * @return            size_t 影响的行数
     * @return            Number of rows affected by size_t 
     */
-    size_t replaceRecord(const string &sTableName, const map<string, pair<FT, string> > &mpColumns);
+    size_t replaceRecord(const std::string &sTableName, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
 
    /**
     * @brief 替换记录(一次替换多条). 
@@ -504,7 +504,7 @@ public:
     * @return            size_t 影响的行数
     * @return            Number of rows affected by size_t 
     */
-    size_t replaceRecord(const string &sTableName, const map<string, pair<FT, vector<string>>> &mpColumns);
+    size_t replaceRecord(const std::string &sTableName, const std::map<std::string, std::pair<FT,  std::vector<std::string>>> &mpColumns);
 
     /**
     * @brief 删除记录.  
@@ -518,7 +518,7 @@ public:
     * @return             size_t 影响的行数
     * @return             Number of rows affected by size_t 
     */
-    size_t deleteRecord(const string &sTableName, const string &sCondition = "");
+    size_t deleteRecord(const std::string &sTableName, const std::string &sCondition = "");
 
     /**
     * @brief 获取Table查询结果的数目. 
@@ -532,7 +532,7 @@ public:
     * @return           size_t 查询的记录数目
     * @return           size_t Number of records queried
     */
-    size_t getRecordCount(const string& sTableName, const string &sCondition = "");
+    size_t getRecordCount(const std::string& sTableName, const std::string &sCondition = "");
 
     /**
     * @brief 获取Sql返回结果集的个数. 
@@ -544,7 +544,7 @@ public:
     * @return           查询的记录数目
     * @return           Number of records queried
     */
-    size_t getSqlCount(const string &sCondition = "");
+    size_t getSqlCount(const std::string &sCondition = "");
 
     /**
      * @brief 存在记录. 
@@ -556,7 +556,7 @@ public:
      * @return     操作是否成功
      * @return     Is the operation successful
      */
-    bool existRecord(const string& sql);
+    bool existRecord(const std::string& sql);
 
     /**
     * @brief 获取字段最大值. 
@@ -572,7 +572,7 @@ public:
     * @return           查询的记录数目
     * @return           Number of records queried
     */
-    int getMaxValue(const string& sTableName, const string& sFieldName, const string &sCondition = "");
+    int getMaxValue(const std::string& sTableName, const std::string& sFieldName, const std::string &sCondition = "");
 
     /**
     * @brief 获取auto_increment最后插入得ID. 
@@ -591,10 +591,10 @@ public:
     * @param sTableName  Table Name
     * @param mpColumns  列名/值对
     * @param mpColumns  Column Name/Value Pair
-    * @return           string insert-SQL语句
+    * @return           std::string insert-SQL语句
     * @return           String insert-SQL statement
     */
-    string buildInsertSQL(const string &sTableName, const map<string, pair<FT, string> > &mpColumns);
+    std::string buildInsertSQL(const std::string &sTableName, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
 
     /**
     * @brief 构造Insert-SQL语句(一次插入多条). 
@@ -604,10 +604,10 @@ public:
     * @param sTableName  table name
     * @param mpColumns  列名/值对
     * @param mpColumns  Column Name/Value Pair
-    * @return           string insert-SQL语句
+    * @return           std::string insert-SQL语句
     * @return           String insert-SQL statement
     */    
-    string buildInsertSQL(const string &sTableName, const map<string, pair<FT, vector<string> >> &mpColumns);
+    std::string buildInsertSQL(const std::string &sTableName, const std::map<std::string, std::pair<FT,  std::vector<std::string> >> &mpColumns);
 
     /**
     * @brief 构造Replace-SQL语句. 
@@ -617,10 +617,10 @@ public:
     * @param sTableName  Table Name
     * @param mpColumns 列名/值对
     * @param mpColumns Column name / value pair
-    * @return           string insert-SQL语句
-    * @return           string insert-SQL statement
+    * @return           std::string insert-SQL语句
+    * @return           std::string insert-SQL statement
     */
-    string buildReplaceSQL(const string &sTableName, const map<string, pair<FT, string> > &mpColumns);
+    std::string buildReplaceSQL(const std::string &sTableName, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
 
     /**
     * @brief 构造Replace-SQL语句(一次替换多条). 
@@ -630,10 +630,10 @@ public:
     * @param sTableName  Tabel Name
     * @param mpColumns 列名/值对
     * @param mpColumns Column name / value pair
-    * @return           string insert-SQL语句
-    * @return           string insert-SQL statement
+    * @return           std::string insert-SQL语句
+    * @return           std::string insert-SQL statement
     */    
-    string buildReplaceSQL(const string &sTableName, const map<string, pair<FT, vector<string> >> &mpColumns);
+    std::string buildReplaceSQL(const std::string &sTableName, const std::map<std::string, std::pair<FT,  std::vector<std::string> >> &mpColumns);
 
     /**
     * @brief 构造Update-SQL语句. 
@@ -645,10 +645,10 @@ public:
     * @param mpColumns   Column name / value pair
     * @param sCondition  where子语句
     * @param sCondition  where clause
-    * @return            string Update-SQL语句
-    * @return            string Update-SQL statement
+    * @return            std::string Update-SQL语句
+    * @return            std::string Update-SQL statement
     */
-    string buildUpdateSQL(const string &sTableName,const map<string, pair<FT, string> > &mpColumns, const string &sCondition);
+    std::string buildUpdateSQL(const std::string &sTableName,const std::map<std::string, std::pair<FT, std::string> > &mpColumns, const std::string &sCondition);
 
     /**
      * @brief 获取最后执行的SQL语句.
@@ -657,7 +657,7 @@ public:
      * @return SQL语句
      * @return SQL statement
      */
-    string getLastSQL() { return _sLastSql; }
+    std::string getLastSQL() { return _sLastSql; }
 
     /**
      * @brief 获取查询影响数
@@ -672,13 +672,13 @@ public:
     *  @brief Character escape, regardless of character set (there is a certain risk)
     *  
     * @param sFrom  源字符串
-    * @param sFrom  Source string
+    * @param sFrom  Source std::string
     * @param sTo    输出字符串
-    * @param sTo    Output string
+    * @param sTo    Output std::string
     * @return       输出字符串
-    * @return       Output string
+    * @return       Output std::string
     */
-    static string escapeString(const string& sFrom);
+    static std::string escapeString(const std::string& sFrom);
 
     /**
     * @brief 构造Insert-SQL语句. 
@@ -688,10 +688,10 @@ public:
     * @param sTableName  Table Name
     * @param mpColumns  列名/值对
     * @param mpColumns  Column name / value pair
-    * @return           string insert-SQL语句
+    * @return           std::string insert-SQL语句
     * @return           String insert SQL statement
     */
-    static string buildInsertSQLNoSafe(const string &sTableName, const map<string, pair<FT, string> > &mpColumns);
+    static std::string buildInsertSQLNoSafe(const std::string &sTableName, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
 
     /**
     * @brief 构造Insert-SQL语句(批量). 
@@ -701,10 +701,10 @@ public:
     * @param sTableName  Table Name
     * @param mpColumns  列名/值对
     * @param mpColumns  Column name / value pair
-    * @return           string insert-SQL语句
-    * @return           string insert-SQL statement
+    * @return           std::string insert-SQL语句
+    * @return           std::string insert-SQL statement
     */    
-    static string buildInsertSQLNoSafe(const string &sTableName, const map<string, pair<FT, vector<string> >> &mpColumns);
+    static std::string buildInsertSQLNoSafe(const std::string &sTableName, const std::map<std::string, std::pair<FT,  std::vector<std::string> >> &mpColumns);
 
     /**
     * @brief 构造Replace-SQL语句. 
@@ -714,10 +714,10 @@ public:
     * @param sTableName  Table Name
     * @param mpColumns 列名/值对
     * @param mpColumns Column name / value pair
-    * @return           string insert-SQL语句
-    * @return           string Insert SQL statement
+    * @return           std::string insert-SQL语句
+    * @return           std::string Insert SQL statement
     */
-    static string buildReplaceSQLNoSafe(const string &sTableName, const map<string, pair<FT, string> > &mpColumns);
+    static std::string buildReplaceSQLNoSafe(const std::string &sTableName, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
 
     /**
     * @brief 构造Replace-SQL语句(批量). 
@@ -727,10 +727,10 @@ public:
     * @param sTableName  Table Name
     * @param mpColumns 列名/值对
     * @param mpColumns Column name / value pair
-    * @return           string insert-SQL语句
+    * @return           std::string insert-SQL语句
     * @return           String insert SQL statement
     */    
-    static string buildReplaceSQLNoSafe(const string &sTableName, const map<string, pair<FT, vector<string> >> &mpColumns);
+    static std::string buildReplaceSQLNoSafe(const std::string &sTableName, const std::map<std::string, std::pair<FT,  std::vector<std::string> >> &mpColumns);
 
     /**
     * @brief 构造Update-SQL语句. 
@@ -742,10 +742,10 @@ public:
     * @param mpColumns   Column Name/Value Pair
     * @param sCondition  where子语句
     * @param sCondition  where cluase
-    * @return            string Update-SQL语句
-    * @return            string Update-SQL statement
+    * @return            std::string Update-SQL语句
+    * @return            std::string Update-SQL statement
     */
-    static string buildUpdateSQLNoSafe(const string &sTableName,const map<string, pair<FT, string> > &mpColumns, const string &sCondition);
+    static std::string buildUpdateSQLNoSafe(const std::string &sTableName,const std::map<std::string, std::pair<FT, std::string> > &mpColumns, const std::string &sCondition);
 
 protected:
     /**
@@ -769,13 +769,13 @@ protected:
     * @param sTableName  Table Name
     * @param mpColumns  列名/值对
     * @param mpColumns  Column Name/Value Pair
-    * @return           string insert-SQL语句
-    * @return           string insert-SQL statement
+    * @return           std::string insert-SQL语句
+    * @return           std::string insert-SQL statement
     */   
-    string buildSQL(const string &sTableName, const string &command, const map<string, pair<FT, string> > &mpColumns);
-    string buildBatchSQL(const string &sTableName, const string &command, const map<string, pair<FT, vector<string> >> &mpColumns);
-    static string buildSQLNoSafe(const string &sTableName, const string &command, const map<string, pair<FT, string> > &mpColumns);
-    static string buildBatchSQLNoSafe(const string &sTableName, const string &command, const map<string, pair<FT, vector<string> >> &mpColumns);
+    std::string buildSQL(const std::string &sTableName, const std::string &command, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
+    std::string buildBatchSQL(const std::string &sTableName, const std::string &command, const std::map<std::string, std::pair<FT,  std::vector<std::string> >> &mpColumns);
+    static std::string buildSQLNoSafe(const std::string &sTableName, const std::string &command, const std::map<std::string, std::pair<FT, std::string> > &mpColumns);
+    static std::string buildBatchSQLNoSafe(const std::string &sTableName, const std::string &command, const std::map<std::string, std::pair<FT,  std::vector<std::string> >> &mpColumns);
 
 private:
 
@@ -801,7 +801,7 @@ private:
      * 最后执行的sql
      * Last executed SQL
      */
-    string      _sLastSql;
+    std::string      _sLastSql;
   
 };
 

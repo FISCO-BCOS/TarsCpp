@@ -16,6 +16,7 @@
 
 #include "util/tc_consistent_hash_new.h"
 
+using namespace std;
 
 namespace tars
 {

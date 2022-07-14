@@ -6,8 +6,6 @@
 #include <atomic>
 #include <memory>
 
-using namespace std;
-
 namespace tars
 {
 

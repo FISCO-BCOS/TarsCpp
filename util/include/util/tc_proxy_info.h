@@ -38,7 +38,7 @@ namespace tars
 class TC_ProxyInfo
 {
 public:
-	TC_ProxyInfo(const TC_Endpoint & ep, const string & user, const string & pass)
+	TC_ProxyInfo(const TC_Endpoint & ep, const std::string & user, const std::string & pass)
 		: _stage(eProxy_Stage_Establish), _ep(ep), _user(user), _pass(pass)
 	{
 	}
@@ -88,7 +88,7 @@ public:
 	 * @param pass
 	 * @return
 	 */
-	static shared_ptr<TC_ProxyInfo> createProxyInfo(const ProxyBaseInfo &baseInfo);
+	static std::shared_ptr<TC_ProxyInfo> createProxyInfo(const ProxyBaseInfo &baseInfo);
 
 	/**
 	 * 返回代理地址
@@ -111,7 +111,7 @@ public:
      * 获取错误信息, sendProxyPacket & recvProxyPacket 返回false, 则可以通过getErrMsg获取错误信息
      * @return
      */
-    const string &getErrMsg() { return _errMsg; }
+    const std::string &getErrMsg() { return _errMsg; }
 
     /**
 	 * 构建鉴权包
@@ -119,7 +119,7 @@ public:
 	 * @param dst
 	 * @return
 	 */
-	virtual bool sendProxyPacket(vector<char> & buff, const TC_Endpoint & dst) = 0;
+	virtual bool sendProxyPacket(std::vector<char> & buff, const TC_Endpoint & dst) = 0;
 
 	/**
 	 * 解析响应包
@@ -136,7 +136,7 @@ protected:
 
 protected:
 	EMProxyStageType _stage;
-	string		_errMsg;
+	std::string		_errMsg;
 	TC_Endpoint _ep;
 	std::string _user;
 	std::string _pass;
@@ -175,7 +175,7 @@ protected:
 	};
 
 public:
-	virtual bool sendProxyPacket(vector<char> & buff, const TC_Endpoint & dst);
+	virtual bool sendProxyPacket(std::vector<char> & buff, const TC_Endpoint & dst);
 
 	virtual bool recvProxyPacket(const char *buff, size_t length);
 };
@@ -183,7 +183,7 @@ public:
 class TC_ProxySock5 : public TC_ProxyInfo
 {
 public:
-	TC_ProxySock5(const TC_Endpoint & ep, const string & user, const string & pass)
+	TC_ProxySock5(const TC_Endpoint & ep, const std::string & user, const std::string & pass)
 		: TC_ProxyInfo(ep, user, pass)
 	{
 	}
@@ -255,7 +255,7 @@ protected:
 	};
 
 public:
-	virtual bool sendProxyPacket(vector<char> & buff, const TC_Endpoint & dst);
+	virtual bool sendProxyPacket(std::vector<char> & buff, const TC_Endpoint & dst);
 
 	virtual bool recvProxyPacket(const char *buff, size_t length);
 
@@ -264,12 +264,12 @@ public:
 class TC_ProxyHttp : public TC_ProxyInfo
 {
 public:
-	TC_ProxyHttp(const TC_Endpoint & ep, const string & user, const string & pass)
+	TC_ProxyHttp(const TC_Endpoint & ep, const std::string & user, const std::string & pass)
 		: TC_ProxyInfo(ep, user, pass)
 	{
 	}
 
-	virtual bool sendProxyPacket(vector<char> & buff, const TC_Endpoint & dst);
+	virtual bool sendProxyPacket(std::vector<char> & buff, const TC_Endpoint & dst);
 
 	virtual bool recvProxyPacket(const char *buff, size_t length);
 

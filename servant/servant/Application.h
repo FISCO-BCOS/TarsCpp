@@ -139,7 +139,7 @@ struct SVT_DLL_API ServerConfig
 	static bool VerifyClient;
 	static std::string Ciphers;
 
-	static map<string, string> Context;     //框架内部用, 传递节点名称(以域名形式部署时)
+	static std::map<std::string, std::string> Context;     //框架内部用, 传递节点名称(以域名形式部署时)
 };
 
 class PropertyReport;
@@ -177,7 +177,7 @@ public:
      * config , 实际配置文件的内容(而不是目录)
      * @param config
      */
-	void main(const string &config);
+	void main(const std::string &config);
 
 	/**
 	 * 运行
@@ -221,19 +221,19 @@ public:
     /**
      * 获取框架的版本
      */
-    static string getTarsVersion();
+    static std::string getTarsVersion();
 
     /**
      * 添加Config
      * @param filename
      */
-    bool addConfig(const string &filename);
+    bool addConfig(const std::string &filename);
 
     /**
      * 添加应用级的Config
      * @param filename
      */
-    bool addAppConfig(const string &filename);
+    bool addAppConfig(const std::string &filename);
 
     /**
      * 手工监听所有端口(Admin的端口是提前就监听的)
@@ -246,7 +246,7 @@ public:
      * @param id
      */
     template<typename T>
-    void addServant(const string &id)
+    void addServant(const std::string &id)
     {
 	    _servantHelper->addServant<T>(id, this, true);
     }
@@ -258,7 +258,7 @@ public:
 	 * @param p, p will pass to T, T must has constructor with p
 	 */
 	template<typename T, typename P>
-	void addServantWithParams(const string &id, const P &p)
+	void addServantWithParams(const std::string &id, const P &p)
 	{
 		_servantHelper->addServant<T>(id, this, p, true);
 	}
@@ -280,7 +280,7 @@ public:
      * @param protocol
      * @param servant
      */
-    void addServantProtocol(const string &servant, const TC_NetWorkBuffer::protocol_functor &protocol);
+    void addServantProtocol(const std::string &servant, const TC_NetWorkBuffer::protocol_functor &protocol);
 
     /**
      * @desc 添加接收新链接的回调
@@ -315,7 +315,7 @@ protected:
      * 处理完成后继续通知Servant
      * @param filename
      */
-    bool cmdLoadConfig(const string &command, const string &params, string &result);
+    bool cmdLoadConfig(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 设置滚动日志等级
@@ -325,7 +325,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdSetLogLevel(const string &command, const string &params, string &result);
+    bool cmdSetLogLevel(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 设置服务的core limit
@@ -335,7 +335,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdCloseCoreDump(const string& command, const string& params, string& result);
+    bool cmdCloseCoreDump(const std::string& command, const std::string& params, std::string& result);
 
     /**
      * 设置按天日志是否生效
@@ -345,7 +345,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdEnableDayLog(const string &command, const string &params, string &result);
+    bool cmdEnableDayLog(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 查看服务状态
@@ -355,7 +355,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdViewStatus(const string &command, const string &params, string &result);
+    bool cmdViewStatus(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 查看链接状态
@@ -365,7 +365,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdConnections(const string &command, const string &params, string &result);
+    bool cmdConnections(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 查看编译的版本
@@ -375,7 +375,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdViewVersion(const string &command, const string &params, string &result);
+    bool cmdViewVersion(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 查看服务的buildid（编译时间）
@@ -385,7 +385,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdViewBuildID(const string &command, const string &params, string &result);
+    bool cmdViewBuildID(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 使配置文件的property信息生效
@@ -395,7 +395,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdLoadProperty(const string &command, const string &params, string &result);
+    bool cmdLoadProperty(const std::string &command, const std::string &params, std::string &result);
 
     /**
      *查看服务支持的管理命令
@@ -404,7 +404,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdViewAdminCommands(const string &command, const string &params, string &result);
+    bool cmdViewAdminCommands(const std::string &command, const std::string &params, std::string &result);
 
     /**
      * 设置染色消息
@@ -414,7 +414,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdSetDyeing(const string &command, const string &params, string &result);
+    bool cmdSetDyeing(const std::string &command, const std::string &params, std::string &result);
 
 
     /**
@@ -425,7 +425,7 @@ protected:
      *
      * @return bool
      */
-    bool cmdCloseCout(const string& command, const string& params, string& result);
+    bool cmdCloseCout(const std::string& command, const std::string& params, std::string& result);
 
     /*
     *通过命令动态加载配置文件，获取最新的locator，以方便应对主控便更
@@ -433,7 +433,7 @@ protected:
     * @param params
     * @param result
     */
-    bool cmdReloadLocator(const string& command, const string& params, string& result);
+    bool cmdReloadLocator(const std::string& command, const std::string& params, std::string& result);
 
 	/*
 	* view server resource
@@ -441,7 +441,7 @@ protected:
 	* @param params
 	* @param result
 	*/
-	bool cmdViewResource(const string& command, const string& params, string& result);
+	bool cmdViewResource(const std::string& command, const std::string& params, std::string& result);
 
 protected:
 
@@ -461,7 +461,7 @@ protected:
     //  *
     //  * @return bool
     //  */
-    // void addServantOnClose(const string& servant, const TC_EpollServer::close_functor& f);
+    // void addServantOnClose(const std::string& servant, const TC_EpollServer::close_functor& f);
 
 protected:
     /**
@@ -496,17 +496,17 @@ protected:
      * 输出
      * @param os
      */
-    void outAdapter(ostream &os, const string &v, TC_EpollServer::BindAdapterPtr lsPtr);
+    void outAdapter(ostream &os, const std::string &v, TC_EpollServer::BindAdapterPtr lsPtr);
 
     /**
      * 解析配置文件
      */
-	void parseConfig(const string &config);
+	void parseConfig(const std::string &config);
 
 	/**
 	* 解析ip权限allow deny 次序
 	*/
-    TC_EpollServer::BindAdapter::EOrder parseOrder(const string &s);
+    TC_EpollServer::BindAdapter::EOrder parseOrder(const std::string &s);
 
     /**
      * bind server adapter
@@ -518,28 +518,28 @@ protected:
      * @param adapter
      * @param name
      */
-	void setAdapter(TC_EpollServer::BindAdapterPtr& adapter, const string &name);
+	void setAdapter(TC_EpollServer::BindAdapterPtr& adapter, const std::string &name);
 
 	/**
      * @param servant
      * @param sPrefix
      */
-    void checkServantNameValid(const string &servant, const string &sPrefix);
+    void checkServantNameValid(const std::string &servant, const std::string &sPrefix);
 
     /**
      * 换成缺省值
      * @param s
      *
-     * @return string
+     * @return std::string
      */
-    string toDefault(const string &s, const string &sDefault);
+    std::string toDefault(const std::string &s, const std::string &sDefault);
 
     /**
      * 获取服务的set分组信息,setname.setarea.setgroup
      *
-     * @return string 没有按set分组则返回空""
+     * @return std::string 没有按set分组则返回空""
      */
-    string setDivision(void);
+    std::string setDivision(void);
 
 protected:
     /**

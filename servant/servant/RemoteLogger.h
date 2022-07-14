@@ -65,9 +65,9 @@ public:
     RollWriteT();
     ~RollWriteT();
 
-    void operator()(ostream &of, const deque<pair<size_t, string> > &ds);
+    void operator()(ostream &of, const deque<pair<size_t, std::string> > &ds);
 
-    void setDyeingLogInfo(const string &sApp, const string &sServer, const string & sLogPath, int iMaxSize, int iMaxNum, const LogPrx &logPrx, const string & sLogObj);
+    void setDyeingLogInfo(const std::string &sApp, const std::string &sServer, const std::string & sLogPath, int iMaxSize, int iMaxNum, const LogPrx &logPrx, const std::string & sLogObj);
 
 protected:
 
@@ -75,9 +75,9 @@ protected:
 
 //    static int  _dyeingThread;
 
-    string _app;
-    string _server;
-    string _logPath;
+    std::string _app;
+    std::string _server;
+    std::string _logPath;
     int _maxSize;
     int _maxNum;
 
@@ -122,7 +122,7 @@ public:
      * @param iMaxSize, 文件最大大小,字节
      * @param iMaxNum, 文件最大数
      */
-    void setLogInfo(const string &sApp, const string &sServer, const string &sLogpath, int iMaxSize = 1024*1024*50, int iMaxNum = 10, const CommunicatorPtr &comm=NULL, const string &sLogObj="");
+    void setLogInfo(const std::string &sApp, const std::string &sServer, const std::string &sLogpath, int iMaxSize = 1024*1024*50, int iMaxNum = 10, const CommunicatorPtr &comm=NULL, const std::string &sLogObj="");
 
     /**
      * 设置同步写日志
@@ -143,13 +143,13 @@ public:
 	 *
 	 * @return RollLogger
 	 */
-	RollLogger *logger(const string &suffix);
+	RollLogger *logger(const std::string &suffix);
 
     /**
      * 染色日志是否启用
      * @param bEnable
      */
-    void enableDyeing(bool bEnable, const string& sDyeingKey = "");
+    void enableDyeing(bool bEnable, const std::string& sDyeingKey = "");
 
     /**
      * 终止
@@ -160,22 +160,22 @@ public:
     /**
      * 应用
      */
-    string                  _app;
+    std::string                  _app;
 
     /**
      * 服务名称
      */
-    string                  _server;
+    std::string                  _server;
 
     /**
      * 日志路径
      */
-    string                  _logpath;
+    std::string                  _logpath;
 
     /**
      * log obj
      */
-    string 					_logObj;
+    std::string 					_logObj;
 
     /**
      * 循环日志
@@ -185,7 +185,7 @@ public:
     /**
      * 扩展日志
      */
-    unordered_map<string, RollLogger*>	_logger_ex;
+    std::unordered_map<string, RollLogger*>	_logger_ex;
 
     /**
      * lock
@@ -284,7 +284,7 @@ public:
      * @param of
      * @param buffer
      */
-    void operator()(ostream &of, const deque<pair<size_t, string> > &buffer);
+    void operator()(ostream &of, const deque<pair<size_t, std::string> > &buffer);
 
 protected:
     /**
@@ -335,7 +335,7 @@ public:
      * @param setdivision,set名称
      * @param sLogType,日志记录类型
      */
-    void setLogInfo(const LogPrx &logPrx, const string &sApp, const string &sServer, const string &sFile, const string &sLogpath, const string &sFormat, const string& setdivision = "", const string& sLogType = "", const PropertyReportPtr &reportSuccPtr = NULL, const PropertyReportPtr &reportFailPtr = NULL);
+    void setLogInfo(const LogPrx &logPrx, const std::string &sApp, const std::string &sServer, const std::string &sFile, const std::string &sLogpath, const std::string &sFormat, const std::string& setdivision = "", const std::string& sLogType = "", const PropertyReportPtr &reportSuccPtr = NULL, const PropertyReportPtr &reportFailPtr = NULL);
 
     /**
      * 设置代理
@@ -359,7 +359,7 @@ public:
      * 染色日志功能打开或关闭
      * @param bEnable
      */
-    void enableDyeing (bool bEnable, const string& sDyeingKey = "");
+    void enableDyeing (bool bEnable, const std::string& sDyeingKey = "");
 
 
     /**
@@ -376,13 +376,13 @@ public:
      * @brief 日志文件名中用户自定义字符与日期字符间的连接符，默认是"_"
      * @param str
      */
-    void setFileNameConcatStr(const string& str) {_concatStr = str;}
+    void setFileNameConcatStr(const std::string& str) {_concatStr = str;}
 
     /**
      * @brief 框架中增加的日志内容之间的分割符，默认是"|"
      * @param str
      */
-    void setSeparator(const string& str) {_separ = str;}
+    void setSeparator(const std::string& str) {_separ = str;}
 
     /**
      * @brief 框架中日期和时间之间是否需要加中括号[],有些统计由特殊需求；默认不加
@@ -394,14 +394,14 @@ public:
      * 设置时间格式("%Y%m%d")
      * @param sFormat
      */
-    void setFormat(const string &sFormat)   { _format = sFormat;}
+    void setFormat(const std::string &sFormat)   { _format = sFormat;}
 
     /**
      * 具体调用
      * @param of
      * @param buffer
      */
-    void operator()(ostream &of, const deque<pair<size_t, string> > &buffer);
+    void operator()(ostream &of, const deque<pair<size_t, std::string> > &buffer);
 
 protected:
 
@@ -420,7 +420,7 @@ protected:
      * 记录错误文件
      * @param buffer
      */
-    void writeError(const deque<pair<size_t, string> > &buffer);
+    void writeError(const deque<pair<size_t, std::string> > &buffer);
 
     /**
      * 初始化logger
@@ -457,27 +457,27 @@ protected:
     /**
      * app名称
      */
-    string              _app;
+    std::string              _app;
 
     /**
      * 服务名称
      */
-    string              _server;
+    std::string              _server;
 
     /**
      * 日志文件名称
      */
-    string              _file;
+    std::string              _file;
 
     /**
      * 时间格式
      */
-    string              _format;
+    std::string              _format;
 
     /**
      * 具体文件
      */
-    string              _filePath;
+    std::string              _filePath;
 
     /**
      * 错误文件
@@ -497,7 +497,7 @@ protected:
     /**
      * 染色日志目录路径
      */
-    string              _dyeingFilePath;
+    std::string              _dyeingFilePath;
 
     /**
      * 远程时间日志
@@ -507,7 +507,7 @@ protected:
     /**
      * set分组信息
      */
-    string               _setDivision;
+    std::string               _setDivision;
 
     /**
      * 日志文件名是否带.log后缀
@@ -521,11 +521,11 @@ protected:
     /**
      * 日志文件名中用户自定义字符与日期字符间的连接符，默认是"_"
      */
-    string                  _concatStr;
+    std::string                  _concatStr;
     /**
      * 分隔符
      */
-     string              _separ;
+     std::string              _separ;
     /**
      * 日期部分是否加上[]
      */
@@ -534,7 +534,7 @@ protected:
      /*
       * 本地日志的记录类型,格式为LogType.toString()返回值,如果不采用LogType，则该值为""
       */
-     string              _logType;
+     std::string              _logType;
      
      /*
      * 对于远程日志，上报同步到logser的成功量，默认不上报
@@ -578,7 +578,7 @@ public:
      * @param server, 服务名称
      * @param logpath, 日志路径
      */
-    void setLogInfo(const CommunicatorPtr &comm, const string &obj, const string &sApp, const string &sServer, const string &sLogpath,const string& setdivision="", const bool &bLogStatReport=false);
+    void setLogInfo(const CommunicatorPtr &comm, const std::string &obj, const std::string &sApp, const std::string &sServer, const std::string &sLogpath,const std::string& setdivision="", const bool &bLogStatReport=false);
 
     /**
      * 初始化设置时间格式("%Y%m%d")
@@ -586,8 +586,8 @@ public:
      * 如果有需要, 初始化后直接修改
      * @param sFormat, 文件名称, 为空表示缺省的时间日志
      */
-    void initFormat(const string &sFile, const string &sFormat,const LogTypePtr& logTypePtr=NULL);
-    void initFormat(const string &sApp, const string &sServer,const string &sFile, const string &sFormat,const LogTypePtr& logTypePtr=NULL);
+    void initFormat(const std::string &sFile, const std::string &sFormat,const LogTypePtr& logTypePtr=NULL);
+    void initFormat(const std::string &sApp, const std::string &sServer,const std::string &sFile, const std::string &sFormat,const LogTypePtr& logTypePtr=NULL);
     /**
      * 初始化设置时间格式("%Y%m%d")
      * 不要动态修改, 线程不安全
@@ -599,14 +599,14 @@ public:
      * initFormat<TarsLogByHour>("logfile",TarsLogByHour::FORMAT,2);
      */
     template<class TLogType>
-    void initFormatWithType(const string &sFile, const string &sFormat,size_t frequency)
+    void initFormatWithType(const std::string &sFile, const std::string &sFormat,size_t frequency)
     {
         LogTypePtr logTypePtr = new TLogType(sFormat,frequency);
         initFormat(sFile,sFormat,logTypePtr);
     }
 
     template<class TLogType>
-    void initFormatWithType(const string &sApp, const string &sServer,const string &sFile, const string &sFormat,size_t frequency)
+    void initFormatWithType(const std::string &sApp, const std::string &sServer,const std::string &sFile, const std::string &sFormat,size_t frequency)
     {
         LogTypePtr logTypePtr = new TLogType(sFormat,frequency);
         initFormat(sApp,sServer,sFile,sFormat,logTypePtr);
@@ -615,7 +615,7 @@ public:
      * 获取时间日志
      * @param file
      */
-    TimeLogger *logger(const string &sFile = "");
+    TimeLogger *logger(const std::string &sFile = "");
 
     /**
      * 获取时间日志
@@ -623,20 +623,20 @@ public:
      * @param server, 服务名称
      * @param file
      */
-    TimeLogger *logger(const string &sApp, const string &sServer,const string &sFile = "");
+    TimeLogger *logger(const std::string &sApp, const std::string &sServer,const std::string &sFile = "");
 
     /**
      * 同步写本地时间日志(远程日志一定是异步写的, 无法调整)
      * @param bSync
      */
-    void sync(const string &sFile, bool bSync);
+    void sync(const std::string &sFile, bool bSync);
 
     /**
      * 远程时间日志
      * @param sFile, 文件名称, 为空表示缺省的时间日志
      * @param bEnable
      */
-    void enableRemote(const string &sFile, bool bEnable);
+    void enableRemote(const std::string &sFile, bool bEnable);
 
     /**
      * 远程时间日志
@@ -645,13 +645,13 @@ public:
      * @param sFile, 文件名称, 为空表示缺省的时间日志
      * @param bEnable
      */
-    void enableRemoteEx(const string &sApp, const string &sServer,const string &sFile, bool bEnable);
+    void enableRemoteEx(const std::string &sApp, const std::string &sServer,const std::string &sFile, bool bEnable);
     /**
      * 本地时间日志
      * @param sFile,文件名称, 为空表示缺省的时间日志
      * @param bEnable
      */
-    void enableLocal(const string &sFile, bool bEnable);
+    void enableLocal(const std::string &sFile, bool bEnable);
     /**
      * 本地时间日志
      * @param sApp,应用名称
@@ -659,7 +659,7 @@ public:
      * @param sFile, 文件名称, 为空表示缺省的时间日志
      * @param bEnable
      */
-    void enableLocalEx(const string &sApp, const string &sServer,const string &sFile, bool bEnable);
+    void enableLocalEx(const std::string &sApp, const std::string &sServer,const std::string &sFile, bool bEnable);
 
     /**
      * @brief 日志文件名是否带.log后缀,影响全部日志文件
@@ -675,13 +675,13 @@ public:
      * @brief 日志文件名中用户自定义字符与日期字符间的连接符，默认是"_",影响全部日志文件
      * @param str
      */
-    void setFileNameConcatStr(const string& str) {_concatStr = str;}
+    void setFileNameConcatStr(const std::string& str) {_concatStr = str;}
 
     /**
      * @brief 框架中增加的日志内容之间的分割符，默认是"|",影响全部日志文件
      * @param str
      */
-    void setSeparator(const string& str) {_separ = str;}
+    void setSeparator(const std::string& str) {_separ = str;}
 
     /**
      * @brief 框架中日期和时间之间是否需要加中括号[],有些统计由特殊需求；默认不加,影响全部日志文件
@@ -711,7 +711,7 @@ protected:
      * @param sFormat
      * @param frequence, 每多少天/小时/分钟,单位是秒
      */
-    void initTimeLogger(TimeLogger *pTimeLogger, const string &sFile, const string &sFormat,const LogTypePtr& logTypePtr=NULL);
+    void initTimeLogger(TimeLogger *pTimeLogger, const std::string &sFile, const std::string &sFormat,const LogTypePtr& logTypePtr=NULL);
 
     /**
      * 初始化时间日志
@@ -723,7 +723,7 @@ protected:
      * @param frequence, 每多少天/小时/分钟,单位是秒
      */
 
-    void initTimeLogger(TimeLogger *pTimeLogger,const string &sApp, const string &sServer, const string &sFile, const string &sFormat,const LogTypePtr& logTypePtr=NULL);
+    void initTimeLogger(TimeLogger *pTimeLogger,const std::string &sApp, const std::string &sServer, const std::string &sFile, const std::string &sFormat,const LogTypePtr& logTypePtr=NULL);
 
 protected:
 
@@ -740,17 +740,17 @@ protected:
     /**
      * 应用
      */
-    string                  _app;
+    std::string                  _app;
 
     /**
      * 服务名称
      */
-    string                  _server;
+    std::string                  _server;
 
     /**
      * 日志路径
      */
-    string                  _logpath;
+    std::string                  _logpath;
 
     /**
      * 缺省按天日志
@@ -760,11 +760,11 @@ protected:
     /**
      * 远程日志
      */
-    map<string, TimeLogger*>  _loggers;
+    std::map<string, TimeLogger*>  _loggers;
     /**
      * set分组信息
      */
-    string                   _setDivision;
+    std::string                   _setDivision;
 
     /**
      * 是否带.log后缀
@@ -778,11 +778,11 @@ protected:
     /**
      * 日志文件名中用户自定义字符与日期字符间的连接符，默认是"_"
      */
-    string                      _concatStr;
+    std::string                      _concatStr;
     /**
      * 分隔符
      */
-    string                   _separ;
+    std::string                   _separ;
     /**
      * 日期部分是否加上[]
      */
@@ -837,11 +837,11 @@ public:
     /**
      * 启用染色日志
      */
-    void enableDyeing(const string & sDyeingKey = "");
+    void enableDyeing(const std::string & sDyeingKey = "");
 
 protected:
     bool _needDyeing;
-    string _dyeingKey;
+    std::string _dyeingKey;
 };
 
 /**

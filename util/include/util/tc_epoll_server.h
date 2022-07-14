@@ -97,32 +97,32 @@ namespace detail
          * 记录日志
          * @param s
          */
-        virtual void debug(const string &s) const = 0;
+        virtual void debug(const std::string &s) const = 0;
 
         /**
         * INFO日志
         * @param s
         */
-        virtual void info(const string &s) const = 0;
+        virtual void info(const std::string &s) const = 0;
 
         /**
          * tars日志
          * @param s
          */
-        virtual void tars(const string &s) const = 0;
+        virtual void tars(const std::string &s) const = 0;
 
         /**
          * 记录错误日志
          * @param s
          */
-        virtual void error(const string &s) const = 0;
+        virtual void error(const std::string &s) const = 0;
 
     };
 }
 
 struct TC_EpollServer_Exception : public TC_Exception
 {
-   TC_EpollServer_Exception(const string &buffer) : TC_Exception(buffer) {};
+   TC_EpollServer_Exception(const std::string &buffer) : TC_Exception(buffer) {};
    ~TC_EpollServer_Exception() {};
 };
 
@@ -158,14 +158,14 @@ public:
     class BindAdapter;
     class Handle;
 
-    typedef shared_ptr<BindAdapter> BindAdapterPtr;
-    typedef shared_ptr<Handle> HandlePtr;
+    typedef std::shared_ptr<BindAdapter> BindAdapterPtr;
+    typedef std::shared_ptr<Handle> HandlePtr;
 
     // typedef TC_AutoPtr<BindAdapter> BindAdapterPtr;
     // typedef TC_AutoPtr<Handle> HandlePtr;
 
 //    using close_functor = std::function<void(void *, EM_CLOSE_T)>;
-    using header_filter_functor = std::function<TC_NetWorkBuffer::PACKET_TYPE(TC_NetWorkBuffer::PACKET_TYPE, vector<char> &)> ;
+    using header_filter_functor = std::function<TC_NetWorkBuffer::PACKET_TYPE(TC_NetWorkBuffer::PACKET_TYPE, std::vector<char> &)> ;
 
     ////////////////////////////////////////////////////////////////////////////
     /**
@@ -192,10 +192,10 @@ public:
         inline int threadIndex() const     { return _threadIndex; }
         inline uint32_t uid() const        { return _uid; }
         inline const TC_Socket::addr_type& addr() const      { return _addr; }
-        inline const string & ip() const   { parseIpPort(); return _ip; }
+        inline const std::string & ip() const   { parseIpPort(); return _ip; }
         inline uint16_t port() const       { parseIpPort(); return _port; }
-        inline vector<char> & buffer()     { return _rbuffer; }
-        inline const vector<char> & buffer() const { return _rbuffer; }
+        inline std::vector<char> & buffer()     { return _rbuffer; }
+        inline const std::vector<char> & buffer() const { return _rbuffer; }
         inline int64_t recvTimeStamp() const { return _recvTimeStamp; }
         inline bool isOverload() const     { return _isOverload; }
         inline void setOverload()          { _isOverload = true; }
@@ -216,19 +216,19 @@ public:
         inline BindAdapterPtr adapter()  { return _adapter.lock(); }
         inline int closeType() const       { return _closeType; }
         inline void setCloseType(int closeType) { _closeType = closeType; }
-        inline shared_ptr<SendContext> createSendContext()     { return std::make_shared<SendContext>(shared_from_this(), 's'); }
-        inline shared_ptr<SendContext> createCloseContext()    { return std::make_shared<SendContext>(shared_from_this(), 'c'); }
+        inline std::shared_ptr<SendContext> createSendContext()     { return std::make_shared<SendContext>(shared_from_this(), 's'); }
+        inline std::shared_ptr<SendContext> createCloseContext()    { return std::make_shared<SendContext>(shared_from_this(), 'c'); }
     protected:
         void parseIpPort() const;
     protected:
     	int _threadIndex;       //网络线程id
         uint32_t _uid;            /**连接标示*/
         TC_Socket::addr_type _addr;
-        mutable string _ip;             /**远程连接的ip*/
+        mutable std::string _ip;             /**远程连接的ip*/
         mutable uint16_t _port;           /**远程连接的端口*/
         int _fd;                /*保存产生该消息的fd，用于回包时选择网络线程*/
         weak_ptr<BindAdapter> _adapter;        /**标识哪一个adapter的消息*/
-        vector<char> _rbuffer;        /**接收的内容*/
+        std::vector<char> _rbuffer;        /**接收的内容*/
         bool _isOverload = false;     /**是否已过载 */
         bool _isClosed = false;       /**是否已关闭*/
         int _closeType;     /*如果是关闭消息包，则标识关闭类型,0:表示客户端主动关闭；1:服务端主动关闭;2:连接超时服务端主动关闭*/
@@ -242,33 +242,33 @@ public:
     class SendContext
     {
     public:
-        SendContext(const shared_ptr<RecvContext> & context, char cmd)
+        SendContext(const std::shared_ptr<RecvContext> & context, char cmd)
                 : _context(context), _cmd(cmd)
         {
             _sbuffer = std::make_shared<TC_NetWorkBuffer::Buffer>();
         }
 
-        inline const shared_ptr<RecvContext> & getRecvContext() { return _context; }
-        inline void setBuffer(const shared_ptr<TC_NetWorkBuffer::Buffer>& buff) { _sbuffer = buff; }
-        inline const shared_ptr<TC_NetWorkBuffer::Buffer> & buffer() { return _sbuffer; }
+        inline const std::shared_ptr<RecvContext> & getRecvContext() { return _context; }
+        inline void setBuffer(const std::shared_ptr<TC_NetWorkBuffer::Buffer>& buff) { _sbuffer = buff; }
+        inline const std::shared_ptr<TC_NetWorkBuffer::Buffer> & buffer() { return _sbuffer; }
         inline char cmd() const        { return _cmd; }
         inline uint32_t uid() const    { return _context->uid(); }
         inline int fd() const          { return _context->fd(); }
-        inline const string & ip() const { return _context->ip(); }
+        inline const std::string & ip() const { return _context->ip(); }
         inline uint16_t port() const   { return _context->port(); }
 
         friend class RecvContext;
 
     protected:
-        shared_ptr<RecvContext>              _context;
+        std::shared_ptr<RecvContext>              _context;
         char _cmd;                                            /**send包才有效, 命令:'c',关闭fd; 's',有数据需要发送*/
-        shared_ptr<TC_NetWorkBuffer::Buffer> _sbuffer;        /**发送的内容*/
+        std::shared_ptr<TC_NetWorkBuffer::Buffer> _sbuffer;        /**发送的内容*/
     };
 
-//    typedef TC_CasQueue<shared_ptr<RecvContext>> recv_queue;
-    typedef TC_ThreadQueue<shared_ptr<RecvContext>> recv_queue;
-//    typedef TC_CasQueue<shared_ptr<SendContext>> send_queue;
-    typedef TC_ThreadQueue<shared_ptr<SendContext>> send_queue;
+//    typedef TC_CasQueue<std::shared_ptr<RecvContext>> recv_queue;
+    typedef TC_ThreadQueue<std::shared_ptr<RecvContext>> recv_queue;
+//    typedef TC_CasQueue<std::shared_ptr<SendContext>> send_queue;
+    typedef TC_ThreadQueue<std::shared_ptr<SendContext>> send_queue;
 
 //    typedef recv_queue::queue_type recv_queue_type;
 
@@ -295,7 +295,7 @@ public:
              * push数据到队列中, 同时唤醒某个等待处理线程
              * @param recv
              */
-            inline void push_back(const shared_ptr<RecvContext> &recv ) { _rbuffer.push_back(recv); }
+            inline void push_back(const std::shared_ptr<RecvContext> &recv ) { _rbuffer.push_back(recv); }
 
             /**
              * 在队列上等待
@@ -309,7 +309,7 @@ public:
              * @param data
              * @return
              */
-            inline bool pop_front(shared_ptr<RecvContext> &data) { return _rbuffer.pop_front(data, 0, false); }
+            inline bool pop_front(std::shared_ptr<RecvContext> &data) { return _rbuffer.pop_front(data, 0, false); }
 
         protected:
             /**
@@ -334,7 +334,7 @@ public:
          * 插入队列
          * @param recv
          */
-        void insertRecvQueue(const shared_ptr<RecvContext> &recv);
+        void insertRecvQueue(const std::shared_ptr<RecvContext> &recv);
 
         /**
          * 等待在队列上
@@ -349,7 +349,7 @@ public:
          * @param data
          * @return
          */
-        bool pop(uint32_t handleIndex, shared_ptr<RecvContext> &data);
+        bool pop(uint32_t handleIndex, std::shared_ptr<RecvContext> &data);
 
         /**
          * 是否开启队列模式
@@ -373,7 +373,7 @@ public:
          * @param handleIndex
          * @param scheduler
          */
-        void registerScheduler(uint32_t handleIndex, const shared_ptr<TC_CoroutineScheduler> & scheduler);
+        void registerScheduler(uint32_t handleIndex, const std::shared_ptr<TC_CoroutineScheduler> & scheduler);
 
         /**
          * 协程反注册
@@ -386,7 +386,7 @@ public:
          * @param handleIndex
          * @return
          */
-		const shared_ptr<TC_CoroutineScheduler> &getScheduler(uint32_t handleIndex);
+		const std::shared_ptr<TC_CoroutineScheduler> &getScheduler(uint32_t handleIndex);
 
         /**
          * 设置等待时间
@@ -398,14 +398,14 @@ public:
 
         inline int index(uint32_t handleIndex) { return handleIndex % _threadDataQueue.size(); }
 
-        const shared_ptr<DataQueue> &getDataQueue(uint32_t handleIndex);
+        const std::shared_ptr<DataQueue> &getDataQueue(uint32_t handleIndex);
 
     protected:
 
         /**
          * 接收队列数据总个数
          */
-        atomic<size_t>                  _iRecvBufferSize {0};
+        std::atomic<size_t>                  _iRecvBufferSize {0};
 
         /**
          * 是否启用队列模式, 相同连接固定
@@ -417,12 +417,12 @@ public:
          * 0: 给共享队列模式时使用
          * 1~handle个数: 队列模式时使用
          */
-        vector<shared_ptr<DataQueue>>   _threadDataQueue;
+        std::vector<std::shared_ptr<DataQueue>>   _threadDataQueue;
 
         /**
          * NET_THREAD_AND_HANDLES_CO 模式下有效
          */
-        vector<shared_ptr<TC_CoroutineScheduler>>  _schedulers;
+        std::vector<std::shared_ptr<TC_CoroutineScheduler>>  _schedulers;
 
         /**
          * wait time for queue
@@ -437,7 +437,7 @@ public:
     */
     struct ConnStatus
     {
-        string ip;
+        std::string ip;
         int32_t uid;
         uint16_t port;
         int timeout;
@@ -462,9 +462,9 @@ public:
          * @param ip
          * @param port
          */
-        Connection(const shared_ptr<ConnectionList> &connlist, BindAdapter *pBindAdapter,
+        Connection(const std::shared_ptr<ConnectionList> &connlist, BindAdapter *pBindAdapter,
                    int fd,
-                   const string & ip,
+                   const std::string & ip,
                    uint16_t port,
                    detail::LogInterface *logger);
 
@@ -472,7 +472,7 @@ public:
          * udp连接
          * @param fd
          */
-        Connection(const shared_ptr<ConnectionList> &connlist, BindAdapter *pBindAdapter, int fd, detail::LogInterface *logger);
+        Connection(const std::shared_ptr<ConnectionList> &connlist, BindAdapter *pBindAdapter, int fd, detail::LogInterface *logger);
 
         /**
          * 析构函数
@@ -505,7 +505,7 @@ public:
          * get epoll info
          * @return
          */
-        inline const shared_ptr<TC_Epoller::EpollInfo> &getEpollInfo() { return _trans->getEpollInfo(); }
+        inline const std::shared_ptr<TC_Epoller::EpollInfo> &getEpollInfo() { return _trans->getEpollInfo(); }
 
         /**
          * 获取连接超时时间
@@ -538,9 +538,9 @@ public:
         /**
          * 远程IP
          *
-         * @return string
+         * @return std::string
          */
-        inline const string &getIp() const { return _ip; }
+        inline const std::string &getIp() const { return _ip; }
 
         /**
          * 远程端口
@@ -613,20 +613,20 @@ public:
          * @return int, -1: sending error, 0: no data, 1: send completely, 2: data retains
          * @return
          */
-        int sendBufferDirect(const shared_ptr<TC_NetWorkBuffer::Buffer>& buff);
+        int sendBufferDirect(const std::shared_ptr<TC_NetWorkBuffer::Buffer>& buff);
 
         /**
          * 添加发送buffer
          * @param buffer
          * @return int, -1:发送出错, 0:无数据, 1:发送完毕, 2:还有数据
          */
-        int send(const shared_ptr<SendContext> & data);
+        int send(const std::shared_ptr<SendContext> & data);
 
         /**
          * 增加数据到队列中
          * @param vtRecvData
          */
-        inline void insertRecvQueue(const shared_ptr<RecvContext> & recv) { _pBindAdapter->insertRecvQueue(recv); }
+        inline void insertRecvQueue(const std::shared_ptr<RecvContext> & recv) { _pBindAdapter->insertRecvQueue(recv); }
 
         /**
          * 对于udp方式的连接，分配指定大小的接收缓冲区
@@ -656,7 +656,7 @@ public:
          * 关闭连接
          * @param fd
          */
-        void onCloseCallback(TC_Transceiver *trans, TC_Transceiver::CloseReason reason, const string &err);
+        void onCloseCallback(TC_Transceiver *trans, TC_Transceiver::CloseReason reason, const std::string &err);
 
         void onRequestCallback(TC_Transceiver *trans);
 
@@ -664,9 +664,9 @@ public:
 
         std::shared_ptr<TC_OpenSSL> onOpensslCallback(TC_Transceiver* trans);
 
-        bool handleOutputImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
-        bool handleInputImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
-        bool handleCloseImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
+        bool handleOutputImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
+        bool handleInputImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
+        bool handleCloseImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
 
         /**
          * 检查发送流量(避免发送数据量特别大, 而网络很慢, 导致内存不断在扩大, 相当于内存泄露了!)
@@ -716,7 +716,7 @@ public:
         /**
          * ip
          */
-        string _ip;
+        std::string _ip;
 
         /**
          * 端口
@@ -726,7 +726,7 @@ public:
         /**
          * 还未发送的数据队列
          */ 
-        list<shared_ptr<SendContext>> _messages;
+        std::list<std::shared_ptr<SendContext>> _messages;
 
         /**
          * message队列中消息内存大小
@@ -746,7 +746,7 @@ public:
         /**
          * 发送的检查<已经发送数据, 剩余buffer大小>
          */
-        vector<pair<size_t, size_t>> _checkSend;
+        std::vector<std::pair<size_t, size_t>> _checkSend;
 
         /**
          * 需要过滤的头部字节数
@@ -855,9 +855,9 @@ public:
         /**
          * 获取某个监听端口的连接
          * @param lfd
-         * @return vector<TC_EpollServer::ConnStatus>
+         * @return std::vector<TC_EpollServer::ConnStatus>
          */
-        vector<ConnStatus> getConnStatus(int lfd);
+        std::vector<ConnStatus> getConnStatus(int lfd);
 
         /**
          * 获取某一个连接
@@ -879,7 +879,7 @@ public:
         inline size_t size() { return _total - _free_size; }
 
     protected:
-        typedef pair<Connection *, multimap<time_t, uint32_t>::iterator> list_data;
+        typedef std::pair<Connection *, std::multimap<time_t, uint32_t>::iterator> list_data;
 
         /**
          * 内部删除, 不加锁
@@ -912,7 +912,7 @@ public:
         /**
          * 空闲链表
          */
-        list<uint32_t> _free;
+        std::list<uint32_t> _free;
 
         /**
          * 空闲链元素个数
@@ -927,7 +927,7 @@ public:
         /**
          * 超时链表
          */
-        multimap<time_t, uint32_t> _tl;
+        std::multimap<time_t, uint32_t> _tl;
 
         /**
          * 上次检查超时时间
@@ -995,24 +995,24 @@ public:
          *
          * @param info
          */
-        inline void setEpollInfo(const shared_ptr<TC_Epoller::EpollInfo> &info) { _info = info; }
+        inline void setEpollInfo(const std::shared_ptr<TC_Epoller::EpollInfo> &info) { _info = info; }
 
         /**
          * get epoll info
          * @return
          */
-        inline shared_ptr<TC_Epoller::EpollInfo> getEpollInfo() { return _info; }
+        inline std::shared_ptr<TC_Epoller::EpollInfo> getEpollInfo() { return _info; }
 
         /**
          * 获取adapter name
-         * @return string
+         * @return std::string
          */
-        const string &getName() const { return _name; }
+        const std::string &getName() const { return _name; }
 
         /**
          * set index
          */ 
-        void setNetThreads(const vector<NetThread*> &netThreads);
+        void setNetThreads(const std::vector<NetThread*> &netThreads);
 
         /**
          * init udp
@@ -1022,7 +1022,7 @@ public:
         /**
          * get index
          */ 
-        inline const vector<NetThread*> & getNetThreads() const { return _netThreads;}
+        inline const std::vector<NetThread*> & getNetThreads() const { return _netThreads;}
 
         /**
          * 获取queue capacity
@@ -1040,13 +1040,13 @@ public:
          * 设置协议名称
          * @param name
          */
-        void setProtocolName(const string & name);
+        void setProtocolName(const std::string & name);
 
         /**
          * 获取协议名称
-         * @return const string&
+         * @return const std::string&
          */
-        const string & getProtocolName();
+        const std::string & getProtocolName();
 
         /**
          * 是否tars协议
@@ -1075,7 +1075,7 @@ public:
 
         /**
          * 获取ip
-         * @return const string&
+         * @return const std::string&
          */
         inline const TC_Endpoint & getEndpoint() const { return _ep; }
 
@@ -1119,25 +1119,25 @@ public:
          * 设置允许ip
          * @param vtAllow
          */
-        inline void setAllow(const vector<string> & vtAllow) { _vtAllow = vtAllow; }
+        inline void setAllow(const std::vector<string> & vtAllow) { _vtAllow = vtAllow; }
 
         /**
          * 设置禁止ip
          * @param vtDeny
          */
-        inline void setDeny(const vector<string> & vtDeny) { _vtDeny = vtDeny; }
+        inline void setDeny(const std::vector<string> & vtDeny) { _vtDeny = vtDeny; }
 
         /**
          * 获取允许ip
-         * @return vector<string>: ip列表
+         * @return std::vector<string>: ip列表
          */
-        inline const vector<string> & getAllow() const { return _vtAllow; }
+        inline const std::vector<string> & getAllow() const { return _vtAllow; }
 
         /**
         * 获取禁止ip
-        * @return vector<string>: ip列表
+        * @return std::vector<string>: ip列表
         */
-        inline const vector<string> & getDeny() const { return _vtDeny; }
+        inline const std::vector<string> & getDeny() const { return _vtDeny; }
 
         /**
         * 获取allow deny次序
@@ -1150,7 +1150,7 @@ public:
          * @param ip
          * @return bool
          */
-        bool isIpAllow(const string & ip) const;
+        bool isIpAllow(const std::string & ip) const;
 
         /**
          * 是否超过了最大连接数
@@ -1172,7 +1172,7 @@ public:
          * 获取所有链接状态
          * @return ConnStatus
          */
-        inline vector<ConnStatus> getConnStatus() { return _epollServer->getConnStatus(_s.getfd()); }
+        inline std::vector<ConnStatus> getConnStatus() { return _epollServer->getConnStatus(_s.getfd()); }
 
         /**
          * 获取当前连接数
@@ -1215,14 +1215,14 @@ public:
          * 获取数据buffer
          * @return
          */
-        inline const shared_ptr<DataBuffer> &getDataBuffer() const { return _dataBuffer; }
+        inline const std::shared_ptr<DataBuffer> &getDataBuffer() const { return _dataBuffer; }
 
         /**
          * 增加数据到队列中
          * @param recv
          * @param force 强制必须插入(无论是否过载, 比如close事件)
          */
-        void insertRecvQueue(const shared_ptr<RecvContext> & recv, bool force = false);
+        void insertRecvQueue(const std::shared_ptr<RecvContext> & recv, bool force = false);
 
         /**
          * 接收队列的大小
@@ -1252,7 +1252,7 @@ public:
          * @param o
          * @return int
          */
-        static TC_NetWorkBuffer::PACKET_TYPE echo_protocol(TC_NetWorkBuffer & r, vector<char> & o);
+        static TC_NetWorkBuffer::PACKET_TYPE echo_protocol(TC_NetWorkBuffer & r, std::vector<char> & o);
 
         /**
          * 默认的包头处理
@@ -1260,7 +1260,7 @@ public:
          * @param o
          * @return int
          */
-        static TC_NetWorkBuffer::PACKET_TYPE echo_header_filter(TC_NetWorkBuffer::PACKET_TYPE i, vector<char> & o);
+        static TC_NetWorkBuffer::PACKET_TYPE echo_header_filter(TC_NetWorkBuffer::PACKET_TYPE i, std::vector<char> & o);
 
         /**
          * 获取需要过滤的包头长度
@@ -1308,7 +1308,7 @@ public:
         /**
          * 获取handles
          */
-        inline vector<HandlePtr> & getHandles() { return _handles; }
+        inline std::vector<HandlePtr> & getHandles() { return _handles; }
 
         /**
          * 是否是队列模式(默认是False的)
@@ -1362,13 +1362,13 @@ public:
          * set openssl ctx
          * @param ctx
          */
-        inline void setSSLCtx(const shared_ptr<TC_OpenSSL::CTX> &ctx) { _ctx = ctx; }
+        inline void setSSLCtx(const std::shared_ptr<TC_OpenSSL::CTX> &ctx) { _ctx = ctx; }
 
         /**
          * get ssl ctx
          * @return
          */
-	    shared_ptr<TC_OpenSSL::CTX> getSSLCtx() { return _ctx; };
+	    std::shared_ptr<TC_OpenSSL::CTX> getSSLCtx() { return _ctx; };
 
         /**
          * 构造函数
@@ -1379,13 +1379,13 @@ public:
          * 设置adapter name
          * @param name
          */
-        void setName(const string & name) { _name = name; }
+        void setName(const std::string & name) { _name = name; }
 
         /**
          * 设置endpoint
          * @param str
          */
-        inline void setEndpoint(const string & str) { _ep.parse(str); }
+        inline void setEndpoint(const std::string & str) { _ep.parse(str); }
 
         /**
          * 是否是UDP端口
@@ -1449,7 +1449,7 @@ public:
         /**
          * Adapter所用的HandleGroup
          */
-        vector<HandlePtr>       _handles;
+        std::vector<HandlePtr>       _handles;
 
         /**
          * 协议解析
@@ -1464,12 +1464,12 @@ public:
         /**
          * adapter的名字
          */
-        string                  _name;
+        std::string                  _name;
 
         /**
          * net threads
          */ 
-        vector<NetThread*>      _netThreads;
+        std::vector<NetThread*>      _netThreads;
 
         /**
          * 监听fd
@@ -1484,7 +1484,7 @@ public:
         /**
          * epoll info
          */
-        shared_ptr<TC_Epoller::EpollInfo>  _info;
+        std::shared_ptr<TC_Epoller::EpollInfo>  _info;
 
         /**
          * 最大连接数
@@ -1509,22 +1509,22 @@ public:
         /**
          * 允许的ip
          */
-        vector<string>          _vtAllow;
+        std::vector<string>          _vtAllow;
 
         /**
          * 禁止的ip
          */
-        vector<string>          _vtDeny;
+        std::vector<string>          _vtDeny;
 
         /**
          * 发送队列数据总个数
          */
-        atomic<size_t>          _iSendBufferSize {0};
+        std::atomic<size_t>          _iSendBufferSize {0};
 
         /**
          * 数据buffer
          */
-        shared_ptr<DataBuffer>  _dataBuffer;
+        std::shared_ptr<DataBuffer>  _dataBuffer;
 
         /**
          * 队列最大容量
@@ -1549,7 +1549,7 @@ public:
         /**
          * 协议名称,缺省为"tars"
          */
-        string                  _protocolName;
+        std::string                  _protocolName;
 
         /**
          * 回包缓存限制大小
@@ -1592,7 +1592,7 @@ public:
         /**
         * ssl ctx
         */
-        shared_ptr<TC_OpenSSL::CTX> _ctx;
+        std::shared_ptr<TC_OpenSSL::CTX> _ctx;
     };
 
     ////////////////////////////////////////////////////////////////////////////
@@ -1619,7 +1619,7 @@ public:
          * connection list
          * @return
          */
-        inline const shared_ptr<ConnectionList> &getConnectionList() const { return _list; }
+        inline const std::shared_ptr<ConnectionList> &getConnectionList() const { return _list; }
 
         /**
          * 网络线程执行函数
@@ -1664,22 +1664,22 @@ public:
          * 关闭连接
          * @param uid
          */
-        void close(const shared_ptr<RecvContext> & data);
+        void close(const std::shared_ptr<RecvContext> & data);
 
         /**
         * 发送数据
         * @param uid
         * @param s
         */
-        void send(const shared_ptr<SendContext> & data);
+        void send(const std::shared_ptr<SendContext> & data);
 
         /**
          * 获取某一监听端口的连接数
          * @param lfd
          *
-         * @return vector<ConnStatus>
+         * @return std::vector<ConnStatus>
          */
-        inline vector<ConnStatus> getConnStatus(int lfd) { return _list->getConnStatus(lfd); }
+        inline std::vector<ConnStatus> getConnStatus(int lfd) { return _list->getConnStatus(lfd); }
 
         /**
          * 获取连接数
@@ -1761,7 +1761,7 @@ public:
          * 通知关闭连接
          * @param fd
          */
-		void notifyCloseConnectionList(const shared_ptr<BindAdapter> &adapter);
+		void notifyCloseConnectionList(const std::shared_ptr<BindAdapter> &adapter);
 
         friend class BindAdapter;
         friend class TC_EpollServer;
@@ -1772,7 +1772,7 @@ public:
         /**
          * scheduler
          */
-		shared_ptr<TC_CoroutineScheduler> _scheduler;
+		std::shared_ptr<TC_CoroutineScheduler> _scheduler;
 
         /**
          * epoller
@@ -1797,12 +1797,12 @@ public:
 		/**
          * 关联的adapters
          */
-        vector<BindAdapter*>    _adapters;
+        std::vector<BindAdapter*>    _adapters;
 
         /**
          * 管理的连接链表
          */
-        shared_ptr<ConnectionList> _list;
+        std::shared_ptr<ConnectionList> _list;
 
         /**
          * 发送队列
@@ -1885,7 +1885,7 @@ public:
          * 设置数据队列
          * @param data
          */
-        inline void setDataBuffer(const shared_ptr<DataBuffer> &data) { _dataBuffer =  data; }
+        inline void setDataBuffer(const std::shared_ptr<DataBuffer> &data) { _dataBuffer =  data; }
 
         /**
          * 协程处理一次
@@ -1918,13 +1918,13 @@ public:
          * @param stRecvData
          * @param sSendBuffer
          */
-        inline void sendResponse(const shared_ptr<SendContext> & data) { _epollServer->send(data); }
+        inline void sendResponse(const std::shared_ptr<SendContext> & data) { _epollServer->send(data); }
 
         /**
          * 关闭链接(tcp连接才有效)
          * @param stRecvData
          */
-        inline void close(const shared_ptr<RecvContext> & data) { _epollServer->close(data);}
+        inline void close(const std::shared_ptr<RecvContext> & data) { _epollServer->close(data);}
 
         /**
          * 对象初始化
@@ -1956,14 +1956,14 @@ public:
          * 处理函数
          * @param stRecvData: 接收到的数据
          */
-        virtual void handle(const shared_ptr<RecvContext> & data) = 0;
+        virtual void handle(const std::shared_ptr<RecvContext> & data) = 0;
 
         /**
          * 处理超时数据, 即数据在队列中的时间已经超过
          * 默认直接关闭连接
          * @param stRecvData: 接收到的数据
          */
-        virtual void handleTimeout(const shared_ptr<RecvContext> & data);
+        virtual void handleTimeout(const std::shared_ptr<RecvContext> & data);
 
         /**
          * 处理连接关闭通知，包括
@@ -1972,14 +1972,14 @@ public:
          * 3.close by timeout or overload
          * @param stRecvData:
          */
-        virtual void handleClose(const shared_ptr<RecvContext> & data);
+        virtual void handleClose(const std::shared_ptr<RecvContext> & data);
 
         /**
          * 处理overload数据 即数据队列中长度已经超过允许值
          * 默认直接关闭连接
          * @param stRecvData: 接收到的数据
          */
-        virtual void handleOverload(const shared_ptr<RecvContext> & data);
+        virtual void handleOverload(const std::shared_ptr<RecvContext> & data);
 
         /**
          * 处理异步回调队列
@@ -2046,7 +2046,7 @@ public:
         /**
          * 数据队列
          */
-        shared_ptr<DataBuffer>  _dataBuffer;
+        std::shared_ptr<DataBuffer>  _dataBuffer;
 
         /**
          * Handle的索引
@@ -2061,7 +2061,7 @@ public:
         /**
          * 协程模式下有效
          */
-		shared_ptr<TC_CoroutineScheduler> _scheduler;
+		std::shared_ptr<TC_CoroutineScheduler> _scheduler;
     };
 
     /**
@@ -2151,7 +2151,7 @@ public:
      * @param args: Handle构造函数需要的参数
      */
     template<typename T, typename ...Args>
-    BindAdapterPtr createBindAdapter(const string &name, const string &ep, size_t handleNum, Args&&... args)
+    BindAdapterPtr createBindAdapter(const std::string &name, const std::string &ep, size_t handleNum, Args&&... args)
     {
         TC_EpollServer::BindAdapterPtr adapter = getBindAdapter(name);
         if(adapter)
@@ -2222,41 +2222,41 @@ public:
      * @param sName
      * @return BindAdapterPtr
      */
-    BindAdapterPtr getBindAdapter(const string &sName);
+    BindAdapterPtr getBindAdapter(const std::string &sName);
 
     /**
      * 获取所有adatapters
      * @return
      */
-    vector<BindAdapterPtr> getBindAdapters();
+    std::vector<BindAdapterPtr> getBindAdapters();
 
     /**
      * 关闭连接
      * @param uid
      */
-    void close(const shared_ptr<RecvContext> &data);
+    void close(const std::shared_ptr<RecvContext> &data);
 
     /**
      * 发送数据
      * @param uid
      * @param s
      */
-    void send(const shared_ptr<SendContext> &data);
+    void send(const std::shared_ptr<SendContext> &data);
 
     /**
      * 获取某一监听端口的连接数
      * @param lfd
      *
-     * @return vector<ConnStatus>
+     * @return std::vector<ConnStatus>
      */
-    vector<ConnStatus> getConnStatus(int lfd);
+    std::vector<ConnStatus> getConnStatus(int lfd);
 
     /**
      * 获取监听socket信息
      *
      * @return map<int,ListenSocket>
      */
-    unordered_map<int, BindAdapterPtr> getListenSocketInfo();
+    std::unordered_map<int, BindAdapterPtr> getListenSocketInfo();
 
     /**
      * 获取所有连接的数目
@@ -2269,26 +2269,26 @@ public:
      * 记录日志
      * @param s
      */
-    virtual void debug(const string &s) const;
+    virtual void debug(const std::string &s) const;
 
     /**
      * INFO日志
      * INFO LOG
      * @param s
      */
-    virtual void info(const string &s) const;
+    virtual void info(const std::string &s) const;
 
     /**
      * tars日志
      * @param s
      */
-    virtual void tars(const string &s) const;
+    virtual void tars(const std::string &s) const;
 
     /**
     * 记录错误日志
     * @param s
     */
-    virtual void error(const string &s) const;
+    virtual void error(const std::string &s) const;
 
     /**
      * 获取网络线程的数目
@@ -2298,7 +2298,7 @@ public:
     /**
      * 获取网络线程的指针集合
      */
-    inline const vector<NetThread *> &getNetThread() const { return _netThreads; }
+    inline const std::vector<NetThread *> &getNetThread() const { return _netThreads; }
 
     /**
      * 停止线程
@@ -2315,7 +2315,7 @@ public:
 
     //网络线程发送心跳的函数
     //Function for network threads to send heartbeats
-    typedef std::function<void(const string &)> heartbeat_callback_functor;
+    typedef std::function<void(const std::string &)> heartbeat_callback_functor;
 
     /**
      * 设置waitForShutdown线程回调的心跳
@@ -2358,7 +2358,7 @@ protected:
      * accept callback
      * @param data
      */
-    bool acceptCallback(const shared_ptr<TC_Epoller::EpollInfo> &info, weak_ptr<BindAdapter> adapter);
+    bool acceptCallback(const std::shared_ptr<TC_Epoller::EpollInfo> &info, weak_ptr<BindAdapter> adapter);
 
     /**
      * listen callback
@@ -2434,12 +2434,12 @@ private:
     /**
      *
      */
-    vector<BindAdapterPtr> _bindAdapters;
+    std::vector<BindAdapterPtr> _bindAdapters;
 
     /**
      * 监听socket
      */
-    unordered_map<int, BindAdapterPtr> _listeners;
+    std::unordered_map<int, BindAdapterPtr> _listeners;
 
     /**
      * 协程池大小

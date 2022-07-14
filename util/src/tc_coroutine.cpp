@@ -36,6 +36,8 @@
 #include <assert.h>
 #include "util/tc_timeprovider.h"
 
+using namespace std;
+
 namespace tars
 {
 

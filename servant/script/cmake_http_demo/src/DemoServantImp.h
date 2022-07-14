@@ -7,31 +7,30 @@
  *
  *
  */
-class DemoServantImp : public Servant
-{
+class DemoServantImp : public Servant {
 public:
-    /**
-     *
-     */
-    virtual ~DemoServantImp() {}
+  /**
+   *
+   */
+  virtual ~DemoServantImp() {}
 
-    /**
-     *
-     */
-    virtual void initialize();
+  /**
+   *
+   */
+  virtual void initialize();
 
-    /**
-     *
-     */
-    virtual void destroy();
+  /**
+   *
+   */
+  virtual void destroy();
 
-    /**
-     *
-     */
-	int doRequest(TarsCurrentPtr current, vector<char> &buffer);
+  /**
+   *
+   */
+  int doRequest(TarsCurrentPtr current, std::vector<char> &buffer);
 
 private:
-	int doRequest(const TC_HttpRequest &req, TC_HttpResponse &rsp);
+  int doRequest(const TC_HttpRequest &req, TC_HttpResponse &rsp);
 };
 /////////////////////////////////////////////////////
 #endif

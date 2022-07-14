@@ -25,8 +25,6 @@
 #include <cassert>
 #include <memory>
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -80,7 +78,7 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */
-    static bool compress(const char *src, size_t length, vector<char>& buffer);
+    static bool compress(const char *src, size_t length, std::vector<char>& buffer);
 
     /**
     * @brief  对数据进行压缩
@@ -95,7 +93,7 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */    
-    static bool compress(const char *src, size_t length, string& buffer);
+    static bool compress(const char *src, size_t length, std::string& buffer);
     
     /**
     * @brief  对数据进行解压
@@ -110,9 +108,9 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */
-    static bool uncompress(const char *src, size_t length, vector<char>& buffer)
+    static bool uncompress(const char *src, size_t length, std::vector<char>& buffer)
     {
-        std::unique_ptr<Output> output(new OutputImp<vector<char>>(buffer));
+        std::unique_ptr<Output> output(new OutputImp<std::vector<char>>(buffer));
 
         return uncompress(src, length, output.get());
     }
@@ -130,9 +128,9 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */
-    static bool uncompress(const char *src, size_t length, string& buffer)
+    static bool uncompress(const char *src, size_t length, std::string& buffer)
     {
-	    std::unique_ptr<Output> output(new OutputImp<string>(buffer));
+	    std::unique_ptr<Output> output(new OutputImp<std::string>(buffer));
 
         return uncompress(src, length, output.get());
     }

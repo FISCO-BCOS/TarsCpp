@@ -33,6 +33,8 @@
 #include <string.h>
 #include <cmath>
 
+using namespace std;
+
 namespace tars
 {
 

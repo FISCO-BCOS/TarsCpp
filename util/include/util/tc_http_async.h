@@ -58,7 +58,7 @@ namespace tars
 */
 struct TC_HttpAsync_Exception : public TC_Exception
 {
-    TC_HttpAsync_Exception(const string &buffer) : TC_Exception(buffer) {};
+    TC_HttpAsync_Exception(const std::string &buffer) : TC_Exception(buffer) {};
     ~TC_HttpAsync_Exception() throw() {};
 };
 
@@ -135,7 +135,7 @@ public:
          * @param info 异常原因
          * @param info Exception Reason
          */
-        virtual void onFailed(FAILED_CODE ret, const string &info) = 0;
+        virtual void onFailed(FAILED_CODE ret, const std::string &info) = 0;
 
         /**
          * @brief 连接被关闭
@@ -186,13 +186,13 @@ protected:
          * @brief Get System Error Tips
          * @return
          */
-        string getError(const string &sDefault) const;
+        std::string getError(const std::string &sDefault) const;
 
         /**
         * @brief 发生异常
         * @brief exception occurred
         */
-        void doException(RequestCallback::FAILED_CODE ret, const string &e);
+        void doException(RequestCallback::FAILED_CODE ret, const std::string &e);
 
         /**
          * @brief 发送请求
@@ -271,7 +271,7 @@ protected:
         TC_Transceiver *trans() { return _trans.get(); }
 
     protected:
-        shared_ptr<TC_ProxyInfo> onCreateCallback(TC_Transceiver* trans);
+        std::shared_ptr<TC_ProxyInfo> onCreateCallback(TC_Transceiver* trans);
         std::shared_ptr<TC_OpenSSL> onOpensslCallback(TC_Transceiver* trans);
         void onCloseCallback(TC_Transceiver* trans);
         void onConnectCallback(TC_Transceiver* trans);
@@ -285,9 +285,9 @@ protected:
         TC_HttpResponse             _stHttpResp;
         uint32_t                    _iUniqId;
         RequestCallbackPtr          _callbackPtr;
-        unique_ptr<TC_Transceiver>  _trans;
+        std::unique_ptr<TC_Transceiver>  _trans;
         std::shared_ptr<TC_NetWorkBuffer::Buffer> _buff;
-	    shared_ptr<TC_OpenSSL::CTX> _ctx;
+	    std::shared_ptr<TC_OpenSSL::CTX> _ctx;
     };
 
     typedef TC_AutoPtr<AsyncRequest> AsyncRequestPtr;
@@ -336,19 +336,19 @@ public:
      * @param addr, 请求地址, ip:port
      * @param addr  Request Address, ip；port
      */
-    void doAsyncRequest(TC_HttpRequest &stHttpRequest, RequestCallbackPtr &callbackPtr, const string &addr);
+    void doAsyncRequest(TC_HttpRequest &stHttpRequest, RequestCallbackPtr &callbackPtr, const std::string &addr);
 
 	/**
 	 * 设置ctx
 	 * @param ctx
 	 */
-	void setCtx(const shared_ptr<TC_OpenSSL::CTX> &ctx) { _ctx = ctx; }
+	void setCtx(const std::shared_ptr<TC_OpenSSL::CTX> &ctx) { _ctx = ctx; }
 
 	/**
 	 * get ctx
 	 * @return
 	 */
-	shared_ptr<TC_OpenSSL::CTX> getCtx() { return _ctx; }
+	std::shared_ptr<TC_OpenSSL::CTX> getCtx() { return _ctx; }
 
     /**
      * set proxy addr
@@ -438,11 +438,11 @@ protected:
 
     void addFd(AsyncRequest* asyncRequest);
 
-    bool handleCloseImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
+    bool handleCloseImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
 
-    bool handleInputImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
+    bool handleInputImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
 
-    bool handleOutputImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
+    bool handleOutputImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
 
         /**
      * @brief 超时处理.
@@ -484,15 +484,15 @@ protected:
 
 	std::mutex                  _mutex;
 
-	deque<uint64_t>             _events;
+	std::deque<uint64_t>             _events;
 
-    deque<uint64_t>             _erases;
+    std::deque<uint64_t>             _erases;
 
-    unique_ptr<TC_Endpoint>     _proxyEp;
+    std::unique_ptr<TC_Endpoint>     _proxyEp;
 
     TC_Socket::addr_type        _bindAddr;
 
-	shared_ptr<TC_OpenSSL::CTX> _ctx;
+	std::shared_ptr<TC_OpenSSL::CTX> _ctx;
 
 };
 

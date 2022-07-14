@@ -2,8 +2,13 @@
 #include "util/tc_common.h"
 #include "util/tc_timeprovider.h"
 
+#include <memory>
+#include <string>
+
 namespace tars
 {
+
+using namespace std;
 
 TC_HttpAsync::AsyncRequest::~AsyncRequest()
 {

@@ -28,7 +28,7 @@ public:
         init("");
     }
 
-    void init(const string& sIP = "")
+    void init(const std::string& sIP = "")
     {
         if (isIPV4(sIP))
         {
@@ -52,7 +52,7 @@ public:
         initOK = true;
     }
 
-    string genID()
+    std::string genID()
     {
         if (!initOK)
         {
@@ -60,13 +60,13 @@ public:
         }
         char buff[33] = {0};
         sprintf(buff, "%08x%08x%08x%08x", ip, pid, (unsigned int)(TNOW), seq++);
-        return string(buff);
+        return std::string(buff);
     }
 
 protected:
-    bool isIPV4(const string& ip)
+    bool isIPV4(const std::string& ip)
     {
-        vector<int> vs = TC_Common::sepstr<int>(ip, ".");
+        std::vector<int> vs = TC_Common::sepstr<int>(ip, ".");
         if (vs.size() != 4)
         {
             return false;
@@ -83,9 +83,9 @@ protected:
         return true;
     }
 
-    uint32_t ipv4Toint(const string& ip)
+    uint32_t ipv4Toint(const std::string& ip)
     {
-        vector<int> vs = TC_Common::sepstr<int>(ip, ".");
+        std::vector<int> vs = TC_Common::sepstr<int>(ip, ".");
         if (vs.size() != 4)
         {
             return 0;
@@ -107,9 +107,9 @@ protected:
         return ipInt;
     }
 
-    string getLocalIP()
+    std::string getLocalIP()
     {
-        vector<string> vs = TC_Socket::getLocalHosts();
+        std::vector<std::string> vs = TC_Socket::getLocalHosts();
 
         for (size_t i = 0; i < vs.size(); i++)
         {

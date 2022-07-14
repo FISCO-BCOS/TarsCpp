@@ -21,8 +21,6 @@
 #include <cassert>
 #include "util/tc_timeprovider.h"
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////

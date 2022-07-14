@@ -25,6 +25,8 @@
 namespace tars
 {
 
+using namespace std;
+
 #if TARGET_PLATFORM_WINDOWS
 #include <windows.h>
 

@@ -42,7 +42,7 @@ namespace tars
 */
 struct TC_RBTree_Exception : public TC_Exception
 {
-    TC_RBTree_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_RBTree_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_RBTree_Exception() throw(){};
 };
  /**
@@ -78,8 +78,8 @@ public:
 	*/
     struct BlockData
     {
-        string  _key;       /**数据Key*/
-        string  _value;     /**数据value*/
+        std::string  _key;       /**数据Key*/
+        std::string  _value;     /**数据value*/
         bool    _dirty;     /**是否是脏数据*/
         time_t  _synct;     /**sync time, 不一定是真正的回写时间*/
         BlockData()
@@ -278,7 +278,7 @@ public:
          * @param iDatalen
          * @param vtData, 淘汰的数据
          */
-        int set(const string& k, const string& v, bool bNewBlock, bool bOnlyKey, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, bool bNewBlock, bool bOnlyKey, vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 是否是脏数据
@@ -318,7 +318,7 @@ public:
          * @param i 
          * @param k 
          */
-        void insertRBTree(tagBlockHead *i, const string &k);
+        void insertRBTree(tagBlockHead *i, const std::string &k);
 
         /**
          * 从Block链表中删除当前Block
@@ -690,7 +690,7 @@ public:
          *          其他值, 异常
          *
          */
-        int get(string& k, string& v);
+        int get(string& k, std::string& v);
 
         /**
          * 获取值
@@ -716,7 +716,7 @@ public:
          * @param vtData, 淘汰的数据
          * @return int
          */
-        int set(const string& k, const string& v, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 设置Key, 无数据
@@ -725,7 +725,7 @@ public:
          *
          * @return int
          */
-        int set(const string& k, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
 
         /**
          *
@@ -734,7 +734,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &k, string &k1, string &v, int &ret);
+        bool equal(const std::string &k, std::string &k1, std::string &v, int &ret);
 
         /**
          *
@@ -743,7 +743,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string& k, string &k1, int &ret);
+        bool equal(const std::string& k, std::string &k1, int &ret);
 
         /**
          * 下一个item
@@ -903,7 +903,7 @@ public:
          * @param pMap
          * @param key
          */
-        RBTreeItem(TC_RBTree *pMap, const string &key, bool bEnd);
+        RBTreeItem(TC_RBTree *pMap, const std::string &key, bool bEnd);
 
         /**
          *
@@ -957,9 +957,9 @@ public:
         /**
          * 获取key
          * 
-         * @return string
+         * @return std::string
          */
-        string getKey() const { return _key; }
+        std::string getKey() const { return _key; }
 
         /**
          * 空数据
@@ -992,7 +992,7 @@ public:
         /**
          * block的地址
          */
-        string    _key;
+        std::string    _key;
 
         /**
          * 是否是结尾
@@ -1023,7 +1023,7 @@ public:
          * @param iAddr, 地址
          * @param type
          */
-        RBTreeIterator(TC_RBTree *pMap, const string &key, bool bEnd, int iOrder);
+        RBTreeIterator(TC_RBTree *pMap, const std::string &key, bool bEnd, int iOrder);
 
         /**
          * copy
@@ -1221,14 +1221,14 @@ public:
     typedef RBTreeIterator nolock_iterator;
 
     //定义key比较处理器
-    using less_functor = std::function<bool (const string& , const string& )>;
+    using less_functor = std::function<bool (const std::string& , const std::string& )>;
 
     /**
      * 缺省的小写比较符号
      */
     struct default_less
     {
-        bool operator()(const string &k1, const string &k2)
+        bool operator()(const std::string &k1, const std::string &k2)
         {
             return k1 < k2;
         }
@@ -1410,7 +1410,7 @@ public:
      *          RT_DUMP_FILE_ERR: dump到文件出错
      *          RT_OK: dump到文件成功
      */
-    int dump2file(const string &sFile);
+    int dump2file(const std::string &sFile);
 
     /**
      * 从文件load
@@ -1421,7 +1421,7 @@ public:
      *          RT_VERSION_MISMATCH_ERR: 版本不一致
      *          RT_OK: load成功
      */
-    int load5file(const string &sFile);
+    int load5file(const std::string &sFile);
 
     /**
      * 清空hashmap
@@ -1440,7 +1440,7 @@ public:
      *          RT_OK: 是干净数据
      *          其他返回值: 错误
      */
-    int checkDirty(const string &k);
+    int checkDirty(const std::string &k);
 
     /**
      * 设置为脏数据, 修改SET时间链, 会导致数据回写
@@ -1453,7 +1453,7 @@ public:
      *          RT_OK: 设置脏数据成功
      *          其他返回值: 错误
      */
-    int setDirty(const string& k);
+    int setDirty(const std::string& k);
 
     /**
      * 设置为干净数据, 修改SET链, 导致数据不回写
@@ -1466,7 +1466,7 @@ public:
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int setClean(const string& k);
+    int setClean(const std::string& k);
 
     /**
      * 获取数据, 修改GET时间链
@@ -1480,7 +1480,7 @@ public:
      *          RT_OK:获取数据成功
      *          其他返回值: 错误
      */
-    int get(const string& k, string &v, time_t &iSyncTime);
+    int get(const std::string& k, std::string &v, time_t &iSyncTime);
 
     /**
      * 获取数据, 修改GET时间链
@@ -1493,7 +1493,7 @@ public:
      *          RT_OK:获取数据成功
      *          其他返回值: 错误
      */
-    int get(const string& k, string &v);
+    int get(const std::string& k, std::string &v);
 
     /**
      * 设置数据, 修改时间链, 内存不够时会自动淘汰老的数据
@@ -1507,7 +1507,7 @@ public:
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const string& k, const string& v, bool bDirty, vector<BlockData> &vtData);
+    int set(const std::string& k, const std::string& v, bool bDirty, vector<BlockData> &vtData);
 
     /**
      * 设置key, 但无数据
@@ -1520,7 +1520,7 @@ public:
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const string& k, vector<BlockData> &vtData);
+    int set(const std::string& k, vector<BlockData> &vtData);
 
     /**
      * 删除数据
@@ -1533,7 +1533,7 @@ public:
      *          RT_OK: 删除数据成功
      *         其他返回值: 错误
      */
-    int del(const string& k, BlockData &data);
+    int del(const std::string& k, BlockData &data);
 
     /**
      * 淘汰数据, 每次删除一条, 根据Get时间淘汰
@@ -1666,7 +1666,7 @@ public:
      * 
      * @return lock_iterator 
      */
-    lock_iterator find(const string& k);
+    lock_iterator find(const std::string& k);
 
     /**
      * 查找(++表示逆序)
@@ -1675,7 +1675,7 @@ public:
      * 
      * @return lock_iterator 
      */
-    lock_iterator rfind(const string& k);
+    lock_iterator rfind(const std::string& k);
 
     /**
      * 返回查找关键字的下界(返回键值>=给定元素的第一个位置)
@@ -1684,7 +1684,7 @@ public:
      * 
      * @return lock_iterator
      */
-    lock_iterator lower_bound(const string &k);
+    lock_iterator lower_bound(const std::string &k);
 
     /**
      * 返回查找关键字的上界(返回键值>给定元素的第一个位置)
@@ -1693,7 +1693,7 @@ public:
      * 
      * @return lock_iterator
      */
-    lock_iterator upper_bound(const string &k);
+    lock_iterator upper_bound(const std::string &k);
 
     /**
      * 查找
@@ -1702,7 +1702,7 @@ public:
      * 
      * @return pair<lock_iterator,lock_iterator>
      */
-    pair<lock_iterator, lock_iterator> equal_range(const string& k1, const string &k2);
+    std::pair<lock_iterator, lock_iterator> equal_range(const std::string& k1, const std::string &k2);
 
     //////////////////////////////////////////////////////////////////////////////////////
     // 
@@ -1747,9 +1747,9 @@ public:
     /**
      * 描述
      *
-     * @return string
+     * @return std::string
      */
-    string desc();
+    std::string desc();
 
 protected:
 
@@ -1857,7 +1857,7 @@ protected:
      * 
      * @return size_t
      */
-    Block getLastBlock(const string &k);
+    Block getLastBlock(const std::string &k);
 
     /**
      * 从某个地址开始超找
@@ -1868,7 +1868,7 @@ protected:
      * 
      * @return lock_iterator 
      */
-    lock_iterator find(uint32_t iAddr, const string& k, int &ret, bool bOrder = true);
+    lock_iterator find(uint32_t iAddr, const std::string& k, int &ret, bool bOrder = true);
 
     /**
      * 从某个地址开始查找
@@ -1880,7 +1880,7 @@ protected:
      * 
      * @return lock_iterator 
      */
-    lock_iterator find(uint32_t iAddr, const string& k, string &v, int &ret);
+    lock_iterator find(uint32_t iAddr, const std::string& k, std::string &v, int &ret);
 
     /**
      * 修改具体的值

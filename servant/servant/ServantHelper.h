@@ -34,7 +34,7 @@ namespace tars
 class ServantHelperCreation : public TC_HandleBase
 {
 public:
-    virtual ServantPtr create(const string &s) = 0;
+    virtual ServantPtr create(const std::string &s) = 0;
 };
 typedef TC_AutoPtr<ServantHelperCreation> ServantHelperCreationPtr;
 
@@ -46,7 +46,7 @@ template<class T>
 struct ServantCreation : public ServantHelperCreation
 {
     ServantCreation(Application *application) : _application(application){}
-    ServantPtr create(const string &s) { T *p = new T; p->setName(s); p->setApplication(_application); return p; }
+    ServantPtr create(const std::string &s) { T *p = new T; p->setName(s); p->setApplication(_application); return p; }
     Application *_application;
 };
 
@@ -57,7 +57,7 @@ template<class T, class P>
 struct ServantCreationWithParams : public ServantHelperCreation
 {
 	ServantCreationWithParams(Application *application, const P &p) : _application(application), _p(p) {}
-	ServantPtr create(const string &s) { T *p = new T(_p); p->setName(s); p->setApplication(_application); return p; }
+	ServantPtr create(const std::string &s) { T *p = new T(_p); p->setName(s); p->setApplication(_application); return p; }
 	Application *_application;
 	P _p;
 };
@@ -84,7 +84,7 @@ public:
      * @param id
      */
     template<typename T>
-    void addServant(const string &id, Application *application, bool check = false)
+    void addServant(const std::string &id, Application *application, bool check = false)
     {
         if(check && _servant_adapter.end() == _servant_adapter.find(id))
         {
@@ -100,7 +100,7 @@ public:
 	 * @param id
 	 */
 	template<typename T, typename P>
-	void addServant(const string &id, Application *application, const P &p,  bool check = false)
+	void addServant(const std::string &id, Application *application, const P &p,  bool check = false)
 	{
 		if(check && _servant_adapter.end() == _servant_adapter.find(id))
 		{
@@ -116,23 +116,23 @@ public:
      *
      * @return ServantPtr
      */
-    ServantPtr create(const string &sAdapter);
+    ServantPtr create(const std::string &sAdapter);
 
     /**
      * 添加Adapter的Servant
      * @param sAdapter
      * @param sServant
      */
-    void setAdapterServant(const string &sAdapter, const string &sServant);
+    void setAdapterServant(const std::string &sAdapter, const std::string &sServant);
 
     /**
      * 根据adapter名称获取Servant名称
      * @param sAdapter
-     * @return string
+     * @return std::string
      */
-    const string &getAdapterServant(const string &sAdapter) const
+    const std::string &getAdapterServant(const std::string &sAdapter) const
     {
-        static const string s = "(NO TARS PROTOCOL)";
+        static const std::string s = "(NO TARS PROTOCOL)";
 		auto it = _adapter_servant.find(sAdapter);
         if(it != _adapter_servant.end())
         {
@@ -144,12 +144,12 @@ public:
     /**
      * 根据servant名称获取adapter名称
      * @param sServant
-     * @return string
+     * @return std::string
      */
-    const string &getServantAdapter(const string& sServant) const
+    const std::string &getServantAdapter(const std::string& sServant) const
     {
 
-	    static const string s = "";
+	    static const std::string s = "";
 
 	    auto it = _servant_adapter.find(sServant);
         if(it != _servant_adapter.end())
@@ -161,9 +161,9 @@ public:
 
     /**
      * 获取Adapter/Servant对应表
-     * @return map<string, string>
+     * @return std::map<string, std::string>
      */
-    const map<string, string> &getAdapterServant() const {return _adapter_servant;}
+    const std::map<string, std::string> &getAdapterServant() const {return _adapter_servant;}
 
     /**
      * 设置染色信息
@@ -171,18 +171,18 @@ public:
      * @param sDyeingKey:      用户号码
      * @param sDyeingServant:  对象名称
      * @param sDyeingInterface:接口名称
-     * @return string: 设置结果
+     * @return std::string: 设置结果
      */
-    bool setDyeing(const string & sDyeingKey, const string & sDyeingServant, const string & sDyeingInterface);
+    bool setDyeing(const std::string & sDyeingKey, const std::string & sDyeingServant, const std::string & sDyeingInterface);
 
     /**
      * 是否是染色的请求
      * @param sKey:      用户号码
      * @param sServant:  对象名称
      * @param sInterface:接口名称
-     * @return string: 设置结果
+     * @return std::string: 设置结果
      */
-    bool isDyeingReq(const string & sKey, const string & sServant, const string & sInterface) const;
+    bool isDyeingReq(const std::string & sKey, const std::string & sServant, const std::string & sInterface) const;
 
     /**
      * 是否是已经被染色
@@ -195,17 +195,17 @@ protected:
     /**
      * Servant生成类
      */
-    map<string, ServantHelperCreationPtr>   _servant_creator;
+    std::map<string, ServantHelperCreationPtr>   _servant_creator;
 
     /**
      * Adapter包含的Servant(Adapter名称:servant名称)
      */
-    map<string, string>                     _adapter_servant;
+    std::map<string, std::string>                     _adapter_servant;
 
     /**
      * Adapter包含的Servant(Servant名称:Adapter名称)
      */
-    map<string, string>                     _servant_adapter;
+    std::map<string, std::string>                     _servant_adapter;
 
 protected:
 
@@ -222,17 +222,17 @@ protected:
     /**
      * 染色用户号码
      */
-    string         _dyeingKey;
+    std::string         _dyeingKey;
 
     /**
      * 染色的servant对象
      */
-    string         _dyeingServant;
+    std::string         _dyeingServant;
 
     /**
      * 染色的接口
      */
-    string         _dyeingInterface;
+    std::string         _dyeingInterface;
 
 };
 

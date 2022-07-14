@@ -36,7 +36,7 @@
 
 #define TO_LOWER_STRING(str) TC_Common::lower(str)
 
-#define DEFINE_STRING(str) string(CSTR(str))
+#define DEFINE_STRING(str) std::string(CSTR(str))
 #define CSTR(str) #str
 #define IDL_NAMESPACE_STR DEFINE_STRING(IDL_NAMESPACE)
 
@@ -89,17 +89,17 @@ public:
           _bDTS(false),
           _iOptimizeLevel(O0) {}
 
-    void createFile(const string &file, const bool bEntry = true);
+    void createFile(const std::string &file, const bool bEntry = true);
 
-    void setRpcPath(const string & sPath) { _sRpcPath = sPath; }
+    void setRpcPath(const std::string & sPath) { _sRpcPath = sPath; }
 
-    void setStreamPath(const string & sPath) { _sStreamPath = sPath; }
+    void setStreamPath(const std::string & sPath) { _sStreamPath = sPath; }
 
     void setEnableClient(bool bEnable) { _bClient = bEnable; }
 
     void setEnableServer(bool bEnable) { _bServer = bEnable; }
 
-    void setTargetPath(const string & sPath) { _sToPath = sPath + "/"; }
+    void setTargetPath(const std::string & sPath) { _sToPath = sPath + "/"; }
 
     void setRecursive(bool bEnable) { _bRecursive = bEnable; }
 
@@ -130,15 +130,15 @@ private:
     {
         enum TYPE_T {EN_ENUM = 10000, EN_ENUM_VALUE, EN_STRUCT};
         int         iType;
-        string      sNamespace;
-        string      sTypeName;
-        string      sName;
+        std::string      sNamespace;
+        std::string      sTypeName;
+        std::string      sName;
     };
 
     struct ImportFile 
     {
-        string                      sFile;
-        string                      sModule;
+        std::string                      sFile;
+        std::string                      sModule;
         map<string, ImportFileType> mapVars;
     };
 
@@ -148,99 +148,99 @@ private:
 
     set<string> _depMembers;
 
-    void   scan(const string & sFile, bool bNotPrefix);
+    void   scan(const std::string & sFile, bool bNotPrefix);
 
-    string makeName();
+    std::string makeName();
 
-    string findName(const string & sNamespace, const string & sName, const bool &bBase = false);
-
-private:
-    string toFunctionName(const TypeIdPtr & pPtr, const string &sAction);
-
-    string toObjectString(const TypeIdPtr &pPtr);
-
-    string getDataType(const TypePtr& pPtr, const bool &bCastEnumAsAny = false);
-
-    string getClassName(const TypePtr& pPtr);
-
-    string getTsType(const TypePtr &pPtr, const bool bStream = true, const bool bBase = false);
-
-    string getDefault(const TypeIdPtr & pPtr, const string &sDefault, const string & sNamespace, const bool &bGlobal = true, const bool &bCastEnumAsAny = false);
+    std::string findName(const std::string & sNamespace, const std::string & sName, const bool &bBase = false);
 
 private:
-    string generateJS(const StructPtr &pPtr, const string &sNamespace, bool &bNeedAssert, bool &bQuickFunc);
+    std::string toFunctionName(const TypeIdPtr & pPtr, const std::string &sAction);
 
-    string generateJS(const ConstPtr &pPtr, const string &sNamespace, bool &bNeedStream);
+    std::string toObjectString(const TypeIdPtr &pPtr);
 
-    string generateJS(const EnumPtr &pPtr, const string &sNamespace);
+    std::string getDataType(const TypePtr& pPtr, const bool &bCastEnumAsAny = false);
 
-    string generateJS(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedAssert, bool &bQuickFunc);
+    std::string getClassName(const TypePtr& pPtr);
+
+    std::string getTsType(const TypePtr &pPtr, const bool bStream = true, const bool bBase = false);
+
+    std::string getDefault(const TypeIdPtr & pPtr, const std::string &sDefault, const std::string & sNamespace, const bool &bGlobal = true, const bool &bCastEnumAsAny = false);
+
+private:
+    std::string generateJS(const StructPtr &pPtr, const std::string &sNamespace, bool &bNeedAssert, bool &bQuickFunc);
+
+    std::string generateJS(const ConstPtr &pPtr, const std::string &sNamespace, bool &bNeedStream);
+
+    std::string generateJS(const EnumPtr &pPtr, const std::string &sNamespace);
+
+    std::string generateJS(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedAssert, bool &bQuickFunc);
 
     bool   generateJS(const ContextPtr &pPtr);
 
 private:
-    string generateTS(const StructPtr &pPtr, const string &sNamespace, bool &bNeedAssert, bool &bQuickFunc);
+    std::string generateTS(const StructPtr &pPtr, const std::string &sNamespace, bool &bNeedAssert, bool &bQuickFunc);
 
-    string generateTS(const ConstPtr &pPtr, const string &sNamespace, bool &bNeedStream);
+    std::string generateTS(const ConstPtr &pPtr, const std::string &sNamespace, bool &bNeedStream);
 
-    string generateTS(const EnumPtr &pPtr, const string &sNamespace);
+    std::string generateTS(const EnumPtr &pPtr, const std::string &sNamespace);
 
-    string generateTS(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedAssert, bool &bQuickFunc);
+    std::string generateTS(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedAssert, bool &bQuickFunc);
 
-    string generateTS(const NamespacePtr &pPtr, const string &sContent);
+    std::string generateTS(const NamespacePtr &pPtr, const std::string &sContent);
 
     void   generateTS(const ContextPtr &cPtr);
 
 private:
-    string generateJSProxy(const NamespacePtr &nPtr, bool &bNeedRpc, bool &bNeedStream);
+    std::string generateJSProxy(const NamespacePtr &nPtr, bool &bNeedRpc, bool &bNeedStream);
 
-    string generateJSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
+    std::string generateJSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
 
-    string generateJSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateJSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
     bool   generateJSProxy(const ContextPtr &pPtr);
 
 private:
-    string generateTSProxy(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc);
+    std::string generateTSProxy(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc);
 
-    string generateTSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
+    std::string generateTSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
 
-    string generateTSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateTSProxy(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
     bool   generateTSProxy(const ContextPtr &pPtr);
 
 private:
-    string generateJSServer(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc, bool &bNeedAssert);
+    std::string generateJSServer(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc, bool &bNeedAssert);
 
-    string generatePing(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
+    std::string generatePing(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
 
-    string generateAsync(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateAsync(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
-    string generateDispatch(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateDispatch(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
-    string generateJSServer(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateJSServer(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
-    string generateJSServer(const InterfacePtr &pPtr, const NamespacePtr &nPtr);
+    std::string generateJSServer(const InterfacePtr &pPtr, const NamespacePtr &nPtr);
 
     bool   generateJSServer(const ContextPtr &pPtr);
 
 private:
-    string generateTSServerAsync(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateTSServerAsync(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
-    string generateTSServerDispatch(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateTSServerDispatch(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
-    string generateTSServer(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc, bool &bNeedAssert);
+    std::string generateTSServer(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc, bool &bNeedAssert);
 
-    string generateTSServer(const InterfacePtr &pPtr, const NamespacePtr &nPtr);
+    std::string generateTSServer(const InterfacePtr &pPtr, const NamespacePtr &nPtr);
 
     bool   generateTSServer(const ContextPtr &pPtr);
 
 private:
-    string generateJSServerImp(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
+    std::string generateJSServerImp(const NamespacePtr &nPtr, const InterfacePtr &pPtr, const OperationPtr &oPtr);
 
-    string generateJSServerImp(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
+    std::string generateJSServerImp(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
 
-    string generateJSServerImp(const ContextPtr &cPtr, const NamespacePtr &nPtr);
+    std::string generateJSServerImp(const ContextPtr &cPtr, const NamespacePtr &nPtr);
 
     void   generateJSServerImp(const ContextPtr &cPtr);
 
@@ -248,53 +248,53 @@ private:
     void   generateTSServerImp(const ContextPtr &cPtr);
 
 private:
-    string generateDTS(const StructPtr &pPtr, const string &sNamespace);
+    std::string generateDTS(const StructPtr &pPtr, const std::string &sNamespace);
 
-    string generateDTS(const ConstPtr &pPtr, const string &sNamespace, bool &bNeedStream);
+    std::string generateDTS(const ConstPtr &pPtr, const std::string &sNamespace, bool &bNeedStream);
 
-    string generateDTS(const EnumPtr &pPtr, const string &sNamespace);
+    std::string generateDTS(const EnumPtr &pPtr, const std::string &sNamespace);
 
-    string generateDTS(const NamespacePtr &pPtr, bool &bNeedStream);
+    std::string generateDTS(const NamespacePtr &pPtr, bool &bNeedStream);
 
-    string generateDTS(const NamespacePtr &pPtr, const string &sContent);
+    std::string generateDTS(const NamespacePtr &pPtr, const std::string &sContent);
 
     void   generateDTS(const ContextPtr &cPtr);
 
 private:
-    string generateDTSServer(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc);
+    std::string generateDTSServer(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc);
 
-    string generateDTSServer(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
+    std::string generateDTSServer(const NamespacePtr &nPtr, const InterfacePtr &pPtr);
 
     void   generateDTSServer(const ContextPtr &cPtr);
 
 private:
-    string generateDTSProxy(const InterfacePtr &pPtr);
+    std::string generateDTSProxy(const InterfacePtr &pPtr);
 
-    string generateDTSProxy(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc);
+    std::string generateDTSProxy(const NamespacePtr &pPtr, bool &bNeedStream, bool &bNeedRpc);
 
     void   generateDTSProxy(const ContextPtr &pPtr);
 
 private:
-    void   makeUTF8File(const string & sFileName, const string & sFileContent);
+    void   makeUTF8File(const std::string & sFileName, const std::string & sFileContent);
 
     bool   isSimple(const TypePtr & pPtr) const;
 
     bool   isBinBuffer(const TypePtr & pPtr) const;
 
-    string representArgument(const TypePtr& pPtr) const;
+    std::string representArgument(const TypePtr& pPtr) const;
 
-    bool   isDependent(const string & sNamespace, const string & sName) const;
+    bool   isDependent(const std::string & sNamespace, const std::string & sName) const;
 
-    string getRealFileInfo(const string & sPath);
+    std::string getRealFileInfo(const std::string & sPath);
 
-    string printHeaderRemark(const string & sTypeName);
+    std::string printHeaderRemark(const std::string & sTypeName);
 
 private:
-    string _sRpcPath;
+    std::string _sRpcPath;
 
-    string _sStreamPath;
+    std::string _sStreamPath;
 
-    string _sToPath;
+    std::string _sToPath;
 
     bool   _bClient;
 
@@ -314,7 +314,7 @@ private:
 
     bool   _bEntry;
 
-    string _sIdlFile;
+    std::string _sIdlFile;
 
     bool   _bTS;
 

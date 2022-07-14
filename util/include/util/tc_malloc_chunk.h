@@ -22,8 +22,6 @@
 #include <string.h>
 #include <vector>
 
-using namespace std;
-
 namespace tars
 {
     /////////////////////////////////////////////////
@@ -747,9 +745,9 @@ namespace tars
          * 每个chunk的大小, 包括后续增加的内存块的大小
          * Size of each chunk, including subsequent increases in memory block size
          *
-         * vector<size_t>
+         * std::vector<size_t>
          */
-        void   getSingleCapacity(vector<size_t> &vec_capacity);
+        void   getSingleCapacity(std::vector<size_t> &vec_capacity);
 
         /**
          * 根据该内存所属TC_Span的起始页和该TC_Span按大小类别划分后的第iIndex个，换算成绝对地址

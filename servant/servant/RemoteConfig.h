@@ -22,8 +22,6 @@
 #include "servant/Global.h"
 #include "servant/ConfigF.h"
 
-using namespace std;
-
 namespace tars
 {
      
@@ -57,7 +55,7 @@ public:
      *
      * @return int
      */
-    int setConfigInfo(const CommunicatorPtr &comm, const string &obj, const string & app, const string &serverName, const string& basePath,const string& setdivision="",int maxBakNum = 5);
+    int setConfigInfo(const CommunicatorPtr &comm, const std::string &obj, const std::string & app, const std::string &serverName, const std::string& basePath,const std::string& setdivision="",int maxBakNum = 5);
 
     /**
      * 读取ConfigServer上配置文件到本地，并备份原文件
@@ -67,7 +65,7 @@ public:
      *
      * @return bool
      */
-    bool addConfig(const string & filename, string &result, bool bAppConfigOnly = false);
+    bool addConfig(const std::string & filename, std::string &result, bool bAppConfigOnly = false);
 
 private:
     /**
@@ -75,17 +73,17 @@ private:
      * @param  sFullFileName 文件名称
      * @param  bAppOnly      是否只获取应用级别的配置
      *
-     * @return string       生成的文件名称
+     * @return std::string       生成的文件名称
      */
-    string getRemoteFile(const string & sFullFileName, bool bAppConfigOnly = false);
+    std::string getRemoteFile(const std::string & sFullFileName, bool bAppConfigOnly = false);
 
     /**
      * 实现本地文件的回滚，可回滚次数等于最大备份文件数，每次
      * 都使用最近的备份文件覆盖当前配置文件
      *
-     * @return string
+     * @return std::string
      */
-    string recoverSysConfig(const string & sFullFileName);
+    std::string recoverSysConfig(const std::string & sFullFileName);
 
     /**
      * 备份文件名称 Config.conf.1.bak,Config.conf.2.bak ...
@@ -93,9 +91,9 @@ private:
      *
      * @param index         第几个备份文件
      *
-     * @return string       配置文件全路径
+     * @return std::string       配置文件全路径
      */
-    inline string index2file(const string & sFullFileName, int index);
+    inline std::string index2file(const std::string & sFullFileName, int index);
 
     /**
      *  rename系统操作的封装，当oldFile不存在时抛出异常
@@ -103,7 +101,7 @@ private:
      * @param oldFile   原文件路径和名称
      * @param newFile   新文件逻辑和名称
      */
-    inline void localRename(const string& oldFile, const string& newFile);
+    inline void localRename(const std::string& oldFile, const std::string& newFile);
 
 	/**
 	*   获取hostname， 给k8s版本使用
@@ -125,23 +123,23 @@ protected:
     /**
      * 应用
      */
-    string          _app;
+    std::string          _app;
 
     /**
      * 服务名称
      */
-    string          _serverName;
+    std::string          _serverName;
 
     /**
      * 路径
      */
-    string          _basePath;
+    std::string          _basePath;
 
     /**
      * set信息
      */
 
-    string          _setdivision;
+    std::string          _setdivision;
 
     /**
      * 最大备份数

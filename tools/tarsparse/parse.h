@@ -55,7 +55,7 @@ public:
      * 头文件路径
      * @param sHeader
      */
-    void setHeader(const string &sHeader);
+    void setHeader(const std::string &sHeader);
 
 	/**
      * 是否支持优先使用当前tars文件
@@ -66,19 +66,19 @@ public:
     /**
      * 获取头文件路径
      */
-    string getHeader();
+    std::string getHeader();
 
     /**
      * 解析某一个文件
      * @param sFileName
      */
-    void parse(const string &sFileName);
+    void parse(const std::string &sFileName);
 
     /**
      * 错误提示
      * @param msg
      */
-    void error(const string &msg);
+    void error(const std::string &msg);
 
     /**
      * 检查关键字
@@ -86,7 +86,7 @@ public:
      *
      * @return int
      */
-    int  checkKeyword(const string &s);
+    int  checkKeyword(const std::string &s);
 
     /**
      * 下一行
@@ -96,16 +96,16 @@ public:
     /**
      * 目前解析的文件名称
      *
-     * @return string
+     * @return std::string
      */
-    string getCurrFileName();
+    std::string getCurrFileName();
 
     /**
      * tab
      *
-     * @return string
+     * @return std::string
      */
-    string getTab();
+    std::string getTab();
 
     /**
      * 增加tab数
@@ -121,7 +121,7 @@ public:
      * 解析文件
      * @param file
      */
-    void pushFile(const string &file);
+    void pushFile(const std::string &file);
 
     /**
      * 弹出解析文件
@@ -199,7 +199,7 @@ public:
      *
      * @return StructPtr
      */
-    StructPtr findStruct(const string &sid);
+    StructPtr findStruct(const std::string &sid);
 
     /**
      * 添加枚举元素
@@ -213,13 +213,13 @@ public:
      *
      * @return EnumPtr
      */
-    EnumPtr findEnum(const string &sid);
+    EnumPtr findEnum(const std::string &sid);
 
     /**
      * 检查冲突
      * @param id
      */
-    void checkConflict(const string &sid);
+    void checkConflict(const std::string &sid);
 
     /**
      * 查找自定义类型
@@ -227,7 +227,7 @@ public:
      *
      * @return TypePtr
      */
-    TypePtr findUserType(const string &sid);
+    TypePtr findUserType(const std::string &sid);
 
     /**
      * 查找名字空间
@@ -235,7 +235,7 @@ public:
      *
      * @return NamespacePtr
      */
-    NamespacePtr findNamespace(const string &id);
+    NamespacePtr findNamespace(const std::string &id);
 
     /**
      * 目前的名字空间
@@ -280,9 +280,9 @@ public:
      * 获取文件名
      * @param s
      *
-     * @return string
+     * @return std::string
      */
-    bool getFilePath(const string &s, string &file);
+    bool getFilePath(const std::string &s, std::string &file);
 
     void setKeyStruct(const StructPtr& key)
     {
@@ -297,13 +297,13 @@ public:
     /**
      * 打印文件开头注释
      */
-    string printHeaderRemark();
+    std::string printHeaderRemark();
 
     
     /**
      * 判断当前的标识符是否是枚举变量
      */
-    bool checkEnum(const string &idName);
+    bool checkEnum(const std::string &idName);
     
         /**
 
@@ -314,9 +314,9 @@ public:
     /**
      * 查找tars文件时,设置include路径
      */
-    void addIncludePath(const string &include)
+    void addIncludePath(const std::string &include)
     {
-        vector<string> v = tars::TC_Common::sepstr<string>(include, "; ,", false);
+        std::vector<std::string> v = tars::TC_Common::sepstr<std::string>(include, "; ,", false);
 
         _vIncludePath.insert(_vIncludePath.end(), v.begin(), v.end());
     }
@@ -326,7 +326,7 @@ public:
      * @param fileName
      * @return
      */
-	string getFileName(const string &fileName);
+	string getFileName(const std::string &fileName);
 
 	/**
 	 * replace ext
@@ -334,7 +334,7 @@ public:
 	 * @param ext
 	 * @return
 	 */
-	string replaceFileName(const string &fileName, const string &ext);
+	string replaceFileName(const std::string &fileName, const std::string &ext);
 
 	/**
 	 * get absolute filename
@@ -342,7 +342,7 @@ public:
 	 * @param fileName
 	 * @return
 	 */
-	string getAbsoluteFileName(const string &baseDir, const string &fileName);
+	string getAbsoluteFileName(const std::string &baseDir, const std::string &fileName);
 
 protected:
     /**
@@ -372,10 +372,10 @@ protected:
     std::vector<StructPtr>          _structs;
     std::vector<EnumPtr>            _enums;
     std::vector<NamespacePtr>       _namespaces;
-    string                          _sHeader;
+    std::string                          _sHeader;
     bool                            _bUseCurrentPath;
     bool                            _bUseCurrentPathFirst;
-    std::vector<string>             _vIncludePath;
+    std::vector<std::string>             _vIncludePath;
 };
 
 extern int yyparse();

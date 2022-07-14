@@ -48,7 +48,7 @@ public:
      * @param sObjectProxyName
      * @param setName 指定set调用的setid
      */
-    ObjectProxy(CommunicatorEpoll * pCommunicatorEpoll, ServantProxy *servantProxy, const string & sObjectProxyName, const string& setName="");
+    ObjectProxy(CommunicatorEpoll * pCommunicatorEpoll, ServantProxy *servantProxy, const std::string & sObjectProxyName, const std::string& setName="");
 
     /**
      * 析构函数
@@ -107,21 +107,21 @@ public:
 
     /**
      * 获取object名称
-     * @return const string&
+     * @return const std::string&
      */
-    inline const string & name() const { return _name; }
+    inline const std::string & name() const { return _name; }
 
 	/**
 	 * address
 	 * @return
 	 */
-	inline const string &hash() const { return _hash; }
+	inline const std::string &hash() const { return _hash; }
 
     /**
      * address
      * @return
      */
-    inline const string &address() const { return _address; }
+    inline const std::string &address() const { return _address; }
 
     /**
      * reconnect
@@ -143,7 +143,7 @@ public:
     /**
      * 获取按set规则调用的set名称
      */
-    inline const string& getInvokeSetName() const { return _invokeSetId; }
+    inline const std::string& getInvokeSetName() const { return _invokeSetId; }
 
 
     /**
@@ -176,7 +176,7 @@ public:
      * get all adapter proxy
      * @return
      */
-	const vector<AdapterProxy*> & getAdapters();
+	const std::vector<AdapterProxy*> & getAdapters();
 
 	/**
 	 *
@@ -204,29 +204,29 @@ private:
     /*
      * [obname]#hash@tcp -h xxxx -p xxx
      */
-    string                                _name;
+    std::string                                _name;
 
     /**
      * obname#[hash]@tcp -h xxxx -p xxx
      * ever hash has one connection
      */
-    string                                _hash;
+    std::string                                _hash;
 
 	/**
 	 * obname#hash@[tcp -h xxxx -p xxx]
 	 * ever hash has one connection
 	 */
-    string                                _address;
+    std::string                                _address;
 
     /**
      * obj full name
      */
-    string                                _sObjectProxyName;
+    std::string                                _sObjectProxyName;
 
     /*
      * 按set规则调用的set名称
      */
-    string                                _invokeSetId;
+    std::string                                _invokeSetId;
 
     /*
      * 是否是按set规则调用

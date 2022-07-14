@@ -19,8 +19,6 @@
 #include <memory>
 #include <cassert>
 
-using namespace std;
-
 #define YYSTYPE GrammarBasePtr
 
 #include "parse.h"

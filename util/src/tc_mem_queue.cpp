@@ -24,6 +24,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_MemQueue::TC_MemQueue()
 :_pctrlBlock(NULL)
 ,_paddr(NULL)

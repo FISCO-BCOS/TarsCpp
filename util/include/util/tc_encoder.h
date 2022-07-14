@@ -39,8 +39,8 @@ namespace tars
 */
 struct TC_Encoder_Exception : public TC_Exception
 {
-    TC_Encoder_Exception(const string &buffer) : TC_Exception(buffer){};
-    TC_Encoder_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_Encoder_Exception(const std::string &buffer) : TC_Exception(buffer){};
+    TC_Encoder_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_Encoder_Exception() throw(){};
 };
 
@@ -84,7 +84,7 @@ public:
     * @return      转换后的utf8编码
 	* @return      the UTF8 encodeing after transformation
     */
-    static string gbk2utf8(const string &sIn,int mode=ICONV_IGNORE);
+    static std::string gbk2utf8(const std::string &sIn,int mode=ICONV_IGNORE);
 
     /**
 	* @brief  gbk 转换到 utf8. 
@@ -92,12 +92,12 @@ public:
 	*  
     * @param sIn    输入buffer
 	* @param sIn    input buffer
-    * @param vtStr  输出gbk的vector
-	* @param vtStr  output the GBK vector
+    * @param vtStr  输出gbk的std::vector
+	* @param vtStr  output the GBK std::vector
     * @throws       TC_Encoder_Exception
     * @return
     */
-    static void gbk2utf8(const string &sIn, vector<string> &vtStr,int mode=ICONV_IGNORE);
+    static void gbk2utf8(const std::string &sIn, std::vector<std::string> &vtStr,int mode=ICONV_IGNORE);
 
 
     /**
@@ -110,19 +110,19 @@ public:
     * @return    转换后的gbk编码
 	* @return    the GBK encodeing after transformation
     */
-    static string utf82gbk(const string &sIn,int mode=ICONV_NORMAL);
+    static std::string utf82gbk(const std::string &sIn,int mode=ICONV_NORMAL);
 
 	/**	
 	* @brief  将string的\n替换掉,转义字符串中的某个字符 
-	* @brief  Replace string '\n ' to escape a character in the string
+	* @brief  Replace std::string '\n ' to escape a character in the std::string
 	*  
 	* 缺省:\n 转换为 \r\0; \r转换为\,
 	* Default: '\n' is escaped to '\r\0'; '\r' is escaped to '\',
 	*  
 	* 主要用于将string记录在一行，通常用于写bin-log的地方;
-	* Mainly used to record strings on one line, usually where 'bin-logs' are written;
+	* Mainly used to record std::strings on one line, usually where 'bin-logs' are written;
 	* @param str   待转换字符串
-	* @param str   the string to be escaped
+	* @param str   the std::string to be escaped
 	* @param f     需要转义的字符
 	* @param f     the character to be escaped
 	* @param t     转义后的字符
@@ -130,21 +130,21 @@ public:
 	* @param u     借用的转义符
 	* @param u     the borrowed escape character
 	* @return str  转换后的字符串
-	* @return str  the escaped string
+	* @return str  the escaped std::string
 	*/
-	static string transTo(const string& str, char f = '\n', char t = '\r', char u = '\0');
+	static std::string transTo(const std::string& str, char f = '\n', char t = '\r', char u = '\0');
 
 	/**
 	* @brief  从替换的数据恢复源数据,将 transTo 的字符串还原， 
-	* @brief  Restore source data from the replaced data, restore the string of transTo.
+	* @brief  Restore source data from the replaced data, restore the std::string of transTo.
 	*  
 	*  缺省:\r\0 还原为\n，\r\r还原为,
 	*  Default: '\r\0' is escaped to '\n'; '\r\r' is escaped to,
 	*  
 	*  主要用于将string记录在一行，通常用于写bin-log的地方
-	*  It is mainly used to record string on one line,usally used to where the bin-log written.
+	*  It is mainly used to record std::string on one line,usally used to where the bin-log written.
 	* @param str  待还原的字符串(必须是transTo后得到的字符串)
-	* @param str  the string to be resroed(must be the string after transTo)
+	* @param str  the std::string to be resroed(must be the std::string after transTo)
 	* @param f    被转义的字符
 	* @param f    the escaped character
 	* @param t    转义后的字符
@@ -152,9 +152,9 @@ public:
 	* @param u    借用的转义符
 	* @param u    the borrowed escaped character
 	* @return str 还原后的字符串
-	* @return str the restored string
+	* @return str the restored std::string
 	*/
-	static string transFrom(const string& str, char f = '\n', char t = '\r', char u = '\0');
+	static std::string transFrom(const std::string& str, char f = '\n', char t = '\r', char u = '\0');
 
 protected:    
 

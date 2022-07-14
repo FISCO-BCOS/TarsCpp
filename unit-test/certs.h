@@ -5,66 +5,63 @@
 
 using namespace tars;
 
-static const string CONFIGPATH(CMAKE_SOURCE_DIR);
+static const std::stringCONFIGPATH(CMAKE_SOURCE_DIR);
 
-inline TC_Config CONFIG()
-{
-	string confFile = TC_Common::replace(TC_File::load2str(CONFIGPATH + "/server/hello.conf"), "PROJECT_PATH", CONFIGPATH);
+inline TC_Config CONFIG() {
+  string confFile =
+      TC_Common::replace(TC_File::load2str(CONFIGPATH + "/server/hello.conf"),
+                         "PROJECT_PATH", CONFIGPATH);
 
-	TC_Config conf;
-	conf.parseString(confFile);
+  TC_Config conf;
+  conf.parseString(confFile);
 
-    return conf;    
-} 
-
-inline TC_Config CLIENT_CONFIG()
-{
-	string confFile = TC_Common::replace(TC_File::load2str(CONFIGPATH + "/server/client.conf"), "PROJECT_PATH", CONFIGPATH);
-
-	TC_Config conf;
-	conf.parseString(confFile);
-
-    return conf;
+  return conf;
 }
 
-inline TC_Config FRAMEWORK_CONFIG()
-{
-	TC_Config conf;
-	conf.parseFile(CONFIGPATH + "/server/framework.conf");
+inline TC_Config CLIENT_CONFIG() {
+  string confFile =
+      TC_Common::replace(TC_File::load2str(CONFIGPATH + "/server/client.conf"),
+                         "PROJECT_PATH", CONFIGPATH);
 
-	return conf;
+  TC_Config conf;
+  conf.parseString(confFile);
+
+  return conf;
 }
 
-inline TC_Config RPC1_CONFIG()
-{
-	TC_Config conf;
-	conf.parseFile(CONFIGPATH + "/server/rpc1.conf");
+inline TC_Config FRAMEWORK_CONFIG() {
+  TC_Config conf;
+  conf.parseFile(CONFIGPATH + "/server/framework.conf");
 
-	return conf;
+  return conf;
 }
 
-inline TC_Config RPC2_CONFIG()
-{
-	TC_Config conf;
-	conf.parseFile(CONFIGPATH + "/server/rpc2.conf");
+inline TC_Config RPC1_CONFIG() {
+  TC_Config conf;
+  conf.parseFile(CONFIGPATH + "/server/rpc1.conf");
 
-	return conf;
+  return conf;
 }
 
-inline TC_Config RPC3_CONFIG()
-{
-	TC_Config conf;
-	conf.parseFile(CONFIGPATH + "/server/rpc3.conf");
+inline TC_Config RPC2_CONFIG() {
+  TC_Config conf;
+  conf.parseFile(CONFIGPATH + "/server/rpc2.conf");
 
-	return conf;
+  return conf;
 }
 
-inline TC_Config WIN_CONFIG()
-{
-	TC_Config conf;
-	conf.parseFile(CONFIGPATH + "/server/windows.conf");
+inline TC_Config RPC3_CONFIG() {
+  TC_Config conf;
+  conf.parseFile(CONFIGPATH + "/server/rpc3.conf");
 
-	return conf;
+  return conf;
+}
+
+inline TC_Config WIN_CONFIG() {
+  TC_Config conf;
+  conf.parseFile(CONFIGPATH + "/server/windows.conf");
+
+  return conf;
 }
 
 #define CA (CONFIGPATH + "/certs/ca.crt")
@@ -74,4 +71,3 @@ inline TC_Config WIN_CONFIG()
 #define CLIENT_KEY (CONFIGPATH + "/certs/client.key")
 
 #endif
-

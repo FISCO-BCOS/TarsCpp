@@ -44,7 +44,7 @@ namespace tars
 */
 struct TC_HashMap_Exception : public TC_Exception
 {
-    TC_HashMap_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_HashMap_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_HashMap_Exception() throw(){};
 };
 
@@ -91,9 +91,9 @@ public:
     struct BlockData
     {
         /*data key*/
-        string  _key;       /**数据Key*/
+        std::string  _key;       /**数据Key*/
         /*date value*/
-        string  _value;     /**数据value*/
+        std::string  _value;     /**数据value*/
         /*whether it is dirty data*/
         bool    _dirty;     /**是否是脏数据*/
         /*sync time, not necessarily true writeback time*/
@@ -309,7 +309,7 @@ public:
          *          TC_HashMap::RT_OK, 正常, normal
          *          其他异常 other exception
          */
-        int get(string &s);
+        int get(std::string &s);
 
         /**
          * @brief 设置数据
@@ -319,7 +319,7 @@ public:
          * @param vtData, 淘汰的数据
          * @param vtData eliminated data
          */
-        int set(const void *pData, size_t iDataLen, bool bOnlyKey, vector<TC_HashMap::BlockData> &vtData);
+        int set(const void *pData, size_t iDataLen, bool bOnlyKey, std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          * @brief 是否是脏数据
@@ -435,7 +435,7 @@ public:
          *
          * @return int,
          */
-        int allocate(size_t iDataLen, vector<TC_HashMap::BlockData> &vtData);
+        int allocate(size_t iDataLen, std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          * @brief 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -445,7 +445,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<size_t> chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<size_t> chunks);
 
         /**
          * @brief 分配n个chunk地址, 
@@ -460,7 +460,7 @@ public:
          * @param vtData eliminated data
          * @return int
          */
-        int allocateChunk(size_t fn, vector<size_t> &chunks, vector<TC_HashMap::BlockData> &vtData);
+        int allocateChunk(size_t fn, std::vector<size_t> &chunks, std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          * @brief 获取数据长度
@@ -575,7 +575,7 @@ public:
          *
          * @return TC_MemChunk::tagChunkHead
          */
-        vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
+        std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
 
         /**
          * @brief 获取内存大小
@@ -597,9 +597,9 @@ public:
          * @brief 每种block中的chunk个数(每种block中的chunk个数相同)
          * @brief Number of chunks per block (same number of chunks per block)
          *
-         * @return vector<size_t>
+         * @return std::vector<size_t>
          */
-        vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
+        std::vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
 
         /**
          * @brief 获取所有block的chunk个数
@@ -622,7 +622,7 @@ public:
          * @return size_t, 相对地址,0表示没有空间可以分配
          * @return size_t Relative address, 0 means no space to allocate
          */
-        size_t allocateMemBlock(size_t index, size_t &iAllocSize, vector<TC_HashMap::BlockData> &vtData);
+        size_t allocateMemBlock(size_t index, size_t &iAllocSize, std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          * @brief 为地址为iAddr的Block分配一个chunk
@@ -637,14 +637,14 @@ public:
          * @return size_t, 相对地址,0表示没有空间可以分配
          * @return size_t Relative address, 0 means no space to allocate
          */
-        size_t allocateChunk(size_t iAddr, size_t &iAllocSize, vector<TC_HashMap::BlockData> &vtData);
+        size_t allocateChunk(size_t iAddr, size_t &iAllocSize, std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          * @brief 释放Block
          * @brief Release Block
          * @param v
          */
-        void deallocateMemBlock(const vector<size_t> &v);
+        void deallocateMemBlock(const std::vector<size_t> &v);
 
         /**
          * @brief 释放Block
@@ -757,7 +757,7 @@ public:
          *          Other values, exceptions
          *
          */
-        int get(string& k, string& v);
+        int get(std::string& k, std::string& v);
 
         /**
          * @brief 获取值
@@ -768,7 +768,7 @@ public:
          *          其他值, 异常
          *          Other values, exceptions
          */
-        int get(string& k);
+        int get(std::string& k);
 
         /**
          * @brief 获取数据块相对地址
@@ -789,7 +789,7 @@ public:
          * @param vtData eliminated data
          * @return int
          */
-        int set(const string& k, const string& v, vector<TC_HashMap::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          * @brief 设置Key, 无数据
@@ -799,7 +799,7 @@ public:
          *
          * @return int
          */
-        int set(const string& k, vector<TC_HashMap::BlockData> &vtData);
+        int set(const std::string& k, std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          *
@@ -808,7 +808,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &k, string &v, int &ret);
+        bool equal(const std::string &k, std::string &v, int &ret);
 
         /**
          *
@@ -817,7 +817,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string& k, int &ret);
+        bool equal(const std::string& k, int &ret);
 
         /**
          * @brief 下一个item
@@ -1039,7 +1039,7 @@ public:
          * 
          * @return
          */
-        void get(vector<TC_HashMap::BlockData> &vtData);
+        void get(std::vector<TC_HashMap::BlockData> &vtData);
 
         /**
          * 
@@ -1376,7 +1376,7 @@ public:
      * @brief 定义hash处理器
      * @brief Define hash processor
      */
-    using hash_functor = std::function<size_t (const string& )>;
+    using hash_functor = std::function<size_t (const std::string& )>;
 
     //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1392,7 +1392,7 @@ public:
     , _pDataAllocator(new BlockAllocator(this))
     , _lock_end(this, 0, 0, 0)
     , _end(this, (size_t)(-1))
-    , _hashf(hash<string>())
+    , _hashf(hash<std::string>())
     {
     }
 
@@ -1465,10 +1465,10 @@ public:
      *  @brief 获取每种大小内存块的头部信息
      * @brief Get header information for each memory block size
      *
-     * @return vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
-     * @return vector<TC_MemChunk::tagChunkHead>: Header information for memory blocks of different sizes
+     * @return std::vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
+     * @return std::vector<TC_MemChunk::tagChunkHead>: Header information for memory blocks of different sizes
      */
-    vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
+    std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
 
     /**
      * @brief 所有block中chunk的个数
@@ -1482,9 +1482,9 @@ public:
      * @brief 每种block中chunk的个数(不同大小内存块的个数相同)
      * @brief Number of chunks in each block (same number of memory blocks of different sizes)
      *
-     * @return vector<size_t>
+     * @return std::vector<size_t>
      */
-    vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
+    std::vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
 
     /**
      * @brief  获取hash桶的个数
@@ -1637,7 +1637,7 @@ public:
      *          RT_OK: dump到文件成功
      *          RT_OK: dump to file succeeded
      */
-    int dump2file(const string &sFile);
+    int dump2file(const std::string &sFile);
 
     /**
      * @brief  从文件load
@@ -1652,7 +1652,7 @@ public:
      *          RT_OK: load成功
      *          RT_OK: load successfully
      */
-    int load5file(const string &sFile);
+    int load5file(const std::string &sFile);
 
     /**
      *  @brief 修复hash索引为i的hash链(i不能操作hashmap的索引值)
@@ -1689,7 +1689,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int checkDirty(const string &k);
+    int checkDirty(const std::string &k);
 
     /**
      * @brief  设置为脏数据, 修改SET时间链, 会导致数据回写
@@ -1708,7 +1708,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int setDirty(const string& k);
+    int setDirty(const std::string& k);
 
     /**
      * 数据回写失败后重新设置为脏数据
@@ -1727,7 +1727,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int setDirtyAfterSync(const string& k);
+    int setDirtyAfterSync(const std::string& k);
 
     /**
      * @brief  设置为干净数据, 修改SET链, 导致数据不回写
@@ -1746,7 +1746,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int setClean(const string& k);
+    int setClean(const std::string& k);
 
     /**
      * @brief  获取数据, 修改GET时间链
@@ -1766,7 +1766,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(const string& k, string &v, time_t &iSyncTime);
+    int get(const std::string& k, std::string &v, time_t &iSyncTime);
 
     /**
      * @brief  获取数据, 修改GET时间链
@@ -1784,7 +1784,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(const string& k, string &v);
+    int get(const std::string& k, std::string &v);
 
     /**
      * @brief  设置数据, 修改时间链, 内存不够时会自动淘汰老的数据
@@ -1807,7 +1807,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string& k, const string& v, bool bDirty, vector<BlockData> &vtData);
+    int set(const std::string& k, const std::string& v, bool bDirty, std::vector<BlockData> &vtData);
 
     /**
      * @brief  设置key, 但无数据
@@ -1825,7 +1825,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string& k, vector<BlockData> &vtData);
+    int set(const std::string& k, std::vector<BlockData> &vtData);
 
     /**
      * @brief  删除数据
@@ -1846,7 +1846,7 @@ public:
      *         其他返回值: 错误
      *          Other Return Values: Error
      */
-    int del(const string& k, BlockData &data);
+    int del(const std::string& k, BlockData &data);
 
     /**
      * @brief  淘汰数据, 每次删除一条, 根据Get时间淘汰
@@ -1956,9 +1956,9 @@ public:
     /**
      * @brief  根据Key查找数据
      * @brief Find data based on Key
-     * @param string
+     * @param std::string
      */
-    lock_iterator find(const string& k);
+    lock_iterator find(const std::string& k);
 
     /**
      * @brief  block正序
@@ -2052,9 +2052,9 @@ public:
      * @brief 描述
      * @brief Description
      *
-     * @return string
+     * @return std::string
      */
-    string desc();
+    std::string desc();
 
     /**
      * @brief  修改更新到内存中
@@ -2185,12 +2185,12 @@ protected:
      *                  0表示做直接根据淘汰策略淘汰
      * @param iNowAddr The current block cannot allocate space and cannot be phased out
      *                  0 means to phase out directly according to the elimination strategy
-     * @param vector<BlockData>, 被淘汰的数据
-     * @param vector<BlockData> Eliminated data
+     * @param std::vector<BlockData>, 被淘汰的数据
+     * @param std::vector<BlockData> Eliminated data
      * @return size_t,淘汰的数据个数
      * @return size_t  Number of data eliminated
      */
-    size_t eraseExcept(size_t iNowAddr, vector<BlockData> &vtData);
+    size_t eraseExcept(size_t iNowAddr, std::vector<BlockData> &vtData);
 
     /**
      * @brief  根据Key计算hash值
@@ -2200,21 +2200,21 @@ protected:
      *
      * @return size_t
      */
-    size_t hashIndex(const string& k);
+    size_t hashIndex(const std::string& k);
 
     /**
      * @brief  根据Key查找数据
      * @brief Find data based on Key
      *
      */
-    lock_iterator find(const string& k, size_t index, string &v, int &ret);
+    lock_iterator find(const std::string& k, size_t index, std::string &v, int &ret);
 
     /**
      * @brief  根据Key查找数据
      * @brief Find data based on Key
      * @param mb
      */
-    lock_iterator find(const string& k, size_t index, int &ret);
+    lock_iterator find(const std::string& k, size_t index, int &ret);
 
     /**
      * @brief  分析hash的数据

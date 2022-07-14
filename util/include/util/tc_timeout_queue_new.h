@@ -29,8 +29,6 @@
 // #include "util/tc_functor.h"
 #include "util/tc_timeprovider.h"
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -50,9 +48,9 @@ public:
     struct NodeInfo;
     struct SendInfo;
 
-    typedef unordered_map<uint32_t, PtrInfo>     data_type;
-    typedef multimap<int64_t,NodeInfo>      time_type;
-    typedef list<SendInfo>                  send_type;
+    typedef std::unordered_map<uint32_t, PtrInfo>     data_type;
+    typedef std::multimap<int64_t,NodeInfo>      time_type;
+    typedef std::list<SendInfo>                  send_type;
 
     typedef std::function<void(T&)> data_functor;
 
@@ -166,7 +164,7 @@ public:
     size_t size() const { return _data.size(); }
 
 protected:
-    atomic<uint32_t>                _uniqId;
+    std::atomic<uint32_t>                _uniqId;
     data_type                       _data;
     time_type                       _time;
     send_type                       _send;

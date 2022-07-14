@@ -94,9 +94,9 @@ public:
      */
     void setReportInfo(const StatFPrx& statPrx,
                        const PropertyFPrx& propertyPrx,
-                       const string& strModuleName,
-                       const string& strModuleIp,
-                       const string& strSetDivision,
+                       const std::string& strModuleName,
+                       const std::string& strModuleIp,
+                       const std::string& strSetDivision,
                        int iReportInterval = 60,
                        int iSampleRate = 1000,
                        unsigned int iMaxSampleCount = 100,
@@ -117,10 +117,10 @@ public:
      * @param sContainer, 设置上报的容器名
      * 。
      */
-    void report(const string& strModuleName,
-                 const string& setdivision,
-                const string& strInterfaceName,
-                const string& strModuleIp,
+    void report(const std::string& strModuleName,
+                 const std::string& setdivision,
+                const std::string& strInterfaceName,
+                const std::string& strModuleIp,
                 uint16_t iPort,
                 StatResult eResult,
                 int  iSptime,
@@ -139,12 +139,12 @@ public:
      * @param iSptime           耗时(单位毫秒)
      * @param iReturnValue      返回值
      */
-    void report(const string& strMasterName,
-                const string& strMasterIp,
-                const string& strSlaveName,
-                const string& strSlaveIp,
+    void report(const std::string& strMasterName,
+                const std::string& strMasterIp,
+                const std::string& strSlaveName,
+                const std::string& strSlaveIp,
                 uint16_t iSlavePort,
-                const string& strInterfaceName,
+                const std::string& strInterfaceName,
                 StatResult eResult,
                 int  iSptime,
                 int  iReturnValue = 0);
@@ -155,7 +155,7 @@ public:
      *
      * @return PropertyReportPtr
      */
-    PropertyReportPtr getPropertyReport(const string& strProperty)
+    PropertyReportPtr getPropertyReport(const std::string& strProperty)
     {
          Lock lock(*this);
          if(_statPropMsg.find(strProperty) != _statPropMsg.end())
@@ -174,7 +174,7 @@ public:
      * @return PropertyReportPtr
      */
     template<typename... Args>
-    PropertyReportPtr createPropertyReport(const string& strProperty, Args... args)
+    PropertyReportPtr createPropertyReport(const std::string& strProperty, Args... args)
     {
         Lock lock(*this);
 
@@ -235,19 +235,19 @@ public:
      * @param str
      * @param limitlen
      *
-     * @return string
+     * @return std::string
      */
-    static string trimAndLimitStr(const string& str, uint32_t limitlen);
+    static std::string trimAndLimitStr(const std::string& str, uint32_t limitlen);
 
     /*
     * func: tars.s.1 =>> MTT s  1
     */
-    static bool divison2SetInfo(const string& str, vector<string>& vtSetInfo);
+    static bool divison2SetInfo(const std::string& str, vector<string>& vtSetInfo);
 
     /*
     * func: tars.xxxServer =>> xxxServer
     */
-    static string getServerName(string sModuleName);
+    static std::string getServerName(string sModuleName);
 
 private:
 
@@ -291,15 +291,15 @@ private:
 
     bool                _terminate;
 
-    string              _moduleName;
+    std::string              _moduleName;
 
-    string              _setName; // 主调上报，表示主调set名，被调上报，表示被调set名
+    std::string              _setName; // 主调上报，表示主调set名，被调上报，表示被调set名
 
-    string              _setArea; //
+    std::string              _setArea; //
 
-    string              _setID; //
+    std::string              _setID; //
 
-    string              _ip;
+    std::string              _ip;
 
     int                 _sampleRate; //生成模块间调用时序图的采样比率
 

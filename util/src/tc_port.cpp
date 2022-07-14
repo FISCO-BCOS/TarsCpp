@@ -36,6 +36,7 @@
 namespace tars
 {
 
+using namespace std;
 int TC_Port::strcmp(const char *s1, const char *s2)
 {
 #if TARGET_PLATFORM_WINDOWS

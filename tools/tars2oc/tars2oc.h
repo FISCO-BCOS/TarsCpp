@@ -35,7 +35,7 @@ public:
      * ����
      * @param file
      */
-    void createFile(const string &file);
+    void createFile(const std::string &file);
 
 
     /**
@@ -58,7 +58,7 @@ public:
     /**
 	 * �����û��Զ������ֿռ�
 	 */
-	void setNS(const string& sNS) {m_sNamespace = sNS;}
+	void setNS(const std::string& sNS) {m_sNamespace = sNS;}
     //����������������Դ������
 protected:
 	/**
@@ -68,71 +68,71 @@ protected:
 	 *
 	 * @return �������ǰ׺�ַ���
 	 */
-	string getNamePrix(const string& sTarsNS) const;
+	string getNamePrix(const std::string& sTarsNS) const;
 	
 	/**
 	 * ��ȡ���Ϲ淶�ĳ�Ա����
 	 */
-	string getPropertyName(const string& sId) const;
+	string getPropertyName(const std::string& sId) const;
 
     /**
 	 *
 	 * ��ȡ�Զ���setter������
 	 */
-	string getSetterName(const string& sId) const;
+	string getSetterName(const std::string& sId) const;
     /**
      * ����ĳ���͵��ַ�������Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostr(const TypePtr &pPtr) const;
+    std::string tostr(const TypePtr &pPtr) const;
 
     /**
      * �����ڽ����͵��ַ���Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrBuiltin(const BuiltinPtr &pPtr) const;
+    std::string tostrBuiltin(const BuiltinPtr &pPtr) const;
     /**
      * ����vector���ַ�������
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrVector(const VectorPtr &pPtr) const;
+    std::string tostrVector(const VectorPtr &pPtr) const;
 
     /**
      * ����map���ַ�������
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrMap(const MapPtr &pPtr) const;
+    std::string tostrMap(const MapPtr &pPtr) const;
 
     /**
      * ����ĳ�ֽṹ�ķ�������
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrStruct(const StructPtr &pPtr) const;
+    std::string tostrStruct(const StructPtr &pPtr) const;
 
 
     /**
      * ����ĳ��ö�ٵķ�������
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrEnum(const EnumPtr &pPtr) const;
+    std::string tostrEnum(const EnumPtr &pPtr) const;
 
 	/**
 	 * ����OBJC �汾2�����Զ���
 	 * @param pPtr
 	 *
-	 * @return string
+	 * @return std::string
 	 */
 	string toTarsV2Procstr(const TypeIdPtr &pPtr) const;
 
@@ -140,7 +140,7 @@ protected:
 	 * ����OBJC�汾2�ĸ�����Ϣ����
 	 * @param pPtr
 	 *
-	 * @return string
+	 * @return std::string
 	 */
 	string toAddtionalClassName(const TypePtr &pPtr) const;
 
@@ -148,23 +148,23 @@ protected:
 	 * ���ɽṹ�����Ե�synthesize����
 	 * @param vMember
 	 *
-	 * @return string
+	 * @return std::string
 	 */
-    string writesynthesize(const vector<TypeIdPtr>& vMember) const;
+    std::string writesynthesize(const vector<TypeIdPtr>& vMember) const;
 
 	/**
 	 * ����Initialize����
 	 * @param pPtr
 	 *
-	 * @return string
+	 * @return std::string
 	 */
-    string writeInitialize(const StructPtr &pPtr) const;
+    std::string writeInitialize(const StructPtr &pPtr) const;
 
 	/**
 	 * ���ɳ�ʼ�����庯��init
 	 * @param vMember
 	 *
-	 * @return string
+	 * @return std::string
 	 */
 	string writeInit(const vector<TypeIdPtr>& vMember) const;
 
@@ -172,7 +172,7 @@ protected:
 	 * ������������
 	 * @param vMember
 	 *
-	 * @return string
+	 * @return std::string
 	 */
 	string writedealloc(const vector<TypeIdPtr>& vMember) const;
 
@@ -180,7 +180,7 @@ protected:
 	 * ���ɽṹ���ƶ���
 	 * @param pPtr
 	 *
-	 * @return string
+	 * @return std::string
 	 */
 	string writeTarsType(const StructPtr &pPtr) const;
 
@@ -188,9 +188,9 @@ protected:
 	 * �������ͱ�ʾ��
 	 * @param pPtr
 	 *
-	 * @return string
+	 * @return std::string
 	 */
-    string toClassName(const TypePtr &pPtr) const;
+    std::string toClassName(const TypePtr &pPtr) const;
 protected:
     /**
 	 * ��ȡtars�ж�����������ͣ�require��optional
@@ -214,7 +214,7 @@ protected:
 	 *
 	 * @return
 	 */
-	map<string,int> getReferences(const StructPtr &pPtr, const string& namespaceId="") const;
+	map<string,int> getReferences(const StructPtr &pPtr, const std::string& namespaceId="") const;
 
 	/**
 	 * ��ȡ��Ա�������������ͱ�ʶ������,
@@ -229,62 +229,62 @@ protected:
      * ���ɽṹ��ͷ�ļ�����
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const StructPtr &pPtr, const string& namespaceId) const;
+    std::string generateH(const StructPtr &pPtr, const std::string& namespaceId) const;
 
     /**
      * ���ɽṹ��m�ļ�����
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateM(const StructPtr &pPtr, const string& namespaceId) const;
+    std::string generateM(const StructPtr &pPtr, const std::string& namespaceId) const;
 
     /**
      * ����ö�ٵ�m�ļ�����
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-	string generateM(const EnumPtr &pPtr, const string& namespaceId) const;
+	string generateM(const EnumPtr &pPtr, const std::string& namespaceId) const;
     /**
      * ����������ͷ�ļ�Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const ContainerPtr &pPtr) const;
+    std::string generateH(const ContainerPtr &pPtr) const;
 
     /**
      * ����ö�ٵ�ͷ�ļ�Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateH(const EnumPtr &pPtr, const string& namespaceId) const;
+    std::string generateH(const EnumPtr &pPtr, const std::string& namespaceId) const;
 
     /**
      * �������ֿռ��ͷ�ļ���ʵ��Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generate(const NamespacePtr &pPtr) const;
+    std::string generate(const NamespacePtr &pPtr) const;
 
     /**
      * �������ֿռ�m�ļ�Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateM(const NamespacePtr &pPtr) const;
+    std::string generateM(const NamespacePtr &pPtr) const;
 
     /**
      * �������ֿռ��ͷ�ļ�Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
     void generate(const ContextPtr &pPtr) const;
 
@@ -292,7 +292,7 @@ protected:
      * �������ֿռ�m�ļ�Դ��
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
     void generateM(const ContextPtr &pPtr) const;
 
