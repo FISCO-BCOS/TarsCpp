@@ -25,6 +25,7 @@
 namespace tars
 {
 
+using namespace std;
 
 TC_ThreadControl::TC_ThreadControl(std::thread *th) : _th(th)
 {

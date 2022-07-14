@@ -384,7 +384,7 @@ void TC_Des::des3(const char *from, char *into, uint32_t *KnL, uint32_t *KnR, ui
 	unscrun(work, into);
 }
 
-string TC_Des::encrypt(const char *key, const char * sIn, size_t iInlen)
+std::string TC_Des::encrypt(const char *key, const char * sIn, size_t iInlen)
 {
     char des_key[8]  = {0};
     char des_input[8]  = {0};
@@ -397,7 +397,7 @@ string TC_Des::encrypt(const char *key, const char * sIn, size_t iInlen)
 
     int mod  = iInlen % sizeof(des_input);
     size_t k     = 0;
-    string ret;
+    std::string ret;
     for(k = 0; k < iInlen / sizeof(des_input); k++)
     {
         memcpy(des_input, (sIn + k * sizeof(des_input)), sizeof(des_input));
@@ -423,7 +423,7 @@ string TC_Des::encrypt(const char *key, const char * sIn, size_t iInlen)
 	return ret;
 }
 
-string TC_Des::decrypt(const char *key, const char * sIn, size_t iInlen)
+std::string TC_Des::decrypt(const char *key, const char * sIn, size_t iInlen)
 {
     char des_key[8]  = {0};
     char des_input[8]  = {0};
@@ -434,7 +434,7 @@ string TC_Des::decrypt(const char *key, const char * sIn, size_t iInlen)
     uint32_t KnL[32] = {0};
     deskey(des_key, DE1, KnL);
 
-    string ret;
+    std::string ret;
     size_t k = 0;
     for(k = 0; k < iInlen / sizeof(des_input); k++)
     {
@@ -475,7 +475,7 @@ string TC_Des::decrypt(const char *key, const char * sIn, size_t iInlen)
 	return ret;
 }
 
-string TC_Des::encrypt3(const char *key, const char * sIn, size_t iInlen)
+std::string TC_Des::encrypt3(const char *key, const char * sIn, size_t iInlen)
 {
     char des_key[24] = {0};
     memcpy(des_key, key, std::min(sizeof(des_key), strlen(key)));
@@ -520,7 +520,7 @@ string TC_Des::encrypt3(const char *key, const char * sIn, size_t iInlen)
         des3(in_data + i * 8, out_data + i * 8, KnL, KnR, Kn3);
     }
 
-    string ret(out_data, len);
+    std::string ret(out_data, len);
 
     delete []in_data;
     delete []out_data;
@@ -528,12 +528,12 @@ string TC_Des::encrypt3(const char *key, const char * sIn, size_t iInlen)
 	return ret;
 }
 
-string TC_Des::decrypt3(const char *key, const char * sIn, size_t iInlen)
+std::string TC_Des::decrypt3(const char *key, const char * sIn, size_t iInlen)
 {
     try
     {
         char des_key[24] = {0};
-        memcpy(des_key, key, min(sizeof(des_key), strlen(key)));
+        memcpy(des_key, key, std::min(sizeof(des_key), strlen(key)));
 
         size_t len = iInlen;
 
@@ -554,7 +554,7 @@ string TC_Des::decrypt3(const char *key, const char * sIn, size_t iInlen)
             des3(in_data + i * 8, out_data + i * 8, KnL, KnR, Kn3);
         }
 
-        string ret((char*)out_data, len);
+        std::string ret((char*)out_data, len);
 
         if(ret.length() > 0)
         {
@@ -573,7 +573,7 @@ string TC_Des::decrypt3(const char *key, const char * sIn, size_t iInlen)
     }
     catch(TC_DES_Exception &e)
     {
-        string res = "TC_Des::decrypt3 error" + string(e.what());
+        std::string res = "TC_Des::decrypt3 error" + std::string(e.what());
         throw TC_DES_Exception(res);
     }
 }

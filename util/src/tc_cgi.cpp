@@ -23,6 +23,8 @@
 extern char **environ;
 #endif
 
+using namespace std;
+
 namespace tars
 {
 

@@ -21,6 +21,8 @@
 #include "util/tc_common.h"
 #include "util/tc_socket.h"
 
+using namespace std;
+
 namespace tars
 {
 

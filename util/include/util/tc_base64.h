@@ -19,8 +19,6 @@
 
 #include <string>
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -40,36 +38,36 @@ class TC_Base64
 {
 public:
     /**
-    * @brief Encode the string by base64
+    * @brief Encode the  std::string by base64
     * @brief 对字符串进行base64编码. 
     * 
     * @param data         Data to be encoded
     * @param bChangeLine  Add line breaks in the final encoded data if necessary,
     *                     (In the RFC, it is recommended to add an 'Enter' after every 76 characters. 
     *                      No newline is added by default.)
-    * @return string      the encoded data
+    * @return  std::string      the encoded data
     * 
     * @param data         需要编码的数据
     * @param bChangeLine  是否需要在最终编码数据加入换行符 ，
     *                     (RFC中建议每76个字符后加入回车换行，默认为不添加换行
-    * @return string      编码后的数据
+    * @return  std::string      编码后的数据
     */
-    static string encode(const string &data, bool bChangeLine = false);
+    static  std::string encode(const  std::string &data, bool bChangeLine = false);
     
     /**
-    * @brief Decode the string by base64
+    * @brief Decode the  std::string by base64
     * @brief 对字符串进行base64解码. 
     * 
     * @param data     Data to be decoded
-    * @return string  the decoded data
+    * @return  std::string  the decoded data
     * 
     * @param data     需要解码的数据
-    * @return string  解码后的数据
+    * @return  std::string  解码后的数据
     */    
-    static string decode(const string &data);
+    static  std::string decode(const  std::string &data);
 
     /**
-    * @brief  Encode the string by base64 
+    * @brief  Encode the  std::string by base64 
     * @brief  对字符串进行base64编码.   
     * 
     * @param buffer       buffer pointer
@@ -77,18 +75,18 @@ public:
     * @param bChangeLine  Add line breaks in the final encoded data if necessary,
     *                     (In the RFC, it is recommended to add an 'Enter' after every 76 characters. 
     *                      No newline is added by default.)
-    * @return string      the encoded data
+    * @return  std::string      the encoded data
     * 
     * @param buffer       buffer指针
     * @param length       长度
     * @param bChangeLine  是否需要在最终编码数据加入换行符 ，
     *                     (RFC中建议每76个字符后加入回车换行，默认为不添加换行
-    * @return string      编码后的数据
+    * @return  std::string      编码后的数据
     */
-    static string encode(const char *buffer, size_t length, bool bChangeLine = false);
+    static  std::string encode(const char *buffer, size_t length, bool bChangeLine = false);
 
     /**
-    * @brief  Encode the string by base64 
+    * @brief  Encode the  std::string by base64 
     * @brief  对字符串进行base64编码 . 
     * 
     * @param pSrc        the data to be encoded
@@ -97,7 +95,7 @@ public:
     * @param bChangeLine Add line breaks in the final encoded data if necessary,
     *                     (In the RFC, it is recommended to add an 'Enter' after every 76 characters. 
     *                      No newline is added by default.)
-    * @return            the length of the encoded string
+    * @return            the length of the encoded  std::string
     *  
     * @param pSrc        需要编码的数据
     * @param nSrcLen     需要编码的数据长度
@@ -109,13 +107,13 @@ public:
     static int encode(const unsigned char* pSrc, size_t nSrcLen, char* pDst, bool bChangeLine = false);
     
     /**
-    * @brief Decode the string by base64
+    * @brief Decode the  std::string by base64
     * @brief 对字符串进行base64解码
     * 
     * @param pSrc    the data to be decoded    
     * @param nSrcLe  the length of the data to be decoded
     * @param pDst    the decoded data
-    * @return        the length of the decoded string
+    * @return        the length of the decoded  std::string
     * 
     * @param pSrc    需要解码的数据    
     * @param nSrcLe  需要解码的数据长度

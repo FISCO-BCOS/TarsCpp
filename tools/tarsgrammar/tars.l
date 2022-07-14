@@ -28,8 +28,6 @@
 #include "parse.h"
 #include "tars.tab.hpp"
 
-using namespace std;
-
 extern "C"
 {
     int yywrap()

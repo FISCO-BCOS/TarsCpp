@@ -33,7 +33,7 @@ public:
 
 
     //重载Servant的doRequest方法
-    int doRequest(tars::TarsCurrentPtr current, vector<char>& response);
+    int doRequest(tars::TarsCurrentPtr current, std::vector<char>& response);
 
     //重载Servant的doClose方法
     int doClose(tars::TarsCurrentPtr current);

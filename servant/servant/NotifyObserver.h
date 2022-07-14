@@ -49,9 +49,9 @@ public:
      * 接收管理命令
      * @param command
      * @param current
-     * @return string
+     * @return std::string
      */
-    string notify(const string& command, CurrentPtr current);
+    std::string notify(const std::string& command, CurrentPtr current);
 
 public:
     /**
@@ -59,33 +59,33 @@ public:
      * @param command
      * @param obj
      */
-    void registerPrefix(const string& command, BaseNotify* obj);
+    void registerPrefix(const std::string& command, BaseNotify* obj);
 
     /**
      * 注销前置处理器
      * @param command
      * @param obj
      */
-    void unregisterPrefix(const string& command, BaseNotify* obj);
+    void unregisterPrefix(const std::string& command, BaseNotify* obj);
 
     /**
      * 注册普通的命令处理器，多个直接顺序不保证
      * @param command
      * @param obj
      */
-    void registerNotify(const string& command, BaseNotify* obj);
+    void registerNotify(const std::string& command, BaseNotify* obj);
 
     /**
      * 注销普通的消息处理器
      * @param command
      * @param obj
      */
-    void unregisterNotify(const string& command, BaseNotify* obj);
+    void unregisterNotify(const std::string& command, BaseNotify* obj);
 
     /**
      * 展示已注册的命令处理器，多个顺序不保证
      */
-    string viewRegisterCommand();
+    std::string viewRegisterCommand();
 
 protected:
     /**
@@ -94,7 +94,7 @@ protected:
      * @param obj
      * @param target
      */
-    void registerObject(const string& command, BaseNotify* obj, map<string, set<BaseNotify*> >& target);
+    void registerObject(const std::string& command, BaseNotify* obj, map<string, set<BaseNotify*> >& target);
 
     /**
      * 取消对象注册
@@ -102,7 +102,7 @@ protected:
      * @param obj
      * @param target
      */
-    void unregisterObject(const string& command, BaseNotify* obj, map<string, set<BaseNotify*> >& target);
+    void unregisterObject(const std::string& command, BaseNotify* obj, map<string, set<BaseNotify*> >& target);
 
 protected:
 

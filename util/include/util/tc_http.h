@@ -29,6 +29,7 @@
 #include <map>
 #include <sstream>
 #include <cassert>
+#include <unordered_map>
 #include <vector>
 
 namespace tars
@@ -80,7 +81,7 @@ class TC_NetWorkBuffer;
 */
 struct TC_Http_Exception : public TC_Exception
 {
-    TC_Http_Exception(const string &sBuffer) : TC_Exception(sBuffer){};
+    TC_Http_Exception(const std::string &sBuffer) : TC_Exception(sBuffer){};
     ~TC_Http_Exception() {};
 };
 
@@ -90,7 +91,7 @@ struct TC_Http_Exception : public TC_Exception
  */
 struct TC_HttpResponse_Exception : public TC_Http_Exception
 {
-    TC_HttpResponse_Exception(const string &sBuffer) : TC_Http_Exception(sBuffer){};
+    TC_HttpResponse_Exception(const std::string &sBuffer) : TC_Http_Exception(sBuffer){};
     ~TC_HttpResponse_Exception() {};
 };
 
@@ -100,7 +101,7 @@ struct TC_HttpResponse_Exception : public TC_Http_Exception
  */
 struct TC_HttpRequest_Exception : public TC_Http_Exception
 {
-    TC_HttpRequest_Exception(const string &sBuffer) : TC_Http_Exception(sBuffer){};
+    TC_HttpRequest_Exception(const std::string &sBuffer) : TC_Http_Exception(sBuffer){};
     ~TC_HttpRequest_Exception() {};
 };
 
@@ -167,11 +168,11 @@ public:
      *  
      * @throws       TC_URL_Exception
      * @param sURL  具体的URL串
-     * @param sURL  Specific URL string
+     * @param sURL  Specific URL std::string
      * @return      解析成功返回true，否则返回false
      * @return      Resolution successfully returned true, otherwise false
      */
-    bool parseURL(const string &sURL);
+    bool parseURL(const std::string &sURL);
 
     /**
      * @brief   清空
@@ -183,46 +184,46 @@ public:
      * @brief  获取scheme.
      * @brief  Get scheme.
      * 
-     * @return const string&类型的scheme
-     * @return scheme of const string& type 
+     * @return const std::string&类型的scheme
+     * @return scheme of const std::string& type 
      */
-    string getScheme() const;
+    std::string getScheme() const;
 
     /**
      * @brief  获取用户名.
      * @brief  Get User Name
      * 
-     * @return const string& ：用户名
-     * @return const string@ : user name
+     * @return const std::string& ：用户名
+     * @return const std::string@ : user name
      */
-    string getUserName() const;
+    std::string getUserName() const;
 
     /**
      * @brief  获取密码.
      * @brief  Get password
      * 
-     * @return const string& ：密码
-     * @return const string& : password
+     * @return const std::string& ：密码
+     * @return const std::string& : password
      */
-    string getPassword() const;
+    std::string getPassword() const;
 
     /**
      * @brief  获取域名.
      * @brief  Get domain name.
      * 
-     * @return const string& ：域名
-     * @return const string& : domain name
+     * @return const std::string& ：域名
+     * @return const std::string& : domain name
      */
-    string getDomain() const;
+    std::string getDomain() const;
 
     /**
      * @brief   获取端口.
      * @brief   Get port.
      * 
-     * @return const string& ：端口
-     * @return const string& : port
+     * @return const std::string& ：端口
+     * @return const std::string& : port
      */
-    string getPort() const;
+    std::string getPort() const;
 
     /**
      * @brief   是否是缺省的端口.
@@ -237,19 +238,19 @@ public:
      * @brief   获取路径.
      * @brief   Get path.
      * 
-     * @return const string& ：路径值
-     * @return const string& : path
+     * @return const std::string& ：路径值
+     * @return const std::string& : path
      */
-    string getPath() const;
+    std::string getPath() const;
 
     /**
      * @brief   获取查询部分.
      * @brief   Get the query section.
      * 
-     * @return string ：查询结果
-     * @return string : query results
+     * @return std::string ：查询结果
+     * @return std::string : query results
      */
-    string getQuery() const;
+    std::string getQuery() const;
 
     /**
      * @brief 取获Request，不包括Host,
@@ -259,16 +260,16 @@ public:
      * @return 符合上述条件的request
      * @return Request that meets the above criteria
      */
-    string getRequest() const;
+    std::string getRequest() const;
 
     /**
      * @brief  获取Ref.
      * @brief  Get Ref.
      * 
      * @return Ref串
-     * @return Ref string
+     * @return Ref std::string
      */
-    string getRef() const;
+    std::string getRef() const;
 
     /**
      * @brief   是否有效.
@@ -286,7 +287,7 @@ public:
      * @return 解析后的URL
      * @return Resolved URL
      */
-    string getURL() const;
+    std::string getURL() const;
 
     /**
      * @brief   获取URL类型.
@@ -302,9 +303,9 @@ public:
      * @brief   Get the relative path.
      * 
      * @return 相对路径字符串
-     * @return Relative path string
+     * @return Relative path std::string
      */
-    string getRelativePath() const;
+    std::string getRelativePath() const;
 
     /**
      * @brief   获取根路径.
@@ -313,7 +314,7 @@ public:
      * @return  根路径字符串
      * @return  Root Path String
      */
-    string getRootPath() const;
+    std::string getRootPath() const;
 
     /** 
      * @brief 调整路径.
@@ -333,7 +334,7 @@ public:
      * @return 返回调整后的URL
      * @return return adjusted URL
      */
-    TC_URL buildWithRelativePath(const string &sRelativeURL) const;
+    TC_URL buildWithRelativePath(const std::string &sRelativeURL) const;
 
     /**
      * @brief 规整化.
@@ -349,27 +350,27 @@ protected:
      * @brief  Change to URL
      * 
      * @return URL串
-     * @return URL string
+     * @return URL std::string
      */
-    string toURL();
+    std::string toURL();
 
     /**
      * @brief  类型到字符串的转换
      * @brief  Type to String Conversion
      * 
-     * @return string：转换后的字符串
-     * @return string: Converted string
+     * @return std::string：转换后的字符串
+     * @return std::string: Converted std::string
      */
-    string type2String() const;
+    std::string type2String() const;
 
     /**
      * @brief  获取协议的缺省端口.
      * @brief  Get the default port for the protocol
      * 
-     * @return string：缺省端口
-     * @return string: default port
+     * @return std::string：缺省端口
+     * @return std::string: default port
      */
-    string getDefaultPort() const;
+    std::string getDefaultPort() const;
 
     /**
      * @brief  简化URL.
@@ -380,7 +381,7 @@ protected:
      * @return      简化后的URL
      * @return      Simplified URL
      */
-    string simplePath(const string &sPath) const;
+    std::string simplePath(const std::string &sPath) const;
 
 protected:
 
@@ -390,19 +391,19 @@ protected:
      */
     int                 _iURLType;
 
-    string                _sScheme;
-    string                _sUser;
-    string                _sPass;
-    string                _sDomain;
-    string                _sPort;
-    string                _sPath;
-    string                _sQuery;
-    string                _sRef;
+    std::string                _sScheme;
+    std::string                _sUser;
+    std::string                _sPass;
+    std::string                _sDomain;
+    std::string                _sPort;
+    std::string                _sPath;
+    std::string                _sQuery;
+    std::string                _sRef;
     /**
      * 解析后的URL
      * Resolved URL
      */
-    string              _sURL;
+    std::string              _sURL;
 };
 
 /**
@@ -412,8 +413,8 @@ protected:
 class TC_Http
 {
 public:
-	static unordered_map<string, int> HEADER;
-	static unordered_map<int, string> HEADER_REVERSE;
+	static std::unordered_map<std::string, int> HEADER;
+	static std::unordered_map<int, std::string> HEADER_REVERSE;
 
     /**
      * @brief  构造函数
@@ -432,10 +433,10 @@ public:
      */
     struct CmpCase
     {
-        bool operator()(const string &s1, const string &s2) const;
+        bool operator()(const std::string &s1, const std::string &s2) const;
     };
 
-    typedef multimap<string, string, CmpCase> http_header_type;
+    typedef std::multimap<std::string, std::string, CmpCase> http_header_type;
 
     /**
      * @brief  删除头部.
@@ -443,7 +444,7 @@ public:
      *
      * @param sHeader:头部信息
      */
-    void eraseHeader(const string &sHeader) { _headers.erase(sHeader); }
+    void eraseHeader(const std::string &sHeader) { _headers.erase(sHeader); }
 
     /**
      * @brief  设置 Cache-Control.
@@ -451,7 +452,7 @@ public:
      *  
      * @param sCacheControl
      */
-    void setCacheControl(const string &sCacheControl){setHeader("Cache-Control", sCacheControl);}
+    void setCacheControl(const std::string &sCacheControl){setHeader("Cache-Control", sCacheControl);}
 
     /**
      * @brief  设置 Connection.
@@ -459,7 +460,7 @@ public:
      *  
      * @param sConnection：Connection信息
      */
-    void setConnection(const string &sConnection){setHeader("Connection", sConnection);}
+    void setConnection(const std::string &sConnection){setHeader("Connection", sConnection);}
 
     /**
      * @brief  设置 Content-Type.
@@ -468,7 +469,7 @@ public:
      * @param sContentType：Content信息
      * @param sContentType：Content Info
      */
-    void setContentType(const string &sContentType){setHeader("Content-Type", sContentType);}
+    void setContentType(const std::string &sContentType){setHeader("Content-Type", sContentType);}
 
     /**
      * @brief  设置内容长度.
@@ -489,7 +490,7 @@ public:
      * @param sReferer：Referer信息
      * @param sReferer：Referer Info
      */
-    void setReferer(const string &sReferer){setHeader("Referer", sReferer);}
+    void setReferer(const std::string &sReferer){setHeader("Referer", sReferer);}
 
     /**
      * @brief  设置 Host.
@@ -498,7 +499,7 @@ public:
      * @param sHost 例如 www.qq.com:80
      * @param sHost for example: www.qq.com:80
      */
-    void setHost(const string &sHost){setHeader("Host", sHost);}
+    void setHost(const std::string &sHost){setHeader("Host", sHost);}
 
     /**
      * @brief  设置 Accept-Encoding.
@@ -506,7 +507,7 @@ public:
      *  
      * @param sAcceptEncoding, gzip, compress, deflate, identity
      */
-    void setAcceptEncoding(const string &sAcceptEncoding){setHeader("Accept-Encoding", sAcceptEncoding);}
+    void setAcceptEncoding(const std::string &sAcceptEncoding){setHeader("Accept-Encoding", sAcceptEncoding);}
 
     /**
      * @brief  设置 Accept-Language.
@@ -515,7 +516,7 @@ public:
      * @param sAcceptLanguage：Accept-Language信息
      * @param sAcceptLanguage：Accept-Language Info
      */
-    void setAcceptLanguage(const string &sAcceptLanguage){setHeader("Accept-Language", sAcceptLanguage);}
+    void setAcceptLanguage(const std::string &sAcceptLanguage){setHeader("Accept-Language", sAcceptLanguage);}
 
     /**
      * @brief  设置 Accept.
@@ -524,7 +525,7 @@ public:
      * @param sAccept Accept信息
      * @param sAccept Accept Info
      */
-    void setAccept(const string &sAccept){setHeader("Accept", sAccept);}
+    void setAccept(const std::string &sAccept){setHeader("Accept", sAccept);}
 
     /**
      * @brief  设置 Transfer-Encoding.
@@ -533,7 +534,7 @@ public:
      * @param sTransferEncoding：Transfer-Encoding信息
      * @param sTransferEncoding：Transfer-Encoding Info
      */
-    void setTransferEncoding(const string& sTransferEncoding) {setHeader("Transfer-Encoding", sTransferEncoding); }
+    void setTransferEncoding(const std::string& sTransferEncoding) {setHeader("Transfer-Encoding", sTransferEncoding); }
 
     /**
      * @brief  设置header，
@@ -547,7 +548,7 @@ public:
      * @param sHeadValue header的值
      * @param sHeadValue header value
      */
-    void setHeader(const string &sHeadName, const string &sHeadValue);
+    void setHeader(const std::string &sHeadName, const std::string &sHeadValue);
 
     /**
      * @brief  设置header，常用的值请使用已经有的get/set方法设
@@ -559,9 +560,9 @@ public:
      * @param sHeadValue  header的值
      * @param sHeadValue  header value
      */
-    void setHeaderMulti(const string &sHeadName, const string &sHeadValue) 
+    void setHeaderMulti(const std::string &sHeadName, const std::string &sHeadValue) 
     {
-        _headers.insert(multimap<string, string>::value_type(sHeadName, sHeadValue));
+        _headers.insert(std::multimap<std::string, std::string>::value_type(sHeadName, sHeadValue));
     }
 
     /**
@@ -570,10 +571,10 @@ public:
      *
      * @param sHeadName  header的名字
      * @param sHeadName  header value
-     * @return           vector<string>header的值
-     * @return           vector<string>header value
+     * @return           std::vector<std::string>header的值
+     * @return           std::vector<std::string>header value
      */
-    vector<string> getHeaderMulti(const string &sHeadName) const;
+    std::vector<std::string> getHeaderMulti(const std::string &sHeadName) const;
 
     /**
      * @brief  获取http内容长度.
@@ -591,7 +592,7 @@ public:
      * @return host请求信息
      * @return Host request information
      */
-    string getHost() const;
+    std::string getHost() const;
 
     /**
      * @brief 获取http头部长度.
@@ -607,15 +608,15 @@ public:
      * @brief Get HTTP content.
      *
      * @return http内容串
-     * @return HTTP content string
+     * @return HTTP content std::string
      */
-    const string &getContent() const { return _content; }
+    const std::string &getContent() const { return _content; }
 
     /**
      * @brief get body
      * @return http body
      */
-    string &getContent() { return _content; }
+    std::string &getContent() { return _content; }
 
     /**
      * @brief 请求body内容, 其他都不变
@@ -651,7 +652,7 @@ public:
      * @param bUpdateContentLength  是否更新ContentLength
      * @param bUpdateContentLength  Whether to update ContentLength
      */
-    void setContent(const string &content, bool bUpdateContentLength = false) 
+    void setContent(const std::string &content, bool bUpdateContentLength = false) 
     {
         _content = content; 
 
@@ -667,9 +668,9 @@ public:
      * @brief 获取内容类型.
      * @brief Get Content Type.
      *
-     * @return string
+     * @return std::string
      */
-    string getContentType() const;
+    std::string getContentType() const;
 
     /**
      * @brief 获取http头部参数，(Set-Cookie和Cookie不要用这个获取,
@@ -681,7 +682,7 @@ public:
      * @return        header的相关信息
      * @return        header related information
      */
-    string getHeader(const string& sHeader) const;
+    std::string getHeader(const std::string& sHeader) const;
 
     /**
      * @brief 是否有header
@@ -702,7 +703,7 @@ public:
 
 	/**
 	 * @brief 获取http头部map.
-     * @brief Get HTTP header map
+     * @brief Get HTTP header std::map
 	 *
 	 * @return http_header_type&
 	 */
@@ -712,7 +713,7 @@ public:
 	 * get headers
 	 * @param header
 	 */
-	void getHeaders(map<string, string> &header) const;
+	void getHeaders(std::map<std::string, std::string> &header) const;
 
      /**
       * @brief 重置
@@ -722,19 +723,19 @@ public:
 
     /**
      * @brief 生成头部字符串(不包含第一行), 直接累加到sHttpHeader后
-     * @brief Generate a header string (excluding the first line) and add it directly to the  back of sHttpHeader
+     * @brief Generate a header std::string (excluding the first line) and add it directly to the  back of sHttpHeader
      *
-     * @return string：头部字符串
-     * @return string: header string
+     * @return std::string：头部字符串
+     * @return std::string: header std::string
      */
-    void genHeader(string &sHttpHeader) const;
+    void genHeader(std::string &sHttpHeader) const;
 
     /**
      * @brief 生成头部字符串(不包含第一行)
-     * @brief Generate header string (excluding first line)
+     * @brief Generate header std::string (excluding first line)
      * @return
      */
-	string genHeader() const;
+	std::string genHeader() const;
 
 	/**
 	 * @brief 该http原始数据包是否是chunk编码格式.
@@ -749,7 +750,7 @@ public:
      * @brief 解析请求head，不解析第一行,
      *        第一行请求包和响应包不一样， 后面的数据解析为map格式
      * @brief Resolve the request head without resolving the first line,
-     *        The first row of request and response packages is different, and the subsequent data is parsed into map format
+     *        The first row of request and response packages is different, and the subsequent data is parsed into std::map format
      * @param szBuffer
      * @return const char*, 偏移的指针
      * @return const char*, Offset pointer
@@ -789,7 +790,7 @@ public:
 //					value.resize(it - (itF + 1));
 //					std::copy(itF + 1, it, value.begin());
 //
-//					sHeader.insert(multimap<string, string>::value_type(TC_Common::trim(name, " "),
+//					sHeader.insert(multimap<string, std::string>::value_type(TC_Common::trim(name, " "),
 //					                                                    TC_Common::trim(value, " ")));
 //
 //				}
@@ -830,13 +831,13 @@ protected:
 	 * 获取版本
      * get version
 	 */
-	string  _version;
+	std::string  _version;
 
     /**
      * http头部内容
      * HTTP header content
      */
-    string              _content;
+    std::string              _content;
 
     /**
      * 是否是chunk模式
@@ -854,13 +855,13 @@ protected:
 class TC_HttpCookie
 {
 public:
-    typedef map<string, string, TC_Http::CmpCase> http_cookie_data;
+    typedef std::map<std::string, std::string, TC_Http::CmpCase> http_cookie_data;
 
     struct Cookie
     {
         http_cookie_data    _data;
-        string              _domain;
-        string              _path;
+        std::string              _domain;
+        std::string              _path;
         /*Equal to 0 means valid only for the current call*/
         time_t              _expires;       //等于0表示只在当前回话有效
         bool                _isSecure;
@@ -879,9 +880,9 @@ public:
      * @param sCookieRspURL 产生该Cookie HTTP响应的URL
      * @param sCookieRspURL The URL that generated the cookie HTTP response
      * @param vCookies      set-Cookie字符串
-     * @param vCookies      Set-Cookie string
+     * @param vCookies      Set-Cookie std::string
      */
-    void addCookie(const string &sCookieRspURL, const vector<string> &vCookies);
+    void addCookie(const std::string &sCookieRspURL, const std::vector<std::string> &vCookies);
 
     /**
      * @brief 增加Cookie到管理器.
@@ -897,7 +898,7 @@ public:
      *  
      * @param cookie
      */
-    void addCookie(const list<Cookie> &cookie);
+    void addCookie(const std::list<Cookie> &cookie);
 
     /**
      * @brief 获取某个url的cookie域值对，去掉了Domain,Path等字段
@@ -906,7 +907,7 @@ public:
      * @param sReqURL URL required matching
      * @param cookies
      */
-    void getCookieForURL(const string &sReqURL, list<Cookie> &cookies);
+    void getCookieForURL(const std::string &sReqURL, std::list<Cookie> &cookies);
 
     /**
      * @brief 获取某个url的cookie域值对，去掉了Domain,Path等字段
@@ -914,13 +915,13 @@ public:
      * @param sReqURL  需要匹配的URL
      * @param sReqURL URL required matching
      * @param sCookie
-     * @param string  
+     * @param std::string  
      */
-    void getCookieForURL(const string &sReqURL, string &sCookie);
+    void getCookieForURL(const std::string &sReqURL, std::string &sCookie);
 
     /**
      * @brief 匹配域名，sCookieDomain串有多个域
-     * @brief Match domain name, sCookieDomain string has multiple domains
+     * @brief Match domain name, sCookieDomain std::string has multiple domains
      * sCookieDomain未以.开头, 则sCookieDomain=sDomain
      * SCookieDomain does not start with. then sCookieDomain=sDomain
      * sCookieDomain以.开头,则sDomain右边匹配sDomain,sDomain比sCookieDomain以最多多一个.
@@ -933,7 +934,7 @@ public:
      * @return bool         匹配成功返回true，否则返回false
      * @return bool         Match successfully returns true, otherwise returns false
      */
-    static bool matchDomain(const string &sCookieDomain, const string &sDomain);
+    static bool matchDomain(const std::string &sCookieDomain, const std::string &sDomain);
 
     /**
      * @brief 匹配路径.
@@ -946,7 +947,7 @@ public:
      * @return            匹配路径的长度
      * @return            The length of the matched path
      */
-    static size_t matchPath(const string &sCookiePath, const string &sPath);
+    static size_t matchPath(const std::string &sCookiePath, const std::string &sPath);
 
     /**
      * @brief 获取所有的Cookie.
@@ -954,7 +955,7 @@ public:
      * 
      * @return list<Cookie>&
      */
-    const list<Cookie>& getAllCookie();
+    const std::list<Cookie>& getAllCookie();
 
     /**
      * @brief  删除过期的Cookie，仅仅存在与当前回话的Cookie不删除
@@ -978,7 +979,7 @@ public:
      * @return  list<Cookie>:所有符合条件的cookie
      * @return  List <Cookie>: All eligible cookies
      */
-    list<Cookie> getSerializeCookie(time_t t);
+    std::list<Cookie> getSerializeCookie(time_t t);
 
 protected:
     /**
@@ -1009,7 +1010,7 @@ protected:
      * @param cookies 要被添加的list对象
      * @param cookies List object to be added
      */
-    void addCookie(const Cookie &cookie, list<Cookie> &cookies);
+    void addCookie(const Cookie &cookie, std::list<Cookie> &cookies);
 
     /**
      * @brief 修正Domain.
@@ -1017,10 +1018,10 @@ protected:
      *  
      * @param sDomain  修正前的Domain
      * @param sDomain  Domain before correction
-     * @return string 修正后的Domain
-     * @return string Modified Domain
+     * @return std::string 修正后的Domain
+     * @return std::string Modified Domain
      */
-    bool fixDomain(const string &sDomain, string &sFixDomain);
+    bool fixDomain(const std::string &sDomain, std::string &sFixDomain);
 
 protected:
 
@@ -1030,7 +1031,7 @@ protected:
      *  
      * key:domain+path
      */
-    list<Cookie> _cookies;
+    std::list<Cookie> _cookies;
 };
 
 /********************* TC_HttpResponse ***********************/
@@ -1100,14 +1101,14 @@ public:
      * @brief 解析http应答(采用string方式) ，
      * 注意:如果http头部没有Content-Length且非chunk模式, 则返回true
      * 需要网络层判断(http服务端主动关闭连接也算是发送http响应完整了)
-     * @brief Resolve the HTTP response (in string mode),
+     * @brief Resolve the HTTP response (in std::string mode),
      * Note: Returns true if the HTTP header has no Content-Length and is not in chunk mode
      * Network layer judgment is required (proactive closure of the connection by the HTTP server is equivalent to sending a complete http response)
      * @param sBuffer
      * @return bool, sBuffer是否是完整的http请求
      * @return bool, is sBuffer a complete HTTP request
      */
-    bool decode(const string &sBuffer);
+    bool decode(const std::string &sBuffer);
 
     /**
      *  @brief 解析http应答，
@@ -1124,32 +1125,32 @@ public:
 
     /**
      * @brief 编码应答包(采用string方式).
-     * @brief Encode the answer pack (in string mode).
+     * @brief Encode the answer pack (in std::string mode).
      *  
      * @param sBuffer 
-     * @return string 编码后的应答包
-     * @return string Encoded Answer Pack
+     * @return std::string 编码后的应答包
+     * @return std::string Encoded Answer Pack
      */
-    string encode() const;
+    std::string encode() const;
 
     /**
-     * @brief 编码应答包(采用vector<char>方式).
-     * @brief Encode the response pack (using vector <char>mode).
+     * @brief 编码应答包(采用std::vector<char>方式).
+     * @brief Encode the response pack (using std::vector <char>mode).
      *  
      * @param sBuffer 
-     * @return string 编码后的应答包(vector<char>形式的)
-     * @return string Encoded Response Pack (in the form of vector<char>
+     * @return std::string 编码后的应答包(std::vector<char>形式的)
+     * @return std::string Encoded Response Pack (in the form of std::vector<char>
      */
-    void encode(vector<char> &sBuffer) const;
+    void encode(std::vector<char> &sBuffer) const;
 
     /**
      * @brief 获取第一行(HTTP/1.1 200 OK).
      * @brief Get the first row (HTTP/1.1 200 OK).
      * 
-     * @return string 获取的内容
-     * @return string content obtained
+     * @return std::string 获取的内容
+     * @return std::string content obtained
      */
-    string getResponseHeaderLine() const { return _headerLine; }
+    std::string getResponseHeaderLine() const { return _headerLine; }
 
     /**
      * @brief 获取HTTP响应状态(例如200).
@@ -1172,10 +1173,10 @@ public:
      * @brief 获取描述(例如OK).
      * @brief Get a description (for example, OK).
      * 
-     * @return string 描述信息
-     * @return string Description Information
+     * @return std::string 描述信息
+     * @return std::string Description Information
      */
-    string getAbout() const { return _about; }
+    std::string getAbout() const { return _about; }
 
     /**
      * @brief 设置描述.
@@ -1184,16 +1185,16 @@ public:
      * @param about 描述信息
      * @param about Descriptive Information
      */
-    void setAbout(const string &about) { _about = about; }
+    void setAbout(const std::string &about) { _about = about; }
 
     /**
      * @brief 获取版本, 例如HTTP/1.1   .
      * @brief Get a version, such as HTTP/1.1
      * 
-     * @return string 版本信息
-     * @return string version info
+     * @return std::string 版本信息
+     * @return std::string version info
      */
-    string getVersion() const { return _version; }
+    std::string getVersion() const { return _version; }
 
     /**
      * @brief 另种模式:HTTP/1.1(默认)或者HTTP/1.0  .
@@ -1201,11 +1202,11 @@ public:
      *  
      * @param sVersion
      */
-    void setVersion(const string &sVersion) { _version = sVersion; }
+    void setVersion(const std::string &sVersion) { _version = sVersion; }
 
     /**
      * @brief 设置应答状态(采用string方式).
-     * @brief Set the response status (string mode).
+     * @brief Set the response status (std::string mode).
      *  
      * @param status 状态码
      * @param status Status Code
@@ -1214,7 +1215,7 @@ public:
      * @param sBody post协议body的内容
      * @param sBody Contents of post protocol body
      */
-    void setResponse(int status = 200, const string& about = "OK", const string& sBody = "");
+    void setResponse(int status = 200, const std::string& about = "OK", const std::string& sBody = "");
 
     /**
      * @brief 设置应答状态.
@@ -1229,7 +1230,7 @@ public:
      * @param iLength sBuffer长度
      * @param iLength sBuffer length
      */
-    void setResponse(int status, const string& about, const char *sBuffer, size_t iLength);
+    void setResponse(int status, const std::string& about, const char *sBuffer, size_t iLength);
 
     /**
      * @brief 设置应答, 缺省status=200, about=OK.
@@ -1249,7 +1250,7 @@ public:
      * @param sServer 服务的信息
      * @param sServer server info
      */
-    void setServer(const string &sServer){setHeader("Server", sServer);}
+    void setServer(const std::string &sServer){setHeader("Server", sServer);}
 
     /**
      * @brief 设置Set-Cookie.
@@ -1258,15 +1259,15 @@ public:
      * @param sCookie Cookie信息
      * @param sCookie Cookie info
      */
-    void setSetCookie(const string &sCookie){setHeader("Set-Cookie", sCookie);}
+    void setSetCookie(const std::string &sCookie){setHeader("Set-Cookie", sCookie);}
 
     /**
      * @brief 获取Set-Cookie.
      * @brief get Set-Cookie
      *
-     * @return vector<string>
+     * @return std::vector<std::string>
      */
-    vector<string> getSetCookie() const;
+    std::vector<std::string> getSetCookie() const;
 
     /**
      * @brief 解析应答头.
@@ -1294,27 +1295,27 @@ public:
 //		auto f1 = std::search(beginIt, headerIt, sep.c_str(), sep.c_str() + sep.size());
 //		if(f1 == headerIt)
 //		{
-//			throw TC_HttpResponse_Exception("[TC_HttpResponse_Exception::parseResponeHeader] http response parse version format error : " + string(beginIt, it));
+//			throw TC_HttpResponse_Exception("[TC_HttpResponse_Exception::parseResponeHeader] http response parse version format error : " + std::string(beginIt, it));
 //		}
 //
 //		auto f2 = std::search(f1 + 1, headerIt, sep.c_str(), sep.c_str() + sep.size());
 //		if(f1 == headerIt)
 //		{
-//			throw TC_HttpResponse_Exception("[TC_HttpResponse_Exception::parseResponeHeader] http response parse status format error : " + string(beginIt, it));
+//			throw TC_HttpResponse_Exception("[TC_HttpResponse_Exception::parseResponeHeader] http response parse status format error : " + std::string(beginIt, it));
 //		}
 //
-//		_headerLine = string(beginIt, it);
+//		_headerLine = std::string(beginIt, it);
 //
 //		if(TC_Port::strncasecmp(_headerLine.c_str(), "HTTP/", 5) != 0)
 //		{
 //			throw TC_HttpResponse_Exception("[TC_HttpResponse_Exception::parseResponeHeader] http response version is not start with 'HTTP/' : " + _headerLine);
 //		}
 //
-//		_version    = string(beginIt, f1);
+//		_version    = std::string(beginIt, f1);
 //
-//		_status     = TC_Common::strto<int>(string(f1 + 1, f2));
+//		_status     = TC_Common::strto<int>(std::string(f1 + 1, f2));
 //
-//		_about      = TC_Common::trim(string(f2 + 1, it));
+//		_about      = TC_Common::trim(std::string(f2 + 1, it));
 //
 //		parseHeader(beginIt, headerIt, _headers);
 //	}
@@ -1327,7 +1328,7 @@ protected:
      * Add content
      * @param sBuffer
      */
-    void addContent(const string &sBuffer);
+    void addContent(const std::string &sBuffer);
 
     /**
      * 添加内容
@@ -1349,13 +1350,13 @@ protected:
      * 应答描述
      * Response Description
      */
-    string  _about;
+    std::string  _about;
 
     /**
      * 获取第一行
      * Get the first row
      */
-    string  _headerLine;
+    std::string  _headerLine;
 
     /**
      * 临时的content length
@@ -1433,7 +1434,7 @@ public:
      *  
      * @param sUserAgent
      */
-    void setUserAgent(const string &sUserAgent){setHeader("User-Agent", sUserAgent);}
+    void setUserAgent(const std::string &sUserAgent){setHeader("User-Agent", sUserAgent);}
 
     /**
      * @brief 设置 Cookie.
@@ -1441,15 +1442,15 @@ public:
      *  
      * @param sCookie
      */
-    void setCookie(const string &sCookie){setHeader("Cookie", sCookie);}
+    void setCookie(const std::string &sCookie){setHeader("Cookie", sCookie);}
 
     /**
      * @brief 获取原始Cookie行.
      * @brief Get the original Cookie line.
      * 
-     * @return vector<string>
+     * @return std::vector<std::string>
      */
-    vector<string> getCookie();
+    std::vector<std::string> getCookie();
 
     /**
      * @brief 解析http请求, 如果不是HTTP请求则抛出异常.
@@ -1461,7 +1462,7 @@ public:
      * @return        Is sBuffer a complete HTTP request
      * @throw         TC_HttpRequest_Exception 
      */
-    bool decode(const string &sBuffer);
+    bool decode(const std::string &sBuffer);
 
 	/**
 	* @brief 解析http请求, 如果不是HTTP请求则抛出异常.
@@ -1473,13 +1474,13 @@ public:
     * @return        Is sBuffer a complete HTTP request
 	* @throw         TC_HttpRequest_Exception
 	*/
-	bool decode(const vector<char> &sBuffer);
+	bool decode(const std::vector<char> &sBuffer);
 
 	/**
      * @brief 解析http请求,
-     *        如果不是HTTP请求则抛出异常(采用vector<char>方式).
+     *        如果不是HTTP请求则抛出异常(采用std::vector<char>方式).
      * @brief Resolve HTTP requests,
-     *        If it is not an HTTP request, an exception is thrown (in vector<char>mode).
+     *        If it is not an HTTP request, an exception is thrown (in std::vector<char>mode).
      *  
      * @param sBuffer http请求
      * @param sBuffer HTTP request
@@ -1493,26 +1494,26 @@ public:
 
     /**
      * @brief 生成请求(采用string方式).
-     * @brief Generate a request (in string mode).
+     * @brief Generate a request (in std::string mode).
      *  
      * @param sUrl 
-     * @return string
+     * @return std::string
      */
-    string encode();
+    std::string encode();
 
     /**
-     * @brief 生成请求(采用vector<char>方式).
-     * @brief Generate the request (using vector <char>).
+     * @brief 生成请求(采用std::vector<char>方式).
+     * @brief Generate the request (using std::vector <char>).
      *  
      * @param buffer请求内容
      */
-    void encode(vector<char> &buffer);
+    void encode(std::vector<char> &buffer);
 
     /**
      * encode buffer to TC_NetWorkBuffer
      * @param buff
      */
-	void encode(shared_ptr<TC_NetWorkBuffer::Buffer>& buff) ;
+	void encode(std::shared_ptr<TC_NetWorkBuffer::Buffer>& buff) ;
 
     /**
      * encode buffer to TC_NetWorkBuffer
@@ -1533,7 +1534,7 @@ public:
      *                     (By default, if there is a Host message, it is not created)
      *                     (Note that it was created at encode time)
      */
-    void setRequest(const string& method, const string &sUrl, const std::string& body = "", bool bNewCreateHost = false);
+    void setRequest(const std::string& method, const std::string &sUrl, const std::string& body = "", bool bNewCreateHost = false);
     
     /**
      * @brief 设置Get请求包.
@@ -1548,7 +1549,7 @@ public:
      *                     (By default, if there is a Host message, it is not created)
      *                     (Note that it was created at encode time)
      */
-    void setGetRequest(const string &sUrl, bool bNewCreateHost = false);
+    void setGetRequest(const std::string &sUrl, bool bNewCreateHost = false);
 
     /**
      * @brief 设置Head请求包.
@@ -1563,11 +1564,11 @@ public:
         *                     (By default, if there is a Host message, it is not created)
         *                     (Note that it was created at encode time)
         */
-   void setHeadRequest(const string &sUrl, bool bNewCreateHost = false);
+   void setHeadRequest(const std::string &sUrl, bool bNewCreateHost = false);
 
     /**
      * @brief 设置POST请求包(采用string方式).
-     * @brief Set the POST request package (string mode).
+     * @brief Set the POST request package (std::string mode).
      *  
      * @param sUrl        例如:http://www.qq.com/query
      * @param sUrl        for example: http://www.qq.com/query
@@ -1580,11 +1581,11 @@ public:
      *                    (By default, if there is a Host message, it is not created)
      *                    (Note that it was created at encode time)
      */
-    void setPostRequest(const string &sUrl, const string &sPostBody, bool bNewCreateHost = false);
+    void setPostRequest(const std::string &sUrl, const std::string &sPostBody, bool bNewCreateHost = false);
 
     /**
-     * @brief 设置POST请求包(采用vector<char>方式).
-     * @brief Set up the POST request package (in vector<char>mode).
+     * @brief 设置POST请求包(采用std::vector<char>方式).
+     * @brief Set up the POST request package (in std::vector<char>mode).
      *  
      * @param sUrl        例如:http://www.qq.com/query
      * @param sUrl        for example: http://www.qq.com/query
@@ -1597,12 +1598,12 @@ public:
      *                    (By default, if there is a Host message, it is not created)
      *                    (Note that it was created at encode time)
      */
-    void setPostRequest(const string &sUrl, const char *sBuffer, size_t iLength, bool bNewCreateHost = false);
+    void setPostRequest(const std::string &sUrl, const char *sBuffer, size_t iLength, bool bNewCreateHost = false);
 
-    void setPutRequest(const string &sUrl, const string &sPostBody, bool bNewCreateHost = false);
-    void setPatchRequest(const string &sUrl, const string &sPostBody, bool bNewCreateHost = false);
+    void setPutRequest(const std::string &sUrl, const std::string &sPostBody, bool bNewCreateHost = false);
+    void setPatchRequest(const std::string &sUrl, const std::string &sPostBody, bool bNewCreateHost = false);
 
-    void setDeleteRequest(const string &sUrl, const string &sPostBody, bool bNewCreateHost = false);
+    void setDeleteRequest(const std::string &sUrl, const std::string &sPostBody, bool bNewCreateHost = false);
 
     /**
      * @brief 设置Get请求包.
@@ -1617,7 +1618,7 @@ public:
      *                     (By default, if there is a Host message, it is not created)
      *                     (Note that it was created at encode time)
      */
-    void setOptionsRequest(const string &sUrl, bool bNewCreateHost = false);
+    void setOptionsRequest(const std::string &sUrl, bool bNewCreateHost = false);
 
     /**
      * @brief 获取url里面的地址和端口.
@@ -1626,7 +1627,7 @@ public:
      * @param sHost
      * @param iPort
      */
-    void getHostPort(string &sDomain, uint32_t &iPort);
+    void getHostPort(std::string &sDomain, uint32_t &iPort);
 
     /**
      * @brief 发送HTTP请求.
@@ -1664,7 +1665,7 @@ public:
 	 * get method
 	 * @return
 	 */
-	const string &getMethod() const;
+	const std::string &getMethod() const;
 
 	/**
 	 * set method
@@ -1748,9 +1749,9 @@ public:
      * @brief Get the complete HTTP request
      *
      * @return http请求串
-     * @return HTTP request string
+     * @return HTTP request std::string
      */
-    string getOriginRequest() const { return _httpURL.getURL(); }
+    std::string getOriginRequest() const { return _httpURL.getURL(); }
 
     /**
      * @brief 获取http请求的url，不包括Host,
@@ -1760,7 +1761,7 @@ public:
      * @return http请求的url
      * @return URL of HTTP request
      */
-    string getRequest() const { return _httpURL.getRequest(); }
+    std::string getRequest() const { return _httpURL.getRequest(); }
 
     /**
      * @brief 获取http请求的url部分, 即?前面，不包括Host,
@@ -1770,7 +1771,7 @@ public:
      * @return http请求的url部分
      * @return URL part of HTTP request
      * */
-    string getRequestUrl() const { return _httpURL.getPath(); }
+    std::string getRequestUrl() const { return _httpURL.getPath(); }
 
     /**
      * @brief 获取http请求url后的参数部分，即?后面#前面部分不
@@ -1780,7 +1781,7 @@ public:
      * @return http请求url后的参数部分
      * @return Parameter section after HTTP request URL
      */
-    string getRequestParam() const { return _httpURL.getQuery(); }
+    std::string getRequestParam() const { return _httpURL.getQuery(); }
 
     /**
      * @brief 解析请求头部.
@@ -1800,7 +1801,7 @@ protected:
      * @brief 解析URL
      * @brief Resolve URL
      */
-    void parseURL(const string& sUrl);
+    void parseURL(const std::string& sUrl);
 
 protected:
 

@@ -46,7 +46,7 @@ namespace tars
 */
 struct TC_PackIn_Exception : public TC_Exception
 {
-	TC_PackIn_Exception(const string &buffer) : TC_Exception(buffer){};
+	TC_PackIn_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_PackIn_Exception() throw(){};
 };
 
@@ -55,8 +55,8 @@ struct TC_PackIn_Exception : public TC_Exception
  */
 struct TC_PackOut_Exception : public TC_Exception
 {
-    TC_PackOut_Exception(const string &buffer) : TC_Exception(buffer){};
-    TC_PackOut_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_PackOut_Exception(const std::string &buffer) : TC_Exception(buffer){};
+    TC_PackOut_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_PackOut_Exception() throw(){};
 };
 
@@ -70,7 +70,7 @@ public:
     /**
      * @brief  构造函数
      */
-    TC_PackIn() : _pii(this, true, string::npos)
+    TC_PackIn() : _pii(this, true, std::string::npos)
     {
 
     }
@@ -86,7 +86,7 @@ protected:
          * @brief  
          * @param pi
          */
-        TC_PackInInner(TC_PackIn *ppi, bool bInsert, string::size_type nPos = string::npos)
+        TC_PackInInner(TC_PackIn *ppi, bool bInsert, std::string::size_type nPos = std::string::npos)
         : _ppi(ppi)
         , _bInsert(bInsert)
         , _nPos(nPos)
@@ -99,7 +99,7 @@ protected:
          */
         ~TC_PackInInner()
         {
-            if(_nPos == string::npos)
+            if(_nPos == std::string::npos)
             {
                  return;
             }
@@ -134,16 +134,16 @@ protected:
         /**
          * @brief  
          *
-         * @return const string&
+         * @return const std::string&
          */
-        const string &topacket() const { return _buffer; }
+        const std::string &topacket() const { return _buffer; }
 
         /**
          *
          *
-         * @return string&
+         * @return std::string&
          */
-        string& getBuffer() { return _buffer; }
+        std::string& getBuffer() { return _buffer; }
 
         /**
          *
@@ -264,7 +264,7 @@ protected:
         * @param iLen, 字节数
         * return void
         */
-        TC_PackInInner& operator << (const string& sBuffer);
+        TC_PackInInner& operator << (const std::string& sBuffer);
 
         /**
          * @brief  
@@ -277,8 +277,8 @@ protected:
     protected:
         TC_PackIn   *_ppi;
         bool        _bInsert;
-        string::size_type   _nPos;
-        string      _buffer;
+        std::string::size_type   _nPos;
+        std::string      _buffer;
     };
 
 public:
@@ -295,16 +295,16 @@ public:
 
     /**
     * @brief  返回当前包体内容
-    * @return string
+    * @return std::string
     */
-    const string& topacket() const { return _pii.topacket(); }
+    const std::string& topacket() const { return _pii.topacket(); }
 
     /**
      * @brief  
      *
-     * @return string&
+     * @return std::string&
      */
-    string& getBuffer() {return _pii.getBuffer(); }
+    std::string& getBuffer() {return _pii.getBuffer(); }
 
     /**
      * @brief  
@@ -324,7 +324,7 @@ public:
      *
      * @return TC_PackIn&
      */
-    TC_PackInInner insert(string::size_type nPos)
+    TC_PackInInner insert(std::string::size_type nPos)
     {
         return TC_PackInInner(this, true, nPos);
     }
@@ -335,7 +335,7 @@ public:
      *
      * @return TC_PackIn&
      */
-    TC_PackInInner replace(string::size_type nPos)
+    TC_PackInInner replace(std::string::size_type nPos)
     {
         return TC_PackInInner(this, false, nPos);
     }
@@ -509,7 +509,7 @@ public:
     * @param iLen, 字节数
     * return void
     */
-    TC_PackOut& operator >> (string& sBuffer);
+    TC_PackOut& operator >> (std::string& sBuffer);
 
 protected:
 
@@ -580,12 +580,12 @@ inline TC_PackIn& encode(TC_PackIn& pi, short i)
 }
 
 /**
- * @brief  string编码
+ * @brief  std::string编码
  * @param s
  *
  * @return TC_PackIn&
  */
-inline TC_PackIn& encode(TC_PackIn& pi, const string &i)
+inline TC_PackIn& encode(TC_PackIn& pi, const std::string &i)
 {
     pi << i;
     return pi;
@@ -641,14 +641,14 @@ inline TC_PackIn& encode(TC_PackIn& pi, const T &i)
 }
 
 /**
- * @brief  vector编码
+ * @brief  std::vector编码
  * @param T
  * @param t
  *
  * @return TC_PackIn&
  */
 template<typename T>
-inline TC_PackIn& encode(TC_PackIn& pi, const vector<T> &t)
+inline TC_PackIn& encode(TC_PackIn& pi, const std::vector<T> &t)
 {
     encode(pi, (int)t.size());
     for(size_t i = 0; i < t.size(); i++)
@@ -667,10 +667,10 @@ inline TC_PackIn& encode(TC_PackIn& pi, const vector<T> &t)
  * @return TC_PackIn&
  */
 template<typename K, typename V>
-inline TC_PackIn& encode(TC_PackIn& pi, const map<K, V> &t)
+inline TC_PackIn& encode(TC_PackIn& pi, const std::map<K, V> &t)
 {
     encode(pi, (int)t.size());
-    typename map<K, V>::const_iterator it = t.begin();
+    typename std::map<K, V>::const_iterator it = t.begin();
     while(it != t.end())
     {
         encode(pi, it->first);
@@ -724,11 +724,11 @@ inline void decode(TC_PackOut &po, char &t)
 }
 
 /**
- * @brief  string解码
+ * @brief  std::string解码
  * @param oPtr
  * @param t
  */
-inline void decode(TC_PackOut &po, string &t)
+inline void decode(TC_PackOut &po, std::string &t)
 {
     po >> t;
 }
@@ -776,13 +776,13 @@ inline void decode(TC_PackOut &po, T &t)
 }
 
 /**
- * @brief  vector解码
+ * @brief  std::vector解码
  * @param T
  * @param oPtr
  * @param t
  */
 template<typename T>
-inline void decode(TC_PackOut &po, vector<T> &t)
+inline void decode(TC_PackOut &po, std::vector<T> &t)
 {
     int n;
     po >> n;
@@ -796,14 +796,14 @@ inline void decode(TC_PackOut &po, vector<T> &t)
 }
 
 /**
- * @brief  map解码
+ * @brief  std::map解码
  * @param K
  * @param V
  * @param oPtr
  * @param t
  */
 template<typename K, typename V>
-inline void decode(TC_PackOut &po, map<K, V> &t)
+inline void decode(TC_PackOut &po, std::map<K, V> &t)
 {
     int n;
     po >> n;

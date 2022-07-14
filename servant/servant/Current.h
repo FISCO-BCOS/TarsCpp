@@ -34,7 +34,7 @@ class ServantHandle;
 class Current : public TC_HandleBase
 {
 public:
-    typedef std::map<string, string>    TARS_STATUS;
+    typedef std::map<string, std::string>    TARS_STATUS;
 
     typedef std::vector<char>           TARS_BUFFER;
 
@@ -51,15 +51,15 @@ public:
 
     /**
      * 获取IP
-     * @return string
+     * @return std::string
      */
-    const string &getIp() const;
+    const std::string &getIp() const;
 
     /**
      * get host name
      * @return
      */
-	const string &getHostName() const;
+	const std::string &getHostName() const;
 
 	/**
      * 获取端口
@@ -103,12 +103,12 @@ public:
     /**
      * 设置返回的context(仅TARS协议有效)
      */
-    void setResponseContext(const map<std::string, std::string> & context){_responseContext = context;}
+    void setResponseContext(const std::map<std::string, std::string> & context){_responseContext = context;}
 
     /**
      * 获取返回的context(仅TARS协议有效)
      */
-    const map<std::string, std::string> & getResponseContext() const {return _responseContext;}
+    const std::map<std::string, std::string> & getResponseContext() const {return _responseContext;}
 
     /**
      * 关闭当前连接
@@ -128,15 +128,15 @@ public:
 
     /**
      * 获取请求buffer
-     * @return string
+     * @return std::string
      */
     const vector<char> &getRequestBuffer() const;
 
     /**
      * 获取服务Servant名称
-     * @return string
+     * @return std::string
      */
-    string getServantName() const;
+    std::string getServantName() const;
 
     /**
      * 请求的协议的版本号(仅TARS协议有效)
@@ -147,21 +147,21 @@ public:
 
     /**
      * 扩展map(仅TARS协议有效)
-     * @return map<string,string>&
+     * @return std::map<string,string>&
      */
-    map<string, string>& getContext();
+    std::map<string, std::string>& getContext();
 
     /**
      * 获取保存状态信息，比如染色等(仅TARS协议有效)
-     * @return map<string,string>&
+     * @return std::map<string,string>&
      */
-    const map<string, string>& getRequestStatus() const;
+    const std::map<string, std::string>& getRequestStatus() const;
 
     /**
      * 函数名称(仅TARS协议有效)
-     * @return string
+     * @return std::string
      */
-    string getFuncName() const;
+    std::string getFuncName() const;
 
     /**
      * 请求ID(仅TARS协议有效)
@@ -233,7 +233,7 @@ public:
      * @param iRet
      * @param buff
      */
-    void sendResponse(int iRet, const string &buff);
+    void sendResponse(int iRet, const std::string &buff);
     
 	/**
      * 普通协议的发送响应数据(非TARS协议有效)
@@ -250,13 +250,13 @@ public:
      * @param sResultDesc
      * @param push
      */
-	void sendResponse(int iRet, ResponsePacket &response, const map<string, string>& status, const string& sResultDesc);
+	void sendResponse(int iRet, ResponsePacket &response, const std::map<string, std::string>& status, const std::string& sResultDesc);
     /**
      * 设置调用链追踪信息，服务端主动回包时用
      * @param traceCall
      * @param traceKey
      */
-	void setTrace(bool traceCall, const string& traceKey);
+	void setTrace(bool traceCall, const std::string& traceKey);
 
     /**
      * 是否需要追踪调用链
@@ -282,13 +282,13 @@ protected:
      * 初始化
      * @param stRecvData
      */
-    void initialize(const shared_ptr<TC_EpollServer::RecvContext> &data);
+    void initialize(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
 	/**
      * 初始化
      * @param stRecvData
      */
-    void initializeClose(const shared_ptr<TC_EpollServer::RecvContext> &data);
+    void initializeClose(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
     /**
      * 初始化
@@ -299,12 +299,12 @@ protected:
     /**
      * 服务端上报状态，针对单向调用及WUP调用(仅对TARS协议有效)
      */
-    void reportToStat(const string & sObj);
+    void reportToStat(const std::string & sObj);
 
     /**
      * 设置cookie
      */
-    void setCookie(const map<string, string> &cookie)
+    void setCookie(const std::map<string, std::string> &cookie)
     {
         _cookie = cookie;
     }
@@ -312,7 +312,7 @@ protected:
     /**
      * 获取cookie
      */
-    map<string, string> & getCookie()
+    std::map<std::string, std::string> & getCookie()
     {
         return _cookie;
     }
@@ -326,7 +326,7 @@ protected:
     /**
      * 接收到的数据
      */
-	shared_ptr<TC_EpollServer::RecvContext> _data;
+	std::shared_ptr<TC_EpollServer::RecvContext> _data;
 
     /**
      * 客户端请求包
@@ -351,12 +351,12 @@ protected:
     /**
      * 设置额外返回的内容
      */
-    map<std::string, std::string> _responseContext;
+    std::map<std::string, std::string> _responseContext;
 
     /**
      * cookie
      */
-    map<string, string>     _cookie;
+    std::map<string, std::string>     _cookie;
 
     /**
      * 是否是tars协议
@@ -364,7 +364,7 @@ protected:
     bool 					_isTars = false;
     
     bool                	_traceCall;
-    string              	_traceKey;
+    std::string              	_traceKey;
 };
 //////////////////////////////////////////////////////////////
 }

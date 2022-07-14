@@ -34,12 +34,12 @@ using namespace tars;
 class Tars2Python
 {
 public:
-    void setBaseDir(const string &dir)
+    void setBaseDir(const std::string &dir)
     {
         _baseDir = dir;
     }
 
-    void setBasePackage(const string &prefix)
+    void setBasePackage(const std::string &prefix)
     {
         _packagePrefix = prefix;
         if (_packagePrefix.length() != 0 && _packagePrefix.substr(_packagePrefix.length()-1, 1) != ".")
@@ -48,7 +48,7 @@ public:
         }
     }
 
-	void createFile(const string &file);
+	void createFile(const std::string &file);
 
 private:
 	string generatePython(const ConstPtr &pPtr, const std::string &sNamespace);
@@ -61,7 +61,7 @@ private:
 
 	string generatePython(const InterfacePtr &pPtr);
 
-	string toFunctionName(const TypeIdPtr & pPtr, const string & sName);
+	string toFunctionName(const TypeIdPtr & pPtr, const std::string & sName);
 
 	string getDataType(const TypePtr & pPtr);
 
@@ -71,7 +71,7 @@ private:
 
 	string getFilePath() const;
 
-	void getNamespace(const string & sFile, set<string> & vec);
+	void getNamespace(const std::string & sFile, std::set<string> & vec);
 
 	void makePackages();
 
@@ -80,9 +80,9 @@ private:
 	string makeParams(const OperationPtr &pPtr);
 
 	string makeOperations(const OperationPtr &pPtr);
-       string tostrEnum(const EnumPtr &pPtr);
+       std::string tostrEnum(const EnumPtr &pPtr);
 private:
-    string _packagePrefix;
+    std::string _packagePrefix;
 	string _baseDir;
 };
 

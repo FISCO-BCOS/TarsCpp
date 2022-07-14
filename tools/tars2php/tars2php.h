@@ -34,7 +34,7 @@ public:
      *
      * @param file
      */
-    void createFile(const string &file, const vector<string> &vsCoder);
+    void createFile(const std::string &file, const vector<string> &vsCoder);
 
 
     /**
@@ -54,73 +54,73 @@ protected:
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string writeTo(const TypeIdPtr &pPtr) const;
+    std::string writeTo(const TypeIdPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string readFrom(const TypeIdPtr &pPtr, bool bIsRequire = true) const;
+    std::string readFrom(const TypeIdPtr &pPtr, bool bIsRequire = true) const;
 
 protected:
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostr(const TypePtr &pPtr) const;
+    std::string tostr(const TypePtr &pPtr) const;
 
     /**
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrBuiltin(const BuiltinPtr &pPtr) const;
+    std::string tostrBuiltin(const BuiltinPtr &pPtr) const;
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrVector(const VectorPtr &pPtr) const;
-
-    /**
-     *
-     * @param pPtr
-     *
-     * @return string
-     */
-    string tostrMap(const MapPtr &pPtr) const;
+    std::string tostrVector(const VectorPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrStruct(const StructPtr &pPtr) const;
+    std::string tostrMap(const MapPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrEnum(const EnumPtr &pPtr) const;
+    std::string tostrStruct(const StructPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
+     */
+    std::string tostrEnum(const EnumPtr &pPtr) const;
+
+    /**
+     *
+     * @param pPtr
+     *
+     * @return std::string
      */
 
-    string toStrSuffix(const TypeIdPtr &pPtr) const;
+    std::string toStrSuffix(const TypeIdPtr &pPtr) const;
 
     /**
      *
@@ -134,40 +134,40 @@ protected:
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string decode(const TypeIdPtr &pPtr) const;
+    std::string decode(const TypeIdPtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string encode(const TypeIdPtr &pPtr) const;
+    std::string encode(const TypeIdPtr &pPtr) const;
 
 protected:
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generatePHP(const StructPtr &pPtr, const string& namespaceId) const;
+    std::string generatePHP(const StructPtr &pPtr, const std::string& namespaceId) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generatePHP(const NamespacePtr &pPtr) const;
+    std::string generatePHP(const NamespacePtr &pPtr) const;
 
     /**
      *
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
     void generatePHP(const ContextPtr &pPtr) const;
 

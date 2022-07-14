@@ -28,6 +28,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_Exception::TC_Exception(const string &buffer)
 : _code(0), _buffer(buffer)
 {

@@ -16,9 +16,12 @@
 
 #include "util/tc_timer.h"
 #include "util/tc_logger.h"
+#include <memory>
 
 namespace tars
 {
+
+using namespace std;
 
 TC_TimerBase::~TC_TimerBase()
 {

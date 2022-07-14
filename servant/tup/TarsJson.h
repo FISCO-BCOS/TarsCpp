@@ -83,7 +83,7 @@ public:
     }
 
 	template<typename T>
-	static void readJson(T& s, const JsonValuePtr & p, bool isRequire = true, typename std::enable_if<std::is_same<T, string>::value, void ***>::type dummy = 0)
+	static void readJson(T& s, const JsonValuePtr & p, bool isRequire = true, typename std::enable_if<std::is_same<T, std::string>::value, void ***>::type dummy = 0)
     {
         if(p && p->getType() == eJsonTypeString)
         {
@@ -357,7 +357,7 @@ public:
 			throw TC_Json_Exception(s);
 		}
 //    	char s[128];
-//    	snprintf(s, sizeof(s), "map key is not Basic type. map key is only string|bool|num");
+//    	snprintf(s, sizeof(s), "map key is not Basic type. map key is only std::string|bool|num");
 //    	throw TC_Json_Exception(s);
 	}
 
@@ -455,7 +455,7 @@ public:
 		}
 
 //    	char s[128];
-//    	snprintf(s, sizeof(s), "map key is not Basic type. map key is only string|bool|num");
+//    	snprintf(s, sizeof(s), "map key is not Basic type. map key is only std::string|bool|num");
 //    	throw TC_Json_Exception(s);
 	}
 
@@ -574,7 +574,7 @@ public:
 	}
 
 	template<class T>
-	static JsonValueStringPtr writeJson(const T &b, typename std::enable_if<std::is_same<T, string>::value, void ***>::type dummy = 0)
+	static JsonValueStringPtr writeJson(const T &b, typename std::enable_if<std::is_same<T, std::string>::value, void ***>::type dummy = 0)
 	{
 		return (new JsonValueString(b));
 	}

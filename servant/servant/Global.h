@@ -35,8 +35,6 @@
 #include "tup/RequestF.h"
 #include "servant/BaseF.h"
 
-using namespace std;
-
 namespace tars
 {
 //////////////////////////////////////////////////////////////
@@ -85,15 +83,15 @@ typedef RemoteTimeLogger TarsTimeLogger;
  */
 struct TarsException : public TC_Exception
 {
-    TarsException(const string &buffer) : TC_Exception(buffer){};
-    TarsException(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TarsException(const std::string &buffer) : TC_Exception(buffer){};
+    TarsException(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TarsException() throw(){};
     /**
      * 根据返回值抛出异常
      * @param ret
      * @param desc
      */
-    static void throwException(int ret, const string& desc = "");
+    static void throwException(int ret, const std::string& desc = "");
 };
 
 ////////////////////////////////////////////////////////////////
@@ -105,7 +103,7 @@ struct TarsException : public TC_Exception
  */
 struct TarsServerEncodeException : public TarsException
 {
-    TarsServerEncodeException(const string &buffer) : TarsException(buffer){};
+    TarsServerEncodeException(const std::string &buffer) : TarsException(buffer){};
     ~TarsServerEncodeException() throw(){};
 };
 /**
@@ -113,7 +111,7 @@ struct TarsServerEncodeException : public TarsException
  */
 struct TarsServerDecodeException : public TarsException
 {
-    TarsServerDecodeException(const string &buffer) : TarsException(buffer){};
+    TarsServerDecodeException(const std::string &buffer) : TarsException(buffer){};
     ~TarsServerDecodeException() throw(){};
 };
 
@@ -122,7 +120,7 @@ struct TarsServerDecodeException : public TarsException
  */
 struct TarsServerNoFuncException : public TarsException
 {
-    TarsServerNoFuncException(const string &buffer) : TarsException(buffer){};
+    TarsServerNoFuncException(const std::string &buffer) : TarsException(buffer){};
     ~TarsServerNoFuncException() throw(){};
 };
 
@@ -131,7 +129,7 @@ struct TarsServerNoFuncException : public TarsException
  */
 struct TarsServerNoServantException : public TarsException
 {
-    TarsServerNoServantException(const string &buffer) : TarsException(buffer){};
+    TarsServerNoServantException(const std::string &buffer) : TarsException(buffer){};
     ~TarsServerNoServantException() throw(){};
 };
 /**
@@ -139,7 +137,7 @@ struct TarsServerNoServantException : public TarsException
  */
 struct TarsServerQueueTimeoutException : public TarsException
 {
-    TarsServerQueueTimeoutException(const string &buffer) : TarsException(buffer){};
+    TarsServerQueueTimeoutException(const std::string &buffer) : TarsException(buffer){};
     ~TarsServerQueueTimeoutException() throw(){};
 };
 /**
@@ -147,7 +145,7 @@ struct TarsServerQueueTimeoutException : public TarsException
  */
 struct TarsServerConnectionException : public TarsException
 {
-	TarsServerConnectionException(const string &buffer) : TarsException(buffer){};
+	TarsServerConnectionException(const std::string &buffer) : TarsException(buffer){};
 	~TarsServerConnectionException() throw(){};
 };
 /**
@@ -155,7 +153,7 @@ struct TarsServerConnectionException : public TarsException
  */
 struct TarsServerInvokeTimeoutException : public TarsException
 {
-	TarsServerInvokeTimeoutException(const string &buffer) : TarsException(buffer){};
+	TarsServerInvokeTimeoutException(const std::string &buffer) : TarsException(buffer){};
 	~TarsServerInvokeTimeoutException() throw(){};
 };
 /**
@@ -163,7 +161,7 @@ struct TarsServerInvokeTimeoutException : public TarsException
  */
 struct TarsServerUnknownException : public TarsException
 {
-    TarsServerUnknownException(const string &buffer) : TarsException(buffer){};
+    TarsServerUnknownException(const std::string &buffer) : TarsException(buffer){};
     ~TarsServerUnknownException() throw(){};
 };
 
@@ -173,7 +171,7 @@ struct TarsServerUnknownException : public TarsException
  */
 struct TarsSyncCallTimeoutException  : public TarsException
 {
-    TarsSyncCallTimeoutException (const string &buffer) : TarsException(buffer){};
+    TarsSyncCallTimeoutException (const std::string &buffer) : TarsException(buffer){};
     ~TarsSyncCallTimeoutException () throw(){};
 };
 
@@ -183,7 +181,7 @@ struct TarsSyncCallTimeoutException  : public TarsException
  */
 struct TarsRegistryException : public TarsException
 {
-    TarsRegistryException(const string &buffer) : TarsException(buffer){};
+    TarsRegistryException(const std::string &buffer) : TarsException(buffer){};
     ~TarsRegistryException() throw(){};
 };
 
@@ -193,7 +191,7 @@ struct TarsRegistryException : public TarsException
  */
 struct TarsClientQueueException : public TarsException
 {
-    TarsClientQueueException(const string &buffer) : TarsException(buffer){};
+    TarsClientQueueException(const std::string &buffer) : TarsException(buffer){};
     ~TarsClientQueueException() throw(){};
 };
 
@@ -202,7 +200,7 @@ struct TarsClientQueueException : public TarsException
  */
 struct TarsUseCoroException : public TarsException
 {
-    TarsUseCoroException(const string &buffer) : TarsException(buffer){};
+    TarsUseCoroException(const std::string &buffer) : TarsException(buffer){};
     ~TarsUseCoroException() throw(){};
 };
 
@@ -211,7 +209,7 @@ struct TarsUseCoroException : public TarsException
  */
 struct TarsCommunicatorException : public TarsException
 {
-	TarsCommunicatorException(const string &buffer) : TarsException(buffer){};
+	TarsCommunicatorException(const std::string &buffer) : TarsException(buffer){};
 	~TarsCommunicatorException() throw(){};
 };
 ///////////////////////////////////////////////////////////////////

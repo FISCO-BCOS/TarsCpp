@@ -21,6 +21,7 @@
 namespace tars
 {
 
+using namespace std;
 TC_RollLogger __global_logger_debug__;
 
 bool TC_LoggerRoll::_bDyeingFlag = false;

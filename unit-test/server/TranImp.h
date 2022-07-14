@@ -6,7 +6,6 @@
 #include <vector>
 #include "servant/Application.h"
 
-using namespace std;
 using namespace tars;
 
 /////////////////////////////////////////////////////////////////////////
@@ -30,7 +29,7 @@ public:
      * @param response 
      * @return int 
      */
-    virtual int doRequest(tars::CurrentPtr current, vector<char> &response);
+    virtual int doRequest(tars::CurrentPtr current,  std::vector<char> &response);
 
     /**
      * @param resp 
@@ -44,7 +43,7 @@ public:
     virtual void destroy();
 
 protected:
-    void async_call(tars::CurrentPtr current, vector<char> &response);
+    void async_call(tars::CurrentPtr current,  std::vector<char> &response);
 protected:
 	ServantPrx _servantPrx;
 

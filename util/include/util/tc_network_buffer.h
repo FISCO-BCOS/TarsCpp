@@ -57,7 +57,7 @@ namespace tars
 */
 struct TC_NetWorkBuffer_Exception : public TC_Exception
 {
-	TC_NetWorkBuffer_Exception(const string &sBuffer) : TC_Exception(sBuffer){};
+	TC_NetWorkBuffer_Exception(const std::string &sBuffer) : TC_Exception(sBuffer){};
 	~TC_NetWorkBuffer_Exception() {};
 };
 
@@ -81,7 +81,7 @@ public:
 	 * 定义协议解析器接口
 	 * Define Protocol Resolver Interface
 	 */
-	typedef std::function<PACKET_TYPE(TC_NetWorkBuffer &, vector<char> &)> protocol_functor;
+	typedef std::function<PACKET_TYPE(TC_NetWorkBuffer &, std::vector<char> &)> protocol_functor;
 
 	/**
 	   * buffer
@@ -151,12 +151,12 @@ public:
 		/**
 		 *  copy数据到空间(增加到最后)
 		 */
-		inline void addBuffer(const string &buff) { addBuffer(buff.data(), buff.size()); }
+		inline void addBuffer(const std::string &buff) { addBuffer(buff.data(), buff.size()); }
 
 		/**
 		 *  copy数据到空间(增加到最后)
 		 */
-		inline void addBuffer(const vector<char> &buff) { addBuffer(buff.data(), buff.size()); }
+		inline void addBuffer(const std::vector<char> &buff) { addBuffer(buff.data(), buff.size()); }
 
 		/**
 		 *  copy数据到空间(增加到最后)
@@ -179,7 +179,7 @@ public:
 		 * 设置buffer, 数据copy
 		 * @param buff
 		 */
-		inline void setBuffer(const vector<char> &buff)
+		inline void setBuffer(const std::vector<char> &buff)
 		{
 			setBuffer(buff.data(), buff.size());
 		}
@@ -188,7 +188,7 @@ public:
 		 * 设置buffer, 数据copy
 		 * @param buff
 		 */
-		inline void setBuffer(const string &buff)
+		inline void setBuffer(const std::string &buff)
 		{
 			setBuffer(buff.c_str(), buff.size());
 		}
@@ -615,7 +615,7 @@ public:
 	 * @param maxLeftCapacity
 	 * @return
 	 */
-	shared_ptr<Buffer> getOrCreateBuffer(size_t minLeftCapacity, size_t maxLeftCapacity);
+	std::shared_ptr<Buffer> getOrCreateBuffer(size_t minLeftCapacity, size_t maxLeftCapacity);
 
 	/**
 	 * 添加数据长度(仅仅调整总体长度, 不调整BufferList中的任何内容)
@@ -636,7 +636,7 @@ public:
 	 * 获取第一个Buffer对象, 如果不存在则返回空对象
 	 * @return
 	 */
-	shared_ptr<Buffer> getBuffer();
+	std::shared_ptr<Buffer> getBuffer();
 
 	/**
 	 * begin
@@ -740,7 +740,7 @@ public:
 	 * A pointer to get the first valid data buffer that can be used to send data
 	 * @return
 	 */
-	pair<const char*, size_t> getBufferPointer() const;
+	std::pair<const char*, size_t> getBufferPointer() const;
 
 	/**
 	 * 将链表上的所有buffer拼接起来
@@ -756,21 +756,21 @@ public:
 	 * @param buff, return buff
 	 * @return
 	 */
-	void getBuffers(shared_ptr<Buffer> &buff) const;
+	void getBuffers(std::shared_ptr<Buffer> &buff) const;
 
 	/**
 	 * 返回所有buffer(将所有buffer拼接起来, 注意性能)
 	 * Return all buffers (stitch all buffers together, pay attention to performance)
 	 * @return string
 	 */
-	vector<char> getBuffers() const;
+	std::vector<char> getBuffers() const;
 
 	/**
 	 * 返回所有buffer(将所有buffer拼接起来, 注意性能)
 	 * Return all buffers (stitch all buffers together, pay attention to performance)
 	 * @return string
 	 */
-	string getBuffersString() const;
+	std::string getBuffersString() const;
 
 	/**
 	 * 读取len字节的buffer(避免len个字节被分割到多个buffer的情况)(注意: 不往后移动)
@@ -865,7 +865,7 @@ public:
 	* @param maxLength, maximum buffer length, if exceeded, is considered an error package and returns PACKET_ERR
 	* @return PACKET_TYPE
 	*/
-	PACKET_TYPE parseBufferOf1(vector<char> &buffer, uint8_t minLength, uint8_t maxLength);
+	PACKET_TYPE parseBufferOf1(std::vector<char> &buffer, uint8_t minLength, uint8_t maxLength);
 
 	/**
 	* 解析一个包头是2字节(字节序)的包, 把包体解析出来(解析后, 往后移动)
@@ -878,7 +878,7 @@ public:
 	* @param maxLength, maximum buffer length, if exceeded, is considered an error package and returns PACKET_ERR
 	* @return PACKET_TYPE
 	*/
-	PACKET_TYPE parseBufferOf2(vector<char> &buffer, uint16_t minLength, uint16_t maxLength);
+	PACKET_TYPE parseBufferOf2(std::vector<char> &buffer, uint16_t minLength, uint16_t maxLength);
 
 	/**
 	* 解析一个包头是4字节(字节序)的包, 把包体解析出来(解析后, 往后移动)
@@ -891,7 +891,7 @@ public:
 	* @param maxLength, maximum buffer length, if exceeded, is considered an error package and returns PACKET_ERR
 	* @return PACKET_TYPE
 	 */
-	PACKET_TYPE parseBufferOf4(vector<char> &buffer, uint32_t minLength, uint32_t maxLength);
+	PACKET_TYPE parseBufferOf4(std::vector<char> &buffer, uint32_t minLength, uint32_t maxLength);
 
 	/**
 	 * 解析二进制包, 1字节长度+包体(iMinLength<包长<iMaxLength, 否则返回PACKET_ERR)
@@ -903,7 +903,7 @@ public:
 	 * @return
 	 */
 	template<uint8_t iMinLength, uint8_t iMaxLength>
-	static TC_NetWorkBuffer::PACKET_TYPE parseBinary1(TC_NetWorkBuffer&in, vector<char> &out)
+	static TC_NetWorkBuffer::PACKET_TYPE parseBinary1(TC_NetWorkBuffer&in, std::vector<char> &out)
 	{
 		return in.parseBufferOf1(out, iMinLength, iMaxLength);
 	}
@@ -918,7 +918,7 @@ public:
 	 * @return
 	 */
 	template<uint16_t iMinLength, uint16_t iMaxLength>
-	static TC_NetWorkBuffer::PACKET_TYPE parseBinary2(TC_NetWorkBuffer&in, vector<char> &out)
+	static TC_NetWorkBuffer::PACKET_TYPE parseBinary2(TC_NetWorkBuffer&in, std::vector<char> &out)
 	{
 		return in.parseBufferOf2(out, iMinLength, iMaxLength);
 	}
@@ -933,7 +933,7 @@ public:
 	 * @return
 	 */
 	template<uint32_t iMinLength, uint32_t iMaxLength>
-	static TC_NetWorkBuffer::PACKET_TYPE parseBinary4(TC_NetWorkBuffer&in, vector<char> &out)
+	static TC_NetWorkBuffer::PACKET_TYPE parseBinary4(TC_NetWorkBuffer&in, std::vector<char> &out)
 	{
 		return in.parseBufferOf4(out, iMinLength, iMaxLength);
 	}
@@ -944,7 +944,7 @@ public:
 	 * @param out
 	 * @return
 	 */
-	static TC_NetWorkBuffer::PACKET_TYPE parseHttp(TC_NetWorkBuffer&in, vector<char> &out);
+	static TC_NetWorkBuffer::PACKET_TYPE parseHttp(TC_NetWorkBuffer&in, std::vector<char> &out);
 
 	/**
 	 * echo
@@ -952,7 +952,7 @@ public:
 	 * @param out
 	 * @return
 	 */
-	static TC_NetWorkBuffer::PACKET_TYPE parseEcho(TC_NetWorkBuffer&in, vector<char> &out);
+	static TC_NetWorkBuffer::PACKET_TYPE parseEcho(TC_NetWorkBuffer&in, std::vector<char> &out);
 
 protected:
 
@@ -961,7 +961,7 @@ protected:
 	template<typename T>
 	T getValue() const
 	{
-		vector<char> buffer;
+		std::vector<char> buffer;
 
 		if(getHeader(sizeof(T), buffer))
 		{
@@ -979,7 +979,7 @@ protected:
 	}
 
 	template<typename T>
-	TC_NetWorkBuffer::PACKET_TYPE parseBuffer(vector<char> &buffer, T minLength, T maxLength)
+	TC_NetWorkBuffer::PACKET_TYPE parseBuffer(std::vector<char> &buffer, T minLength, T maxLength)
 	{
 		if(getBufferLength() < sizeof(T))
 		{

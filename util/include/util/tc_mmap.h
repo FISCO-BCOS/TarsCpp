@@ -25,7 +25,6 @@
 
 #include <string>
 #include "util/tc_ex.h"
-using namespace std;
 
 namespace tars
 {
@@ -45,8 +44,8 @@ namespace tars
 */
 struct TC_Mmap_Exception : public TC_Exception
 {
-   TC_Mmap_Exception(const string &buffer) : TC_Exception(buffer){};
-   TC_Mmap_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+   TC_Mmap_Exception(const std::string &buffer) : TC_Exception(buffer){};
+   TC_Mmap_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
    ~TC_Mmap_Exception() throw() {};
 };
 

@@ -8,6 +8,8 @@
 namespace tars
 {
 
+using namespace std;
+
 const char* strnstr(const char* s1, const char* s2, int pos1)
 {
 	int l1, l2;

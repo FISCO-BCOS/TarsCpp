@@ -7,8 +7,6 @@
 #include "util/tc_lock.h"
 #include "util/tc_spin_lock.h"
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -25,7 +23,7 @@ namespace tars
  * @brief Thread Safe Queue
  * @brief 线程安全队列
  */
-template<typename T, typename D = deque<T> >
+template<typename T, typename D = std::deque<T> >
 class TC_CasQueue
 {
 public:

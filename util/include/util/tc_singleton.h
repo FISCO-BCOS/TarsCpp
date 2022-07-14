@@ -309,7 +309,7 @@ protected:
     }
 protected:
 
-    static atomic<T*>       __pInstance;
+    static std::atomic<T*>       __pInstance;
     static bool             __destroyed;
 
 protected:
@@ -322,7 +322,7 @@ template <class T, template<class> class CreatePolicy, template<class> class Lif
 bool TC_Singleton<T, CreatePolicy, LifetimePolicy>::__destroyed = false;
 
 template <class T, template<class> class CreatePolicy, template<class> class LifetimePolicy>
-atomic<T*> TC_Singleton<T, CreatePolicy, LifetimePolicy>::__pInstance = {nullptr};
+std::atomic<T*> TC_Singleton<T, CreatePolicy, LifetimePolicy>::__pInstance = {nullptr};
 }
 
 #endif

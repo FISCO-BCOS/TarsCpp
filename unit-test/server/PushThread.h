@@ -3,28 +3,26 @@
 
 #include "servant/Application.h"
 
-class PushUser
-{
+class PushUser {
 public:
-	static map<string, CurrentPtr> pushUser;
-	static TC_ThreadMutex mapMutex;
+  static std::map<string, CurrentPtr> pushUser;
+  static TC_ThreadMutex mapMutex;
 };
 
-class PushInfoThread : public TC_Thread, public TC_ThreadLock
-{
+class PushInfoThread : public TC_Thread, public TC_ThreadLock {
 public:
-	PushInfoThread():_bTerminate(false),_iId(0){}
-	~PushInfoThread();
+  PushInfoThread() : _bTerminate(false), _iId(0) {}
+  ~PushInfoThread();
 
-	virtual void run();
+  virtual void run();
 
-	void terminate();
+  void terminate();
 
-	void setPushInfo(const string &sInfo);
+  void setPushInfo(const std::string &sInfo);
 
 private:
-	bool _bTerminate;
-	unsigned int _iId;
-	string _sPushInfo;
+  bool _bTerminate;
+  unsigned int _iId;
+  string _sPushInfo;
 };
 #endif

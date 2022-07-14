@@ -8,30 +8,28 @@
  *
  *
  */
-class PushImp : public  tars::Servant
-{
+class PushImp : public tars::Servant {
 public:
-    /**
-     *
-     */
-    virtual ~PushImp() {}
+  /**
+   *
+   */
+  virtual ~PushImp() {}
 
-    /**
-     *
-     */
-    virtual void initialize();
+  /**
+   *
+   */
+  virtual void initialize();
 
-    /**
-     *
-     */
-    virtual void destroy();
+  /**
+   *
+   */
+  virtual void destroy();
 
-    //重载Servant的doRequest方法
-    int doRequest(tars::CurrentPtr current, vector<char>& response);
+  //重载Servant的doRequest方法
+  int doRequest(tars::CurrentPtr current, std::vector<char> &response);
 
-    //重载Servant的doClose方法
-    int doClose(tars::CurrentPtr current);
-
+  //重载Servant的doClose方法
+  int doClose(tars::CurrentPtr current);
 };
 /////////////////////////////////////////////////////
 #endif

@@ -22,8 +22,6 @@
 #include <vector>
 #include "util/tc_ex.h"
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -39,7 +37,7 @@ namespace tars
  */
 struct TC_BitMap_Exception : public TC_Exception
 {
-    TC_BitMap_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_BitMap_Exception(const  std::string &buffer) : TC_Exception(buffer){};
     ~TC_BitMap_Exception() throw(){};
 };
 
@@ -167,7 +165,7 @@ public:
          * 
          * @return int
          */
-        int dump2file(const string &sFile);
+        int dump2file(const  std::string &sFile);
 
         /**
          * @brief Load from File
@@ -177,7 +175,7 @@ public:
          * 
          * @return int
          */
-        int load5file(const string &sFile);
+        int load5file(const  std::string &sFile);
 
         /**the Head of Shared Memories*/
         /**共享内存头部*/
@@ -336,7 +334,7 @@ public:
      * 
      * @return int
      */
-    int dump2file(const string &sFile);
+    int dump2file(const  std::string &sFile);
 
     /**
      * @brief Load from File
@@ -346,10 +344,10 @@ public:
      * 
      * @return int
      */
-    int load5file(const string &sFile);
+    int load5file(const  std::string &sFile);
 
 protected:
-    vector<BitMap>   _bitmaps;
+    std::vector<BitMap>   _bitmaps;
 };
 
 }

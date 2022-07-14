@@ -21,7 +21,6 @@
 #include <vector>
 #include <stdint.h>
 #include "util/tc_ex.h"
-using namespace std;
 
 namespace tars
 {
@@ -52,7 +51,7 @@ namespace tars
  */
 struct TC_SHA_Exception : public TC_Exception
 {
-    TC_SHA_Exception(const string &buffer, bool err) : TC_Exception(buffer, err){};
+    TC_SHA_Exception(const std::string &buffer, bool err) : TC_Exception(buffer, err){};
     ~TC_SHA_Exception() throw(){};
 };
 
@@ -68,108 +67,108 @@ public:
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return vector<char> hash的内容(20个字节)
+     * @return std::vector<char> hash的内容(20个字节)
      */
-    static vector<char> sha1bin(const char *buffer, size_t length);
+    static std::vector<char> sha1bin(const char *buffer, size_t length);
 
     /**
      * @brief sha1 hash算法.
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return        string 加密后的内容(20*2个字符)
+     * @return        std::string 加密后的内容(20*2个字符)
      */
-    static string sha1str(const char *buffer, size_t length);
+    static std::string sha1str(const char *buffer, size_t length);
 
     /**
      * @brief 对文件计算sha1 hash算法.
      *  
      * @param fileName  文件名
      * @throw TC_SHA_Exception, 文件读取错误会抛出异常 
-     * @return string   加密后的内容(20*2个字符)
+     * @return std::string   加密后的内容(20*2个字符)
      */
-    static string sha1file(const string &fileName);
+    static std::string sha1file(const std::string &fileName);
 
     /**
      * @brief sha256 hash算法.
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return vector<char> hash的内容(32个字节)
+     * @return std::vector<char> hash的内容(32个字节)
      */
-    static vector<char> sha256bin(const char *buffer, size_t length);
+    static std::vector<char> sha256bin(const char *buffer, size_t length);
 
     /**
      * @brief sha256 hash算法.
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return        string 加密后的内容(32*2个字符)
+     * @return        std::string 加密后的内容(32*2个字符)
      */
-    static string sha256str(const char *buffer, size_t length);
+    static std::string sha256str(const char *buffer, size_t length);
 
     /**
      * @brief 对文件计算sha256 hash算法.
      *  
      * @param fileName  文件名
      * @throw TC_SHA_Exception, 文件读取错误会抛出异常 
-     * @return string   加密后的内容(32*2个字符)
+     * @return std::string   加密后的内容(32*2个字符)
      */
-    static string sha256file(const string &fileName);
+    static std::string sha256file(const std::string &fileName);
 
     /**
      * @brief sha1 hash算法.
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return vector<char> hash的内容(48个字节)
+     * @return std::vector<char> hash的内容(48个字节)
      */
-    static vector<char> sha384bin(const char *buffer, size_t length);
+    static std::vector<char> sha384bin(const char *buffer, size_t length);
 
     /**
      * @brief sha1 hash算法.
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return        string 加密后的内容(48*2个字符)
+     * @return        std::string 加密后的内容(48*2个字符)
      */
-    static string sha384str(const char *buffer, size_t length);
+    static std::string sha384str(const char *buffer, size_t length);
 
     /**
      * @brief 对文件计算sha384 hash算法.
      *  
      * @param fileName  文件名
      * @throw TC_SHA_Exception, 文件读取错误会抛出异常 
-     * @return string   加密后的内容(48*2个字符)
+     * @return std::string   加密后的内容(48*2个字符)
      */
-    static string sha384file(const string &fileName);
+    static std::string sha384file(const std::string &fileName);
 
     /**
      * @brief sha1 hash算法.
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return vector<char> hash的内容(64个字节)
+     * @return std::vector<char> hash的内容(64个字节)
      */
-    static vector<char> sha512bin(const char *buffer, size_t length);
+    static std::vector<char> sha512bin(const char *buffer, size_t length);
 
     /**
      * @brief sha1 hash算法.
      *  
      * @param sIn     输入buffer
      * @param iInLen  输入buffer长度
-     * @return        string 加密后的内容(64*2个字符)
+     * @return        std::string 加密后的内容(64*2个字符)
      */
-    static string sha512str(const char *buffer, size_t length);
+    static std::string sha512str(const char *buffer, size_t length);
 
     /**
      * @brief 对文件计算sha512 hash算法.
      *  
      * @param fileName  文件名
      * @throw TC_SHA_Exception, 文件读取错误会抛出异常 
-     * @return string   加密后的内容(64*2个字符)
+     * @return std::string   加密后的内容(64*2个字符)
      */
-    static string sha512file(const string &fileName);
+    static std::string sha512file(const std::string &fileName);
 };
 
 }

@@ -23,7 +23,6 @@
 #include "util/tc_http2.h"
 
 using namespace tars;
-using namespace std;
 
 /**
  *
@@ -50,7 +49,7 @@ public:
     /**
      *
      */
-    int doRequest(TarsCurrentPtr current, vector<char> &buffer);
+    int doRequest(TarsCurrentPtr current, std::vector<char> &buffer);
 
     /**
      * close connection

@@ -27,7 +27,7 @@ public:
     virtual void destroy();
 
     //overloading method of Servant::doRequest
-    int doRequest(tars::TarsCurrentPtr current, vector<char>& response);
+    int doRequest(tars::TarsCurrentPtr current, std::vector<char>& response);
 
     //overloading method of Servant::doClose
     int doClose(tars::TarsCurrentPtr current);

@@ -21,6 +21,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_TimeProvider* TC_TimeProvider::g_tp = NULL;
 
 TC_TimeProvider* TC_TimeProvider::getInstance()

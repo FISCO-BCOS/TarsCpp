@@ -8,6 +8,8 @@
 namespace tars
 {
 
+using namespace std;
+
 class CloseClourse
 {
 public:

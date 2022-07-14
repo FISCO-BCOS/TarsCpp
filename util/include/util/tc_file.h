@@ -53,8 +53,8 @@ namespace tars
 */
 struct TC_File_Exception : public TC_Exception
 {
-    TC_File_Exception(const string &buffer) : TC_Exception(buffer){};
-    TC_File_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_File_Exception(const std::string &buffer) : TC_Exception(buffer){};
+    TC_File_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_File_Exception() throw(){};
 };
 
@@ -72,7 +72,7 @@ public:
 	* @param  sFullFileName 文件全路径(所在目录和文件名)
 	* @return               ofstream::pos_type类型文件大小
 	*/
-	static ifstream::pos_type getFileSize(const string &sFullFileName);
+	static std::ifstream::pos_type getFileSize(const std::string &sFullFileName);
 
 	/**
 	 * @brief 判断是否为绝对路径, 忽略空格以'/'开头.
@@ -80,7 +80,7 @@ public:
 	 * @param sFullFileName 文件全路径(所在目录和文件名)
 	 * @return              ture是绝对路径，false代表非绝对路径
 	 */
-	static bool isAbsolute(const string &sFullFileName);
+	static bool isAbsolute(const std::string &sFullFileName);
 
 	/**
 	* @brief 判断给定路径的文件是否存在.
@@ -89,7 +89,7 @@ public:
 	* @param iFileType     文件类型, 缺省S_IFREG
 	* @return           true代表存在，fals代表不存在
 	*/
-	static bool isFileExist(const string &sFullFileName, mode_t iFileType = S_IFREG);
+	static bool isFileExist(const std::string &sFullFileName, mode_t iFileType = S_IFREG);
 
 	/**
 	* @brief 判断给定路径的文件是否存在.
@@ -98,7 +98,7 @@ public:
 	* @param iFileType      文件类型, 缺省S_IFREG
 	* @return               true-存在，fals-不存在
 	*/
-	static bool isFileExistEx(const string &sFullFileName, mode_t iFileType = S_IFREG);
+	static bool isFileExistEx(const std::string &sFullFileName, mode_t iFileType = S_IFREG);
 
 	/**
 	 * @brief 规则化目录名称, 把一些不用的去掉, 例如./等.
@@ -106,7 +106,7 @@ public:
 	 * @param path 目录名称
 	 * @return        规范后的目录名称
 	 */
-	static string simplifyDirectory(const string& path);
+	static std::string simplifyDirectory(const std::string& path);
 
 	/**
 	* @brief 创建目录, 如果目录已经存在, 则也返回成功.
@@ -114,7 +114,7 @@ public:
 	* @param sFullPath 要创建的目录名称
 	* @return bool  true-创建成功 ，false-创建失败
 	*/
-	static bool makeDir(const string &sDirectoryPath);
+	static bool makeDir(const std::string &sDirectoryPath);
 
 	/**
 	 *@brief 循环创建目录, 如果目录已经存在, 则也返回成功.
@@ -123,7 +123,7 @@ public:
 	 * @return           true-创建成功，false-创建失败
 	 */
 
-	static bool makeDirRecursive(const string &sDirectoryPath);
+	static bool makeDirRecursive(const std::string &sDirectoryPath);
 	
 	/**
 	 * @brief 删除一个文件或目录.
@@ -132,7 +132,7 @@ public:
 	 * @param bRecursive    如果是目录是否递归删除
 	 * @return              0-成功，失败可以通过errno查看失败的原因
 	 */
-	static int removeFile(const string &sFullFileName, bool bRecursive);
+	static int removeFile(const std::string &sFullFileName, bool bRecursive);
 
 	/**
 	 * @brief 重命名一个文件或目录.
@@ -141,16 +141,16 @@ public:
 	 * @param sDstFullFileName 目的文件名
 	 * @return              0-成功，失败可以通过errno查看失败的原因
 	 */
-	static int renameFile(const string &sSrcFullFileName, const string &sDstFullFileName);
+	static int renameFile(const std::string &sSrcFullFileName, const std::string &sDstFullFileName);
 
 	/**
-	* @brief 读取文件到string
+	* @brief 读取文件到std::string
 	* 文件存在则返回文件数据，不存在或者读取文件错误的时候, 返回为空
 	* @param sFullFileName 文件名称
 	* @return              文件数据
 	*/
-	static string load2str(const string &sFullFileName);
-	static bool load2str(const string &sFullFileName, vector<char> &data);
+	static std::string load2str(const std::string &sFullFileName);
+	static bool load2str(const std::string &sFullFileName, std::vector<char> &data);
 
 	/**
 	* @brief 写文件.
@@ -159,7 +159,7 @@ public:
 	* @param sFileData     文件内容
 	* @return
 	*/
-	static void save2file(const string &sFullFileName, const string &sFileData);
+	static void save2file(const std::string &sFullFileName, const std::string &sFileData);
 
 	/**
 	 * @brief 写文件.
@@ -169,7 +169,7 @@ public:
 	 * @param length      写入长度
 	 * @return               0-成功,-1-失败
 	 */
-	static int save2file(const string &sFullFileName, const char *sFileData, size_t length);
+	static int save2file(const std::string &sFullFileName, const char *sFileData, size_t length);
 
     /**
      * @brief 设置文件是否可执行. 
@@ -178,7 +178,7 @@ public:
      * @param canExecutable true表示可执行, false代表不可之行 
      * @return                 成功返回0, 其他失败
      */
-    static int setExecutable(const string &sFullFileName, bool canExecutable);
+    static int setExecutable(const std::string &sFullFileName, bool canExecutable);
 
     /**
      * @brief 判断文件是否可执行. 
@@ -186,22 +186,22 @@ public:
      * @param sFullFileName 文件全路径
      * @return                 true-可执行, false-不可执行 
      */
-    static bool canExecutable(const string &sFullFileName);
+    static bool canExecutable(const std::string &sFullFileName);
 	
     /**
      * @brief 获取前当可执行文件路径.
      *
-     * @return string 可执行文件的路径全名称
+     * @return std::string 可执行文件的路径全名称
      */
-    static string getExePath();
+    static std::string getExePath();
 
 	/**
 	* @brief 提取文件名称
 	*从一个完全文件名中去掉路径，例如:/usr/local/temp.gif获取temp.gif
 	*@param sFullFileName  文件的完全名称
-	*@return string        提取后的文件名称
+	*@return std::string        提取后的文件名称
 	*/
-	static string extractFileName(const string &sFullFileName);
+	static std::string extractFileName(const std::string &sFullFileName);
 
 	/**
 	* @brief 从一个完全文件名中提取文件的路径.
@@ -211,7 +211,7 @@ public:
 	* @param sFullFileName 文件的完全名称
 	* @return              提取后的文件路径
 	*/
-	static string extractFilePath(const string &sFullFileName);
+	static std::string extractFilePath(const std::string &sFullFileName);
 
 	/**
 	* @brief 提取文件扩展名.
@@ -221,7 +221,7 @@ public:
 	*@param sFullFileName 文件名称
 	*@return              文件扩展名
 	*/
-	static string extractFileExt(const string &sFullFileName);
+	static std::string extractFileExt(const std::string &sFullFileName);
 
 	/**
 	* @brief 提取文件名称,去掉扩展名.
@@ -230,7 +230,7 @@ public:
 	* @param sFullFileName 文件名称
 	* @return              去掉扩展名的文件名称
 	*/
-	static string excludeFileExt(const string &sFullFileName);
+	static std::string excludeFileExt(const std::string &sFullFileName);
 
 	/**
 	* @brief 替换文件扩展名
@@ -242,7 +242,7 @@ public:
 	* @param sExt          扩展名
 	* @return              替换扩展名后的文件名
 	*/
-	static string replaceFileExt(const string &sFullFileName, const string &sExt);
+	static std::string replaceFileExt(const std::string &sFullFileName, const std::string &sExt);
 
 	/**
 	* @brief 从一个url中获取完全文件名.
@@ -254,7 +254,7 @@ public:
 	* @param sUrl url字符串
 	* @return     文件名称
 	*/
-	static string extractUrlFilePath(const string &sUrl);
+	static std::string extractUrlFilePath(const std::string &sUrl);
 
 #if TARGET_PLATFORM_LINUX || TARGET_PLATFORM_IOS
 	/**
@@ -273,7 +273,7 @@ public:
 	* @param iMaxSize      最大文件个数,iMaxSize <=0时,返回所有匹配文件
 	* @return              文件个数
 	*/
-	static size_t scanDir(const string &sFilePath, vector<string> &vtMatchFiles, FILE_SELECT f = NULL, int iMaxSize = 0);
+	static size_t scanDir(const std::string &sFilePath, std::vector<std::string> &vtMatchFiles, FILE_SELECT f = NULL, int iMaxSize = 0);
 #endif
 
 	/**
@@ -284,7 +284,7 @@ public:
 	 * @param bRecursive 是否递归子目录
 	 *
 	 **/
-	static void listDirectory(const string &path, vector<string> &files, bool bRecursive);
+	static void listDirectory(const std::string &path, std::vector<std::string> &files, bool bRecursive);
 
 	/**
 	* @brief 复制文件或目录.
@@ -294,16 +294,16 @@ public:
 	* @param bRemove    是否先删除sNewFile再copy ，防止Textfile busy导致复制失败
 	* @return
 	*/
-	static void copyFile(const string &sExistFile, const string &sNewFile, bool bRemove = false);
+	static void copyFile(const std::string &sExistFile, const std::string &sNewFile, bool bRemove = false);
 
 	/**
 	* @brief 是否以windows盘符开头.
 	* @return
 	*/		
-	static bool startWindowsPanfu(const string & sPath);
+	static bool startWindowsPanfu(const std::string & sPath);
 
 private:
-	static bool isPanfu(const string & sPath);
+	static bool isPanfu(const std::string & sPath);
 };
 }
 #endif // TC_FILE_H

@@ -21,8 +21,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -38,7 +36,7 @@ template<typename T>
 class TC_LoopQueue
 {
 public:
-    typedef vector<T> queue_type;
+    typedef std::vector<T> queue_type;
 
     TC_LoopQueue(size_t iSize)
     {

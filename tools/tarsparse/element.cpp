@@ -21,6 +21,8 @@
 #include "util/tc_file.h"
 #include "util/tc_common.h"
 
+using namespace std;
+
 /*************************************************************************************************/
 const char* Builtin::builtinTable[] =
     {

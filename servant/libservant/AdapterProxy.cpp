@@ -29,6 +29,8 @@
 namespace tars
 {
     
+    using namespace std;
+
 std::atomic<int> AdapterProxy::_idGen;
 
 AdapterProxy::AdapterProxy(ObjectProxy * pObjectProxy, const EndpointInfo &ep, Communicator* pCom)

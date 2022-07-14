@@ -45,7 +45,7 @@ namespace tars
 */
 struct TC_Multi_HashMap_Exception : public TC_Exception
 {
-    TC_Multi_HashMap_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_Multi_HashMap_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_Multi_HashMap_Exception() throw(){};
 };
 
@@ -72,9 +72,9 @@ public:
     struct BlockData
     {
         /**Data Key, union key (after union primary key is removed)*/
-        string            _key;       /**数据Key，联合key(联合主键去掉主key后)*/
+        std::string            _key;       /**数据Key，联合key(联合主键去掉主key后)*/
         /**data value*/
-        string            _value;     /**数据value*/
+        std::string            _value;     /**数据value*/
         /**Is it dirty data*/
         bool            _dirty;     /**是否是脏数据*/
         /**Data Version, 1 for Initial Version, 0 for Retention*/
@@ -96,7 +96,7 @@ public:
     struct Value
     {
         /**Primary Key*/
-        string            _mkey;        /**主key*/
+        std::string            _mkey;        /**主key*/
         /**Other Data*/
         BlockData        _data;        /**其它数据*/
     };
@@ -328,7 +328,7 @@ public:
          *          其他异常
          *          Other Exceptions
          */
-        int get(string &mk);
+        int get(std::string &mk);
 
         /**
          * @brief 设置主key
@@ -338,7 +338,7 @@ public:
          * @param vtData, 淘汰的数据
          * @param vtData, Eliminated data
          */
-        int set(const void *pData, uint32_t iDataLen, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const void *pData, uint32_t iDataLen, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 将当前主key移动到主key链上的下一个主key
@@ -382,7 +382,7 @@ public:
          * @return int, TC_Multi_HashMap::RT_OK成功，其它失败
          * @return Int, TC_Multi_HashMap::RT_OK Success, Other Failures
          */
-        int erase(vector<Value> &vtData);
+        int erase(std::vector<Value> &vtData);
 
         /**
          * @brief 刷新get链表, 将当前主key放在get链表头部
@@ -415,7 +415,7 @@ public:
          *
          * @return int
          */
-        int allocate(uint32_t iDataLen, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocate(uint32_t iDataLen, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -427,7 +427,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<uint32_t>& chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<uint32_t>& chunks);
 
         /**
          * @brief 分配指定大小的内存空间，可能会有多个chunk
@@ -440,7 +440,7 @@ public:
          * @param vtData, Eliminated data
          * @return int
          */
-        int allocateChunk(uint32_t fn, vector<uint32_t> &chunks, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocateChunk(uint32_t fn, std::vector<uint32_t> &chunks, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 释放指定chunk之后的所有chunk
@@ -776,7 +776,7 @@ public:
          *          其他异常
          *          other ecxeptions
          */
-        int get(string &s);
+        int get(std::string &s);
 
         /**
          * @brief 设置数据
@@ -796,7 +796,7 @@ public:
          *                其它为失败
          *                Others are failures
          */
-        int set(const void *pData, uint32_t iDataLen, bool bOnlyKey, uint8_t iVersion, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const void *pData, uint32_t iDataLen, bool bOnlyKey, uint8_t iVersion, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 是否是脏数据
@@ -896,7 +896,7 @@ public:
          *
          * @return int,
          */
-        int allocate(uint32_t iDataLen, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocate(uint32_t iDataLen, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -908,7 +908,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<uint32_t>& chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<uint32_t>& chunks);
 
         /**
          * @brief 分配指定大小的内存空间, 可能会有多个chunk
@@ -921,7 +921,7 @@ public:
          * @param vtData, Eliminated data
          * @return int
          */
-        int allocateChunk(uint32_t fn, vector<uint32_t> &chunks, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocateChunk(uint32_t fn, std::vector<uint32_t> &chunks, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 释放指定chunk之后的所有chunk
@@ -1056,9 +1056,9 @@ public:
          * @brief 获取每种数据块头部信息
          * @brief Get header information for each data block
          *
-         * @return vector<TC_MemChunk::tagChunkHead>
+         * @return std::vector<TC_MemChunk::tagChunkHead>
          */
-        vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
+        std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
 
         /**
          * @brief 总内存大小
@@ -1080,9 +1080,9 @@ public:
          * @brief 每种block中的chunk个数(每种block中的chunk个数相同)
          * @brief Number of chunks per block (same number of chunks per block)
          *
-         * @return vector<size_t>
+         * @return std::vector<size_t>
          */
-        vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
+        std::vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
 
         /**
          * @brief 所有block的chunk个数
@@ -1109,7 +1109,7 @@ public:
          * @return size_t, 内存块地址索引, 0表示没有空间可以分配
          * @return size_t, Memory block address index, 0 means there is no space to allocate
          */
-        uint32_t allocateMemBlock(uint32_t iMainKeyAddr, uint32_t index, bool bHead, uint32_t &iAllocSize, vector<TC_Multi_HashMap::Value> &vtData);
+        uint32_t allocateMemBlock(uint32_t iMainKeyAddr, uint32_t index, bool bHead, uint32_t &iAllocSize, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
         * @brief 在内存中分配一个主key头，只需要一个chunk即可
@@ -1123,7 +1123,7 @@ public:
         * @return size_t, 主key头首地址,0表示没有空间可以分配
         * @return size_t, Primary key header address, 0 means there is no space to allocate
         */
-        uint32_t allocateMainKeyHead(uint32_t index, vector<TC_Multi_HashMap::Value> &vtData);
+        uint32_t allocateMainKeyHead(uint32_t index, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 为地址为iAddr的Block分配一个chunk         *
@@ -1137,7 +1137,7 @@ public:
          * @return size_t, 相对地址,0表示没有空间可以分配
          * @return size_t, Relative to the address, 0 means there is no space to allocate
          */
-        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, vector<TC_Multi_HashMap::Value> &vtData);
+        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 释放Block
@@ -1145,7 +1145,7 @@ public:
          * @param v, 需要释放的chunk的地址列表
          * @param v, Address list of chunks to be released
          */
-        void deallocateMemChunk(const vector<uint32_t> &v);
+        void deallocateMemChunk(const std::vector<uint32_t> &v);
 
         /**
          * @brief 释放Block
@@ -1281,7 +1281,7 @@ public:
          *          其他值, 异常
          *          Other values, exception
          */
-        int get(string &mk, string &uk);
+        int get(std::string &mk, std::string &uk);
 
         /**
          * @brief 获取对应block的相对地址
@@ -1308,7 +1308,7 @@ public:
          * @param vtData, eliminated data 
          * @return int
          */
-        int set(const string &mk, const string &uk, const string& v, uint8_t iVersion, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const std::string &mk, const std::string &uk, const std::string& v, uint8_t iVersion, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 设置Key, 无数据(Only Key)
@@ -1322,7 +1322,7 @@ public:
          *
          * @return int
          */
-        int set(const string &mk, const string &uk, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const std::string &mk, const std::string &uk, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 判断当前item是否是指定key的item, 如果是还返回value
@@ -1332,7 +1332,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &mk, const string &uk, TC_Multi_HashMap::Value &v, int &ret);
+        bool equal(const std::string &mk, const std::string &uk, TC_Multi_HashMap::Value &v, int &ret);
 
         /**
          * @brief 判断当前item是否是指定key的item
@@ -1342,7 +1342,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &mk, const string &uk, int &ret);
+        bool equal(const std::string &mk, const std::string &uk, int &ret);
 
         /**
          * @brief 将当前item移动到下一个item
@@ -1573,7 +1573,7 @@ public:
          * @param vtData
          * @return
          */
-        void get(vector<TC_Multi_HashMap::Value> &vtData);
+        void get(std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 获取当前item的hash索引
@@ -1937,7 +1937,7 @@ public:
 
     /**定义hash处理器*/
     /**Define hash processor*/
-    using hash_functor = std::function<uint32_t (const string& )>;
+    using hash_functor = std::function<uint32_t (const std::string& )>;
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //map的接口定义
@@ -2038,10 +2038,10 @@ public:
      * @brief 获取每种大小内存块的头部信息
      * @brief Get header information for each memory block size
      *
-     * @return vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
-     * @return vector<TC_MemChunk::tagChunkHead>: Header information for memory blocks of different sizes
+     * @return std::vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
+     * @return std::vector<TC_MemChunk::tagChunkHead>: Header information for memory blocks of different sizes
      */
-    vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
+    std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
 
     /**
      * @brief 所有block中chunk的个数
@@ -2055,9 +2055,9 @@ public:
      * @brief 每种block中chunk的个数(不同大小内存块的个数相同)
      * @brief Number of chunks in each block (same number of memory blocks of different sizes)
      *
-     * @return vector<size_t>
+     * @return std::vector<size_t>
      */
-    vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
+    std::vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
 
     /**
      * @brief 获取数据区hash桶的个数
@@ -2241,7 +2241,7 @@ public:
      *          RT_OK: dump到文件成功
      *          RT_OK: Dump to file succeeded
      */
-    int dump2file(const string &sFile);
+    int dump2file(const std::string &sFile);
 
     /**
      * @brief 从文件load
@@ -2256,7 +2256,7 @@ public:
      *          RT_OK: load成功
      *          RT_OK: load successfully
      */
-    int load5file(const string &sFile);
+    int load5file(const std::string &sFile);
 
     /**
      * @brief 清空hashmap
@@ -2282,7 +2282,7 @@ public:
     *        TC_Multi_HashMap::RT_NO_DATA, 主key不存在
     *        TC_Multi_HashMap::RT_NO_DATA,Primary key does not exist
     */
-    int checkMainKey(const string &mk);
+    int checkMainKey(const std::string &mk);
 
     /**
     * @brief 设置主key下数据的完整性
@@ -2302,7 +2302,7 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int setFullData(const string &mk, bool bFull);
+    int setFullData(const std::string &mk, bool bFull);
 
     /**
      * @brief 检查数据干净状态
@@ -2324,7 +2324,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int checkDirty(const string &mk, const string &uk);
+    int checkDirty(const std::string &mk, const std::string &uk);
 
     /**
     * @brief 
@@ -2344,7 +2344,7 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int checkDirty(const string &mk);
+    int checkDirty(const std::string &mk);
 
     /**
      * @brief 设置为脏数据, 修改SET时间链, 会导致数据回写
@@ -2366,7 +2366,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int setDirty(const string &mk, const string &uk);
+    int setDirty(const std::string &mk, const std::string &uk);
 
     /**
      * @brief 设置为干净数据, 修改SET链, 导致数据不回写
@@ -2388,7 +2388,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int setClean(const string &mk, const string &uk);
+    int setClean(const std::string &mk, const std::string &uk);
 
     /**
     * @brief 更新数据的回写时间
@@ -2409,7 +2409,7 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int setSyncTime(const string &mk, const string &uk, time_t iSyncTime);
+    int setSyncTime(const std::string &mk, const std::string &uk, time_t iSyncTime);
 
     /**
      * @brief 获取数据, 修改GET时间链
@@ -2431,7 +2431,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(const string &mk, const string &uk, Value &v);
+    int get(const std::string &mk, const std::string &uk, Value &v);
 
     /**
      * @brief 获取主key下的所有数据, 修改GET时间链
@@ -2453,7 +2453,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(const string &mk, vector<Value> &vs);
+    int get(const std::string &mk, std::vector<Value> &vs);
 
     /**
      * @brief 获取主key hash下的所有数据 
@@ -2470,7 +2470,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(uint32_t &mh, map<string, vector<Value> > &vs);
+    int get(uint32_t &mh, std::map<std::string, std::vector<Value> > &vs);
 
     /**
      * @brief 设置数据, 修改时间链, 内存不够时会自动淘汰老的数据
@@ -2503,8 +2503,8 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string &mk, const string &uk, const string &v, uint8_t iVersion, 
-        bool bDirty, DATATYPE eType, bool bHead,vector<Value> &vtData);
+    int set(const std::string &mk, const std::string &uk, const std::string &v, uint8_t iVersion, 
+        bool bDirty, DATATYPE eType, bool bHead, std::vector<Value> &vtData);
 
     /**
      * @brief 设置key, 但无数据(only key), 
@@ -2531,7 +2531,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string &mk, const string &uk, DATATYPE eType, bool bHead, vector<Value> &vtData);
+    int set(const std::string &mk, const std::string &uk, DATATYPE eType, bool bHead, std::vector<Value> &vtData);
 
     /**
      * @brief 仅设置主key, 无联合key及数据 
@@ -2552,7 +2552,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string &mk, vector<Value> &vtData);
+    int set(const std::string &mk, std::vector<Value> &vtData);
 
     /**
     * @brief 批量设置数据, 内存不够时会自动淘汰老的数据
@@ -2578,7 +2578,7 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int set(const vector<Value> &vtSet, DATATYPE eType, bool bHead, bool bForce, vector<Value> &vtErased);
+    int set(const std::vector<Value> &vtSet, DATATYPE eType, bool bHead, bool bForce, std::vector<Value> &vtErased);
 
     /**
      * @brief 
@@ -2603,7 +2603,7 @@ public:
      *         其他返回值: 错误
      *          Other Return Values: Error
      */
-    int del(const string &mk, const string &uk, Value &data);
+    int del(const std::string &mk, const std::string &uk, Value &data);
 
     /**
      * @brief 删除主key下所有数据
@@ -2624,7 +2624,7 @@ public:
      *         其他返回值: 错误
      *          Other Return Values: Error
      */
-    int del(const string &mk, vector<Value> &data);
+    int del(const std::string &mk, std::vector<Value> &data);
 
     /**
      * @brief 淘汰数据, 每次删除一条, 根据Get时间淘汰
@@ -2653,7 +2653,7 @@ public:
      *          其他返回值: 错误, 通常忽略, 继续调用erase淘汰
      *          Other return values: Error, usually ignored, continue calling erase obsolete
      */
-    int erase(int ratio, vector<Value> &vtData, bool bCheckDirty = false);
+    int erase(int ratio, std::vector<Value> &vtData, bool bCheckDirty = false);
 
     /**
      * @brief 回写, 每次返回需要回写的一条
@@ -2719,7 +2719,7 @@ public:
      *          其他返回值: 错误, 通常忽略, 继续调用backup
      *          Other return values: Error, usually ignored, continue to call backup
      */
-    int backup(vector<Value> &vtData);
+    int backup(std::vector<Value> &vtData);
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // 以下是遍历map函数, 需要对map加锁
@@ -2821,7 +2821,7 @@ public:
      * @param uk: Joint primary key except primary key
      * @return lock_iterator
      */
-    lock_iterator find(const string &mk, const string &uk);
+    lock_iterator find(const std::string &mk, const std::string &uk);
 
     /**
     * @brief 获取主key链上block的数量
@@ -2830,7 +2830,7 @@ public:
     * @param mk: main key
     * @return size_t
     */
-    size_t count(const string &mk);
+    size_t count(const std::string &mk);
 
     /**
     * @brief 根据主key查找第一个block位置. 
@@ -2842,15 +2842,15 @@ public:
     * @param mk: main key
     * @return lock_iterator
     */
-    lock_iterator find(const string &mk);
+    lock_iterator find(const std::string &mk);
 
     /**
      * @brief 描述
      * @brief describe
      *
-     * @return string
+     * @return std::string
      */
-    string desc();
+    std::string desc();
 
     /**
     * @brief 对可能的坏block进行检查，并可进行修复
@@ -3030,7 +3030,7 @@ protected:
     * @param bInc, 是增加还是减少
     * @param bInc, Increase or decrease
     */
-    void incMainKeyBlockCount(const string &mk, bool bInc = true);
+    void incMainKeyBlockCount(const std::string &mk, bool bInc = true);
 
     /**
     * @brief 更新主key下面最大记录数信息
@@ -3062,12 +3062,12 @@ protected:
      * @param iNowAddr, The main key is currently allocating memory and cannot be phased out
      *                  0表示做直接根据淘汰策略淘汰
      *                  0 means to phase out directly according to the elimination strategy
-     * @param vector<Value>, 被淘汰的数据
-     * @param vector<Value>, Eliminated data
+     * @param std::vector<Value>, 被淘汰的数据
+     * @param std::vector<Value>, Eliminated data
      * @return size_t, 淘汰的数据个数
      * @return size_t, Number of data phased out
      */
-    size_t eraseExcept(uint32_t iNowAddr, vector<Value> &vtData);
+    size_t eraseExcept(uint32_t iNowAddr, std::vector<Value> &vtData);
 
     /**
      * @brief 根据Key计算hash值
@@ -3079,7 +3079,7 @@ protected:
      *
      * @return uint32_t
      */
-    uint32_t hashIndex(const string &mk, const string &uk);
+    uint32_t hashIndex(const std::string &mk, const std::string &uk);
 
     /**
      * @brief 根据Key计算hash值
@@ -3088,7 +3088,7 @@ protected:
      *
      * @return uint32_t
      */
-    uint32_t hashIndex(const string &k);
+    uint32_t hashIndex(const std::string &k);
 
     /**
     * @brief 根据主key计算主key的hash
@@ -3097,7 +3097,7 @@ protected:
     * @param mk: main key
     * @return uint32_t
     */
-    uint32_t mhashIndex(const string &mk); 
+    uint32_t mhashIndex(const std::string &mk); 
 
     /**
      * @brief 根据hash索引查找指定key(mk+uk)的数据的位置, 并返回数据
@@ -3116,7 +3116,7 @@ protected:
      * @return lock_iterator: Return the location of the data found, or end() if it does not exist
      *
      */
-    lock_iterator find(const string &mk, const string &uk, uint32_t index, Value &v, int &ret);
+    lock_iterator find(const std::string &mk, const std::string &uk, uint32_t index, Value &v, int &ret);
 
     /**
      * @brief 根据hash索引查找指定key(mk+uk)的数据的位置
@@ -3133,7 +3133,7 @@ protected:
      * @return lock_iterator: Returns the location of the data found, or end() if it does not exist
      *
      */
-    lock_iterator find(const string &mk, const string &uk, uint32_t index, int &ret);
+    lock_iterator find(const std::string &mk, const std::string &uk, uint32_t index, int &ret);
 
     /**
     * @brief 根据主key hash索引查找主key的地址，找不到返回0
@@ -3147,7 +3147,7 @@ protected:
     * @return uint32_t: 返回找到的主key的首地址，找不到返回0
     * @return uint32_t: Return the first address of the primary key found, return 0 not found
     */
-    uint32_t find(const string &mk, uint32_t index, int &ret);
+    uint32_t find(const std::string &mk, uint32_t index, int &ret);
 
     /**
      * @brief 分析主键hash的数据

@@ -44,7 +44,7 @@ public:
     /**
      *
      */
-    int doRequest(TarsCurrentPtr current, vector<char> &buffer);
+    int doRequest(TarsCurrentPtr current, std::vector<char> &buffer);
 
 };
 /////////////////////////////////////////////////////

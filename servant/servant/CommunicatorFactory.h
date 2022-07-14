@@ -45,7 +45,7 @@ public:
      * @param name
      * @return ServantPrx
      */
-    CommunicatorPtr getCommunicator(const string& name = "default")
+    CommunicatorPtr getCommunicator(const std::string& name = "default")
     {
         TC_LockT<TC_ThreadRecMutex> lock(*this);
 
@@ -66,7 +66,7 @@ public:
      * @param name
      * @return ServantPrx
      */
-    CommunicatorPtr getCommunicator(TC_Config& conf, const string& name = "default")
+    CommunicatorPtr getCommunicator(TC_Config& conf, const std::string& name = "default")
     {
         TC_LockT<TC_ThreadRecMutex> lock(*this);
 
@@ -81,7 +81,7 @@ public:
             return it->second;
         }
 
-        string s = "";
+        std::string s = "";
 
         it->second->setProperty(conf);
 

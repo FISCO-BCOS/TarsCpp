@@ -26,6 +26,8 @@
 namespace tars
 {
 
+using  namespace  std;
+
 TC_Mysql::TC_Mysql()
 :_bConnected(false)
 {

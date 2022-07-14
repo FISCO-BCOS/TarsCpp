@@ -27,8 +27,6 @@
 #include <WS2tcpip.h>
 #endif
 
-using namespace std;
-
 namespace tars
 {
 /**
@@ -47,7 +45,7 @@ public:
      *
      * @param ep
      */
-	EndpointInfo(const TC_Endpoint &ep, const string &setDivision="");
+	EndpointInfo(const TC_Endpoint &ep, const std::string &setDivision="");
 
 	/**
      * 构造函数
@@ -73,16 +71,16 @@ public:
 	/**
      * 地址的字符串描述(用于比较)
      *
-     * @return string
+     * @return std::string
      */
-	inline const string & cmpDesc() const { return _cmpDesc; }
+	inline const std::string & cmpDesc() const { return _cmpDesc; }
 
 	/**
      * 地址的字符串描述
      *
-     * @return string
+     * @return std::string
      */
-    inline const string & desc() const { return _desc; }
+    inline const std::string & desc() const { return _desc; }
 
     /**
      *
@@ -105,9 +103,9 @@ public:
 	/**
      * 获取主机名
      *
-     * @return const string&
+     * @return const std::string&
      */
-    const string &host() const { return _ep.getHost(); }
+    const std::string &host() const { return _ep.getHost(); }
 
     /**
      * 获取端口号
@@ -149,9 +147,9 @@ public:
     /**
     *返回set分组信息
     *
-    *@return string
+    *@return std::string
     */
-    inline const string& setDivision() const { return _setDivision; }
+    inline const std::string& setDivision() const { return _setDivision; }
 
     /*
      * 获取认证类型
@@ -185,16 +183,16 @@ protected:
     /**
      * 地址的字符串描述
      * @param bWithSetInfo,标识
-     * @return string
+     * @return std::string
      */
-    string createDesc() const { return _ep.toString(); }
+    std::string createDesc() const { return _ep.toString(); }
 
     /**
      * 详细地址字符串描述
      * 
-     * @return string 
+     * @return std::string 
      */
-    string createCompareDesc();
+    std::string createCompareDesc();
 
 private:
 	/**
@@ -206,18 +204,18 @@ private:
 	/**
 	 *set分组信息
 	 */
-    string                 _setDivision;
+    std::string                 _setDivision;
 
 
     /**
      * 比较的地址字符串描述
      */
-    string                 _cmpDesc;
+    std::string                 _cmpDesc;
 
     /**
      * 地址的字符串描述
      */
-    string                 _desc;
+    std::string                 _desc;
 
 
 };

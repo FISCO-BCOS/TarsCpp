@@ -13,6 +13,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_Epoller::NotifyInfo::~NotifyInfo()
 {
 	if(_epollInfo && _epoller)

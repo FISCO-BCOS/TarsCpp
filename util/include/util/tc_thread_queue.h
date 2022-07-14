@@ -22,8 +22,6 @@
 #include <mutex>
 #include <condition_variable>
 
-using namespace std;
-
 namespace tars
 {
 /////////////////////////////////////////////////
@@ -38,7 +36,7 @@ namespace tars
 /**
  * @brief 线程安全队列
  */
-template<typename T, typename D = deque<T> >
+template<typename T, typename D = std::deque<T> >
 class TC_ThreadQueue
 {
 public:

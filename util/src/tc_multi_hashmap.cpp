@@ -21,6 +21,8 @@
 namespace tars
 {
 
+using namespace std;
+
 int TC_Multi_HashMap::FailureRecover::_iRefCount = 0;
 
 bool TC_Multi_HashMap::MainKey::next()

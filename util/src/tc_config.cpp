@@ -19,6 +19,8 @@
 #include "util/tc_config.h"
 #include "util/tc_common.h"
 
+using namespace std;
+
 namespace tars
 {
 

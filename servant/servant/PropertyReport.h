@@ -60,8 +60,8 @@ public:
     {
     public:
         sum() :_d(0)                { }
-        string get();
-        string desc()               { return "Sum"; }
+        std::string get();
+        std::string desc()               { return "Sum"; }
         void   set(int o)           { _d += o; }
     protected:
         void   clear()              { _d  = 0; }
@@ -76,8 +76,8 @@ public:
     {
     public:
         avg():_sum(0), _count(0)    { }
-        string desc()               { return "Avg"; }
-        string get();
+        std::string desc()               { return "Avg"; }
+        std::string get();
         void   set(int o)           { _sum += o;++_count; }
     protected:
         void clear()                { _sum = 0; _count = 0; }
@@ -93,15 +93,15 @@ public:
     {
     public:
         distr(){};
-        distr(const vector<int>& range);
-        string desc()               { return "Distr"; }
+        distr(const std::vector<int>& range);
+        std::string desc()               { return "Distr"; }
         void   set(int o);
-        string get();
+        std::string get();
     protected:
         void clear()                { _result.clear();}
     private:
-        vector<int>     _range;
-        vector<size_t>  _result;
+        std::vector<int>     _range;
+        std::vector<size_t>  _result;
     };
 
     /**
@@ -111,8 +111,8 @@ public:
     {
     public:
         max() : _d(-9999999)        { }
-        string desc()               { return "Max"; }
-        string get();
+        std::string desc()               { return "Max"; }
+        std::string get();
         void   set(int o)           { _d < o?_d = o:1; }
     protected:
         void   clear()              { _d = 0; }
@@ -127,8 +127,8 @@ public:
     {
     public:
         min():_d(0)                 { }
-        string desc()               { return "Min"; }
-        string get();
+        std::string desc()               { return "Min"; }
+        std::string get();
         void   set(int o);
     protected:
         void   clear()              { _d = 0; }
@@ -143,8 +143,8 @@ public:
     {
     public:
         count():_d(0)               { }
-        string desc()               { return "Count"; }
-        string get();
+        std::string desc()               { return "Count"; }
+        std::string get();
         void   set(int o)           { _d++; }
     protected:
         void   clear()              { _d = 0; }
@@ -155,7 +155,7 @@ public:
 public:
 
     virtual void report(int iValue)             = 0;
-    virtual vector<pair<string, string> > get() = 0;
+    virtual std::vector<pair<string, std::string> > get() = 0;
 
 protected:
     std::string _sMasterName;   //属性所属服务名称
@@ -203,9 +203,9 @@ public:
     /**
      * 获取属性信息
      *
-     * @return vector<pair<string, string>>
+     * @return std::vector<pair<string, std::string>>
      */
-    vector<pair<string, string> > get() override
+    std::vector<pair<string, std::string> > get() override
     {
         TC_LockT<TC_ThreadMutex> lock(*this);
         return Helper<std::tuple_size<decltype(_propertyReportData)>::value>::Get(*this);
