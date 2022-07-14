@@ -40,7 +40,7 @@ public:
      * 设置代码生成的根目录
      * @param dir
      */
-    void setBaseDir(const string &dir);
+    void setBaseDir(const std::string &dir);
 
     /**
      * 生成JSON2TARS用例
@@ -59,18 +59,18 @@ public:
      * @param file
      * @param isFramework 是否是框架
      */
-    void createFile(const string &tarsfile, const string& outfile = "");
+    void createFile(const std::string &tarsfile, const std::string& outfile = "");
 
 protected:
     /**
      * 根据命名空间获取文件路径
      * @param ns 命名空间
      *
-     * @return string
+     * @return std::string
      */
-    string getFilePath(const string &ns) const;
+    std::string getFilePath(const std::string &ns) const;
 
-    string 	_baseDir;
+    std::string 	_baseDir;
     bool    _jsonCase;
     bool    _webCase;
 
@@ -80,64 +80,64 @@ protected:
      * 生成某类型的字符串描述源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string toStr(const TypePtr &pPtr) const;
+    std::string toStr(const TypePtr &pPtr) const;
 
 
     /**
      * 生成某类型的字符串描述源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string toDescStr(const TypePtr &pPtr) const;
+    std::string toDescStr(const TypePtr &pPtr) const;
 
     /**
      * 生成内建类型的字符串源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrBuiltin(const BuiltinPtr &pPtr) const;
+    std::string tostrBuiltin(const BuiltinPtr &pPtr) const;
     /**
      * 生成vector的字符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrVector(const VectorPtr &pPtr) const;
+    std::string tostrVector(const VectorPtr &pPtr) const;
 
     /**
      * 生成map的字符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrMap(const MapPtr &pPtr, bool bNew = false) const;
+    std::string tostrMap(const MapPtr &pPtr, bool bNew = false) const;
 
     /**
      * 生成某种结构的符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrStruct(const StructPtr &pPtr) const;
+    std::string tostrStruct(const StructPtr &pPtr) const;
 
     /**
      * 生成某种枚举的符串描述
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string tostrEnum(const EnumPtr &pPtr) const;
+    std::string tostrEnum(const EnumPtr &pPtr) const;
 
 protected:
     /**
      * 生成某类型的JSON描述源码
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
     JsonValuePtr generateJson(const TypePtr &pPtr) const;
 
@@ -165,17 +165,17 @@ protected:
 
 protected:
 
-	string tocaseBuiltin(const BuiltinPtr &pPtr, const string& varName) const;
+	std::string tocaseBuiltin(const BuiltinPtr &pPtr, const std::string& varName) const;
 
-    string tocaseVector(const VectorPtr &pPtr, const string& varName) const;
+    std::string tocaseVector(const VectorPtr &pPtr, const std::string& varName) const;
 
-    string tocaseMap(const MapPtr &pPtr, const string& varName) const;
+    std::string tocaseMap(const MapPtr &pPtr, const std::string& varName) const;
 
-    string tocaseStruct(const StructPtr &pPtr, const string& varName) const;
+    std::string tocaseStruct(const StructPtr &pPtr, const std::string& varName) const;
 
-    string tocaseEnum(const EnumPtr &pPtr, const string& varName) const;
+    std::string tocaseEnum(const EnumPtr &pPtr, const std::string& varName) const;
 
-	string toCase(const TypePtr &pPtr, const string& varName) const;
+	std::string toCase(const TypePtr &pPtr, const std::string& varName) const;
 
     //以下是h和java文件的具体生成
 protected:
@@ -183,55 +183,55 @@ protected:
      * 生成参数声明的test文件内容
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    string generateTest(const ParamDeclPtr &pPtr) const;
+    std::string generateTest(const ParamDeclPtr &pPtr) const;
 
 	/**
 	*
 	* 生成测试用例
 	**/
-    string generateCase(const ParamDeclPtr &pPtr) const;
+    std::string generateCase(const ParamDeclPtr &pPtr) const;
 
    /**
      * 生成WEB代理请求访问的JSON串
      * @param pPtr
      * @param outfile
      *
-     * @return string
+     * @return std::string
      */
-    string generateJson(const InterfacePtr &pPtr, const string& outfile = "") const;
+    std::string generateJson(const InterfacePtr &pPtr, const std::string& outfile = "") const;
 
    /**
      * 生成WEB代理请求访问的JSON串, JSON用例
      * @param pPtr
      * @param outfile
      *
-     * @return string
+     * @return std::string
      */
-    string generateDesc(const InterfacePtr &pPtr, const string& outfile = "") const;
+    std::string generateDesc(const InterfacePtr &pPtr, const std::string& outfile = "") const;
 
     /**
      * 生成TEST接口访问的测试
      * @param pPtr
      * @param outfile
      *
-     * @return string
+     * @return std::string
      */
-    string generateTest(const InterfacePtr &pPtr, const string& outfile = "") const;
+    std::string generateTest(const InterfacePtr &pPtr, const std::string& outfile = "") const;
 
     /**
      * 生成每个tars文件的用例文件
      * @param pPtr
      *
-     * @return string
+     * @return std::string
      */
-    void generateFile(const ContextPtr &pPtr, const string& outfile = "") const;
+    void generateFile(const ContextPtr &pPtr, const std::string& outfile = "") const;
 
 	/**
 	* 生成tag和require、optional信息
 	*/
-	string genratePrefix(const TypeIdPtr &ptr) const;
+	std::string genratePrefix(const TypeIdPtr &ptr) const;
 };
 
 #endif

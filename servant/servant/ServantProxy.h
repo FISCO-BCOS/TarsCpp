@@ -278,7 +278,7 @@ public:
         // eg: f.2-ee824ad0eb4dacf56b29d230a229c584|030019ac000010796162bc5900000021|030019ac000010796162bc5900000021
         bool init(const std::string& k)
         {
-            vector<string> vs = TC_Common::sepstr<string>(k, "|");
+            vector<std::string> vs = TC_Common::sepstr<string>(k, "|");
             if (vs.size() == 2)
             {
                 traceID = vs[0];
@@ -314,7 +314,7 @@ public:
             std::string::size_type  pos = tid.find("-");
             if (pos != std::string::npos)
             {
-                vector<string> flags = TC_Common::sepstr<string>(tid.substr(0, pos), ".");
+                vector<std::string> flags = TC_Common::sepstr<string>(tid.substr(0, pos), ".");
                 if (flags.size() >= 1)
                 {
                     type = strtol(flags[0].c_str(), NULL, 16);

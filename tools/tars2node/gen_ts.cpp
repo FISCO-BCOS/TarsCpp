@@ -15,7 +15,7 @@
  */
 
 #include "code_generator.h"
-
+using namespace std;
 string CodeGenerator::generateTS(const EnumPtr &pPtr, const string &sNamespace)
 {
     ostringstream s;

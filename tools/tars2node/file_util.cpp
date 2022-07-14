@@ -16,6 +16,8 @@
 
 #include "code_generator.h"
 
+using namespace std;
+
 void CodeGenerator::makeUTF8File(const string& sFileName, const string& sFileContent) 
 {
     try {

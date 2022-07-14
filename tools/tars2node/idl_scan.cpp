@@ -15,7 +15,7 @@
  */
 
 #include "code_generator.h"
-
+using namespace std;
 string CodeGenerator::makeName()
 {
     int iHigh = uiNameIndex/26;

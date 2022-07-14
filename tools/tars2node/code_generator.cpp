@@ -16,6 +16,8 @@
 
 #include "code_generator.h"
 
+using namespace std;
+
 string CodeGenerator::printHeaderRemark(const string &sTypeName)
 {
     ostringstream s;

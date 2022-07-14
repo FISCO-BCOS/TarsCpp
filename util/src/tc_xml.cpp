@@ -24,6 +24,8 @@
 namespace tars
 {
 
+using namespace std;
+
 #define FILTER_SPACE  while(isspace((int)reader.get())) {reader.skip();}
 #define FILTER_NODENAME  while(lookup_node_name[(int)reader.get()]) {reader.skip();}
 #define XML_PARSE_ERROR(what) { throw TC_Xml_Exception(what); }

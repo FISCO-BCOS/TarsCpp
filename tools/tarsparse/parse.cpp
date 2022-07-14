@@ -22,6 +22,8 @@
 #include "util/tc_common.h"
 #include "util/tc_file.h"
 
+using namespace std;
+
 TarsParsePtr g_parse = new TarsParse();
 
 void yyerror(char const *msg)

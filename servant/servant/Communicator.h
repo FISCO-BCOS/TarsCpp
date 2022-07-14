@@ -220,7 +220,7 @@ public:
      /*
      *获取公有网络线程的对象
      */
-    inline const shared_ptr<CommunicatorEpoll> &getCommunicatorEpoll(size_t iNum)
+    inline const std::shared_ptr<CommunicatorEpoll> &getCommunicatorEpoll(size_t iNum)
     {
         assert(iNum < getCommunicatorEpollNum());
         return _communicatorEpoll[iNum];
@@ -230,7 +230,7 @@ public:
      * 获取所有的网络通信器(包括公有和私有的)
      * @return
      */
-	vector<shared_ptr<CommunicatorEpoll>> getAllCommunicatorEpoll();
+	vector<std::shared_ptr<CommunicatorEpoll>> getAllCommunicatorEpoll();
 
     /**
      * 获取属性
@@ -290,7 +290,7 @@ public:
     /**
      * 重新加载属性
      */
-    int reloadProperty(string & sResult);
+    int reloadProperty(std::string & sResult);
     
     /*
     * 重新加载locator
@@ -392,13 +392,13 @@ protected:
 	 *
 	 * @param func
 	 */
-	void forEachSchedCommunicatorEpoll(std::function<void(const shared_ptr<CommunicatorEpoll> &)> func);
+	void forEachSchedCommunicatorEpoll(std::function<void(const std::shared_ptr<CommunicatorEpoll> &)> func);
 
 	/**
 	 * 创建一个协程内的网络通信器
 	 * @return
 	 */
-	shared_ptr<CommunicatorEpoll> createSchedCommunicatorEpoll(size_t netThreadSeq,  const shared_ptr<ReqInfoQueue> &reqInfoQueue);
+	shared_ptr<CommunicatorEpoll> createSchedCommunicatorEpoll(size_t netThreadSeq,  const std::shared_ptr<ReqInfoQueue> &reqInfoQueue);
 
 	/**
 	 * 删除协程内网络通信器
@@ -454,12 +454,12 @@ protected:
     /*
      * 公有网络线程
      */
-    vector<shared_ptr<CommunicatorEpoll>>    _communicatorEpoll;//[MAX_CLIENT_THREAD_NUM];
+    vector<std::shared_ptr<CommunicatorEpoll>>    _communicatorEpoll;//[MAX_CLIENT_THREAD_NUM];
 
     /**
      * 私有网络线程, 会动态变化
      */
-    unordered_map<size_t, shared_ptr<CommunicatorEpoll>>	_schedCommunicatorEpoll;
+    std::unordered_map<size_t, std::shared_ptr<CommunicatorEpoll>>	_schedCommunicatorEpoll;
 
     /**
      * 操作通信器的锁
@@ -504,7 +504,7 @@ protected:
 	/**
 	 * ssl
 	 */
-	unordered_map<string, shared_ptr<TC_OpenSSL::CTX>> _objCtx;
+	unordered_map<string, std::shared_ptr<TC_OpenSSL::CTX>> _objCtx;
 
     /*
      * 异步线程数组

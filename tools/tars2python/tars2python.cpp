@@ -25,6 +25,8 @@
 #define INC_TAB g_parse->incTab()
 #define DEL_TAB g_parse->delTab()
 
+using namespace std;
+
 const string MAP_PREFIX = "mapcls_";
 const string VEC_PREFIX = "vctcls_";
 

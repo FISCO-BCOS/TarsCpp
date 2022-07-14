@@ -20,6 +20,7 @@
 #include "util/tc_common.h"
 #include <string>
 
+using namespace std;
 //////////////////////////////////////////////////////////////////////////////////
 //
 Tars2Case::Tars2Case() : _jsonCase(false), _webCase(false)

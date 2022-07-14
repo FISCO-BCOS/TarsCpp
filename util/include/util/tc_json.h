@@ -26,7 +26,7 @@
 
 #include "util/tc_autoptr.h"
 
-using namespace std;
+
 
 namespace tars
 {
@@ -108,7 +108,7 @@ public:
 	virtual ~JsonValueString()
 	{
 	}
-	string value;
+	std::string value;
 };
 typedef TC_AutoPtr<JsonValueString> JsonValueStringPtr;
 
@@ -170,7 +170,7 @@ public:
 
 	virtual ~JsonValueObj(){}
 public:
-	std::unordered_map<string,JsonValuePtr> value;
+	std::unordered_map<std::string,JsonValuePtr> value;
 };
 typedef TC_AutoPtr<JsonValueObj> JsonValueObjPtr;
 
@@ -376,28 +376,28 @@ private:
 class TC_JsonWriteOstream
 {
 public:
-    static void writeValue(const JsonValuePtr & p, ostream& ostr, bool withSpace = false);
+    static void writeValue(const JsonValuePtr & p, std::ostream& ostr, bool withSpace = false);
 private:
 	//string 类型到json字符串
 	//stirng type to json std::string
-	static void writeString(const JsonValueStringPtr & p, ostream& ostr);
-	static void writeString(const std::string & s, ostream& ostr);
+	static void writeString(const JsonValueStringPtr & p, std::ostream& ostr);
+	static void writeString(const std::string & s, std::ostream& ostr);
 
 	//num 类型到json字符串
 	//num type to json std::string
-	static void writeNum(const JsonValueNumPtr & p, ostream& ostr);
+	static void writeNum(const JsonValueNumPtr & p, std::ostream& ostr);
 
 	//obj 类型到json字符串
 	//obj type to json std::string
-	static void writeObj(const JsonValueObjPtr & p, ostream& ostr, bool withSpace = false);
+	static void writeObj(const JsonValueObjPtr & p, std::ostream& ostr, bool withSpace = false);
 
 	//array 类型到json字符串
 	//array type to json std::string
-	static void writeArray(const JsonValueArrayPtr & p, ostream& ostr, bool withSpace = false);
+	static void writeArray(const JsonValueArrayPtr & p, std::ostream& ostr, bool withSpace = false);
 
 	//boolean 类型到json字符串
 	//boolean type to json std::string
-	static void writeBoolean(const JsonValueBooleanPtr & p, ostream& ostr);
+	static void writeBoolean(const JsonValueBooleanPtr & p, std::ostream& ostr);
 };
 }
 

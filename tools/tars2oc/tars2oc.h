@@ -68,18 +68,18 @@ protected:
 	 *
 	 * @return �������ǰ׺�ַ���
 	 */
-	string getNamePrix(const std::string& sTarsNS) const;
+	std::string getNamePrix(const std::string& sTarsNS) const;
 	
 	/**
 	 * ��ȡ���Ϲ淶�ĳ�Ա����
 	 */
-	string getPropertyName(const std::string& sId) const;
+	std::string getPropertyName(const std::string& sId) const;
 
     /**
 	 *
 	 * ��ȡ�Զ���setter������
 	 */
-	string getSetterName(const std::string& sId) const;
+	std::string getSetterName(const std::string& sId) const;
     /**
      * ����ĳ���͵��ַ�������Դ��
      * @param pPtr
@@ -96,7 +96,7 @@ protected:
      */
     std::string tostrBuiltin(const BuiltinPtr &pPtr) const;
     /**
-     * ����vector���ַ�������
+     * ����std::vector���ַ�������
      * @param pPtr
      *
      * @return std::string
@@ -134,7 +134,7 @@ protected:
 	 *
 	 * @return std::string
 	 */
-	string toTarsV2Procstr(const TypeIdPtr &pPtr) const;
+	std::string toTarsV2Procstr(const TypeIdPtr &pPtr) const;
 
 	/**
 	 * ����OBJC�汾2�ĸ�����Ϣ����
@@ -142,7 +142,7 @@ protected:
 	 *
 	 * @return std::string
 	 */
-	string toAddtionalClassName(const TypePtr &pPtr) const;
+	std::string toAddtionalClassName(const TypePtr &pPtr) const;
 
 	/**
 	 * ���ɽṹ�����Ե�synthesize����
@@ -150,7 +150,7 @@ protected:
 	 *
 	 * @return std::string
 	 */
-    std::string writesynthesize(const vector<TypeIdPtr>& vMember) const;
+    std::string writesynthesize(const std::vector<TypeIdPtr>& vMember) const;
 
 	/**
 	 * ����Initialize����
@@ -166,7 +166,7 @@ protected:
 	 *
 	 * @return std::string
 	 */
-	string writeInit(const vector<TypeIdPtr>& vMember) const;
+	std::string writeInit(const std::vector<TypeIdPtr>& vMember) const;
 
 	/**
 	 * ������������
@@ -174,7 +174,7 @@ protected:
 	 *
 	 * @return std::string
 	 */
-	string writedealloc(const vector<TypeIdPtr>& vMember) const;
+	std::string writedealloc(const std::vector<TypeIdPtr>& vMember) const;
 
 	/**
 	 * ���ɽṹ���ƶ���
@@ -182,7 +182,7 @@ protected:
 	 *
 	 * @return std::string
 	 */
-	string writeTarsType(const StructPtr &pPtr) const;
+	std::string writeTarsType(const StructPtr &pPtr) const;
 
 	/**
 	 * �������ͱ�ʾ��
@@ -197,7 +197,7 @@ protected:
 	 * @param pPtr
 	 *
 	 */
-	string getReqOptionType(const TypeIdPtr &pPtr) const;
+	std::string getReqOptionType(const TypeIdPtr &pPtr) const;
 	/**
 	 * �ж������Ƿ�����retain���ͣ�string�Ͷ������Ͷ�����retain
 	 * @param pPtr
@@ -214,7 +214,7 @@ protected:
 	 *
 	 * @return
 	 */
-	map<string,int> getReferences(const StructPtr &pPtr, const std::string& namespaceId="") const;
+	std::map<std::string,int> getReferences(const StructPtr &pPtr, const std::string& namespaceId="") const;
 
 	/**
 	 * ��ȡ��Ա�������������ͱ�ʶ������,
@@ -223,7 +223,7 @@ protected:
 	 * @param pPtr
 	 * @param mRefs
 	 */
-	void toIncludeName(const TypePtr &pPtr,map<string,int>& mRefs) const;
+	void toIncludeName(const TypePtr &pPtr,std::map<std::string,int>& mRefs) const;
 
     /**
      * ���ɽṹ��ͷ�ļ�����
@@ -247,7 +247,7 @@ protected:
      *
      * @return std::string
      */
-	string generateM(const EnumPtr &pPtr, const std::string& namespaceId) const;
+	std::string generateM(const EnumPtr &pPtr, const std::string& namespaceId) const;
     /**
      * ����������ͷ�ļ�Դ��
      * @param pPtr
@@ -305,7 +305,7 @@ private:
     std::string m_sBaseDir;
 
     //<modulename,EM_TYPE>, 2:enum,1,stuct;
-    mutable map<string,int> m_mIncludes;
+    mutable std::map<std::string,int> m_mIncludes;
 	/**
 	 * �Ƿ�֧��arc�汾
 	 *
@@ -318,7 +318,7 @@ private:
 	/**
 	 *�û��Զ�������ֿռ�ǰ׺�������ֵΪ�գ�Ĭ����ȡtars�ļ��ж����ֵ
 	 */
-	string m_sNamespace;
+	std::string m_sNamespace;
 };
 
 #endif

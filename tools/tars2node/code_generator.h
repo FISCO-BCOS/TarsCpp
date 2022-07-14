@@ -113,7 +113,7 @@ public:
 
     void setMinimalMembers(bool bEnable) { _bMinimalMembers = bEnable; }
 
-    void setDependent(set<string>& deps) { _depMembers = deps; }
+    void setDependent(std::set<std::string>& deps) { _depMembers = deps; }
 
     void setEnableTS(bool bEnable) { _bTS = bEnable; }
 
@@ -139,14 +139,14 @@ private:
     {
         std::string                      sFile;
         std::string                      sModule;
-        map<string, ImportFileType> mapVars;
+        std::map<std::string, ImportFileType> mapVars;
     };
 
     uint32_t uiNameIndex;
 
-    map<string, ImportFile> _mapFiles;
+    std::map<std::string, ImportFile> _mapFiles;
 
-    set<string> _depMembers;
+    std::set<std::string> _depMembers;
 
     void   scan(const std::string & sFile, bool bNotPrefix);
 

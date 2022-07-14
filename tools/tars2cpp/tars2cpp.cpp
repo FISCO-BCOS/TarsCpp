@@ -25,6 +25,8 @@
 #define DEL_TAB g_parse->delTab()
 #define G_TRACE_PARAM_OVER_MAX_LEN "\"{\\\"trace_param_over_max_len\\\":true}\""
 
+using namespace std;
+
 //////////////////////////////////////////////////////////////////////////////////
 //
 Tars2Cpp::Tars2Cpp()
@@ -3218,6 +3220,9 @@ string Tars2Cpp::generateH(const NamespacePtr& pPtr) const
     s << TAB << "{" << endl;
     INC_TAB;
 
+    // add using namespace std
+    s << TAB << "using namespace std;" << endl;
+    
     for (size_t i = 0; i < cs.size(); i++)
     {
         s << generateH(cs[i]) << endl;
@@ -3277,7 +3282,7 @@ void Tars2Cpp::generateH(const ContextPtr &pPtr) const
     if (_bSqlSupport) s << "#include \"util/tc_mysql.h\"" << endl;
     if (_bXmlSupport) s << "#include \"tup/TarsXml.h\"" << endl;
 
-    s << "using namespace std;" << endl;
+    // s << "using namespace std;" << endl;
 
     vector<string> include = pPtr->getIncludes();
     for (size_t i = 0; i < include.size(); i++)

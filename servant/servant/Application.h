@@ -90,7 +90,7 @@ namespace tars
  * 多个前置方法之间顺序不确定
  */
 #define TARS_ADD_ADMIN_CMD_PREFIX(c,f) \
-    do { addAdminCommandPrefix(string(c), std::bind(&f, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)); } while (0);
+    do { addAdminCommandPrefix(std::string(c), std::bind(&f, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)); } while (0);
 
 /**
  * 添加Normal命令处理方法
@@ -98,7 +98,7 @@ namespace tars
  * 多个Normal方法之间顺序不确定
  */
 #define TARS_ADD_ADMIN_CMD_NORMAL(c,f) \
-    do { addAdminCommandNormal(string(c), std::bind(&f, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)); } while (0);
+    do { addAdminCommandNormal(std::string(c), std::bind(&f, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)); } while (0);
 
 //////////////////////////////////////////////////////////////////////
 /**
@@ -267,7 +267,7 @@ public:
 	 * get servant helper
 	 * @return
 	 */
-	const shared_ptr<ServantHelperManager> &getServantHelper() { return _servantHelper; }
+	const std::shared_ptr<ServantHelperManager> &getServantHelper() { return _servantHelper; }
 
 	/**
 	 * get notify observer
@@ -565,12 +565,12 @@ protected:
     /**
      * servant helper
      */
-    shared_ptr<ServantHelperManager>    _servantHelper;
+    std::shared_ptr<ServantHelperManager>    _servantHelper;
 
     /**
      * notify observer
      */
-    shared_ptr<NotifyObserver>          _notifyObserver;
+    std::shared_ptr<NotifyObserver>          _notifyObserver;
 
     /**
      * ssl ctx

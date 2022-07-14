@@ -23,6 +23,8 @@
 #define INC_TAB g_parse->incTab()
 #define DEL_TAB g_parse->delTab()
 
+using namespace std;
+
 //////////////////////////////////////////////////////////////////////////////////
 //
 Tars2Php::Tars2Php(): m_bCheckDefault(false)

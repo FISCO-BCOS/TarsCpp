@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 #include "util/tc_autoptr.h"
-using namespace std;
+
 
 namespace tars
 {

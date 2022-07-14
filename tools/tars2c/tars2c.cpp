@@ -23,6 +23,8 @@
 #define INC_TAB g_parse->incTab()
 #define DEL_TAB g_parse->delTab()
 
+using namespace std;
+
 //////////////////////////////////////////////////////////////////////////////////
 //
 string Tars2C::writeTo(const TypeIdPtr &pPtr,const string& namespaceId) const

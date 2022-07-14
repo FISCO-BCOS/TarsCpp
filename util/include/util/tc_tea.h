@@ -9,7 +9,7 @@
 
 #include "util/tc_ex.h"
 
-using namespace std;
+
 
 namespace tars
 {

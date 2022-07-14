@@ -2000,7 +2000,7 @@ yyreduce:
     {
     TypePtr returnType = TypePtr::dynamicCast((yyvsp[(1) - (2)]));
     StringGrammarPtr ident = StringGrammarPtr::dynamicCast((yyvsp[(2) - (2)]));
-    string name        = ident->v;
+    std::string name        = ident->v;
     InterfacePtr cl    = InterfacePtr::dynamicCast(g_parse->currentContainer());
     if(cl)
     {
@@ -2371,7 +2371,7 @@ yyreduce:
 #line 728 "/Users/octopus/octo/code/TarsCpp/tools/tarsgrammar/tars.y"
     {
     IntergerGrammarPtr intVal = IntergerGrammarPtr::dynamicCast((yyvsp[(1) - (1)]));
-    ostringstream sstr;
+    std::ostringstream sstr;
     sstr << intVal->v;
     ConstGrammarPtr c = new ConstGrammar();
     c->t = ConstGrammar::VALUE;
@@ -2384,7 +2384,7 @@ yyreduce:
 #line 738 "/Users/octopus/octo/code/TarsCpp/tools/tarsgrammar/tars.y"
     {
     FloatGrammarPtr floatVal = FloatGrammarPtr::dynamicCast((yyvsp[(1) - (1)]));
-    ostringstream sstr;
+    std::ostringstream sstr;
     sstr << floatVal->v;
     ConstGrammarPtr c = new ConstGrammar();
     c->t = ConstGrammar::VALUE;

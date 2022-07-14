@@ -25,8 +25,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 #undef max
 #undef min
 
@@ -155,7 +153,7 @@ public:
 public:
 
     virtual void report(int iValue)             = 0;
-    virtual std::vector<pair<string, std::string> > get() = 0;
+    virtual std::vector<std::pair<std::string, std::string> > get() = 0;
 
 protected:
     std::string _sMasterName;   //属性所属服务名称
@@ -205,7 +203,7 @@ public:
      *
      * @return std::vector<pair<string, std::string>>
      */
-    std::vector<pair<string, std::string> > get() override
+    std::vector<std::pair<std::string, std::string> > get() override
     {
         TC_LockT<TC_ThreadMutex> lock(*this);
         return Helper<std::tuple_size<decltype(_propertyReportData)>::value>::Get(*this);

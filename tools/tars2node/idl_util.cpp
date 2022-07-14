@@ -15,7 +15,7 @@
  */
 
 #include "code_generator.h"
-
+using namespace std;
 string CodeGenerator::toFunctionName(const TypeIdPtr& pPtr, const string& sAction)
 {
     BuiltinPtr bPtr = BuiltinPtr::dynamicCast(pPtr->getTypePtr());

@@ -36,8 +36,6 @@
 #include "util/tc_coroutine.h"
 #include "util/tc_openssl.h"
 
-using namespace std;
-
 /**
  * 服务模型说明:
  * - 服务模型全面支持协程化, 一共有四种模式, 可以通过setOpenCoroutine来设置, 这四种模式是:
@@ -227,7 +225,7 @@ public:
         mutable std::string _ip;             /**远程连接的ip*/
         mutable uint16_t _port;           /**远程连接的端口*/
         int _fd;                /*保存产生该消息的fd，用于回包时选择网络线程*/
-        weak_ptr<BindAdapter> _adapter;        /**标识哪一个adapter的消息*/
+        std::weak_ptr<BindAdapter> _adapter;        /**标识哪一个adapter的消息*/
         std::vector<char> _rbuffer;        /**接收的内容*/
         bool _isOverload = false;     /**是否已过载 */
         bool _isClosed = false;       /**是否已关闭*/
@@ -686,7 +684,7 @@ public:
         /**
          * 连接list
          */
-        weak_ptr<ConnectionList> _connList;
+        std::weak_ptr<ConnectionList> _connList;
 
         /**
          * log interface
@@ -804,7 +802,7 @@ public:
          * 关闭
          * @param bindFd
          */
-		void closeConnections(weak_ptr<BindAdapter> bindAdapter);
+		void closeConnections(std::weak_ptr<BindAdapter> bindAdapter);
 
         /**
          * 获取惟一ID
@@ -943,7 +941,7 @@ public:
 
     ////////////////////////////////////////////////////////////////////////////
     // 服务端口管理,监听socket信息
-    class BindAdapter : public enable_shared_from_this<BindAdapter> // : public TC_HandleBase
+    class BindAdapter : public std::enable_shared_from_this<BindAdapter> // : public TC_HandleBase
     {
     public:
         /**
@@ -1119,25 +1117,25 @@ public:
          * 设置允许ip
          * @param vtAllow
          */
-        inline void setAllow(const std::vector<string> & vtAllow) { _vtAllow = vtAllow; }
+        inline void setAllow(const std::vector<std::string> & vtAllow) { _vtAllow = vtAllow; }
 
         /**
          * 设置禁止ip
          * @param vtDeny
          */
-        inline void setDeny(const std::vector<string> & vtDeny) { _vtDeny = vtDeny; }
+        inline void setDeny(const std::vector<std::string> & vtDeny) { _vtDeny = vtDeny; }
 
         /**
          * 获取允许ip
-         * @return std::vector<string>: ip列表
+         * @return std::vector<std::string>: ip列表
          */
-        inline const std::vector<string> & getAllow() const { return _vtAllow; }
+        inline const std::vector<std::string> & getAllow() const { return _vtAllow; }
 
         /**
         * 获取禁止ip
-        * @return std::vector<string>: ip列表
+        * @return std::vector<std::string>: ip列表
         */
-        inline const std::vector<string> & getDeny() const { return _vtDeny; }
+        inline const std::vector<std::string> & getDeny() const { return _vtDeny; }
 
         /**
         * 获取allow deny次序
@@ -1509,12 +1507,12 @@ public:
         /**
          * 允许的ip
          */
-        std::vector<string>          _vtAllow;
+        std::vector<std::string>          _vtAllow;
 
         /**
          * 禁止的ip
          */
-        std::vector<string>          _vtDeny;
+        std::vector<std::string>          _vtDeny;
 
         /**
          * 发送队列数据总个数
@@ -2358,13 +2356,13 @@ protected:
      * accept callback
      * @param data
      */
-    bool acceptCallback(const std::shared_ptr<TC_Epoller::EpollInfo> &info, weak_ptr<BindAdapter> adapter);
+    bool acceptCallback(const std::shared_ptr<TC_Epoller::EpollInfo> &info, std::weak_ptr<BindAdapter> adapter);
 
     /**
      * listen callback
      * @param data
      */
-    void listenCallback(weak_ptr<BindAdapter> adapterPtr);
+    void listenCallback(std::weak_ptr<BindAdapter> adapterPtr);
 
     /**
      * 接收句柄

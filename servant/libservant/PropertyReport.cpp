@@ -20,6 +20,7 @@
 namespace tars
 {
 
+using namespace std;
 string PropertyReport::sum::get()
 {
     string s = TC_Common::tostr(_d);

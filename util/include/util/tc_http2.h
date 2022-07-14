@@ -41,7 +41,7 @@ public:
   /**
    * @brief  buffer
    */
-  vector<char> &buffer() { return _buff; }
+  std::vector<char> &buffer() { return _buff; }
 
   /**
    * buffer
@@ -53,7 +53,7 @@ public:
    * swap buff
    * @param buff
    */
-  void swap(vector<char> &buff) { _buff.swap(buff); }
+  void swap(std::vector<char> &buff) { _buff.swap(buff); }
 
   /**
    * insert buff
@@ -88,7 +88,7 @@ protected:
   /**
    * data buff
    */
-  vector<char> _buff;
+  std::vector<char> _buff;
 };
 
 class TC_Http2Server : public TC_Http2 {
@@ -120,7 +120,7 @@ public:
    * @param std::vector<std::shared_ptr<TC_HttpRequest>>
    * @return
    */
-  vector<shared_ptr<Http2Context>> decodeRequest();
+  std::vector<std::shared_ptr<Http2Context>> decodeRequest();
 
   /**
    *
@@ -129,7 +129,7 @@ public:
    * @param out
    * @return
    */
-  int encodeResponse(const shared_ptr<Http2Context> &context,
+  int encodeResponse(const std::shared_ptr<Http2Context> &context,
                      std::vector<char> &out);
 
   /**
@@ -149,16 +149,16 @@ public:
   void onStreamCloseCallback(int32_t streamId);
 
 protected:
-  shared_ptr<Http2Context> getContext(int32_t streamId);
+  std::shared_ptr<Http2Context> getContext(int32_t streamId);
 
   void deleteContext(int32_t streamId);
 
 protected:
   TC_ThreadMutex _nghttpLock;
 
-  unordered_map<int32_t, shared_ptr<Http2Context>> _context;
+  std::unordered_map<int32_t, std::shared_ptr<Http2Context>> _context;
 
-  vector<shared_ptr<Http2Context>> _contextFinished;
+  std::vector<std::shared_ptr<Http2Context>> _contextFinished;
 
   std::vector<char> _reqout;
 };
@@ -183,7 +183,7 @@ public:
    */
   TC_NetWorkBuffer::PACKET_TYPE
   parseResponse(TC_NetWorkBuffer &in,
-                pair<int, shared_ptr<TC_HttpResponse>> &out);
+                std::pair<int, std::shared_ptr<TC_HttpResponse>> &out);
 
   /**
    * submit, get net buffer to send
@@ -200,14 +200,14 @@ public:
   /**
    * @brief response
    */
-  std::unordered_map<int, shared_ptr<TC_HttpResponse>> &responses() {
+  std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> &responses() {
     return _responses;
   }
 
   /**
    * @brief response finished
    */
-  std::unordered_map<int, shared_ptr<TC_HttpResponse>> &doneResponses() {
+  std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> &doneResponses() {
     return _doneResponses;
   }
 
@@ -216,13 +216,13 @@ private:
    * 收到的响应
    * Responses received
    */
-  std::unordered_map<int, shared_ptr<TC_HttpResponse>> _responses;
+  std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> _responses;
 
   /**
    * 收到的完整响应
    * Complete response received
    */
-  std::unordered_map<int, shared_ptr<TC_HttpResponse>> _doneResponses;
+  std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> _doneResponses;
 };
 
 } // namespace tars

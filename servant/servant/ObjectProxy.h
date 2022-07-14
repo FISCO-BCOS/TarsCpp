@@ -167,7 +167,7 @@ public:
      *
      * @return
      */
-	inline const shared_ptr<EndpointManager> &getEndpointManager()
+	inline const std::shared_ptr<EndpointManager> &getEndpointManager()
 	{
     	return _endpointManger;
 	}

@@ -15,7 +15,7 @@
  */
 
 #include "code_generator.h"
-
+using namespace std;
 string CodeGenerator::generatePing(const NamespacePtr &nPtr, const InterfacePtr &pPtr)
 {
     ostringstream str;
