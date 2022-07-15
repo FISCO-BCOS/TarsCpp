@@ -36,7 +36,7 @@ public:
    * 析构函数，清理掉已设置的cookie
    */
   ~CookieOp() {
-    ServantProxyThreadData *td = ServantProxyThreadData::getData();
+    tars::ServantProxyThreadData *td = tars::ServantProxyThreadData::getData();
     assert(NULL != td);
     if (td) {
       td->_data._cookie.clear();
@@ -46,8 +46,8 @@ public:
   /**
    * 获取cookie
    */
-  static std::map<string, string> &getCookie() {
-    ServantProxyThreadData *td = ServantProxyThreadData::getData();
+  static std::map<std::string, std::string> &getCookie() {
+    tars::ServantProxyThreadData *td = tars::ServantProxyThreadData::getData();
     assert(NULL != td);
 
     return td->_data._cookie;
@@ -56,8 +56,8 @@ public:
   /**
    * 设置cookie
    */
-  void setCookie(const std::map<string, string> &cookie) {
-    ServantProxyThreadData *td = ServantProxyThreadData::getData();
+  void setCookie(const std::map<std::string, std::string> &cookie) {
+    tars::ServantProxyThreadData *td = tars::ServantProxyThreadData::getData();
     assert(NULL != td);
     if (td) {
       td->_data._cookie = cookie;
