@@ -38,7 +38,7 @@
 // #       include <ext/pool_allocator.h>
 // #   endif
 // #endif
-using namespace tars;
+// using namespace tars;
 
 namespace tup {
 
@@ -49,16 +49,16 @@ const std::string STATUS_RESULT_DESC = "STATUS_RESULT_DESC";
 /////////////////////////////////////////////////////////////////////////////////
 // 属性封装类
 
-template <typename TWriter = BufferWriter, typename TReader = BufferReader,
+template <typename TWriter = tars::BufferWriter, typename TReader = tars::BufferReader,
           template <typename> class Alloc = std::allocator>
 // template<typename> class Alloc = __gnu_cxx::__pool_alloc >
 class UniAttribute {
   typedef std::vector<char, Alloc<char>> VECTOR_CHAR_TYPE;
-  typedef std::map<std::string, VECTOR_CHAR_TYPE, less<string>,
-                   Alloc<pair<const std::string, VECTOR_CHAR_TYPE>>>
+  typedef std::map<std::string, VECTOR_CHAR_TYPE, std::less<std::string>,
+                   Alloc<std::pair<const std::string, VECTOR_CHAR_TYPE>>>
       VECTOR_CHAR_IN_MAP_TYPE;
-  typedef std::map<std::string, VECTOR_CHAR_IN_MAP_TYPE, less<string>,
-                   Alloc<pair<const std::string, VECTOR_CHAR_IN_MAP_TYPE>>>
+  typedef std::map<std::string, VECTOR_CHAR_IN_MAP_TYPE, std::less<std::string>,
+                   Alloc<std::pair<const std::string, VECTOR_CHAR_IN_MAP_TYPE>>>
       WUP_DATA_TYPE;
 
 public:
@@ -105,13 +105,13 @@ public:
       value = std::string(&mit->second[0] + 1, mit->second.size() - 2);
       return;
     }
-    throw runtime_error(std::string("UniAttribute not found key:") + name);
+    throw std::runtime_error(std::string("UniAttribute not found key:") + name);
   }
 
   /**
    * 获取属性值，属性不存在则抛出异常
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param T:   属性类型
    * @param name:属性名称
    * @param t:   属性值输出参数
@@ -130,12 +130,12 @@ public:
 
       return;
     }
-    throw runtime_error(std::string("UniAttribute not found key:") + name);
+    throw std::runtime_error(std::string("UniAttribute not found key:") + name);
   }
   /**
    * 获取属性值，属性不存在则抛出异常
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param T:   属性类型
    * @param name:属性名称
    * @return T:  属性值
@@ -159,7 +159,7 @@ public:
   void getByDefault(const std::string &name, T &t, const T &def) {
     try {
       get<T>(name, t);
-    } catch (runtime_error &e) {
+    } catch (std::runtime_error &e) {
       t = def;
     }
   }
@@ -212,7 +212,7 @@ public:
 
   /** 编码
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param buff：输出存放编码结果的buffer指针
    * @param len： 输入buff长度，输出编码结果长度
    */
@@ -222,14 +222,14 @@ public:
     os.write(_data, 0);
 
     if (len < os.getLength())
-      throw runtime_error("encode error, buffer length too short");
+      throw std::runtime_error("encode error, buffer length too short");
     memcpy(buff, os.getBuffer(), os.getLength());
     len = os.getLength();
   }
 
   /** 解码
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param buff：待解码字节流的buffer指针
    * @param len： 待解码字节流的长度
    */
@@ -245,7 +245,7 @@ public:
   /**
    * 解码
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param buff： 待解码的字节流
    */
   void decode(const std::vector<char> &buff) {
@@ -297,16 +297,16 @@ protected:
   short _iVer;
 
 public:
-  TarsInputStream<TReader> is;
-  TarsOutputStream<TWriter> os;
+  tars::TarsInputStream<TReader> is;
+  tars::TarsOutputStream<TWriter> os;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
 // 请求、回应包封装类
 
-template <typename TWriter = BufferWriter, typename TReader = BufferReader,
+template <typename TWriter = tars::BufferWriter, typename TReader = tars::BufferReader,
           template <typename> class Alloc = std::allocator>
-struct UniPacket : protected RequestPacket,
+struct UniPacket : protected tars::RequestPacket,
                    public UniAttribute<TWriter, TReader, Alloc> {
 public:
   /**
@@ -364,27 +364,27 @@ public:
   /**
    * 编码，结果的包头4个字节为整个包的长度，网络字节序
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param buff： 编码结果输出参数
    */
-  void encode(std::string &buff) { encodeBuff<string>(buff); }
+  void encode(std::string &buff) { encodeBuff<std::string>(buff); }
 
   /**
    * 编码，结果的包头4个字节为整个包的长度，网络字节序
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param buff： 编码结果输出参数
    */
-  void encode(std::vector<char> &buff) { encodeBuff<vector<char>>(buff); }
+  void encode(std::vector<char> &buff) { encodeBuff<std::vector<char>>(buff); }
 
   /**
    * 编码，结果的包头4个字节为整个包的长度，网络字节序
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param buff：存放编码结果的buffer指针
    * @param len： 输入buff长度，输出编码结果长度
    */
   void encode(char *buff, size_t &len) {
-    TarsOutputStream<TWriter> &os = UniAttribute<TWriter, TReader>::os;
+    tars::TarsOutputStream<TWriter> &os = UniAttribute<TWriter, TReader>::os;
 
     os.reset();
 
@@ -396,7 +396,7 @@ public:
 
     tars::Int32 iHeaderLen = htonl(sizeof(tars::Int32) + os.getLength());
     if (len < sizeof(tars::Int32) + os.getLength())
-      throw runtime_error("encode error, buffer length too short");
+      throw std::runtime_error("encode error, buffer length too short");
 
     memcpy(buff, &iHeaderLen, sizeof(tars::Int32));
     memcpy(buff + sizeof(tars::Int32), os.getBuffer(), os.getLength());
@@ -406,17 +406,17 @@ public:
 
   /** 解码
    *
-   * @throw runtime_error
+   * @throw std::runtime_error
    * @param buff：待解码字节流的buffer指针
    * @param len： 待解码字节流的长度
    */
 
   void decode(const char *buff, size_t len) {
     if (len < sizeof(tars::Int32))
-      throw runtime_error(
+      throw std::runtime_error(
           "packet length too short, first 4 bytes must be buffer length.");
 
-    TarsInputStream<TReader> &is = UniAttribute<TWriter, TReader, Alloc>::is;
+    tars::TarsInputStream<TReader> &is = UniAttribute<TWriter, TReader, Alloc>::is;
 
     is.reset();
 
@@ -474,7 +474,7 @@ public:
 
 protected:
   template <typename T> void encodeBuff(T &buff) {
-    TarsOutputStream<TWriter> &os = UniAttribute<TWriter, TReader>::os;
+    tars::TarsOutputStream<TWriter> &os = UniAttribute<TWriter, TReader>::os;
 
     os.reset();
 
@@ -501,12 +501,12 @@ protected:
   /**
    * 内部编码
    */
-  void doEncode(TarsOutputStream<TWriter> &os) {
+  void doEncode(tars::TarsOutputStream<TWriter> &os) {
     // ServantName、FuncName不能为空
     if (sServantName.empty())
-      throw runtime_error("ServantName must not be empty");
+      throw std::runtime_error("ServantName must not be empty");
     if (sFuncName.empty())
-      throw runtime_error("FuncName must not be empty");
+      throw std::runtime_error("FuncName must not be empty");
 
     os.reset();
 
@@ -521,7 +521,7 @@ protected:
 /////////////////////////////////////////////////////////////////////////////////
 // 调用TARS的服务时使用的类
 
-template <typename TWriter = BufferWriter, typename TReader = BufferReader,
+template <typename TWriter = tars::BufferWriter, typename TReader = tars::BufferReader,
           template <typename> class Alloc = std::allocator>
 struct TarsUniPacket : public UniPacket<TWriter, TReader, Alloc> {
 public:
@@ -656,10 +656,10 @@ public:
 
 // #ifdef __GNUC__
 // #   if __GNUC__ >3 || __GNUC_MINOR__ > 3
-//         typedef UniAttribute<BufferWriter,BufferReader,
+//         typedef UniAttribute<tars::BufferWriter,tars::BufferReader,
 //         __gnu_cxx::__pool_alloc> UniAttrPoolAlloc; typedef
-//         UniPacket<BufferWriter,BufferReader, __gnu_cxx::__pool_alloc>
-//         UniPacketPoolAlloc; typedef TarsUniPacket<BufferWriter,BufferReader,
+//         UniPacket<tars::BufferWriter,tars::BufferReader, __gnu_cxx::__pool_alloc>
+//         UniPacketPoolAlloc; typedef TarsUniPacket<tars::BufferWriter,tars::BufferReader,
 //         __gnu_cxx::__pool_alloc> TarsUniPacketPoolAlloc;
 // #   endif
 // #endif
