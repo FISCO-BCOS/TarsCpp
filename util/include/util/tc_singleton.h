@@ -39,18 +39,18 @@ namespace tars
  * 
  *  public:
  * 
- *    A(){cout << "A" << endl;}
+ *    A(){cout << "A" << std::endl;}
  * 
  *   ~A()
  * 
  *   {
  * 
- *     cout << "~A" << endl;
+ *     cout << "~A" << std::endl;
  * 
  * 
  *    }
  *
- *    void test(){cout << "test A" << endl;}
+ *    void test(){cout << "test A" << std::endl;}
  * 
  * };
  * 对象的创建方式由CreatePolicy指定, 有如下方式:
@@ -309,7 +309,7 @@ protected:
     }
 protected:
 
-    static atomic<T*>       __pInstance;
+    static std::atomic<T*>       __pInstance;
     static bool             __destroyed;
 
 protected:
@@ -322,7 +322,7 @@ template <class T, template<class> class CreatePolicy, template<class> class Lif
 bool TC_Singleton<T, CreatePolicy, LifetimePolicy>::__destroyed = false;
 
 template <class T, template<class> class CreatePolicy, template<class> class LifetimePolicy>
-atomic<T*> TC_Singleton<T, CreatePolicy, LifetimePolicy>::__pInstance = {nullptr};
+std::atomic<T*> TC_Singleton<T, CreatePolicy, LifetimePolicy>::__pInstance = {nullptr};
 }
 
 #endif

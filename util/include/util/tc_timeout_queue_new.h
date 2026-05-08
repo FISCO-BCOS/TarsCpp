@@ -31,9 +31,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_timeout_queue_new.h
@@ -51,9 +48,9 @@ public:
     struct NodeInfo;
     struct SendInfo;
 
-    typedef unordered_map<uint32_t, PtrInfo>     data_type;
-    typedef multimap<int64_t,NodeInfo>      time_type;
-    typedef list<SendInfo>                  send_type;
+    typedef std::unordered_map<uint32_t, PtrInfo>     data_type;
+    typedef std::multimap<int64_t,NodeInfo>      time_type;
+    typedef std::list<SendInfo>                  send_type;
 
     typedef std::function<void(T&)> data_functor;
 
@@ -104,12 +101,12 @@ public:
     bool getSend(T & t);
 
     /**
-     * 把已经发送的数据从list里面删除
+     * 把已经发送的数据从std::list里面删除
      */
     void popSend(bool del = false);
 
     /**
-     *获取要发送list的size
+     *获取要发送std::list的size
      */
     size_t getSendListSize()
     {
@@ -167,7 +164,7 @@ public:
     size_t size() const { return _data.size(); }
 
 protected:
-    atomic<uint32_t>                _uniqId;
+    std::atomic<uint32_t>                _uniqId;
     data_type                       _data;
     time_type                       _time;
     send_type                       _send;
@@ -242,15 +239,15 @@ template<typename T> bool TC_TimeoutQueueNew<T>::push(T& ptr, uint32_t uniqId,in
     pi.ptr = ptr;
     pi.hasSend = hasSend;
 
-    pair<typename data_type::iterator, bool> result;
-    result = _data.insert(make_pair(uniqId, pi));
+    std::pair<typename data_type::iterator, bool> result;
+    result = _data.insert(std::make_pair(uniqId, pi));
     if (result.second == false) return false;
 
     NodeInfo stNodeInfo;
     stNodeInfo.dataIter = result.first;
-    result.first->second.timeIter = _time.insert(make_pair(timeout,stNodeInfo));
+    result.first->second.timeIter = _time.insert(std::make_pair(timeout, stNodeInfo));
 
-    //没有发送放到list队列里面
+    //没有发送放到std::list队列里面
     if(!hasSend)
     {
         SendInfo stSendInfo;

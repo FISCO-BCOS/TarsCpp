@@ -45,7 +45,7 @@ public:
      *
      * @return ObjectPrx
      */
-    ObjectProxy * getObjectProxy(const string& sObjectProxyName,const string& setName = "");
+    ObjectProxy * getObjectProxy(const std::string& sObjectProxyName,const std::string& setName = "");
 
     /**
      * 析构函数
@@ -58,7 +58,7 @@ public:
     int loadObjectLocator();
 
     /**
-     * 获取所有对象的个数，为了不加锁不用map
+     * 获取所有对象的个数，为了不加锁不用std::map
      */
     inline size_t getObjNum()
     {
@@ -66,7 +66,7 @@ public:
     }
 
     /**
-     * 根据序号 获取所有obj对象，为了不加锁不用map
+     * 根据序号 获取所有obj对象，为了不加锁不用std::map
      */
     inline ObjectProxy * getObjectProxy(size_t iNum)
     {
@@ -83,12 +83,12 @@ private:
     /**
      * 保存已创建的objectproxy
      */
-    map<string,ObjectProxy*>    _objectProxys;
+    std::map<std::string,ObjectProxy*>    _objectProxys;
 
     /**
      * 保存已经创建的obj 取的时候可以不用加锁
      */
-    vector<ObjectProxy *>       _vObjectProxys;
+    std::vector<ObjectProxy *>       _vObjectProxys;
 
     /*
      *保存已经创建obj的数量

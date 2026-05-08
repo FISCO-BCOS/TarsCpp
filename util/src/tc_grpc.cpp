@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_SpinLock TC_GrpcServer::_mutex;
 
 unordered_map<int32_t, shared_ptr<TC_GrpcServer>> TC_GrpcServer::_http2;

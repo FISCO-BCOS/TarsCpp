@@ -24,6 +24,8 @@
 
 namespace tars
 {
+
+using namespace std;
 /////////////////////////////////////////////////////////////////////////////
 QueryEpBase::QueryEpBase(Communicator * pComm, bool bFirstNetThread,bool bInterfaceReq)
 : _communicator(pComm)

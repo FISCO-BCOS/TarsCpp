@@ -31,7 +31,7 @@ namespace tars
 */
 struct TC_AutoPtrNull_Exception : public TC_Exception
 {
-    TC_AutoPtrNull_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_AutoPtrNull_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_AutoPtrNull_Exception() {};
 };
 
@@ -143,7 +143,7 @@ protected:
  * @brief Smart Pointer Template Class
  * @brief 智能指针模板类. 
  *  
- * This template class an product thread-safe smart pointer which can be placed in a container.
+ * This template class an product std::thread-safe smart pointer which can be placed in a container.
  * The smart pointer which is defined by this class can be implemented by reference counting.
  * The pointer can be passed in a container.
  * 
@@ -428,7 +428,7 @@ public:
 template<typename T> inline void
 TC_AutoPtr<T>::throwNullHandleException() const
 {
-    throw TC_AutoPtrNull_Exception("autoptr null handle error![" + string(typeid(T).name()) +"]");
+    throw TC_AutoPtrNull_Exception("autoptr null handle error![" + std::string(typeid(T).name()) +"]");
 }
 
 /**
@@ -476,8 +476,8 @@ inline bool operator!=(const TC_AutoPtr<T>& lhs, const TC_AutoPtr<U>& rhs)
 }
 
 /**
- * @brief Determine '<', can be used in map and other conrainers.
- * @brief 小于判断, 用于放在map等容器中. 
+ * @brief Determine '<', can be used in std::map and other conrainers.
+ * @brief 小于判断, 用于放在std::map等容器中. 
  *  
  * @param T
  * @param U

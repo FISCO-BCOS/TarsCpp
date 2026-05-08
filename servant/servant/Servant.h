@@ -50,13 +50,13 @@ public:
      * 设置名称
      * @param name
      */
-    void setName(const string &name);
+    void setName(const std::string &name);
 
     /**
      * 名称
-     * @return string
+     * @return std::string
      */
-    string getName() const;
+    std::string getName() const;
 
     /**
      * 设置所属的Handle
@@ -101,7 +101,7 @@ public:
      * @param sSend
      * @return int
      */
-    virtual int dispatch(CurrentPtr current, vector<char> &buffer);
+    virtual int dispatch(CurrentPtr current, std::vector<char> &buffer);
 
     /**
      * 分发并处理请求
@@ -110,7 +110,7 @@ public:
      * @param sSend
      * @return int
      */
-    virtual int onDispatch(CurrentPtr current, vector<char> &buffer) { return -1; }
+    virtual int onDispatch(CurrentPtr current, std::vector<char> &buffer) { return -1; }
 
 public:
     /**
@@ -119,7 +119,7 @@ public:
      * @param buffer 
      * @return int 
      */
-    virtual int doRequest(CurrentPtr current, vector<char> &buffer) { return -1; }
+    virtual int doRequest(CurrentPtr current, std::vector<char> &buffer) { return -1; }
 
     /**
      * 作为客户端访问其他server时，成功返回的响应接口
@@ -175,7 +175,7 @@ protected:
     /**
      * 名字
      */
-    string _name;
+    std::string _name;
 
     /**
      * 应用
@@ -212,7 +212,7 @@ public:
      * @param servant 
      * @param current 
      */
-    ServantCallback(const string& type, const ServantPtr& servant, const CurrentPtr& current);
+    ServantCallback(const std::string& type, const ServantPtr& servant, const CurrentPtr& current);
 
     /**
      * callback的响应接口 
@@ -256,7 +256,7 @@ protected:
 class CallbackThreadData //: public TC_ThreadPool::ThreadData
 {
 public:
-    static thread_local shared_ptr<CallbackThreadData> g_sp;
+    static thread_local std::shared_ptr<CallbackThreadData> g_sp;
 
     /**
      * 构造函数
@@ -280,7 +280,7 @@ public:
      * 设置返回的额外内容
      * @param context
      */
-    void setResponseContext(const map<std::string, std::string> & context);
+    void setResponseContext(const std::map<std::string, std::string> & context);
 
     /**
      * 获取返回的额外内容是否有效
@@ -292,7 +292,7 @@ public:
      * 获取返回的额外内容
      * @param context
      */
-    map<std::string, std::string> & getResponseContext();
+    std::map<std::string, std::string> & getResponseContext();
 
     /**
      * 清除返回的额外内容是否有效
@@ -309,7 +309,7 @@ private:
     /*
      * 返回的context
      */
-    map<std::string, std::string>    _responseContext;
+    std::map<std::string, std::string>    _responseContext;
 };
 
 //////////////////////////////////////////////////////////////////////

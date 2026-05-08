@@ -51,21 +51,21 @@ public:
      * @param result
      * @return bool
      */
-    bool notify(const string& command, const string& params, CurrentPtr current, string& result);
+    bool notify(const std::string& command, const std::string& params, CurrentPtr current, std::string& result);
 
     /**
      * 处理命令的函数类型
      * bool: true(继续往后通知其他object),false(通知中止)
      * result: 处理结果描述
      */
-    using TAdminFunc = std::function<bool (const string&, const string&, string& )>;
+    using TAdminFunc = std::function<bool (const std::string&, const std::string&, std::string& )>;
 
     /**
      * 添加Servant管理命令和对应的处理方法
      * @param command
      * @param func
      */
-    void addAdminCommandNormal(const string& command, TAdminFunc func);
+    void addAdminCommandNormal(const std::string& command, TAdminFunc func);
 
     /**
      * 添加管理命令和对应的处理方法
@@ -73,21 +73,21 @@ public:
      * @param command
      * @param func
      */
-    void addAdminCommandPrefix(const string& command, TAdminFunc func);
+    void addAdminCommandPrefix(const std::string& command, TAdminFunc func);
 
 protected:
-	void setNotifyObserver(const shared_ptr<NotifyObserver> &notifyObserver) { _observer = notifyObserver; }
+	void setNotifyObserver(const std::shared_ptr<NotifyObserver> &notifyObserver) { _observer = notifyObserver; }
 
 protected:
     /**
      * 命令处理方法
      */
-    map<string, TAdminFunc> _procFunctors;
+    std::map<std::string, TAdminFunc> _procFunctors;
 
     /**
      * notify observer
      */
-	shared_ptr<NotifyObserver> _observer;
+	std::shared_ptr<NotifyObserver> _observer;
 
 };
 /////////////////////////////////////////////////////////////////////

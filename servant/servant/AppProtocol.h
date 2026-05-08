@@ -28,8 +28,6 @@
 
 namespace tars
 {
-
-using namespace std;
 using namespace tup;
 
 class TC_Transceiver;
@@ -66,7 +64,7 @@ public:
      *
      * @return int, 0表示没有接收完全, 1表示收到一个完整包
      */
-    static TC_NetWorkBuffer::PACKET_TYPE parse(TC_NetWorkBuffer &in, vector<char> &out)
+    static TC_NetWorkBuffer::PACKET_TYPE parse(TC_NetWorkBuffer &in, std::vector<char> &out)
     {
         return TC_NetWorkBuffer::parseBinary4<TARS_NET_MIN_PACKAGE_SIZE, TARS_NET_MAX_PACKAGE_SIZE>(in, out);
     }
@@ -81,7 +79,7 @@ public:
      * @return int
      */
     template<size_t offset, typename T, bool netorder>
-    static TC_NetWorkBuffer::PACKET_TYPE parseStream(TC_NetWorkBuffer& in, vector<char>& out)
+    static TC_NetWorkBuffer::PACKET_TYPE parseStream(TC_NetWorkBuffer& in, std::vector<char>& out)
     {
         size_t len = offset + sizeof(T);
 
@@ -90,7 +88,7 @@ public:
             return TC_NetWorkBuffer::PACKET_LESS;
         }
 
-        string header;
+        std::string header;
         in.getHeader(len, header);
 
         assert(header.size() == len);
@@ -125,9 +123,9 @@ public:
     }
 };
 
-//typedef std::function<vector<char>(RequestPacket&, TC_Transceiver *)> request_protocol;
+//typedef std::function<std::vector<char>(RequestPacket&, TC_Transceiver *)> request_protocol;
 
-typedef std::function<shared_ptr<TC_NetWorkBuffer::Buffer>(RequestPacket&, TC_Transceiver*)> request_protocol;
+typedef std::function<std::shared_ptr<TC_NetWorkBuffer::Buffer>(RequestPacket&, TC_Transceiver*)> request_protocol;
 
 typedef std::function<TC_NetWorkBuffer::PACKET_TYPE(TC_NetWorkBuffer&, ResponsePacket&)> response_protocol;
 
@@ -144,25 +142,25 @@ public:
     ProxyProtocol() : requestFunc(streamRequest) {}
 
     /**
-     * 将TarsOutputStream<BufferWriter>换成shared_ptr<TC_NetWorkBuffer::Buffer>, 且中间没有内存copy
-     * 注意: 转换后os无效了, 数据被置换到shared_ptr<TC_NetWorkBuffer::Buffer>
+     * 将TarsOutputStream<BufferWriter>换成std::shared_ptr<TC_NetWorkBuffer::Buffer>, 且中间没有内存copy
+     * 注意: 转换后os无效了, 数据被置换到std::shared_ptr<TC_NetWorkBuffer::Buffer>
      */ 
-    static shared_ptr<TC_NetWorkBuffer::Buffer> toBuffer(TarsOutputStream<BufferWriter> &os);
-    static shared_ptr<TC_NetWorkBuffer::Buffer> http1Request(tars::RequestPacket& request, TC_Transceiver *);
+    static std::shared_ptr<TC_NetWorkBuffer::Buffer> toBuffer(TarsOutputStream<BufferWriter> &os);
+    static std::shared_ptr<TC_NetWorkBuffer::Buffer> http1Request(tars::RequestPacket& request, TC_Transceiver *);
     static TC_NetWorkBuffer::PACKET_TYPE http1Response(TC_NetWorkBuffer &in, ResponsePacket& done);
 
 #if TARS_HTTP2
 
-    // ENCODE function, called by network thread
-    static shared_ptr<TC_NetWorkBuffer::Buffer> http2Request(tars::RequestPacket& request, TC_Transceiver *);
+    // ENCODE std::function, called by network std::thread
+    static std::shared_ptr<TC_NetWorkBuffer::Buffer> http2Request(tars::RequestPacket& request, TC_Transceiver *);
 
-    // DECODE function, called by network thread
+    // DECODE std::function, called by network std::thread
     static TC_NetWorkBuffer::PACKET_TYPE http2Response(TC_NetWorkBuffer &in, ResponsePacket& done);
 
-    // ENCODE function, called by network thread
-    static shared_ptr<TC_NetWorkBuffer::Buffer> grpcRequest(tars::RequestPacket& request, TC_Transceiver *);
+    // ENCODE std::function, called by network std::thread
+    static std::shared_ptr<TC_NetWorkBuffer::Buffer> grpcRequest(tars::RequestPacket& request, TC_Transceiver *);
 
-    // DECODE function, called by network thread
+    // DECODE std::function, called by network std::thread
     static TC_NetWorkBuffer::PACKET_TYPE grpcResponse(TC_NetWorkBuffer &in, ResponsePacket& done);
 #endif
 
@@ -171,9 +169,9 @@ public:
      * @param request
      * @param buff
      */
-    static shared_ptr<TC_NetWorkBuffer::Buffer> streamRequest(RequestPacket& request, TC_Transceiver *)
+    static std::shared_ptr<TC_NetWorkBuffer::Buffer> streamRequest(RequestPacket& request, TC_Transceiver *)
     {
-        shared_ptr<TC_NetWorkBuffer::Buffer> buff = std::make_shared<TC_NetWorkBuffer::Buffer>();
+        std::shared_ptr<TC_NetWorkBuffer::Buffer> buff = std::make_shared<TC_NetWorkBuffer::Buffer>();
         buff->addBuffer(request.sBuffer);
 	    return buff;
     }
@@ -202,7 +200,7 @@ public:
             return TC_NetWorkBuffer::PACKET_LESS;
         }
 
-        string header;
+        std::string header;
         in.getHeader(len, header);
 
         assert(header.size() == len);
@@ -234,7 +232,7 @@ public:
 
         K requestId;
 
-        vector<char> tmp;
+        std::vector<char> tmp;
         in.moveHeader(idOffset);
         in.getHeader(sizeof(K), tmp);
 
@@ -298,7 +296,7 @@ public:
 
             if (len >= head)
             {
-                string buffer;
+                std::string buffer;
                 in.getHeader(head, buffer);
 
                 TarsInputStream<BufferReader> is;
@@ -330,7 +328,7 @@ public:
         else
         {
             //buffer包括4个字节长度
-            vector<char> buffer;
+            std::vector<char> buffer;
             buffer.resize(iHeaderLen);
 
             in.getHeader(iHeaderLen, buffer);
@@ -401,7 +399,7 @@ public:
 
 			if (len >= head)
 			{
-				string buffer;
+				std::string buffer;
 				in.getHeader(head, buffer);
 
 				TarsInputStream<BufferReader> is;
@@ -435,11 +433,11 @@ public:
 		}
 		else
 		{
-			vector<char> buffer;
+			std::vector<char> buffer;
 			bool ret = in.parseBufferOf4(buffer, iMinLength, iMaxLength);
 			if (!ret)
 			{
-				throw TarsDecodeException("parse buffer exception");
+				throw TarsDecodeException("parse buffer std::exception");
 			}
 
 			TarsInputStream<BufferReader> is;
@@ -473,7 +471,7 @@ public:
      * @param request
      * @param buff
      */
-    static shared_ptr<TC_NetWorkBuffer::Buffer> tarsRequest(RequestPacket& request, TC_Transceiver *);
+    static std::shared_ptr<TC_NetWorkBuffer::Buffer> tarsRequest(RequestPacket& request, TC_Transceiver *);
 
     /**
      * tars响应包解析
@@ -511,7 +509,7 @@ public:
 
             if (len >= head)
             {
-                string buffer;
+                std::string buffer;
                 in.getHeader(head, buffer);
 
                 TarsInputStream<BufferReader> is;
@@ -546,11 +544,11 @@ public:
         }
         else
         {
-	        vector<char> buffer;
+	        std::vector<char> buffer;
             auto ret = in.parseBufferOf4(buffer, iMinLength, iMaxLength);
             if (ret == TC_NetWorkBuffer::PACKET_LESS)
             {
-	            throw TarsDecodeException("parse buffer exception");
+	            throw TarsDecodeException("parse buffer std::exception");
             }
 
             TarsInputStream<BufferReader> is;
@@ -613,7 +611,7 @@ public:
 
             if (len >= head)
             {
-                string buffer;
+                std::string buffer;
                 in.getHeader(head, buffer);
 
                 TarsInputStream<BufferReader> is;
@@ -649,7 +647,7 @@ public:
         else
         {
             //看看包头是否正确
-            string buffer;
+            std::string buffer;
             in.getHeader(iHeaderLen, buffer);
 
             TarsInputStream<BufferReader> is;
@@ -660,7 +658,7 @@ public:
             if (rsp.iVersion == TUPVERSION)
             {
                 //buffer包括4个字节长度
-                vector<char> buffer;
+                std::vector<char> buffer;
                 buffer.resize(iHeaderLen);
 
                 in.getHeader(iHeaderLen, buffer);
@@ -689,11 +687,11 @@ public:
             }
             else if (rsp.iVersion == TARSVERSION || rsp.iVersion == JSONVERSION)
             {
-                vector<char> buffer;
+                std::vector<char> buffer;
                 bool ret = in.parseBufferOf4(buffer, iMinLength, iMaxLength);
                 if (!ret)
                 {
-                    throw TarsDecodeException("parse buffer exception");
+                    throw TarsDecodeException("parse buffer std::exception");
                 }
 
                 TarsInputStream<BufferReader> is;

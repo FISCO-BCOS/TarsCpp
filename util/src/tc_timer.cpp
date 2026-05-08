@@ -20,6 +20,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_TimerBase::~TC_TimerBase()
 {
 }

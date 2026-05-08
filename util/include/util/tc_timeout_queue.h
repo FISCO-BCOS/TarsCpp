@@ -29,9 +29,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_timeout_queue.h
@@ -50,10 +47,10 @@ public:
 
     struct NodeInfo;
 
-    // typedef map<uint32_t, PtrInfo> data_type;
-    typedef unordered_map<uint32_t, PtrInfo> data_type;
+    // typedef std::map<uint32_t, PtrInfo> data_type;
+    typedef std::unordered_map<uint32_t, PtrInfo> data_type;
 
-    typedef list<NodeInfo>         time_type;
+    typedef std::list<NodeInfo>         time_type;
 
 //    typedef TC_Functor<void, TL::TYPELIST_1(T&)> data_functor;
     typedef std::function<void(T&)> data_functor;
@@ -152,7 +149,7 @@ public:
      * @param q
      * @return bool
      */
-    bool swap(deque<T> &q);
+    bool swap(std::deque<T> &q);
 
     /**
      * @brief 设置超时时间(毫秒).
@@ -238,7 +235,7 @@ template<typename T> T TC_TimeoutQueue<T>::getAndRefresh(uint32_t uniqId)
     //再插入到时间队列末尾
     NodeInfo ni;
 
-    ni.createTime = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    ni.createTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
     ni.dataIter = it;
 
@@ -276,9 +273,9 @@ template<typename T> bool TC_TimeoutQueue<T>::push(const T& ptr, uint32_t uniqId
 
     pi.ptr = ptr;
 
-    pair<typename data_type::iterator, bool> result;
+    std::pair<typename data_type::iterator, bool> result;
 
-    result = _data.insert(make_pair(uniqId, pi));
+    result = _data.insert(std::make_pair(uniqId, pi));
 
     if (result.second == false) return false;
 
@@ -286,12 +283,11 @@ template<typename T> bool TC_TimeoutQueue<T>::push(const T& ptr, uint32_t uniqId
 
     NodeInfo ni;
 
-    ni.createTime = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    ni.createTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
     ni.dataIter = it;
 
     ni.hasPoped = false;
-
     _time.push_back(ni);
 
     typename time_type::iterator tmp = _time.end();
@@ -313,7 +309,7 @@ template<typename T> void TC_TimeoutQueue<T>::timeout()
 //    struct timeval tv;
 //    TC_TimeProvider::getInstance()->getNow(&tv);
 
-    auto ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
     while (true)
     {
@@ -340,10 +336,9 @@ template<typename T> void TC_TimeoutQueue<T>::timeout()
 
 template<typename T> void TC_TimeoutQueue<T>::timeout(data_functor &df)
 {
-//    struct timeval tv;
 //    TC_TimeProvider::getInstance()->getNow(&tv);
 //
-    auto ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
     while (true)
     {
@@ -441,7 +436,7 @@ template<typename T> bool TC_TimeoutQueue<T>::pop(T &ptr)
     return true;
 }
 
-template<typename T> bool TC_TimeoutQueue<T>::swap(deque<T> &q)
+template<typename T> bool TC_TimeoutQueue<T>::swap(std::deque<T> &q)
 {
 	std::lock_guard<std::mutex> lock(_mutex);
 

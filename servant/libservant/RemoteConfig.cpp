@@ -24,6 +24,8 @@
 namespace tars
 {
 
+using namespace std;
+
 int RemoteConfig::setConfigInfo(const CommunicatorPtr &comm, const string &obj, const string & app, const string &serverName, const string& basePath,const string& setdivision, int maxBakNum)
 {
     _comm           = comm;

@@ -28,6 +28,8 @@
 
 namespace tars
 {
+
+using namespace std;
 //////////////////////////////////////////////////////////////////
 //
 StatReport::StatReport(Communicator* communicator)

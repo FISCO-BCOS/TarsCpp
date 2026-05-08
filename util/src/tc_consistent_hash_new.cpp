@@ -20,6 +20,8 @@
 namespace tars
 {
 
+using namespace std;
+
 int32_t TC_KetamaHashAlg::hash(const char* sKey, size_t length)
 {
     vector<char> sMd5 = TC_MD5::md5bin(sKey, length);

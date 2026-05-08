@@ -7,9 +7,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
  * @file tc_des.h
@@ -23,11 +20,11 @@ using namespace std;
 
 /**
  * @brief des异常. 
- * @brief des exception
+ * @brief des std::exception
  */
 struct TC_DES_Exception : public TC_Exception
 {
-    TC_DES_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_DES_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_DES_Exception() throw(){};
 };
 
@@ -61,7 +58,7 @@ struct TC_DES_Exception : public TC_Exception
  * If itself is 8-bit aligned, complete eight '0x08' at the tail.
  *
  * Key必须是null结束的字符串.
- * The key must be a null-terminated string.
+ * The key must be a null-terminated std::string.
  *
  */
 class TC_Des
@@ -77,10 +74,10 @@ public:
      * @param sIn     input buffer
 	 * @param iInLen  输入buffer长度
      * @param iInLen  input buffer length
-	 * @return        string 加密后的内容
-     * @return        string, the encrypted content
+	 * @return        std::string 加密后的内容
+     * @return        std::string, the encrypted content
      */
-    static string encrypt(const char *key, const char *sIn, size_t iInlen);
+    static std::string encrypt(const char *key, const char *sIn, size_t iInlen);
 
     /**
 	 * @brief des解密.
@@ -92,10 +89,10 @@ public:
      * @param sIn     input buffer
 	 * @param iInlen  输入buffer长度
      * @param iInLen  input buffer length
-	 * @return        string 解码后的内容, 如果解密失败, 则为空
-     * @return        string, the decrypted content, if decryption failed, return null.
+	 * @return        std::string 解码后的内容, 如果解密失败, 则为空
+     * @return        std::string, the decrypted content, if decryption failed, return null.
      */
-    static string decrypt(const char *key, const char *sIn, size_t iInlen);
+    static std::string decrypt(const char *key, const char *sIn, size_t iInlen);
 
     /**
 	 * @brief  3des加密. 
@@ -107,10 +104,10 @@ public:
      * @param sIn     input buffer
 	 * @param iInLen  输入buffer长度
      * @param iInLen  input buffer length 
-	 * @return        string 加密后的内容
-     * @return        string, the encrypted content
+	 * @return        std::string 加密后的内容
+     * @return        std::string, the encrypted content
      */
-    static string encrypt3(const char *key, const char *sIn, size_t iInlen);
+    static std::string encrypt3(const char *key, const char *sIn, size_t iInlen);
 
     /**
 	 * @brief  3des解密. 
@@ -121,10 +118,10 @@ public:
      * @param sIn      input buffer
 	 * @param iInlen   输入buffer长度
      * @param iInLen   input buffer length 
-	 * @return         string解码后的内容, 如果解密失败, 则为空
-     * @return         string, the dcrypted content, if decryption failed, return null.
+	 * @return         std::string解码后的内容, 如果解密失败, 则为空
+     * @return         std::string, the dcrypted content, if decryption failed, return null.
      */
-    static string decrypt3(const char *key, const char *sIn, size_t iInlen);
+    static std::string decrypt3(const char *key, const char *sIn, size_t iInlen);
 
     /**
 	 * @brief  定义加密/解密 . 

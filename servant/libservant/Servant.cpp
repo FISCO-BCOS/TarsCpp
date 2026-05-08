@@ -25,6 +25,8 @@
 namespace tars
 {
 
+using namespace std;
+
 thread_local shared_ptr<CallbackThreadData> CallbackThreadData::g_sp;
 
 Servant::Servant():_handle(NULL)

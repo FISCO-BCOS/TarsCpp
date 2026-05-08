@@ -23,6 +23,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_ThreadMutex::TC_ThreadMutex()
 {
 }

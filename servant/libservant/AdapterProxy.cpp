@@ -28,6 +28,8 @@
 
 namespace tars
 {
+
+using namespace std;
     
 std::atomic<int> AdapterProxy::_idGen;
 

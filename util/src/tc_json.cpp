@@ -9,6 +9,8 @@
 namespace tars
 {
 
+using namespace std;
+
 #define FILTER_SPACE while(isspace((int)c)) {c=reader.read();}
 
 JsonValuePtr TC_Json::getValue(BufferJsonReader & reader)

@@ -46,7 +46,6 @@
 
 namespace tars
 {
-	using namespace std;
 	/////////////////////////////////////////////////
 	/**
 	 * @file tc_logger.h
@@ -72,7 +71,7 @@ namespace tars
 	 *  The steps to customize scrolling are as follows:
 	 *
 	 *  1 实现自定义模板类,继承于TC_LoggerRoll,实现roll函数,该函数实现写逻辑,
-	 *  1 Implement a custom template class that inherits from TC_LoggerRoll, which implements the roll function, which implements write logic
+	 *  1 Implement a custom template class that inherits from TC_LoggerRoll, which implements the roll std::function, which implements write logic
 	 *
 	 *  例如:template<typename WriteT>
 	 *  for example: template<typename WriteT>
@@ -123,8 +122,8 @@ namespace tars
 	*/
 	struct TC_Logger_Exception : public TC_Exception
 	{
-		TC_Logger_Exception(const string &buffer) : TC_Exception(buffer){};
-		TC_Logger_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+		TC_Logger_Exception(const std::string &buffer) : TC_Exception(buffer){};
+		TC_Logger_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
 		~TC_Logger_Exception() throw(){};
 	};
 
@@ -135,9 +134,9 @@ namespace tars
 	class TC_DefaultWriteT
 	{
 	public:
-		void operator()(ostream &of, const deque<pair<size_t, string> > &ds)
+		void operator()(std::ostream &of, const std::deque<std::pair<size_t, std::string> > &ds)
 		{
-			deque<pair<size_t, string> >::const_iterator it = ds.begin();
+			std::deque<std::pair<size_t, std::string> >::const_iterator it = ds.begin();
 			while (it != ds.end())
 			{
 				of << it->second;
@@ -174,7 +173,7 @@ namespace tars
 		 * Different policy log classes, implementing different logic
 		 * @param buffer
 		 */
-		virtual void roll(const deque<pair<size_t, string> > &ds) = 0;
+		virtual void roll(const std::deque<std::pair<size_t, std::string> > &ds) = 0;
 
 		/**
 		 * @brief 安装线程.
@@ -197,7 +196,7 @@ namespace tars
 		 *
 		 * @param 日志内容
 		 */
-		void write(const pair<size_t, string> &buffer);
+		void write(const std::pair<size_t, std::string> &buffer);
 
 		/**
 		 * @brief 刷新缓存到文件
@@ -211,7 +210,7 @@ namespace tars
 		 *
 		 * @param bEnable
 		 */
-		void enableDyeing(bool bEnable, const string &sKey)
+		void enableDyeing(bool bEnable, const std::string &sKey)
 		{
 			TC_LockT<TC_SpinLock> lock(_mutexDyeing);
 
@@ -233,7 +232,7 @@ namespace tars
 		/**
 		 * buffer
 		 */
-		TC_CasQueue<pair<std::size_t, string> > _buffer;
+		TC_CasQueue<std::pair<std::size_t, std::string> > _buffer;
 
 		/**
 		 * 锁
@@ -263,10 +262,10 @@ namespace tars
 
 		/**
 		 * 染色的线程ID集合
-		 * Stained thread ID collection
+		 * Stained std::thread ID collection
 		 *
 		 */
-		static unordered_map<size_t, string> _mapThreadID;
+		static std::unordered_map<size_t, std::string> _mapThreadID;
 	};
 
 	typedef TC_AutoPtr<TC_LoggerRoll> TC_LoggerRollPtr;
@@ -278,7 +277,7 @@ namespace tars
 	 * @brief Write Log Thread Group
 	 *
 	 * 关键点:注册日志后,会保存职能指针,保证日志对象一直存在
-	 * Key point: After registering the log, the function pointer is saved to ensure that the log object always exists
+	 * Key point: After registering the log, the std::function pointer is saved to ensure that the log object always exists
 	 */
 	class TC_LoggerThreadGroup
 	{
@@ -348,7 +347,7 @@ namespace tars
 			}
 		};
 
-		typedef set<TC_LoggerRollPtr, KeyComp> logger_set;
+		typedef std::set<TC_LoggerRollPtr, KeyComp> logger_set;
 
 	protected:
 		/**
@@ -433,7 +432,7 @@ namespace tars
 		 *
 		 * @return streamsize
 		 */
-		virtual streamsize xsputn(const char_type *s, streamsize n);
+		virtual std::streamsize xsputn(const char_type *s, std::streamsize n);
 
 		/**
 		 * @brief buffer满了, 具体写数据.
@@ -496,9 +495,9 @@ namespace tars
 		 * @brief Constructor.
 		 *
 		 * @param stream
-		 * @param mutex
+		 * @param std::mutex
 		 */
-		LoggerStream(const char *header, ostream *stream, ostream *estream, TC_ThreadMutex &mutex) : _stream(stream), _estream(estream), _mutex(mutex)
+		LoggerStream(const char *header, std::ostream *stream, std::ostream *estream, TC_ThreadMutex &mutex) : _stream(stream), _estream(estream), _mutex(mutex)
 		{
 			if (stream)
 			{
@@ -550,10 +549,10 @@ namespace tars
 		}
 
 		/**
-		 * @brief endl,flush等函数
+		 * @brief std::endl,flush等函数
 		 * @brief Endl, flush and other functions
 		 */
-		typedef ostream &(*F)(ostream &os);
+		typedef std::ostream &(*F)(std::ostream &os);
 		LoggerStream &operator<<(F f)
 		{
 			if (_stream)
@@ -567,7 +566,7 @@ namespace tars
 		 * @brief  hex等系列函数
 		 * @brief  Series of functions such as hex
 		 */
-		typedef ios_base &(*I)(ios_base &os);
+		typedef std::ios_base &(*I)(std::ios_base &os);
 		LoggerStream &operator<<(I f)
 		{
 			if (_stream)
@@ -578,12 +577,12 @@ namespace tars
 		}
 
 		/**
-		 * @brief 字段转换成ostream类型.
-		 * @brief Field is converted to ostream type.
+		 * @brief 字段转换成std::ostream类型.
+		 * @brief Field is converted to std::ostream type.
 		 *
-		 * @return ostream&
+		 * @return std::ostream&
 		 */
-		operator ostream &()
+		operator std::ostream &()
 		{
 			if (_stream)
 			{
@@ -636,7 +635,7 @@ namespace tars
 		 * @brief 日志级别名称
 		 * @brief Log Level Name
 		 */
-		static const string LN[];
+		static const std::string LN[];
 
 	public:
 		/**
@@ -753,7 +752,7 @@ namespace tars
 		* @param level 等级
 		* @param level level
 		* @return      成功设置返回0，否则返回-1
-		* @return      Successfully set to return 0, otherwise return -1
+		* @return      Successfully std::set to return 0, otherwise return -1
 		*/
 		int setLogLevel(int level)
 		{
@@ -773,7 +772,7 @@ namespace tars
 		 * @param level
 		 * @param int
 		 */
-		int setLogLevel(const string &level)
+		int setLogLevel(const std::string &level)
 		{
 			if (level == "ERROR")
 			{
@@ -802,7 +801,7 @@ namespace tars
 			return -1;
 		}
 
-		bool isNeedLog(const string &level)
+		bool isNeedLog(const std::string &level)
 		{
 			if (level == "ERROR")
 			{
@@ -842,7 +841,7 @@ namespace tars
 		 * @brief Separator between added log contents in the framework, default is'|'
 		 * @param str
 		 */
-		void setSeparator(const string &str) { _sSepar = str; }
+		void setSeparator(const std::string &str) { _sSepar = str; }
 
 		/**
 		 * @brief 框架中日期和时间之间是否需要加中括号[],有些统计有特殊需求；默认不加
@@ -945,7 +944,7 @@ namespace tars
 
 		LoggerStream stream(int level)
 		{
-			ostream *ost = NULL;
+			std::ostream *ost = NULL;
 
 			if (level <= _level)
 			{
@@ -1033,7 +1032,7 @@ namespace tars
 		 * 分隔符
 		 * Separator
 		 */
-		string _sSepar;
+		std::string _sSepar;
 		/**
 		 * 日期部分是否加上[]
 		 * Is [] added to the date part
@@ -1042,8 +1041,8 @@ namespace tars
 	};
 
 	template <typename WriteT, template <class> class RollPolicy>
-	//const string TC_Logger<WriteT, RollPolicy>::LN[6] = { "ANY", "NONE_LOG", "ERROR", "WARN", "DEBUG", "INFO" };
-    const string TC_Logger<WriteT, RollPolicy>::LN[] = { "ANY", "NONE_LOG", "ERROR", "WARN", "INFO", "DEBUG", "TARS" };
+	//const std::string TC_Logger<WriteT, RollPolicy>::LN[6] = { "ANY", "NONE_LOG", "ERROR", "WARN", "DEBUG", "INFO" };
+    const std::string TC_Logger<WriteT, RollPolicy>::LN[] = { "ANY", "NONE_LOG", "ERROR", "WARN", "INFO", "DEBUG", "TARS" };
 	////////////////////////////////////////////////////////////////////////////////
 
 	class RollWrapperInterface
@@ -1142,7 +1141,7 @@ namespace tars
 		 *
 		 * @param buffer
 		 */
-		void roll(const pair<size_t, string> &buffer) { _roll->write(buffer); }
+		void roll(const std::pair<size_t, std::string> &buffer) { _roll->write(buffer); }
 
 		/**
 		* @brief 获取roll实例.
@@ -1193,7 +1192,7 @@ namespace tars
 			 * @param iMaxSize, byte
 			 * @param iMaxNum
 			 */
-			void init(const string &path, int iMaxSize = 5000000, int iMaxNum = 10)
+			void init(const std::string &path, int iMaxSize = 5000000, int iMaxNum = 10)
 			{
 				this->_roll->init(path, iMaxSize, iMaxNum);
 			}
@@ -1202,15 +1201,15 @@ namespace tars
 			 * @brief 获取日志路径.
 			 * @brief Get Log Path
 			 *
-			 * @return string
+			 * @return std::string
 			 */
-			string getPath() { return this->_roll->getPath(); }
+			std::string getPath() { return this->_roll->getPath(); }
 
 			/**
 			 * @brief 设置文件路径
 			 * @brief Set File Path
 			 */
-			void setPath(const string &path) { this->_roll->setPath(path); }
+			void setPath(const std::string &path) { this->_roll->setPath(path); }
 
 			/**
 			 * @brief 获取最大大小.
@@ -1276,7 +1275,7 @@ namespace tars
 		 * @param iMaxNum, 最大个数
 		 * @param iMaxNum. maximum number
 		 */
-		void init(const string &path, int iMaxSize = 5000000, int iMaxNum = 10)
+		void init(const std::string &path, int iMaxSize = 5000000, int iMaxNum = 10)
 		{
 			std::lock_guard<std::mutex> lock(*this);
 
@@ -1289,9 +1288,9 @@ namespace tars
 		 * @brief 获取日志路径.
 		 * @brief Get log path.
 		 *
-		 * @return string
+		 * @return std::string
 		 */
-		string getPath()
+		std::string getPath()
 		{
 			std::lock_guard<std::mutex> lock(*this);
 			return _path;
@@ -1301,7 +1300,7 @@ namespace tars
 		 * @brief 设置路径.
 		 * @brief Set log path.
 		 */
-		void setPath(const string &path)
+		void setPath(const std::string &path)
 		{
 			std::lock_guard<std::mutex> lock(*this);
 			_path = path;
@@ -1368,15 +1367,15 @@ namespace tars
 		 * 函数对象
 		 * Function object
 		 *
-		 * @param string
+		 * @param std::string
 		 */
-		void roll(const deque<pair<size_t, string> > &buffer)
+		void roll(const std::deque<std::pair<size_t, std::string> > &buffer)
 		{
 			std::lock_guard<std::mutex> lock(*this);
 
 			if (_path.empty())
 			{
-				_t(cout, buffer);
+				_t(std::cout, buffer);
 				return;
 			}
 
@@ -1394,11 +1393,11 @@ namespace tars
 			//Check that the log file is open
 			if (!_of.is_open())
 			{
-				string sLogFileName = _path + ".log";
+				std::string sLogFileName = _path + ".log";
 
-				_of.open(sLogFileName.c_str(), ios::app | ios::out);
+				_of.open(sLogFileName.c_str(), std::ios::app | std::ios::out);
 
-				string sLogFilePath = TC_File::extractFilePath(_path);
+				std::string sLogFilePath = TC_File::extractFilePath(_path);
 
 				if (!TC_File::isFileExist(sLogFilePath))
 				{
@@ -1407,10 +1406,10 @@ namespace tars
 
 				if (!_of.is_open())
 				{
-					// cout << "write roll4:" << sLogFileName << ", " << strerror(errno)<< endl;
+					// cout << "write roll4:" << sLogFileName << ", " << strerror(errno)<< std::endl;
 
 					//抛异常前继续进入_t 以便打远程日志
-					//Continue to _t for remote logging before throwing an exception
+					//Continue to _t for remote logging before throwing an std::exception
 					_t(_of, buffer);
 					THROW_EXCEPTION_SYSCODE(TC_Logger_Exception, "[TC_RollBySize::roll]:fopen fail: " + sLogFileName);
 					// throw TC_Logger_Exception("[TC_RollBySize::roll]:fopen fail: " + sLogFileName, TC_Exception::getSystemCode());
@@ -1433,7 +1432,7 @@ namespace tars
 
 			//文件大小超出限制,删除最后一个文件
 			//File size exceeds limit, delete last file
-			string sLogFileName = _path + TC_Common::tostr(_maxNum - 1) + ".log";
+			std::string sLogFileName = _path + TC_Common::tostr(_maxNum - 1) + ".log";
 			{
 				if (TC_File::isFileExist(sLogFileName) && TC_File::removeFile(sLogFileName, true))
 				{
@@ -1459,12 +1458,12 @@ namespace tars
 
 				if (TC_File::isFileExist(sLogFileName))
 				{
-					string sNewLogFileName = _path + TC_Common::tostr(i + 1) + ".log";
+					std::string sNewLogFileName = _path + TC_Common::tostr(i + 1) + ".log";
 					rename(sLogFileName.c_str(), sNewLogFileName.c_str());
 				}
 			}
 
-			_of.open(sLogFileName.c_str(), ios::app);
+					_of.open(sLogFileName.c_str(), std::ios::app);
 			if (!_of)
 			{
 				THROW_EXCEPTION_SYSCODE(TC_Logger_Exception, "[TC_RollBySize::roll]:fopen fail: " + sLogFileName);
@@ -1477,7 +1476,7 @@ namespace tars
 		 * 文件路径
 		 * File Path
 		 */
-		string _path;
+		std::string _path;
 
 		/**
 		* 日志文件的最大大小
@@ -1496,7 +1495,7 @@ namespace tars
 		 * 日志文件
 		 * log file
 		 */
-		ofstream _of;
+		std::ofstream _of;
 
 		/**
 		 * 具体写操作
@@ -1563,7 +1562,7 @@ namespace tars
 		}
 
 		//转换成相应的字符串形式:1day,1hour,2minute
-		//Convert to the corresponding string: 1day, 1hour, 2minute
+		//Convert to the corresponding std::string: 1day, 1hour, 2minute
 		inline std::string &toString()
 		{
 			return _des;
@@ -1572,7 +1571,7 @@ namespace tars
 	protected:
 		//计算下一个时间点
 		//Calculate the next point in time
-		void init(const string &format = "%Y%m%d", size_t frequency = 1)
+		void init(const std::string &format = "%Y%m%d", size_t frequency = 1)
 		{
 			_frequency = (frequency == 0 ? 1 : frequency);
 			_format = format;
@@ -1585,20 +1584,20 @@ namespace tars
 
 	protected:
 		time_t _next_time_t;
-		string _format;
-		string _next_cut_time;
+		std::string _format;
+		std::string _next_cut_time;
 		size_t _frequency;
-		string _des;
+		std::string _des;
 	};
 	typedef TC_AutoPtr<LogType> LogTypePtr;
 
 	class LogByDay : public LogType
 	{
 	public:
-		static const string FORMAT;
+		static const std::string FORMAT;
 
 	public:
-		explicit LogByDay(const string &format = "%Y%m%d", size_t frequency = 1)
+		explicit LogByDay(const std::string &format = "%Y%m%d", size_t frequency = 1)
 		{
 			init(format, frequency);
 			_des = TC_Common::tostr(_frequency) + "day";
@@ -1613,10 +1612,10 @@ namespace tars
 	class LogByHour : public LogType
 	{
 	public:
-		static const string FORMAT;
+		static const std::string FORMAT;
 
 	public:
-		explicit LogByHour(const string &format = "%Y%m%d%H", size_t frequency = 1)
+		explicit LogByHour(const std::string &format = "%Y%m%d%H", size_t frequency = 1)
 		{
 			init(format, frequency);
 			_des = TC_Common::tostr(_frequency) + "hour";
@@ -1632,10 +1631,10 @@ namespace tars
 	class LogByMinute : public LogType
 	{
 	public:
-		static const string FORMAT;
+		static const std::string FORMAT;
 
 	public:
-		explicit LogByMinute(const string &format = "%Y%m%d%H%M", size_t frequency = 1)
+		explicit LogByMinute(const std::string &format = "%Y%m%d%H%M", size_t frequency = 1)
 		{
 			init(format, frequency);
 			_des = TC_Common::tostr(_frequency) + "minute";
@@ -1675,13 +1674,13 @@ namespace tars
 			 * @param bHasSufix,日志文件是否添加".log"后缀
 			 * @param bHasSufix, Does the log file add a '.log' suffix
 			 * @param sConcatstr,日志路径和时间字串之间的连接符,例如：app_log/test_20121210.log
-			 * @param sConcatstr,Connector between log path and time string, for example: app_Log/test_20121210.log
+			 * @param sConcatstr,Connector between log path and time std::string, for example: app_Log/test_20121210.log
 			 * @param logTypePtr,日志记录类型，详见LogType
 			 * @param logTypePtr,Log record type, see LogType for details
 			 * @param bIsRemote,是否是远程日志实例
 			 * @param bIsRemote,Is it a remote log instance
 			 */
-			void init(const string &path, const string &format = "%Y%m%d", bool bHasSufix = true, const string &sConcatstr = "_", const LogTypePtr &logTypePtr = NULL, bool bIsRemote = false)
+			void init(const std::string &path, const std::string &format = "%Y%m%d", bool bHasSufix = true, const std::string &sConcatstr = "_", const LogTypePtr &logTypePtr = NULL, bool bIsRemote = false)
 			{
 				this->_roll->init(path, format, bHasSufix, sConcatstr, logTypePtr, bIsRemote);
 			}
@@ -1690,23 +1689,23 @@ namespace tars
 			 * @brief 获取日志路径.
 			 * @brief Get log path.
 			 *
-			 * @return string
+			 * @return std::string
 			 */
-			string getPath() { return this->_roll->getPath(); }
+			std::string getPath() { return this->_roll->getPath(); }
 
 			/**
 			 * @brief 设置文件路径
 			 * @brief Set file path
 			 */
-			void setPath(const string &path) { this->_roll->setPath(path); }
+			void setPath(const std::string &path) { this->_roll->setPath(path); }
 
 			/**
 			 * @brief 获取格式.
 			 * @brief Get  format.
 			 *
-			 * @return string
+			 * @return std::string
 			 */
-			string getFormat() { return this->_roll->getFormat(); }
+			std::string getFormat() { return this->_roll->getFormat(); }
 
 			/**
 			 * @brief 设置格式.
@@ -1715,7 +1714,7 @@ namespace tars
 			 * @param format,支持按天，按小时，按分钟格式
 			 * @param format,Supports day-by-day, hour-by-minute formats
 			 */
-			void setFormat(const string &format) { this->_roll->setFormat(format); }
+			void setFormat(const std::string &format) { this->_roll->setFormat(format); }
 
 			void setRemote(bool en) { this->_roll->setRemote(en); }
 		};
@@ -1757,7 +1756,7 @@ namespace tars
 		 * @param bIsRemote
 		 */
 
-		void init(const string &path, const string &format = "%Y%m%d", bool bHasSufix = true, const string &sConcatstr = "_", const LogTypePtr &logTypePtr = NULL, bool bIsRemote = false)
+		void init(const std::string &path, const std::string &format = "%Y%m%d", bool bHasSufix = true, const std::string &sConcatstr = "_", const LogTypePtr &logTypePtr = NULL, bool bIsRemote = false)
 		{
 			std::lock_guard<std::mutex> lock(*this);
 
@@ -1782,9 +1781,9 @@ namespace tars
 		 * @brief 获取日志路径.
 		 * @brief Get log path.
 		 *
-		 * @return string
+		 * @return std::string
 		 */
-		string getPath()
+		std::string getPath()
 		{
 			std::lock_guard<std::mutex> lock(*this);
 			return _path;
@@ -1794,7 +1793,7 @@ namespace tars
 		 * @brief 设置文件路径
 		 * @brief Set log path
 		 */
-		void setPath(const string &path)
+		void setPath(const std::string &path)
 		{
 			std::lock_guard<std::mutex> lock(*this);
 			_path = path;
@@ -1804,9 +1803,9 @@ namespace tars
 		 * @brief 获取格式.
 		 * @brief Get  format
 		 *
-		 * @return string
+		 * @return std::string
 		 */
-		string getFormat()
+		std::string getFormat()
 		{
 			std::lock_guard<std::mutex> lock(*this);
 			return _format;
@@ -1819,7 +1818,7 @@ namespace tars
 		 * @param format,支持按天，按小时，按分钟格式
 		 * @param format,Supports day-by-day, hour-by-minute formats
 		 */
-		void setFormat(const string &format)
+		void setFormat(const std::string &format)
 		{
 			std::lock_guard<std::mutex> lock(*this);
 			_format = format;
@@ -1850,15 +1849,15 @@ namespace tars
 		 *
 		 * @param path
 		 * @param of
-		 * @return string
+		 * @return std::string
 		 */
-		void roll(const deque<pair<size_t, string> > &buffer)
+		void roll(const std::deque<std::pair<size_t, std::string> > &buffer)
 		{
 			std::lock_guard<std::mutex> lock(*this);
 
 			if (_path.empty())
 			{
-				_t(cout, buffer);
+				_t(std::cout, buffer);
 				return;
 			}
 			//远程日志在本地不用打开文件
@@ -1871,9 +1870,9 @@ namespace tars
 
 			time_t t = TNOW;//std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-			string nowTime = "";
+			std::string nowTime = "";
 			//如果设置了记录类型,则使用记录类型来计算时间
-			//If record type is set, use record type to calculate time
+			//If record type is std::set, use record type to calculate time
 			if (_logTypePtr)
 			{
 				nowTime = _logTypePtr->get_new_time(t);
@@ -1911,19 +1910,19 @@ namespace tars
 
 			if (!_of.is_open())
 			{
-				string sLogFileName = _path + _sConcatStr + nowTime + (_bHasSufix ? ".log" : "");
-				string sLogFilePath = TC_File::extractFilePath(_path);
+				std::string sLogFileName = _path + _sConcatStr + nowTime + (_bHasSufix ? ".log" : "");
+				std::string sLogFilePath = TC_File::extractFilePath(_path);
 				if (!TC_File::isFileExist(sLogFilePath))
 				{
 					TC_File::makeDirRecursive(sLogFilePath);
 				}
 
-				_of.open(sLogFileName.c_str(), ios::app);
+				_of.open(sLogFileName.c_str(), std::ios::app);
 
 				if (!_of)
 				{
 					//抛异常前继续进入_t 以便打远程日志
-					//Continue to _t for remote logging before throwing an exception
+					//Continue to _t for remote logging before throwing an std::exception
 					_t(_of, buffer);
 					THROW_EXCEPTION_SYSCODE(TC_Logger_Exception, "[TC_RollByTime::roll]:fopen fail: " + sLogFileName);
 					// throw TC_Logger_Exception("[TC_RollByTime::roll]:fopen fail: " + sLogFileName, TC_Exception::getSystemCode());
@@ -1940,25 +1939,25 @@ namespace tars
 		 * 文件路径
 		 * file path
 		 */
-		string _path;
+		std::string _path;
 
 		/**
 		 * 时间格式
 		 * time format
 		 */
-		string _format;
+		std::string _format;
 
 		/**
 		 * 上次roll时的时间
 		 * Last roll time
 		 */
-		string _currentTime;
+		std::string _currentTime;
 
 		/**
 		 * 日志文件
 		 * log file
 		 */
-		ofstream _of;
+		std::ofstream _of;
 
 		/**
 		 * 具体写操作
@@ -1980,7 +1979,7 @@ namespace tars
 		 * 日志文件名中用户自定义字符与日期字符间的连接符，默认是"_"
 		 * Connector between user-defined character and date character in log file name, default is "_"
 		 */
-		string _sConcatStr;
+		std::string _sConcatStr;
 
 		/**
 		 * 按天/小时/分钟输出日志时的记录类型

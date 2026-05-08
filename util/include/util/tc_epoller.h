@@ -70,7 +70,7 @@ class TC_Epoller : public TC_TimerBase
 {
 
 public:
-    class EpollInfo : public enable_shared_from_this<EpollInfo>
+    class EpollInfo : public std::enable_shared_from_this<EpollInfo>
 	{
 	public:
 		/**
@@ -88,7 +88,7 @@ public:
 		~EpollInfo();
 
 		//注意: 返回false, 表示socket有问题, 框架如果发现是false, 则epoller不再监听socket的事件
-		typedef std::function<bool(const shared_ptr<TC_Epoller::EpollInfo> &)> EVENT_CALLBACK;
+		typedef std::function<bool(const std::shared_ptr<TC_Epoller::EpollInfo> &)> EVENT_CALLBACK;
 
 		/**
 		 * 句柄
@@ -107,7 +107,7 @@ public:
 		 * @param p
 		 * @param deconstructor
 		 */
-		inline void cookie(void *p, function<void(void*)> deconstructor = function<void(void*)>()) 
+		inline void cookie(void *p, std::function<void(void*)> deconstructor = std::function<void(void*)>()) 
 		{ 
 			_cookie = p; 
 			_deconstructor = deconstructor;
@@ -122,14 +122,14 @@ public:
 		/**
 		 * 通用callback, 只要任何事件来了, 都会回到一次
 		 */
-		void setCallback(const std::function<void(const shared_ptr<TC_Epoller::EpollInfo> &)> &callback) { _callback = callback; }
+		void setCallback(const std::function<void(const std::shared_ptr<TC_Epoller::EpollInfo> &)> &callback) { _callback = callback; }
 
 		/**
 		 * registry event callback
 		 * @param callbacks: <EPOLLIN/EPOLLOUT/EPOLLERR, EVENT_CALLBACK>
 		 * @param events: 需要add的事件, 如果为0, 则不add事件
 		 */
-		void registerCallback(const map<uint32_t, EVENT_CALLBACK> & callbacks, uint32_t events);
+		void registerCallback(const std::map<uint32_t, EVENT_CALLBACK> & callbacks, uint32_t events);
 
 		/**
 		 * 清除所有callback
@@ -189,11 +189,11 @@ public:
 
 		void*					_cookie;
 
-		function<void(void*)>	_deconstructor;
+		std::function<void(void*)>	_deconstructor;
 
 		EVENT_CALLBACK 	        _callbacks[3];
 
-		std::function<void(const shared_ptr<TC_Epoller::EpollInfo> &)> _callback;
+		std::function<void(const std::shared_ptr<TC_Epoller::EpollInfo> &)> _callback;
 	};
 
     /**
@@ -222,13 +222,13 @@ public:
          * 获取epoll info, 该指针不需要自己手工delete, epoller loop or NotifyInfo析构中会释放
          * @return
          */
-        inline shared_ptr<EpollInfo> &getEpollInfo() { return _epollInfo; }
+        inline std::shared_ptr<EpollInfo> &getEpollInfo() { return _epollInfo; }
 
     protected:
         TC_Epoller* _epoller = NULL;
 
         //
-        shared_ptr<EpollInfo>  _epollInfo;
+        std::shared_ptr<EpollInfo>  _epollInfo;
 
         //通知fd
         TC_Socket   _notify;
@@ -252,7 +252,7 @@ public:
 	 * 设置名称
 	 * @param name, 给测试用, 知道具体是哪个epoll
 	 */
-	void setName(const string &name = "") { _name = name; }
+	void setName(const std::string &name = "") { _name = name; }
 
 	/**
 	 * @brief 生成epoll句柄. 
@@ -308,13 +308,13 @@ public:
      * @param fd    句柄
      * @return EpollInfo
 	 */
-	shared_ptr<EpollInfo> createEpollInfo(SOCKET_TYPE fd);
+	std::shared_ptr<EpollInfo> createEpollInfo(SOCKET_TYPE fd);
 
 	/**
 	 * 释放EpollInfo
 	 * @param epollInfo
 	 */
-	void releaseEpollInfo(const shared_ptr<EpollInfo> &epollInfo);
+	void releaseEpollInfo(const std::shared_ptr<EpollInfo> &epollInfo);
 
 	/**
 	 * @brief 等待时间. 
@@ -433,7 +433,7 @@ protected:
 	 * @brief 控制epoll，将EPOLL设为边缘触发EPOLLET模式 
 	 * @brief Control epoll, set EPOLL to Edge Trigger EPOLLET mode
      * @param fd    句柄，在create函数时被赋值
-	 * @param fd    Handle, assigned when creating function
+	 * @param fd    Handle, assigned when creating std::function
      * @param data  辅助的数据, 可以后续在epoll_event中获取到
 	 * @param data  auxiliary data that can be obtained in epoll_event subsequently
      * @param event 需要监听的事件
@@ -465,7 +465,7 @@ protected:
 	/**
 	 * epoll名称, 主要给debug使用
 	 */
-	string  _name;
+	std::string  _name;
 	/**
 	 * 是否退出循环
 	 */
@@ -505,7 +505,7 @@ protected:
 	/**
 	 * 空闲处理
 	 */
-	vector<std::function<void()>> _idleCallbacks;
+	std::vector<std::function<void()>> _idleCallbacks;
 };
 
 }

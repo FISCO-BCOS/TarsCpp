@@ -83,7 +83,7 @@ public:
     }
 
 	template<typename T>
-	static void readJson(T& s, const JsonValuePtr & p, bool isRequire = true, typename std::enable_if<std::is_same<T, string>::value, void ***>::type dummy = 0)
+	static void readJson(T& s, const JsonValuePtr & p, bool isRequire = true, typename std::enable_if<std::is_same<T, std::string>::value, void ***>::type dummy = 0)
     {
         if(p && p->getType() == eJsonTypeString)
         {
@@ -174,7 +174,7 @@ public:
     }
 
     template<typename V, typename Cmp, typename Alloc>
-    static void readJson(std::map<string, V, Cmp, Alloc>& m, const JsonValuePtr & p, bool isRequire = true)
+	static void readJson(std::map<std::string, V, Cmp, Alloc>& m, const JsonValuePtr & p, bool isRequire = true)
     {
         if(p && p->getType() == eJsonTypeObj)
         {
@@ -182,7 +182,7 @@ public:
             auto iter=pObj->value.begin();
             for(;iter!=pObj->value.end();++iter)
             {
-                std::pair<string, V> pr;
+				std::pair<std::string, V> pr;
                 pr.first=iter->first;
                 readJson(pr.second,iter->second);
                 m.insert(pr);
@@ -197,7 +197,7 @@ public:
     }
 
 	template<typename V, typename H, typename Cmp, typename Alloc>
-	static void readJson(std::unordered_map<string, V, H, Cmp, Alloc>& m, const JsonValuePtr & p, bool isRequire = true)
+	static void readJson(std::unordered_map<std::string, V, H, Cmp, Alloc>& m, const JsonValuePtr & p, bool isRequire = true)
 	{
 		if(p && p->getType() == eJsonTypeObj)
 		{
@@ -205,7 +205,7 @@ public:
 			auto iter=pObj->value.begin();
 			for(;iter!=pObj->value.end();++iter)
 			{
-				std::pair<string, V> pr;
+				std::pair<std::string, V> pr;
 				pr.first=iter->first;
 				readJson(pr.second,iter->second);
 				m.insert(pr);
@@ -574,7 +574,7 @@ public:
 	}
 
 	template<class T>
-	static JsonValueStringPtr writeJson(const T &b, typename std::enable_if<std::is_same<T, string>::value, void ***>::type dummy = 0)
+	static JsonValueStringPtr writeJson(const T &b, typename std::enable_if<std::is_same<T, std::string>::value, void ***>::type dummy = 0)
 	{
 		return (new JsonValueString(b));
 	}
@@ -587,11 +587,11 @@ public:
 
     static JsonValueStringPtr writeJson(const char *buf, const UInt32 len)
     {
-        return (new JsonValueString(string(buf,len)));
+		return (new JsonValueString(std::string(buf, len)));
     }
 
     template<typename V, typename Cmp, typename Alloc>
-    static JsonValueObjPtr writeJson(const std::map<string, V, Cmp, Alloc>& m)
+	static JsonValueObjPtr writeJson(const std::map<std::string, V, Cmp, Alloc>& m)
     {
         JsonValueObjPtr pObj=new JsonValueObj();
         for (auto i = m.begin(); i != m.end(); ++i)
@@ -602,7 +602,7 @@ public:
     }
 
 	template<typename V, typename H, typename Cmp, typename Alloc>
-	static JsonValueObjPtr writeJson(const std::unordered_map<string, V, H, Cmp, Alloc>& m)
+	static JsonValueObjPtr writeJson(const std::unordered_map<std::string, V, H, Cmp, Alloc>& m)
 	{
 		JsonValueObjPtr pObj=new JsonValueObj();
 		for (auto i = m.begin(); i != m.end(); ++i)

@@ -5,6 +5,8 @@
 namespace tars
 {
 
+using namespace std;
+
 const std::vector<std::string> TC_Cron::DAYS = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 const std::vector<std::string> TC_Cron::MONTHS = { "NIL", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
 

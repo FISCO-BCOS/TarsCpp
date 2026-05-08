@@ -21,6 +21,8 @@
 
 namespace tars
 {
+
+using namespace std;
 #if TARGET_PLATFORM_LINUX || TARGET_PLATFORM_IOS
 
 TC_SemMutex::TC_SemMutex():_semID(-1),_semKey(-1)

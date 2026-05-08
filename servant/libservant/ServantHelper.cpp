@@ -19,6 +19,8 @@
 namespace tars
 {
 
+using namespace std;
+
 ServantPtr ServantHelperManager::create(const string &sAdapter)
 {
     if(_adapter_servant.find(sAdapter) == _adapter_servant.end())

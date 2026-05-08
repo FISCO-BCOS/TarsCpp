@@ -39,8 +39,8 @@ namespace tars
 */
 struct TC_FileMutex_Exception : public TC_Lock_Exception
 {
-    TC_FileMutex_Exception(const string &buffer) : TC_Lock_Exception(buffer){};
-    TC_FileMutex_Exception(const string &buffer, int err) : TC_Lock_Exception(buffer, err){};
+    TC_FileMutex_Exception(const std::string &buffer) : TC_Lock_Exception(buffer){};
+    TC_FileMutex_Exception(const std::string &buffer, int err) : TC_Lock_Exception(buffer, err){};
     ~TC_FileMutex_Exception() throw() {};
 };
 

@@ -25,18 +25,13 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_thread_rwlock.h
- * @brief 读写锁
  * @author ruanshudong@qq.com
  */
 
 /////////////////////////////////////////////////
-
 class UTIL_DLL_API TC_ThreadRWLocker
 {
 protected:
@@ -48,14 +43,14 @@ protected:
 		void readLock()
 		{
 			//加锁, 直到可读
-			unique_lock<mutex> lck(_mutex);
+			std::unique_lock<std::mutex> lck(_mutex);
 			_cond.wait(lck, std::bind(&TC_SharedMutex::isReadCond, this));
 			_readCount++;
 		}
 
 		bool tryReadLock()
 		{
-			unique_lock<mutex> lck(_mutex);
+			std::unique_lock<std::mutex> lck(_mutex);
 			if(_cond.wait_for(lck, std::chrono::seconds(0)) == std::cv_status::timeout)
 			{
 				return false;
@@ -73,14 +68,14 @@ protected:
 		//解读锁
 		void unReadLock()
 		{
-			unique_lock<mutex> lck(_mutex);
+			std::unique_lock<std::mutex> lck(_mutex);
 			_readCount--;
 			_cond.notify_all();
 		}
 		
 		void writeLock()
 		{
-			unique_lock<mutex> lck(_mutex);
+			std::unique_lock<std::mutex> lck(_mutex);
 			_cond.wait(lck, std::bind([](const bool *is_w, const size_t *read_c) -> bool
 			{
 				return false == *is_w && 0 == *read_c;
@@ -91,7 +86,7 @@ protected:
 
 		bool tryWriteLock()
 		{
-			unique_lock<mutex> lck(_mutex);
+			std::unique_lock<std::mutex> lck(_mutex);
 			if(_cond.wait_for(lck, std::chrono::seconds(0)) == std::cv_status::timeout)
 			{
 				return false;
@@ -108,15 +103,15 @@ protected:
 
 		void unWriteLock()
 		{
-			unique_lock<mutex> lck(_mutex);
+			std::unique_lock<std::mutex> lck(_mutex);
 			_isWrite = false;
 			_cond.notify_all();
 		}
 	private:
 		// 锁
-		mutex _mutex;
+		std::mutex _mutex;
 		// 条件变量
-		condition_variable _cond;
+		std::condition_variable _cond;
 		// 是否在写
 		bool _isWrite = false;
 		// 读者数量

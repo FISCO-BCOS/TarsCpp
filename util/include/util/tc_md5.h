@@ -22,9 +22,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_md5.h
@@ -36,10 +33,10 @@ using namespace std;
 
 /**
 * @brief 该类提供MD5的散列算法，通过静态函数提供 . 
-* @brief This class provides MD5 hash algorithm through static function
+* @brief This class provides MD5 hash algorithm through static std::function
 *  
 * 提供两种输出方式:字符串(32个字符)或二进制(16个字节)
-* Two output modes are provided: string (32 characters) or binary (16 bytes)
+* Two output modes are provided: std::string (32 characters) or binary (16 bytes)
 */
 #ifndef GET_ULONG_LE
 #define GET_ULONG_LE(n,b,i)                             \
@@ -63,11 +60,11 @@ using namespace std;
 
 /**
  * @brief md5异常. 
- * @brief MD5 exception
+ * @brief MD5 std::exception
  */
 struct TC_MD5_Exception : public TC_Exception
 {
-    TC_MD5_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_MD5_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_MD5_Exception() throw(){};
 };
 
@@ -101,15 +98,15 @@ class TC_MD5
 public:
     /**
     * @brief 对字符串进行md5处理,返回16字节二进制数据. 
-    * @brief MD5 string processing, return 16 bytes of binary data
+    * @brief MD5 std::string processing, return 16 bytes of binary data
     *  
     * @param sString  输入字符串
-    * @param sString  Input string
-    * @return string 输出,16个字节的二进制数据
-    * @return string Output, 16 bytes of binary data
+    * @param sString  Input std::string
+    * @return std::string 输出,16个字节的二进制数据
+    * @return std::string Output, 16 bytes of binary data
     */
-    static vector<char> md5bin(const string &sString);
-    static vector<char> md5bin(const char *buffer, size_t length);
+    static std::vector<char> md5bin(const std::string &sString);
+    static std::vector<char> md5bin(const char *buffer, size_t length);
 
     /**
     * @brief 对字符串进行md5处理 ，
@@ -117,12 +114,12 @@ public:
     * @brief MD5 is used to process strings, 
     *        and the binary data of MD5 is converted into 32 byte strings of hex
     * @param sString  输入字符串
-    * @param sString  Input string
-    * @return string 输出,32个字符
-    * @return string Output, 32 characters
+    * @param sString  Input std::string
+    * @return std::string 输出,32个字符
+    * @return std::string Output, 32 characters
     */
-    static string md5str(const string &sString);
-    static string md5str (const char *buffer, size_t length);
+    static std::string md5str(const std::string &sString);
+    static std::string md5str (const char *buffer, size_t length);
 
     /**
      * @brief 对文件进行md5处理. 
@@ -131,15 +128,15 @@ public:
      * @param fileName 要处理的文件名 
      * @param fileName File name to process
      * @throw TC_MD5_Exception, 文件读取错误会抛出异常 
-     * @throw TC_MD5_Exception, File read error throws an exception
-     * @return string  处理后的字符串
-     * @return string  Processed string
+     * @throw TC_MD5_Exception, File read error throws an std::exception
+     * @return std::string  处理后的字符串
+     * @return std::string  Processed std::string
      */
-    static string md5file(const string& fileName);
+    static std::string md5file(const std::string& fileName);
 
 protected:
 
-    static string bin2str(const void *buf, size_t len, const string &sSep);
+    static std::string bin2str(const void *buf, size_t len, const std::string &sSep);
 
     /**
     * @brief MD5 init.

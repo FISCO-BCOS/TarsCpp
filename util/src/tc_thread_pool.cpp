@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_ThreadPool::TC_ThreadPool()
     :  _threadNum(1), _bTerminate(true)
 {

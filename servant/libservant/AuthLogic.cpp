@@ -27,6 +27,8 @@
 namespace tars
 {
 
+using namespace std;
+
 
 AUTH_STATE processAuthReqHelper(const BasicAuthPackage& pkg, const BasicAuthInfo& info)
 {

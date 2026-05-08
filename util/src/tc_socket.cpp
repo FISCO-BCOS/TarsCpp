@@ -45,6 +45,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_Socket::TC_Socket() : _sock(INVALID_SOCKET), _bOwner(true), _iDomain(AF_INET)
 {
 }

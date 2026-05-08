@@ -31,6 +31,7 @@
 namespace tars
 {
 
+	using namespace std;
 class TC_Transceiver;
 
 shared_ptr<TC_NetWorkBuffer::Buffer> ProxyProtocol::toBuffer(TarsOutputStream<BufferWriter> &os)

@@ -77,7 +77,7 @@ public:
     /**
      * server端的响应包返回
      */
-    void finishInvoke(shared_ptr<ResponsePacket> &rsp);
+    void finishInvoke(std::shared_ptr<ResponsePacket> &rsp);
 
     /**
      * 发起建立连接请求, 并返回是否成功
@@ -105,7 +105,7 @@ public:
     /**
      * 处理stat
      */
-    void mergeStat(map<StatMicMsgHead, StatMicMsgBody> & mStatMicMsg);
+    void mergeStat(std::map<StatMicMsgHead, StatMicMsgBody> & mStatMicMsg);
 
 // #ifdef TARS_OPENTRACKING
 // 	/** 
@@ -219,17 +219,17 @@ public:
 protected:
 
     //创建完网络句柄后的回调
-    shared_ptr<TC_ProxyInfo> onCreateCallback(TC_Transceiver*);
+    std::shared_ptr<TC_ProxyInfo> onCreateCallback(TC_Transceiver*);
 
     std::shared_ptr<TC_OpenSSL> onOpensslCallback(TC_Transceiver*);
 
-    void onCloseCallback(TC_Transceiver*, TC_Transceiver::CloseReason reason, const string &err);
+    void onCloseCallback(TC_Transceiver*, TC_Transceiver::CloseReason reason, const std::string &err);
 
     void onConnectCallback(TC_Transceiver*);
 
     void onRequestCallback(TC_Transceiver*);
 
-    shared_ptr<TC_NetWorkBuffer::Buffer> onSendAuthCallback(TC_Transceiver*);
+    std::shared_ptr<TC_NetWorkBuffer::Buffer> onSendAuthCallback(TC_Transceiver*);
 
     TC_NetWorkBuffer::PACKET_TYPE onVerifyAuthCallback(TC_NetWorkBuffer &, TC_Transceiver*);
 
@@ -292,14 +292,14 @@ private:
      * @param msg
      * @return
      */
-	void finishInvoke_serial(shared_ptr<ResponsePacket> & rsp);
+	void finishInvoke_serial(std::shared_ptr<ResponsePacket> & rsp);
 
     /**
      * 完成连接复用请求
      * @param msg
      * @return
      */
-	void finishInvoke_parallel(shared_ptr<ResponsePacket> & rsp);
+	void finishInvoke_parallel(std::shared_ptr<ResponsePacket> & rsp);
 
 	/**
 	 * 并行发送的情况(连接复用)
@@ -311,7 +311,7 @@ private:
 	 * @param sSlaveName
 	 * @return
 	 */
-	string getSlaveName(const string& sSlaveName);
+	std::string getSlaveName(const std::string& sSlaveName);
 
 private:
 
@@ -424,16 +424,16 @@ private:
     /*
      * 模块间调用统计信息的body信息
      */
-    unordered_map<string,StatMicMsgBody>    _statBody;
+    std::unordered_map<std::string,StatMicMsgBody>    _statBody;
 
     /*
      * 调用链信息
      */
 // #ifdef TARS_OPENTRACKING
-//     map<int,std::unique_ptr<opentracing::Span>> _spanMap;
+//     std::map<int,std::unique_ptr<opentracing::Span>> _spanMap;
 // #endif
     int                                    _id;
-    static  atomic<int>                    _idGen;
+    static  std::atomic<int>                    _idGen;
 };
 ////////////////////////////////////////////////////////////////////
 }

@@ -16,8 +16,8 @@ namespace tars
 struct TC_CronException : public TC_Exception
 {
 public:
-	TC_CronException(const string& buffer) : TC_Exception(buffer) {};
-//	TC_CronException(const string& buffer, bool err) : TC_Exception(buffer, err) {};
+	TC_CronException(const std::string& buffer) : TC_Exception(buffer) {};
+//	TC_CronException(const std::string& buffer, bool err) : TC_Exception(buffer, err) {};
     ~TC_CronException() throw() {};
 };
 
@@ -70,7 +70,7 @@ public:
      // 0 15 10 * * MON-FRI	10:15 AM every Monday, Tuesday, Wednesday, Thursday and Friday
      // 0 0 12 1/5 * *	12 PM every 5 days every month, starting on the first day of the month
      // 0 11 11 11 11 *	Every November 11th at 11:11 AM
-    static TC_Cron makecron(const string & expr);
+    static TC_Cron makecron(const std::string & expr);
 
     /**
      * @brief 获取cron对象的下一个时间点
@@ -143,7 +143,7 @@ protected:
 
     /**
      * @brief 时间格式转换函数
-     * @brief Time format conversion function
+     * @brief Time format conversion std::function
      */
     static std::time_t tm_to_time(std::tm& tmt);
     static std::tm* time_to_tm(std::time_t const* date, std::tm* const out);
@@ -183,7 +183,7 @@ protected:
 
     /**
     * @brief 位图控制函数
-    * @brief Bitmap control function
+    * @brief Bitmap control std::function
     */
     template <size_t N>
     static size_t nextSetbit(const std::bitset<N> & target, size_t minimum, size_t maximum, size_t offset);
@@ -200,7 +200,7 @@ void TC_Cron::setCronField(std::string value,std::bitset<N>& target,cron_int min
     if (value.length() > 0 && value[value.length() - 1] == ',')
         throw TC_CronException("[TC_Cron::setCronField] value cannot end with comma");
 
-    auto fields = TC_Common::sepstr<string>(value, ",");
+    auto fields = TC_Common::sepstr<std::string>(value, ",");
     if (fields.empty())
         throw TC_CronException("[TC_Cron::setCronField] expression parsing error");
 
@@ -218,7 +218,7 @@ void TC_Cron::setCronField(std::string value,std::bitset<N>& target,cron_int min
         }
         else
         {
-            auto parts = TC_Common::sepstr<string>(field, "/");
+            auto parts = TC_Common::sepstr<std::string>(field, "/");
             if (parts.size() != 2)
                 throw TC_CronException("[TC_Cron::setCronField] incrementer must have two fields");
 

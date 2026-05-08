@@ -38,7 +38,7 @@ namespace tars
 */
 struct TC_MemVectorException : public TC_Exception
 {
-    TC_MemVectorException(const string &buffer) : TC_Exception(buffer){};
+    TC_MemVectorException(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_MemVectorException() throw(){};
 };
 
@@ -156,9 +156,9 @@ public:
      * @brief 
      * @param simple
      *
-     * @return string
+     * @return std::string
      */
-    string desc() const;
+    std::string desc() const;
 
     /**
      * @brief 迭代器
@@ -275,8 +275,8 @@ public:
     {
         if(iIndex >= _pHead->_iBlockCount)
         {
-			ostringstream s;
-			s << string("[TC_MemVector::get] index beyond : index = ") << iIndex << " > " << _pHead->_iBlockCount;
+			std::ostringstream s;
+			s << std::string("[TC_MemVector::get] index beyond : index = ") << iIndex << " > " << _pHead->_iBlockCount;
 
             throw TC_MemVectorException(s.str());
         }
@@ -362,13 +362,13 @@ void TC_MemVector<T>::clear()
 }
 
 template<typename T>
-string TC_MemVector<T>::desc() const
+std::string TC_MemVector<T>::desc() const
 {
-    ostringstream s;
+    std::ostringstream s;
     s << "[TC_MemVector] [_iSize=" << _pHead->_iSize << "] "
       << "[_iBlockCount="  << _pHead->_iBlockCount << "] "
       << "[_iBlockSize="  << _pHead->_iBlockSize << "] "
-      << endl;
+      << std::endl;
     s << "[~TC_MemVector]";
 
     return s.str();

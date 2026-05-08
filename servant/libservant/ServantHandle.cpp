@@ -31,6 +31,8 @@
 namespace tars
 {
 
+using namespace std;
+
 /////////////////////////////////////////////////////////////////////////
 //
 ServantHandle::ServantHandle(Application *application)

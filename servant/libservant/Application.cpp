@@ -51,6 +51,8 @@ std::this_thread::sleep_for(std::chrono::milliseconds(20)); \
 namespace tars
 {
 
+using namespace std;
+
 std::string ServerConfig::TarsPath;         //服务路径
 std::string ServerConfig::Application;      //应用名称
 std::string ServerConfig::ServerName;       //服务名称,一个服务名称含一个或多个服务标识

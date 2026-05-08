@@ -40,12 +40,12 @@ namespace tars
 /////////////////////////////////////////////////
 
 /**
-*  @brief Multi Hash map异常类
+*  @brief Multi Hash std::map异常类
 *  @brief Multi Hash Map Exception Class
 */
 struct TC_Multi_HashMap_Exception : public TC_Exception
 {
-    TC_Multi_HashMap_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_Multi_HashMap_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_Multi_HashMap_Exception() throw(){};
 };
 
@@ -72,9 +72,9 @@ public:
     struct BlockData
     {
         /**Data Key, union key (after union primary key is removed)*/
-        string            _key;       /**数据Key，联合key(联合主键去掉主key后)*/
+        std::string            _key;       /**数据Key，联合key(联合主键去掉主key后)*/
         /**data value*/
-        string            _value;     /**数据value*/
+        std::string            _value;     /**数据value*/
         /**Is it dirty data*/
         bool            _dirty;     /**是否是脏数据*/
         /**Data Version, 1 for Initial Version, 0 for Retention*/
@@ -96,7 +96,7 @@ public:
     struct Value
     {
         /**Primary Key*/
-        string            _mkey;        /**主key*/
+        std::string            _mkey;        /**主key*/
         /**Other Data*/
         BlockData        _data;        /**其它数据*/
     };
@@ -328,7 +328,7 @@ public:
          *          其他异常
          *          Other Exceptions
          */
-        int get(string &mk);
+        int get(std::string &mk);
 
         /**
          * @brief 设置主key
@@ -338,7 +338,7 @@ public:
          * @param vtData, 淘汰的数据
          * @param vtData, Eliminated data
          */
-        int set(const void *pData, uint32_t iDataLen, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const void *pData, uint32_t iDataLen, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 将当前主key移动到主key链上的下一个主key
@@ -366,7 +366,7 @@ public:
 
         /**
          * @brief 新主key时调用该函数，初始化主key相关信息
-         * @brief This function is called when a new primary key is created to initialize information about the primary key
+         * @brief This std::function is called when a new primary key is created to initialize information about the primary key
          * @param iIndex, 主key hash索引
          * @param iIndex, Primary key hash index
          * @param iAllocSize, 内存大小
@@ -376,17 +376,17 @@ public:
 
         /**
          * @brief 从主key链表中删除当前主key
-         * @brief Delete the current main key from the main key chain list
+         * @brief Delete the current main key from the main key chain std::list
          * 返回被删除的主key下的所有数据
          * Returns all data under the deleted primary key
          * @return int, TC_Multi_HashMap::RT_OK成功，其它失败
          * @return Int, TC_Multi_HashMap::RT_OK Success, Other Failures
          */
-        int erase(vector<Value> &vtData);
+        int erase(std::vector<Value> &vtData);
 
         /**
          * @brief 刷新get链表, 将当前主key放在get链表头部
-         * @brief Refresh the get list, place the current primary key at the head of the get list
+         * @brief Refresh the get std::list, place the current primary key at the head of the get std::list
          */
         void refreshGetList();
 
@@ -415,7 +415,7 @@ public:
          *
          * @return int
          */
-        int allocate(uint32_t iDataLen, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocate(uint32_t iDataLen, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -427,7 +427,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<uint32_t>& chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<uint32_t>& chunks);
 
         /**
          * @brief 分配指定大小的内存空间，可能会有多个chunk
@@ -435,12 +435,12 @@ public:
          * @param fn, 分配的空间大小
          * @param fn, Allocated space size
          * @param chunks, 分配成功返回的chunks地址列表
-         * @param chunks, A list of chunks addresses that were successfully assigned back
+         * @param chunks, A std::list of chunks addresses that were successfully assigned back
          * @param vtData, 淘汰的数据
          * @param vtData, Eliminated data
          * @return int
          */
-        int allocateChunk(uint32_t fn, vector<uint32_t> &chunks, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocateChunk(uint32_t fn, std::vector<uint32_t> &chunks, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 释放指定chunk之后的所有chunk
@@ -704,7 +704,7 @@ public:
 
         /**
          * @brief 获取当前桶链表最后一个block的头部地址
-         * @brief Get the header address of the last block in the current bucket chain list
+         * @brief Get the header address of the last block in the current bucket chain std::list
          * @param bUKList, 是联合主键链还是主key链
          * @param bUKList, Is it a union primary key chain or a primary key chain?
          * @return uint32_t
@@ -776,7 +776,7 @@ public:
          *          其他异常
          *          other ecxeptions
          */
-        int get(string &s);
+        int get(std::string &s);
 
         /**
          * @brief 设置数据
@@ -796,7 +796,7 @@ public:
          *                其它为失败
          *                Others are failures
          */
-        int set(const void *pData, uint32_t iDataLen, bool bOnlyKey, uint8_t iVersion, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const void *pData, uint32_t iDataLen, bool bOnlyKey, uint8_t iVersion, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 是否是脏数据
@@ -847,7 +847,7 @@ public:
 
         /**
          * @brief 新block时调用该函数
-         * @brief Call this function when a new block
+         * @brief Call this std::function when a new block
          * 初始化新block的一些信息
          * Some information about initializing a new block
          * @param iMainKeyAddr, 所属主key地址
@@ -863,14 +863,14 @@ public:
 
         /**
          * @brief 从Block链表中删除当前Block
-         * @brief Delete the current block from the block list
+         * @brief Delete the current block from the block std::list
          * @return
          */
         void erase();
 
         /**
          * @brief 刷新set链表, 将当前block放在Set链表头部
-         * @brief Refresh the set list and place the current block in the head of the set list
+         * @brief Refresh the set std::list and place the current block in the head of the set std::list
          */
         void refreshSetList();
 
@@ -896,7 +896,7 @@ public:
          *
          * @return int,
          */
-        int allocate(uint32_t iDataLen, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocate(uint32_t iDataLen, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -908,7 +908,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<uint32_t>& chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<uint32_t>& chunks);
 
         /**
          * @brief 分配指定大小的内存空间, 可能会有多个chunk
@@ -916,12 +916,12 @@ public:
          * @param fn, 分配的空间大小
          * @param fn, Allocated space size
          * @param chunks, 分配成功返回的chunks地址列表
-         * @param chunks, A list of chunks addresses that were successfully assigned back
+         * @param chunks, A std::list of chunks addresses that were successfully assigned back
          * @param vtData, 淘汰的数据
          * @param vtData, Eliminated data
          * @return int
          */
-        int allocateChunk(uint32_t fn, vector<uint32_t> &chunks, vector<TC_Multi_HashMap::Value> &vtData);
+        int allocateChunk(uint32_t fn, std::vector<uint32_t> &chunks, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 释放指定chunk之后的所有chunk
@@ -1056,9 +1056,9 @@ public:
          * @brief 获取每种数据块头部信息
          * @brief Get header information for each data block
          *
-         * @return vector<TC_MemChunk::tagChunkHead>
+         * @return std::vector<TC_MemChunk::tagChunkHead>
          */
-        vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
+        std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
 
         /**
          * @brief 总内存大小
@@ -1080,9 +1080,9 @@ public:
          * @brief 每种block中的chunk个数(每种block中的chunk个数相同)
          * @brief Number of chunks per block (same number of chunks per block)
          *
-         * @return vector<size_t>
+         * @return std::vector<size_t>
          */
-        vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
+        std::vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
 
         /**
          * @brief 所有block的chunk个数
@@ -1109,7 +1109,7 @@ public:
          * @return size_t, 内存块地址索引, 0表示没有空间可以分配
          * @return size_t, Memory block address index, 0 means there is no space to allocate
          */
-        uint32_t allocateMemBlock(uint32_t iMainKeyAddr, uint32_t index, bool bHead, uint32_t &iAllocSize, vector<TC_Multi_HashMap::Value> &vtData);
+        uint32_t allocateMemBlock(uint32_t iMainKeyAddr, uint32_t index, bool bHead, uint32_t &iAllocSize, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
         * @brief 在内存中分配一个主key头，只需要一个chunk即可
@@ -1123,7 +1123,7 @@ public:
         * @return size_t, 主key头首地址,0表示没有空间可以分配
         * @return size_t, Primary key header address, 0 means there is no space to allocate
         */
-        uint32_t allocateMainKeyHead(uint32_t index, vector<TC_Multi_HashMap::Value> &vtData);
+        uint32_t allocateMainKeyHead(uint32_t index, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 为地址为iAddr的Block分配一个chunk         *
@@ -1137,15 +1137,15 @@ public:
          * @return size_t, 相对地址,0表示没有空间可以分配
          * @return size_t, Relative to the address, 0 means there is no space to allocate
          */
-        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, vector<TC_Multi_HashMap::Value> &vtData);
+        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 释放Block
          * @brief Release block
          * @param v, 需要释放的chunk的地址列表
-         * @param v, Address list of chunks to be released
+         * @param v, Address std::list of chunks to be released
          */
-        void deallocateMemChunk(const vector<uint32_t> &v);
+        void deallocateMemChunk(const std::vector<uint32_t> &v);
 
         /**
          * @brief 释放Block
@@ -1171,7 +1171,7 @@ public:
 
     public:
         /**
-         * map
+         * std::map
          */
         TC_Multi_HashMap                *_pMap;
 
@@ -1184,8 +1184,8 @@ public:
 
     ////////////////////////////////////////////////////////////////
     /** 
-      * @brief 构造map的数据项
-      * @brief Construct data items of map
+      * @brief 构造std::map的数据项
+      * @brief Construct data items of std::map
       */
     class HashMapLockItem
     {
@@ -1263,7 +1263,7 @@ public:
          *          RT_ONLY_KEY: key有效, v无效为空
          *          RT_ONLY_KEY: Key is valid, V is invalid and null
          *          其他值, 异常
-         *          Other values, exception
+         *          Other values, std::exception
          *
          */
         int get(TC_Multi_HashMap::Value &v);
@@ -1279,9 +1279,9 @@ public:
          *          RT_OK:数据获取OK
          *          RT_OK: data acquisition OK
          *          其他值, 异常
-         *          Other values, exception
+         *          Other values, std::exception
          */
-        int get(string &mk, string &uk);
+        int get(std::string &mk, std::string &uk);
 
         /**
          * @brief 获取对应block的相对地址
@@ -1308,7 +1308,7 @@ public:
          * @param vtData, eliminated data 
          * @return int
          */
-        int set(const string &mk, const string &uk, const string& v, uint8_t iVersion, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const std::string &mk, const std::string &uk, const std::string& v, uint8_t iVersion, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 设置Key, 无数据(Only Key)
@@ -1322,7 +1322,7 @@ public:
          *
          * @return int
          */
-        int set(const string &mk, const string &uk, vector<TC_Multi_HashMap::Value> &vtData);
+        int set(const std::string &mk, const std::string &uk, std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 判断当前item是否是指定key的item, 如果是还返回value
@@ -1332,7 +1332,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &mk, const string &uk, TC_Multi_HashMap::Value &v, int &ret);
+        bool equal(const std::string &mk, const std::string &uk, TC_Multi_HashMap::Value &v, int &ret);
 
         /**
          * @brief 判断当前item是否是指定key的item
@@ -1342,7 +1342,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &mk, const string &uk, int &ret);
+        bool equal(const std::string &mk, const std::string &uk, int &ret);
 
         /**
          * @brief 将当前item移动到下一个item
@@ -1364,7 +1364,7 @@ public:
 
     private:
         /**
-         * map
+         * std::map
          */
         TC_Multi_HashMap *_pMap;
 
@@ -1520,8 +1520,8 @@ public:
 
     ////////////////////////////////////////////////////////////////
     /** 
-     *  @brief map的HashItem项, 一个HashItem对应多个数据项
-     *  @brief The hashitem item item of map. One hashitem corresponds to multiple data items
+     *  @brief std::map的HashItem项, 一个HashItem对应多个数据项
+     *  @brief The hashitem item item of std::map. One hashitem corresponds to multiple data items
      */
     class HashMapItem
     {
@@ -1573,7 +1573,7 @@ public:
          * @param vtData
          * @return
          */
-        void get(vector<TC_Multi_HashMap::Value> &vtData);
+        void get(std::vector<TC_Multi_HashMap::Value> &vtData);
 
         /**
          * @brief 获取当前item的hash索引
@@ -1595,7 +1595,7 @@ public:
 
     private:
         /**
-         * map
+         * std::map
          */
         TC_Multi_HashMap *_pMap;
 
@@ -1706,8 +1706,8 @@ public:
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @brief map头
-     * @brief map head
+     * @brief std::map头
+     * @brief std::map head
      */
 #pragma pack(1) 
 
@@ -1741,19 +1741,19 @@ public:
         size_t      _iEraseCount;        /**每次淘汰个数*/
         /**Number of dirty data*/
         size_t      _iDirtyCount;        /**脏数据个数*/
-        /**Set time list header*/
+        /**Set time std::list header*/
         uint32_t    _iSetHead;           /**Set时间链表头部*/
         /**Set time chain tail*/
         uint32_t    _iSetTail;           /**Set时间链表尾部*/
-        /**Get time list header*/
+        /**Get time std::list header*/
         uint32_t    _iGetHead;           /**Get时间链表头部*/
-        /**End of get time chain list*/
+        /**End of get time chain std::list*/
         uint32_t    _iGetTail;           /**Get时间链表尾部*/
         /**Dirty data link tail*/
         uint32_t    _iDirtyTail;         /**脏数据链尾部*/
         /**Hot standby pointer*/
         uint32_t    _iBackupTail;        /**热备指针*/
-        /**Write back linked list*/
+        /**Write back linked std::list*/
         uint32_t    _iSyncTail;          /**回写链表*/
         /**Write back time*/
         time_t      _iSyncTime;          /**回写时间*/
@@ -1835,10 +1835,10 @@ public:
     */
     enum
     {
-        /**Large version number of current map*/
-        MAX_VERSION         = 1,        /**当前map的大版本号*/
-        /**Small version number of current map*/
-        MIN_VERSION         = 1,        /**当前map的小版本号*/
+        /**Large version number of current std::map*/
+        MAX_VERSION         = 1,        /**当前std::map的大版本号*/
+        /**Small version number of current std::map*/
+        MIN_VERSION         = 1,        /**当前std::map的小版本号*/
     };
 
 #else
@@ -1848,10 +1848,10 @@ public:
     */
     enum
     {
-        /**Large version number of current map*/
-        MAX_VERSION         = 1,        /**当前map的大版本号*/
-        /**Small version number of current map*/
-        MIN_VERSION         = 0,        /**当前map的小版本号*/
+        /**Large version number of current std::map*/
+        MAX_VERSION         = 1,        /**当前std::map的大版本号*/
+        /**Small version number of current std::map*/
+        MIN_VERSION         = 0,        /**当前std::map的小版本号*/
     };
 
 #endif
@@ -1901,7 +1901,7 @@ public:
         /**Data phase-out success*/
         RT_ERASE_OK             = 5,    /**淘汰数据成功*/
         /**Map read-only*/
-        RT_READONLY             = 6,    /**map只读*/
+        RT_READONLY             = 6,    /**std::map只读*/
         /**insufficient memory*/
         RT_NO_MEMORY            = 7,    /**内存不够*/
         /**Key only, no Value*/
@@ -1916,7 +1916,7 @@ public:
         RT_PART_DATA            = 12,    /**主key数据不完整*/
         /**Parsing error*/
         RT_DECODE_ERR           = -1,   /**解析错误*/
-        /**exception*/
+        /**std::exception*/
         RT_EXCEPTION_ERR        = -2,   /**异常*/
         /**Load Data Exception*/
         RT_LOAD_DATA_ERR        = -3,   /**加载数据异常*/
@@ -1937,10 +1937,10 @@ public:
 
     /**定义hash处理器*/
     /**Define hash processor*/
-    using hash_functor = std::function<uint32_t (const string& )>;
+    using hash_functor = std::function<uint32_t (const std::string& )>;
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    //map的接口定义
+    //std::map的接口定义
     //Map's interface definition
 
     /**
@@ -2005,7 +2005,7 @@ public:
      * @param iSize 存储空间大小
      * @param iSize Storage size
      * @return 失败则抛出异常
-     * @return Failure throws an exception
+     * @return Failure throws an std::exception
      */
     void create(void *pAddr, size_t iSize);
 
@@ -2017,7 +2017,7 @@ public:
      * @param iSize, 内存大小
      * @param iSize, memory size
      * @return 失败则抛出异常
-     * @return Failure throws an exception
+     * @return Failure throws an std::exception
      */
     void connect(void *pAddr, size_t iSize);
 
@@ -2038,10 +2038,10 @@ public:
      * @brief 获取每种大小内存块的头部信息
      * @brief Get header information for each memory block size
      *
-     * @return vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
-     * @return vector<TC_MemChunk::tagChunkHead>: Header information for memory blocks of different sizes
+     * @return std::vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
+     * @return std::vector<TC_MemChunk::tagChunkHead>: Header information for memory blocks of different sizes
      */
-    vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
+    std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
 
     /**
      * @brief 所有block中chunk的个数
@@ -2055,9 +2055,9 @@ public:
      * @brief 每种block中chunk的个数(不同大小内存块的个数相同)
      * @brief Number of chunks in each block (same number of memory blocks of different sizes)
      *
-     * @return vector<size_t>
+     * @return std::vector<size_t>
      */
-    vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
+    std::vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
 
     /**
      * @brief 获取数据区hash桶的个数
@@ -2241,7 +2241,7 @@ public:
      *          RT_OK: dump到文件成功
      *          RT_OK: Dump to file succeeded
      */
-    int dump2file(const string &sFile);
+    int dump2file(const std::string &sFile);
 
     /**
      * @brief 从文件load
@@ -2256,13 +2256,13 @@ public:
      *          RT_OK: load成功
      *          RT_OK: load successfully
      */
-    int load5file(const string &sFile);
+    int load5file(const std::string &sFile);
 
     /**
      * @brief 清空hashmap
      * @brief Empty HashMap
-     * 所有map的数据恢复到初始状态
-     * Restore all map data to its initial state
+     * 所有std::map的数据恢复到初始状态
+     * Restore all std::map data to its initial state
      */
     void clear();
 
@@ -2282,7 +2282,7 @@ public:
     *        TC_Multi_HashMap::RT_NO_DATA, 主key不存在
     *        TC_Multi_HashMap::RT_NO_DATA,Primary key does not exist
     */
-    int checkMainKey(const string &mk);
+    int checkMainKey(const std::string &mk);
 
     /**
     * @brief 设置主key下数据的完整性
@@ -2302,7 +2302,7 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int setFullData(const string &mk, bool bFull);
+    int setFullData(const std::string &mk, bool bFull);
 
     /**
      * @brief 检查数据干净状态
@@ -2324,7 +2324,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int checkDirty(const string &mk, const string &uk);
+    int checkDirty(const std::string &mk, const std::string &uk);
 
     /**
     * @brief 
@@ -2344,7 +2344,7 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int checkDirty(const string &mk);
+    int checkDirty(const std::string &mk);
 
     /**
      * @brief 设置为脏数据, 修改SET时间链, 会导致数据回写
@@ -2366,7 +2366,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int setDirty(const string &mk, const string &uk);
+    int setDirty(const std::string &mk, const std::string &uk);
 
     /**
      * @brief 设置为干净数据, 修改SET链, 导致数据不回写
@@ -2388,7 +2388,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int setClean(const string &mk, const string &uk);
+    int setClean(const std::string &mk, const std::string &uk);
 
     /**
     * @brief 更新数据的回写时间
@@ -2409,7 +2409,7 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int setSyncTime(const string &mk, const string &uk, time_t iSyncTime);
+    int setSyncTime(const std::string &mk, const std::string &uk, time_t iSyncTime);
 
     /**
      * @brief 获取数据, 修改GET时间链
@@ -2431,7 +2431,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(const string &mk, const string &uk, Value &v);
+    int get(const std::string &mk, const std::string &uk, Value &v);
 
     /**
      * @brief 获取主key下的所有数据, 修改GET时间链
@@ -2453,7 +2453,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(const string &mk, vector<Value> &vs);
+    int get(const std::string &mk, std::vector<Value> &vs);
 
     /**
      * @brief 获取主key hash下的所有数据 
@@ -2461,8 +2461,8 @@ public:
      * @brief Get all the data under the primary key hash without modifying the GET time chain, mainly for migration
      * @param mh, 主key hash值
      * @param mh, main key hash value
-     * @param vs, 返回的数据集，以主key进行分组的map
-     * @param vs, Returned dataset, map grouped by primary key
+     * @param vs, 返回的数据集，以主key进行分组的std::map
+     * @param vs, Returned dataset, std::map grouped by primary key
      *
      * @return int:
      *          RT_OK: 获取数据成功
@@ -2470,7 +2470,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int get(uint32_t &mh, map<string, vector<Value> > &vs);
+    int get(uint32_t &mh, std::map<std::string, std::vector<Value> > &vs);
 
     /**
      * @brief 设置数据, 修改时间链, 内存不够时会自动淘汰老的数据
@@ -2492,8 +2492,8 @@ public:
      * @param vtData: 被淘汰的记录
      * @param vtData: Obsolete records
      * @return int:
-     *          RT_READONLY: map只读
-     *          RT_READONLY: map read-only
+     *          RT_READONLY: std::map只读
+     *          RT_READONLY: std::map read-only
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_NO_MEMORY: no space(occurs without data phasing out)
      *            RT_DATA_VER_MISMATCH, 要设置的数据版本与当前版本不符，应该重新get后再set
@@ -2503,8 +2503,8 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string &mk, const string &uk, const string &v, uint8_t iVersion, 
-        bool bDirty, DATATYPE eType, bool bHead,vector<Value> &vtData);
+    int set(const std::string &mk, const std::string &uk, const std::string &v, uint8_t iVersion, 
+        bool bDirty, DATATYPE eType, bool bHead,std::vector<Value> &vtData);
 
     /**
      * @brief 设置key, 但无数据(only key), 
@@ -2522,8 +2522,8 @@ public:
      * @param vtData: Eliminated data
      *
      * @return int
-     *          RT_READONLY: map只读
-     *          RT_READONLY: map read-only
+     *          RT_READONLY: std::map只读
+     *          RT_READONLY: std::map read-only
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_NO_MEMORY: No space (occurs without data phasing out)
      *          RT_OK: 设置成功
@@ -2531,7 +2531,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string &mk, const string &uk, DATATYPE eType, bool bHead, vector<Value> &vtData);
+    int set(const std::string &mk, const std::string &uk, DATATYPE eType, bool bHead, std::vector<Value> &vtData);
 
     /**
      * @brief 仅设置主key, 无联合key及数据 
@@ -2543,8 +2543,8 @@ public:
      * @param vtData: Eliminated data
      *
      * @return int
-     *          RT_READONLY: map只读
-     *          RT_READONLY: map read-only
+     *          RT_READONLY: std::map只读
+     *          RT_READONLY: std::map read-only
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_NO_MEMORY: No space (occurs without data phasing out)
      *          RT_OK: 设置成功
@@ -2552,7 +2552,7 @@ public:
      *          其他返回值: 错误
      *          Other Return Values: Error
      */
-    int set(const string &mk, vector<Value> &vtData);
+    int set(const std::string &mk, std::vector<Value> &vtData);
 
     /**
     * @brief 批量设置数据, 内存不够时会自动淘汰老的数据
@@ -2569,8 +2569,8 @@ public:
     * @param vtErased: Data eliminated when out of memory
     *
     * @return 
-    *          RT_READONLY: map只读
-    *          RT_READONLY: map read-only
+    *          RT_READONLY: std::map只读
+    *          RT_READONLY: std::map read-only
     *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
     *          RT_NO_MEMORY: No space (occurs without data phasing out)
     *          RT_OK: 设置成功
@@ -2578,13 +2578,13 @@ public:
     *          其他返回值: 错误
     *          Other Return Values: Error
     */
-    int set(const vector<Value> &vtSet, DATATYPE eType, bool bHead, bool bForce, vector<Value> &vtErased);
+    int set(const std::vector<Value> &vtSet, DATATYPE eType, bool bHead, bool bForce, std::vector<Value> &vtErased);
 
     /**
      * @brief 
      *        删除数据，除非强制删除某条数据，否则应该调用下面的删除主key下所有数据的函数
      * @brief 
-     *        Delete data, unless a data is forcibly deleted, the following function should be called to delete all data under the main key
+     *        Delete data, unless a data is forcibly deleted, the following std::function should be called to delete all data under the main key
      * @param mk: 主key
      * @param mk: main key
      * @param uk: 除主key外的联合主键
@@ -2592,8 +2592,8 @@ public:
      * @param data: 被删除的记录
      * @param data: Deleted Records
      * @return int:
-     *          RT_READONLY: map只读
-     *          RT_READONLY: map read-only
+     *          RT_READONLY: std::map只读
+     *          RT_READONLY: std::map read-only
      *          RT_NO_DATA: 没有当前数据
      *          RT_NO_DATA: no current data
      *          RT_ONLY_KEY:只有Key, 删除成功
@@ -2603,7 +2603,7 @@ public:
      *         其他返回值: 错误
      *          Other Return Values: Error
      */
-    int del(const string &mk, const string &uk, Value &data);
+    int del(const std::string &mk, const std::string &uk, Value &data);
 
     /**
      * @brief 删除主key下所有数据
@@ -2613,8 +2613,8 @@ public:
      * @param data: 被删除的记录
      * @param data: Deleted Records
      * @return int:
-     *          RT_READONLY: map只读
-     *          RT_READONLY: map read-only
+     *          RT_READONLY: std::map只读
+     *          RT_READONLY: std::map read-only
      *          RT_NO_DATA: 没有当前数据
      *          RT_NO_DATA: No current data
      *          RT_ONLY_KEY:只有Key, 删除成功
@@ -2624,7 +2624,7 @@ public:
      *         其他返回值: 错误
      *          Other Return Values: Error
      */
-    int del(const string &mk, vector<Value> &data);
+    int del(const std::string &mk, std::vector<Value> &data);
 
     /**
      * @brief 淘汰数据, 每次删除一条, 根据Get时间淘汰
@@ -2640,8 +2640,8 @@ public:
      * @param bCheckDirty: 是否检查脏数据
      * @param bCheckDirty: Check for dirty data
      * @return int:
-     *          RT_READONLY: map只读
-     *          RT_READONLY: map read-only
+     *          RT_READONLY: std::map只读
+     *          RT_READONLY: std::map read-only
      *          RT_OK: 不用再继续淘汰了
      *          RT_OK: No need to continue phasing out
      *          RT_ONLY_KEY:只有Key, 删除成功
@@ -2653,7 +2653,7 @@ public:
      *          其他返回值: 错误, 通常忽略, 继续调用erase淘汰
      *          Other return values: Error, usually ignored, continue calling erase obsolete
      */
-    int erase(int ratio, vector<Value> &vtData, bool bCheckDirty = false);
+    int erase(int ratio, std::vector<Value> &vtData, bool bCheckDirty = false);
 
     /**
      * @brief 回写, 每次返回需要回写的一条
@@ -2661,11 +2661,11 @@ public:
      * 数据回写时间与当前时间超过_pHead->_iSyncTime则需要回写
      * Data Writeback Time and Current Time Over _pHead->_iSyncTime needs writeback
      * _pHead->_iSyncTime由setSyncTime函数设定, 默认10分钟
-     * _pHead->_iSyncTime is set by setSyncTime function, default 10 minutes
+     * _pHead->_iSyncTime is set by setSyncTime std::function, default 10 minutes
 
      * 外部循环调用该函数进行回写
-     * Outer loop calls this function to rewrite
-     * map只读时仍然可以回写
+     * Outer loop calls this std::function to rewrite
+     * std::map只读时仍然可以回写
      * Map can still be rewritten when read-only
      * @param iNowTime: 当前时间
      *                  回写时间与当前时间相差_pHead->_iSyncTime都需要回写
@@ -2695,7 +2695,7 @@ public:
 
     /**
      * @brief 开始备份之前调用该函数
-     * @brief Call this function before starting backup
+     * @brief Call this std::function before starting backup
      *
      * @param bForceFromBegin: 是否强制从头开始备份
      * @param bForceFromBegin: Is backup forced from scratch
@@ -2719,11 +2719,11 @@ public:
      *          其他返回值: 错误, 通常忽略, 继续调用backup
      *          Other return values: Error, usually ignored, continue to call backup
      */
-    int backup(vector<Value> &vtData);
+    int backup(std::vector<Value> &vtData);
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // 以下是遍历map函数, 需要对map加锁
-    // The following is a traversal map function that requires a lock on the map
+    // 以下是遍历std::map函数, 需要对std::map加锁
+    // The following is a traversal std::map std::function that requires a lock on the std::map
 
     /**
      * @brief 结束
@@ -2783,7 +2783,7 @@ public:
 
     /**
      * @brief 获取脏链表尾部迭代器(最长时间没有操作的脏数据)
-     * @brief Get dirty chain list tail iterator (dirty data that has not been operated on for the longest time)
+     * @brief Get dirty chain std::list tail iterator (dirty data that has not been operated on for the longest time)
      *
      * 返回的迭代器++表示按照时间顺序==>(最短时间没有操作的脏数据)
      * The returned iterator++ indicates dirty data in chronological order==> (minimum no operation)
@@ -2793,8 +2793,8 @@ public:
     lock_iterator beginDirty();
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // 以下是遍历map函数, 不需要对map加锁
-    // The following is a traversal map function that does not require a lock on the map
+    // 以下是遍历std::map函数, 不需要对std::map加锁
+    // The following is a traversal std::map std::function that does not require a lock on the std::map
 
     /**
      * @brief 根据hash桶遍历
@@ -2821,7 +2821,7 @@ public:
      * @param uk: Joint primary key except primary key
      * @return lock_iterator
      */
-    lock_iterator find(const string &mk, const string &uk);
+    lock_iterator find(const std::string &mk, const std::string &uk);
 
     /**
     * @brief 获取主key链上block的数量
@@ -2830,7 +2830,7 @@ public:
     * @param mk: main key
     * @return size_t
     */
-    size_t count(const string &mk);
+    size_t count(const std::string &mk);
 
     /**
     * @brief 根据主key查找第一个block位置. 
@@ -2842,15 +2842,15 @@ public:
     * @param mk: main key
     * @return lock_iterator
     */
-    lock_iterator find(const string &mk);
+    lock_iterator find(const std::string &mk);
 
     /**
      * @brief 描述
      * @brief describe
      *
-     * @return string
+     * @return std::string
      */
-    string desc();
+    std::string desc();
 
     /**
     * @brief 对可能的坏block进行检查，并可进行修复
@@ -3011,7 +3011,7 @@ protected:
 
     /**
      * @brief 某hash链表数据个数-1
-     * @brief Number of data in a Hash list-1
+     * @brief Number of data in a Hash std::list-1
      * @param index
      */
     void delListCount(uint32_t index) { saveValue(&item(index)->_iListCount, item(index)->_iListCount-1); }
@@ -3030,7 +3030,7 @@ protected:
     * @param bInc, 是增加还是减少
     * @param bInc, Increase or decrease
     */
-    void incMainKeyBlockCount(const string &mk, bool bInc = true);
+    void incMainKeyBlockCount(const std::string &mk, bool bInc = true);
 
     /**
     * @brief 更新主key下面最大记录数信息
@@ -3062,12 +3062,12 @@ protected:
      * @param iNowAddr, The main key is currently allocating memory and cannot be phased out
      *                  0表示做直接根据淘汰策略淘汰
      *                  0 means to phase out directly according to the elimination strategy
-     * @param vector<Value>, 被淘汰的数据
-     * @param vector<Value>, Eliminated data
+     * @param std::vector<Value>, 被淘汰的数据
+     * @param std::vector<Value>, Eliminated data
      * @return size_t, 淘汰的数据个数
      * @return size_t, Number of data phased out
      */
-    size_t eraseExcept(uint32_t iNowAddr, vector<Value> &vtData);
+    size_t eraseExcept(uint32_t iNowAddr, std::vector<Value> &vtData);
 
     /**
      * @brief 根据Key计算hash值
@@ -3079,7 +3079,7 @@ protected:
      *
      * @return uint32_t
      */
-    uint32_t hashIndex(const string &mk, const string &uk);
+    uint32_t hashIndex(const std::string &mk, const std::string &uk);
 
     /**
      * @brief 根据Key计算hash值
@@ -3088,7 +3088,7 @@ protected:
      *
      * @return uint32_t
      */
-    uint32_t hashIndex(const string &k);
+    uint32_t hashIndex(const std::string &k);
 
     /**
     * @brief 根据主key计算主key的hash
@@ -3097,7 +3097,7 @@ protected:
     * @param mk: main key
     * @return uint32_t
     */
-    uint32_t mhashIndex(const string &mk); 
+    uint32_t mhashIndex(const std::string &mk); 
 
     /**
      * @brief 根据hash索引查找指定key(mk+uk)的数据的位置, 并返回数据
@@ -3116,7 +3116,7 @@ protected:
      * @return lock_iterator: Return the location of the data found, or end() if it does not exist
      *
      */
-    lock_iterator find(const string &mk, const string &uk, uint32_t index, Value &v, int &ret);
+    lock_iterator find(const std::string &mk, const std::string &uk, uint32_t index, Value &v, int &ret);
 
     /**
      * @brief 根据hash索引查找指定key(mk+uk)的数据的位置
@@ -3133,7 +3133,7 @@ protected:
      * @return lock_iterator: Returns the location of the data found, or end() if it does not exist
      *
      */
-    lock_iterator find(const string &mk, const string &uk, uint32_t index, int &ret);
+    lock_iterator find(const std::string &mk, const std::string &uk, uint32_t index, int &ret);
 
     /**
     * @brief 根据主key hash索引查找主key的地址，找不到返回0
@@ -3147,7 +3147,7 @@ protected:
     * @return uint32_t: 返回找到的主key的首地址，找不到返回0
     * @return uint32_t: Return the first address of the primary key found, return 0 not found
     */
-    uint32_t find(const string &mk, uint32_t index, int &ret);
+    uint32_t find(const std::string &mk, uint32_t index, int &ret);
 
     /**
      * @brief 分析主键hash的数据
@@ -3331,7 +3331,7 @@ protected:
 
     /**
     * 主key的hash计算函数, 如果不提供，将使用上面的_hashf
-    * The hash calculation function of the primary key, if not provided, will use the _hashf above
+    * The hash calculation std::function of the primary key, if not provided, will use the _hashf above
     */
     hash_functor                _mhashf;
 };

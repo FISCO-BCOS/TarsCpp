@@ -22,9 +22,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**  
 * @file tc_mem_chunk.h
@@ -566,10 +563,10 @@ public:
      * @brief 获取每个block的大小, 包括后续增加的内存块的大小
      * @brief Get the size of each block, including the size of subsequently added memory blocks
      *
-     * @return vector<size_t>block大小的vector
-     * @return Vector<size_T>block size vector
+     * @return std::vector<size_t>block大小的std::vector
+     * @return Vector<size_T>block size std::vector
      */
-    vector<size_t> getBlockSize()  const;
+    std::vector<size_t> getBlockSize()  const;
 
     /**
      * @brief 每个block中chunk个数(都是相等的) 
@@ -584,9 +581,9 @@ public:
      * @brief Get the header information for each block, including the size of subsequently added memory blocks
      * @param i
      *
-     * @return vector<TC_MemChunk::tagChunkHead>
+     * @return std::vector<TC_MemChunk::tagChunkHead>
      */
-    vector<TC_MemChunk::tagChunkHead> getBlockDetail() const;
+    std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() const;
 
     /**
      * @brief 总计内存大小, 包括后续增加的内存块的大小
@@ -607,10 +604,10 @@ public:
     /**
      * @brief 一个chunk的block个数, 包括后续增加的内存块的 
      * @brief Number of blocks for a chunk, including subsequently added memory blocks
-     * @return vector<size_t>block个数
-     * @return vector<size_t>block count
+     * @return std::vector<size_t>block个数
+     * @return std::vector<size_t>block count
      */
-    vector<size_t> singleBlockChunkCount() const;
+    std::vector<size_t> singleBlockChunkCount() const;
 
     /**
      * @brief 所有chunk的区块合计的block的个数 
@@ -770,7 +767,7 @@ private:
      * 区块大小
      * block size
      */
-    vector<size_t>          _vBlockSize;
+    std::vector<size_t>          _vBlockSize;
 
     /**
      * 每个chunk中block的个数
@@ -782,7 +779,7 @@ private:
      * chunk链表
      * Chunk Linked List
      */
-    vector<TC_MemChunkAllocator*>       _allocator;
+    std::vector<TC_MemChunkAllocator*>       _allocator;
 
     /**
      * 所有的索引个数

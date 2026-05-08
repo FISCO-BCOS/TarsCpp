@@ -21,6 +21,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <map>
+#include <tuple>
 
 #include "util/tc_thread_pool.h"
 #include "util/tc_timeprovider.h"
@@ -31,11 +32,11 @@ namespace tars
 /////////////////////////////////////////////////
 /** 
  * @file tc_timer.h
- * @brief 定时器类, 用于设置定时器, 可以定时回调function
+ * @brief 定时器类, 用于设置定时器, 可以定时回调std::function
  * 使用说明:
  * 设定函数的定时时间, 定时时间到, 则回调
  * 可以设定回调线程数, 默认只有一个, 底层用tc_thread_pool实现线程池的
- * 任何可以丢进tc_thread_pool的function对象(std::bind的对象), 都可以丢该tc_timer
+ * 任何可以丢进tc_thread_pool的std::function对象(std::bind的对象), 都可以丢该tc_timer
  *
  */          
 /////////////////////////////////////////////////
@@ -60,9 +61,9 @@ protected:
 
     typedef std::unordered_set<uint64_t> EVENT_SET;
 
-    typedef std::unordered_map<uint64_t, shared_ptr<Func>> MAP_EVENT;
+    typedef std::unordered_map<uint64_t, std::shared_ptr<Func>> MAP_EVENT;
 
-    typedef map<uint64_t, unordered_set<uint64_t>> MAP_TIMER;
+    typedef std::map<uint64_t, std::unordered_set<uint64_t>> MAP_TIMER;
 
 public:
 
@@ -132,7 +133,7 @@ public:
     // 0 0 12 1/5 * *	12 PM every 5 days every month, starting on the first day of the month
     // 0 11 11 11 11 *	Every November 11th at 11:11 AM
     template <class F, class... Args>
-    int64_t postCron(const string&cronexpr, F&& f, Args&&... args)
+    int64_t postCron(const std::string&cronexpr, F&& f, Args&&... args)
     {
 	    return post(create(0, 0,cronexpr, f, args...),true);
     }
@@ -161,14 +162,14 @@ public:
 
 protected:
     template <class F, class... Args>
-    shared_ptr<Func> create(int64_t fireMillseconds, int64_t repeatTime, const string & cronexpr, F &&f, Args &&... args)
+    std::shared_ptr<Func> create(int64_t fireMillseconds, int64_t repeatTime, const std::string & cronexpr, F &&f, Args &&... args)
     {
         //定义返回值类型
         using RetType = decltype(f(args...));
 
         auto task = std::make_shared<std::packaged_task<RetType()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
-		shared_ptr<Func> fPtr = std::make_shared<Func>(fireMillseconds, genUniqueId());
+		std::shared_ptr<Func> fPtr = std::make_shared<Func>(fireMillseconds, genUniqueId());
 
         if (!cronexpr.empty())
         {
@@ -186,13 +187,13 @@ protected:
 		}
 		else
 		{
-			weak_ptr<Func> wPtr = fPtr;
+			std::weak_ptr<Func> wPtr = fPtr;
 
             fPtr->_func = [task, this, wPtr, repeatTime]() {
                 (*task)();
                 task->reset();
 
-                shared_ptr<Func> p = wPtr.lock();
+                std::shared_ptr<Func> p = wPtr.lock();
                 if(p)
 				{
 					if (this->exist(p->_uniqueId, true))
@@ -218,7 +219,7 @@ protected:
         return fPtr;
     }
 
-	int64_t post(const shared_ptr<Func> &event ,bool repeat = false);
+	int64_t post(const std::shared_ptr<Func> &event ,bool repeat = false);
 
     /**
      * 触发事件
@@ -265,9 +266,9 @@ protected:
 
 	MAP_EVENT   _tmpEvent;      //id, 事件
 
-	atomic_uint _increaseId = {0};
+    std::atomic_uint _increaseId = {0};
 	
-	set<int64_t> _repeatIds; //循环任务的所有ID
+    std::set<int64_t> _repeatIds; //循环任务的所有ID
 
 };
 
@@ -300,7 +301,7 @@ public:
 	 * @brief
 	 * @return num(RUNNER_EVENT), num(ALL_EVENT), num(REPEAT_EVENT)
 	 */
-	tuple<int64_t, int64_t, int64_t> status();
+        std::tuple<int64_t, int64_t, int64_t> status();
 
 
 protected:

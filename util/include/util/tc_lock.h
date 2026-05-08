@@ -25,9 +25,6 @@
 
 namespace tars
 {
-    
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_lock.h 
@@ -39,11 +36,11 @@ using namespace std;
 
 /**
 * @brief  锁异常
-* @brief  Lock exception
+* @brief  Lock std::exception
 */
 struct TC_Lock_Exception : public TC_Exception
 {
-    TC_Lock_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_Lock_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_Lock_Exception() throw() {};
 };
 
@@ -62,8 +59,8 @@ public:
      * @brief  构造函数，构造时枷锁
      * @brief  Constructor, flail when constructing
      *  
-     * @param mutex 锁对象
-     * @param mutex Lock Object
+    * @param mutex 锁对象
+    * @param mutex Lock Object
      */
     TC_LockT(const T& mutex) : _mutex(mutex)
     {
@@ -85,13 +82,13 @@ public:
 
     /**
      * @brief  上锁, 如果已经上锁,则抛出异常
-     * @brief  Lock, throw an exception if already locked
+     * @brief  Lock, throw an std::exception if already locked
      */
     void acquire() const
     {
         if (_acquired)
         {
-            throw TC_Lock_Exception("thread has locked!");
+            throw TC_Lock_Exception("std::thread has locked!");
         }
         _mutex.lock();
         _acquired = true;
@@ -112,13 +109,13 @@ public:
 
     /**
      * @brief  释放锁, 如果没有上过锁, 则抛出异常
-     * @brief  Release lock, throw exception if no lock is on
+     * @brief  Release lock, throw std::exception if no lock is on
      */
     void release() const
     {
         if (!_acquired)
         {
-            throw TC_Lock_Exception("thread hasn't been locked!");
+            throw TC_Lock_Exception("std::thread hasn't been locked!");
         }
         _mutex.unlock();
         _acquired = false;

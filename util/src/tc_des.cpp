@@ -6,6 +6,8 @@
 namespace tars
 {
 
+using namespace std;
+
 static const unsigned short bytebit[8]    = {
     0200, 0100, 040, 020, 010, 04, 02, 01 };
 

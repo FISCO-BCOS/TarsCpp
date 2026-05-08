@@ -39,11 +39,11 @@ namespace tars
  */
 /////////////////////////////////////////////////
 /**
-* @brief Hash map异常类
+* @brief Hash std::map异常类
 */
 struct TC_HashMapCompact_Exception : public TC_Exception
 {
-    TC_HashMapCompact_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_HashMapCompact_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_HashMapCompact_Exception() throw(){};
 };
 
@@ -67,8 +67,8 @@ public:
 
     /**
      * @brief 操作数据
-     * string  _key      数据Key
-     * string  _value    数据value
+     * std::string  _key      数据Key
+     * std::string  _value    数据value
      * bool    _dirty    是否是脏数据
      * uint32_t  _synct  sync time 不一定是真正的回写时间
      * uint32_t _expiret 数据过期的绝对时间
@@ -77,8 +77,8 @@ public:
      */
     struct BlockData
     {
-        string  _key;       /**数据Key*/
-        string  _value;     /**数据value*/
+        std::string  _key;       /**数据Key*/
+        std::string  _value;     /**数据value*/
         bool    _dirty;     /**是否是脏数据*/
         uint32_t  _synct;   /**sync time, 不一定是真正的回写时间*/
         uint32_t _expiret;    /**数据过期的绝对时间，由设置或更新数据时提供，0表示不关心此时间*/
@@ -266,7 +266,7 @@ public:
          *          TC_HashMapCompact::RT_OK, 正常
          *          其他异常
          */
-        int get(string &s);
+        int get(std::string &s);
 
         /**
          * @brief 设置数据
@@ -274,7 +274,7 @@ public:
          * @param iDatalen
          * @param vtData, 淘汰的数据
          */
-        int set(const string& k, const string& v, uint32_t iExpireTime, uint8_t iVersion, bool bNewBlock, bool bOnlyKey, vector<TC_HashMapCompact::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, uint32_t iExpireTime, uint8_t iVersion, bool bNewBlock, bool bOnlyKey, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          * @brief 是否是脏数据
@@ -378,7 +378,7 @@ public:
          *
          * @return int,
          */
-        int allocate(uint32_t iDataLen, vector<TC_HashMapCompact::BlockData> &vtData);
+        int allocate(uint32_t iDataLen, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          * @brief 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -387,7 +387,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<uint32_t> chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<uint32_t> chunks);
 
         /**
          * @brief 分配n个chunk地址，
@@ -397,7 +397,7 @@ public:
          * @param vtData  淘汰的数据
          * @return        int
          */
-        int allocateChunk(uint32_t fn, vector<uint32_t> &chunks, vector<TC_HashMapCompact::BlockData> &vtData);
+        int allocateChunk(uint32_t fn, std::vector<uint32_t> &chunks, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          * @brief 获取数据长度
@@ -498,7 +498,7 @@ public:
          *
          * @return TC_MemChunk::tagChunkHead
          */
-        vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
+        std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
 
         /**
          * @brief 内存大小
@@ -517,9 +517,9 @@ public:
         /**
          * @brief 每种block中的chunk个数(每种block中的chunk个数相同)
          *
-         * @return vector<size_t>
+         * @return std::vector<size_t>
          */
-        vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
+        std::vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
 
         /**
          * @brief 所有block的chunk个数
@@ -536,7 +536,7 @@ public:
          * @param vtData, 返回释放的内存块数据
          * @return size_t, 相对地址,0表示没有空间可以分配
          */
-        uint32_t allocateMemBlock(uint32_t index, uint32_t &iAllocSize, vector<TC_HashMapCompact::BlockData> &vtData);
+        uint32_t allocateMemBlock(uint32_t index, uint32_t &iAllocSize, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          * @brief 为地址为iAddr的Block分配一个chunk
@@ -546,13 +546,13 @@ public:
          * @param vtData 返回释放的内存块数据
          * @return size_t, 相对地址,0表示没有空间可以分配
          */
-        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, vector<TC_HashMapCompact::BlockData> &vtData);
+        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          * @brief 释放Block
          * @param v
          */
-        void deallocateMemBlock(const vector<uint32_t> &v);
+        void deallocateMemBlock(const std::vector<uint32_t> &v);
 
         /**
          * @brief 释放Block
@@ -572,7 +572,7 @@ public:
 
     public:
         /**
-         * map
+         * std::map
          */
         TC_HashMapCompact           *_pMap;
 
@@ -584,7 +584,7 @@ public:
 
     ////////////////////////////////////////////////////////////////
     /**
-     *@brief  map的数据项
+     *@brief  std::map的数据项
      * */
     class HashMapLockItem
     {
@@ -656,7 +656,7 @@ public:
          *          其他值, 异常
          *
          */
-        int get(string& k, string& v);
+        int get(std::string& k, std::string& v);
 
         /**
          * @brief 获取值
@@ -664,7 +664,7 @@ public:
          *          RT_OK:数据获取OK
          *          其他值, 异常
          */
-        int get(string& k);
+        int get(std::string& k);
 
         /**
          * @brief 数据块相对地址
@@ -684,7 +684,7 @@ public:
          * @param vtData, 淘汰的数据
          * @return int
          */
-        int set(const string& k, const string& v, uint32_t iExpireTime, uint8_t iVersion, bool bNewBlock, vector<TC_HashMapCompact::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, uint32_t iExpireTime, uint8_t iVersion, bool bNewBlock, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          * @brief 设置Key, 无数据
@@ -693,7 +693,7 @@ public:
          *
          * @return int
          */
-        int set(const string& k, uint8_t iVersion, bool bNewBlock, vector<TC_HashMapCompact::BlockData> &vtData);
+        int set(const std::string& k, uint8_t iVersion, bool bNewBlock, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          *
@@ -702,7 +702,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &k, string &v, int &ret);
+        bool equal(const std::string &k, std::string &v, int &ret);
 
         /**
          *
@@ -711,7 +711,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string& k, int &ret);
+        bool equal(const std::string& k, int &ret);
 
         /**
          * @brief 下一个item
@@ -731,7 +731,7 @@ public:
 
     private:
         /**
-         * map
+         * std::map
          */
         TC_HashMapCompact *_pMap;
 
@@ -862,7 +862,7 @@ public:
     };
 
     ////////////////////////////////////////////////////////////////
-    // map的HashItem项, 一个HashItem对应多个数据项
+    // std::map的HashItem项, 一个HashItem对应多个数据项
     class HashMapItem
     {
     public:
@@ -910,7 +910,7 @@ public:
          *
          * @return
          */
-        void get(vector<TC_HashMapCompact::BlockData> &vtData);
+        void get(std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          * @brief 获取当前hash桶的过期数据, 注意只获取有key/value的数据,
@@ -918,7 +918,7 @@ public:
          *
          * @return
          */
-        void getExpire(uint32_t t, vector<TC_HashMapCompact::BlockData> &vtData);
+        void getExpire(uint32_t t, std::vector<TC_HashMapCompact::BlockData> &vtData);
 
         /**
          *
@@ -946,7 +946,7 @@ public:
 
     private:
         /**
-         * map
+         * std::map
          */
         TC_HashMapCompact *_pMap;
 
@@ -1049,7 +1049,7 @@ public:
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * map头
+     * std::map头
      */
 #pragma pack(1) 
     struct tagMapHead
@@ -1123,8 +1123,8 @@ public:
       */
     enum
     {
-        MAX_VERSION         = 4,    //当前map的大版本号
-        MIN_VERSION         = 1,    //当前map的小版本号
+        MAX_VERSION         = 4,    //当前std::map的大版本号
+        MIN_VERSION         = 1,    //当前std::map的小版本号
     };
 
 #else
@@ -1133,8 +1133,8 @@ public:
       */
     enum
     {
-        MAX_VERSION         = 4,    /**当前map的大版本号*/
-        MIN_VERSION         = 0,    /**当前map的小版本号*/
+        MAX_VERSION         = 4,    /**当前std::map的大版本号*/
+        MIN_VERSION         = 0,    /**当前std::map的小版本号*/
     };
 
 #endif
@@ -1159,7 +1159,7 @@ public:
         RT_NEED_SYNC            = 3,    /**需要回写*/
         RT_NONEED_SYNC          = 4,    /**不需要回写*/
         RT_ERASE_OK             = 5,    /**淘汰数据成功*/
-        RT_READONLY             = 6,    /**map只读*/
+        RT_READONLY             = 6,    /**std::map只读*/
         RT_NO_MEMORY            = 7,    /**内存不够*/
         RT_ONLY_KEY             = 8,    /**只有Key, 没有Value*/
         RT_NEED_BACKUP          = 9,    /**需要备份*/
@@ -1183,10 +1183,10 @@ public:
     /**
      * @brief 定义hash处理器
       */
-    typedef std::function<size_t(const string &)> hash_functor;
+    typedef std::function<size_t(const std::string &)> hash_functor;
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    //map的接口定义
+    //std::map的接口定义
 
     /**
      * @brief 构造函数
@@ -1199,7 +1199,7 @@ public:
     , _pDataAllocator(new BlockAllocator(this))
     , _lock_end(this, 0, 0, 0)
     , _end(this, (uint32_t)(-1))
-    , _hashf(hash_new<string>())
+    , _hashf(hash_new<std::string>())
     {
     }
 
@@ -1250,9 +1250,9 @@ public:
     /**
      * @brief 获取每种大小内存块的头部信息
      *
-     * @return vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
+     * @return std::vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
      */
-    vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
+    std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
 
     /**
      * @brief 所有block中chunk的个数
@@ -1264,9 +1264,9 @@ public:
     /**
      * @brief 每种block中chunk的个数(不同大小内存块的个数相同)
      *
-     * @return vector<size_t>
+     * @return std::vector<size_t>
      */
-    vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
+    std::vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
 
     /**
      * @brief 获取hash桶的个数
@@ -1399,7 +1399,7 @@ public:
      *          RT_DUMP_FILE_ERR: dump到文件出错
      *          RT_OK: dump到文件成功
      */
-    int dump2file(const string &sFile);
+    int dump2file(const std::string &sFile);
 
     /**
      * @brief 从文件load
@@ -1410,7 +1410,7 @@ public:
      *          RT_VERSION_MISMATCH_ERR: 版本不一致
      *          RT_OK: load成功
      */
-    int load5file(const string &sFile);
+    int load5file(const std::string &sFile);
 
     /**
      * @brief 修复hash索引为i的hash链(i不能操作hashmap的索引值)
@@ -1422,7 +1422,7 @@ public:
     int recover(size_t i, bool bRepair);
 
     /**
-     * @brief 清空hashmap，所有map的数据恢复到初始状态
+     * @brief 清空hashmap，所有std::map的数据恢复到初始状态
      */
     void clear();
 
@@ -1437,7 +1437,7 @@ public:
      *          RT_OK: 是干净数据
      *          其他返回值: 错误
      */
-    int checkDirty(const string &k);
+    int checkDirty(const std::string &k);
 
     /**
      * @brief 设置为脏数据, 修改SET时间链, 会导致数据回写
@@ -1450,7 +1450,7 @@ public:
      *          RT_OK: 设置脏数据成功
      *          其他返回值: 错误
      */
-    int setDirty(const string& k);
+    int setDirty(const std::string& k);
 
     /**
      * 数据回写失败后重新设置为脏数据
@@ -1463,7 +1463,7 @@ public:
      *          RT_OK: 设置脏数据成功
      *          其他返回值: 错误
      */
-    int setDirtyAfterSync(const string& k);
+    int setDirtyAfterSync(const std::string& k);
 
     /**
      * @brief 设置为干净数据, 修改SET链, 导致数据不回写
@@ -1476,7 +1476,7 @@ public:
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int setClean(const string& k);
+    int setClean(const std::string& k);
 
     /**
      * @brief 获取数据, 修改GET时间链
@@ -1492,7 +1492,7 @@ public:
      *          RT_OK:获取数据成功
      *          其他返回值: 错误
      */
-    int get(const string& k, string &v, uint32_t &iSyncTime, uint32_t& iExpireTime, uint8_t& iVersion);
+    int get(const std::string& k, std::string &v, uint32_t &iSyncTime, uint32_t& iExpireTime, uint8_t& iVersion);
 
     /**
      * @brief 获取数据, 修改GET时间链
@@ -1506,7 +1506,7 @@ public:
      *          RT_OK:获取数据成功
      *          其他返回值: 错误
      */
-    int get(const string& k, string &v, uint32_t &iSyncTime);
+    int get(const std::string& k, std::string &v, uint32_t &iSyncTime);
 
     /**
      * @brief 获取数据, 修改GET时间链
@@ -1519,7 +1519,7 @@ public:
      *          RT_OK:获取数据成功
      *          其他返回值: 错误
      */
-    int get(const string& k, string &v);
+    int get(const std::string& k, std::string &v);
 
     /**
      * @brief 设置数据, 修改时间链, 内存不够时会自动淘汰老的数据
@@ -1528,12 +1528,12 @@ public:
      * @param bDirty: 是否是脏数据
      * @param vtData: 被淘汰的记录
      * @return int:
-     *          RT_READONLY: map只读
+     *          RT_READONLY: std::map只读
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const string& k, const string& v, bool bDirty, vector<BlockData> &vtData);
+    int set(const std::string& k, const std::string& v, bool bDirty, std::vector<BlockData> &vtData);
 
     /**
      * @brief 设置数据, 修改时间链, 内存不够时会自动淘汰老的数据
@@ -1545,23 +1545,23 @@ public:
      *                    应该根据get出的数据版本写回，为0表示不关心数据版 本
      * @param bDirty     是否是脏数据
      * @param vtData     被淘汰的记录
-     * @return           RT_READONLY: map只读
+     * @return           RT_READONLY: std::map只读
      *                   RT_NO_MEMORY:没有空间(不淘汰数据情况下会出现）
      *                   RT_OK: 设置成功 其他返回值: 错误
      */
-    int set(const string& k, const string& v, uint32_t iExpireTime, uint8_t iVersion, bool bDirty, vector<BlockData> &vtData);
+    int set(const std::string& k, const std::string& v, uint32_t iExpireTime, uint8_t iVersion, bool bDirty, std::vector<BlockData> &vtData);
 
     /**
      * @brief 设置key, 但无数据
      * @param k
      * @param vtData
      *
-     * @return  RT_READONLY: map只读
+     * @return  RT_READONLY: std::map只读
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const string& k, vector<BlockData> &vtData);
+    int set(const std::string& k, std::vector<BlockData> &vtData);
 
     /**
      * @brief 设置key, 但无数据
@@ -1570,25 +1570,25 @@ public:
      * @param vtData
      *
      * @return int
-     *          RT_READONLY: map只读
+     *          RT_READONLY: std::map只读
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const string& k, uint8_t iVersion, vector<BlockData>& vtData);
+    int set(const std::string& k, uint8_t iVersion, std::vector<BlockData>& vtData);
 
     /**
      * @brief 删除数据
      * @param k, 关键字
      * @param data, 被删除的记录
      * @return int:
-     *          RT_READONLY: map只读
+     *          RT_READONLY: std::map只读
      *          RT_NO_DATA: 没有当前数据
      *          RT_ONLY_KEY:只有Key, 删除成功
      *          RT_OK: 删除数据成功
      *         其他返回值: 错误
      */
-    int del(const string& k, BlockData &data);
+    int del(const std::string& k, BlockData &data);
 
     /**
      * @brief 淘汰数据, 每次删除一条,
@@ -1597,7 +1597,7 @@ public:
      * 为true时，遇到脏数据则淘汰结束
      * @param radio 共享内存chunks使用比例 0< radio < 100
      * @param data  当前被删除的一条记录
-     * @return  RT_READONLY: map只读
+     * @return  RT_READONLY: std::map只读
      *          RT_OK: 不用再继续淘汰了
      *          RT_ONLY_KEY:只有Key, 删除成功
      *          RT_DIRTY_DATA:数据是脏数据，当bCheckDirty=true时会有可能产生这种返回值
@@ -1611,7 +1611,7 @@ public:
      * 数据回写时间与当前时间超过_pHead->_iSyncTime则需要回写
      * _pHead->_iSyncTime由setSyncTime函数设定, 默认10分钟
      * 外部循环调用该函数进行回写
-     * map只读时仍然可以回写
+     * std::map只读时仍然可以回写
      * @param iNowTime: 当前时间
      *                  回写时间与当前时间相差_pHead->_iSyncTime都需要回写
      * @param data : 回写的数据
@@ -1650,7 +1650,7 @@ public:
     int backup(BlockData &data);
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // 以下是遍历map函数, 需要对map加锁
+    // 以下是遍历std::map函数, 需要对std::map加锁
 
     /**
      *@brief  结束
@@ -1662,9 +1662,9 @@ public:
 
     /**
      * @brief 根据Key查找数据
-     * @param string
+     * @param std::string
      */
-    lock_iterator find(const string& k);
+    lock_iterator find(const std::string& k);
 
     /**
      * @brief block正序
@@ -1717,7 +1717,7 @@ public:
     lock_iterator beginDirty();
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // 以下是遍历map函数, 不需要对map加锁
+    // 以下是遍历std::map函数, 不需要对std::map加锁
 
     /**
      * @brief 根据hash桶遍历
@@ -1736,9 +1736,9 @@ public:
     /**
      * @brief 描述
      *
-     * @return string
+     * @return std::string
      */
-    string desc();
+    std::string desc();
 
 public:
 
@@ -1873,10 +1873,10 @@ protected:
      * @brief 淘汰iNowAddr之外的数据(根据淘汰策略淘汰)
      * @param iNowAddr, 当前Block不能正在分配空间, 不能被淘汰
      *                  0表示做直接根据淘汰策略淘汰
-     * @param vector<BlockData>, 被淘汰的数据
+     * @param std::vector<BlockData>, 被淘汰的数据
      * @return size_t,淘汰的数据个数
      */
-    uint32_t eraseExcept(uint32_t iNowAddr, vector<BlockData> &vtData);
+    uint32_t eraseExcept(uint32_t iNowAddr, std::vector<BlockData> &vtData);
 
     /**
      * @brief 根据Key计算hash值
@@ -1885,19 +1885,19 @@ protected:
      *
      * @return size_t
      */
-    uint32_t hashIndex(const string& k);
+    uint32_t hashIndex(const std::string& k);
 
     /**
      * @brief 根据Key查找数据
      *
      */
-    lock_iterator find(const string& k, uint32_t index, string &v, int &ret);
+    lock_iterator find(const std::string& k, uint32_t index, std::string &v, int &ret);
 
     /**
      * @brief 根据Key查找数据
      * @param mb
      */
-    lock_iterator find(const string& k, uint32_t index, int &ret);
+    lock_iterator find(const std::string& k, uint32_t index, int &ret);
 
     /**
      * @brief 分析hash的数据

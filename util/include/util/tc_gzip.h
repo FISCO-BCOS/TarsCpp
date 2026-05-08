@@ -27,9 +27,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
 * @file tc_gzip.h 
@@ -81,7 +78,7 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */
-    static bool compress(const char *src, size_t length, vector<char>& buffer);
+    static bool compress(const char *src, size_t length, std::vector<char>& buffer);
 
     /**
     * @brief  对数据进行压缩
@@ -96,7 +93,7 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */    
-    static bool compress(const char *src, size_t length, string& buffer);
+    static bool compress(const char *src, size_t length, std::string& buffer);
     
     /**
     * @brief  对数据进行解压
@@ -111,9 +108,9 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */
-    static bool uncompress(const char *src, size_t length, vector<char>& buffer)
+    static bool uncompress(const char *src, size_t length, std::vector<char>& buffer)
     {
-        std::unique_ptr<Output> output(new OutputImp<vector<char>>(buffer));
+        std::unique_ptr<Output> output(new OutputImp<std::vector<char>>(buffer));
 
         return uncompress(src, length, output.get());
     }
@@ -131,9 +128,9 @@ public:
     * @return bool       成功失败
     * @return bool       sucessfull or failed
     */
-    static bool uncompress(const char *src, size_t length, string& buffer)
+    static bool uncompress(const char *src, size_t length, std::string& buffer)
     {
-	    std::unique_ptr<Output> output(new OutputImp<string>(buffer));
+	    std::unique_ptr<Output> output(new OutputImp<std::string>(buffer));
 
         return uncompress(src, length, output.get());
     }
@@ -149,7 +146,7 @@ public:
     * @param length      数据长度
     * @param length      data length
     * @param o           输出buffer的函数对象 
-    * @param o           function project for output buffer
+    * @param o           std::function project for output buffer
     *                    struct Output
     *                    {
     *                        void operator()(char *begin, size_t

@@ -24,6 +24,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_Endpoint::TC_Endpoint()
 {
     _host = "0.0.0.0";

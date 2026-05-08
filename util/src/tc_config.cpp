@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_ConfigDomain::TC_ConfigDomain(const string &sLine)
 {
 	_name = TC_Common::trim(sLine);

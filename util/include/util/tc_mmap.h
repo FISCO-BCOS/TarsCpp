@@ -28,9 +28,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
 * @file tc_mmap.h 
@@ -47,8 +44,8 @@ using namespace std;
 */
 struct TC_Mmap_Exception : public TC_Exception
 {
-   TC_Mmap_Exception(const string &buffer) : TC_Exception(buffer){};
-   TC_Mmap_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+   TC_Mmap_Exception(const std::string &buffer) : TC_Exception(buffer){};
+   TC_Mmap_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
    ~TC_Mmap_Exception() throw() {};
 };
 
@@ -59,8 +56,8 @@ struct TC_Mmap_Exception : public TC_Exception
  *  
  *  说明:
  *  Notes:
- *   1: 创建map时,文件一定需要有length的长度, 否则可能导致越界
- *   1: When creating a map, the file must have a length of length, otherwise it may lead to a break.
+ *   1: 创建std::map时,文件一定需要有length的长度, 否则可能导致越界
+ *   1: When creating a std::map, the file must have a length of length, otherwise it may lead to a break.
  *   2: 2中说的情况一般通过产生空洞文件避免,int mmap(const char *file, size_t length);
  *   2: The situations described in 2 are generally avoided by generating a hollow file, int MMAP (const char *file, size_t length);
  *      
@@ -98,7 +95,7 @@ public:
      * @param file    文件名
      * @param file    file name
      * @param length  映射文件的长度
-     * @param length  Length of map file
+     * @param length  Length of std::map file
      * @throws        TC_Mmap_Exception
      * @return
      */
@@ -135,7 +132,7 @@ public:
 
     /**
      * @brief 获取映射的空间大小.
-     * @brief Get the space size of the map.
+     * @brief Get the space size of the std::map.
      *
      * @return size_t 映射的空间大小
      * @return size_t Space Size of Mapping

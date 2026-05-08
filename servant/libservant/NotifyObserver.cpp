@@ -20,6 +20,8 @@
 namespace tars
 {
 
+using namespace std;
+
 NotifyObserver::NotifyObserver()
 {
 }

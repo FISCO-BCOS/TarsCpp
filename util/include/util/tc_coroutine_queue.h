@@ -26,9 +26,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
     /////////////////////////////////////////////////
 /** 
  * @file tc_coroutine_queue.h
@@ -45,7 +42,7 @@ using namespace std;
 /**
  * @brief 线程/协程安全队列, 必须在协程执行, 否则会异常!
  */
-template<typename T, typename D = deque<T> >
+template<typename T, typename D = std::deque<T> >
 class TC_CoroutineQueue
 {
 public:
@@ -144,7 +141,7 @@ protected:
     /**
      * 协程调度器
      */
-	unordered_set<shared_ptr<TC_CoroutineScheduler>> _schedulers;
+	std::unordered_set<std::shared_ptr<TC_CoroutineScheduler>> _schedulers;
 
 	/**
 	 * 结束协程exec

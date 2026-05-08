@@ -22,6 +22,8 @@
 
 namespace tars
 {
+
+using namespace std;
     
 TC_FileMutex::TC_FileMutex() 
 {

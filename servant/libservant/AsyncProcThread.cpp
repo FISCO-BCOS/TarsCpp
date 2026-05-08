@@ -23,6 +23,7 @@
 namespace tars
 {
 
+	using namespace std;
 AsyncProcThread::AsyncProcThread(size_t iQueueCap, bool merge)
 : _terminate(false), _iQueueCap(iQueueCap), _merge(merge)
 {

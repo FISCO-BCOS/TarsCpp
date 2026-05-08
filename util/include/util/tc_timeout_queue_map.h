@@ -23,9 +23,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_timeout_queue_map.h
@@ -156,12 +153,12 @@ public:
     bool getSend(T & t);
 
     /**
-     * 把已经发送的数据从list里面删除
+     * 把已经发送的数据从std::list里面删除
      */
     void popSend(bool del = false);
 
     /**
-     *获取要发送list的size
+     *获取要发送std::list的size
      */
     size_t getSendListSize()
     {
@@ -321,7 +318,7 @@ template<typename T> uint32_t TC_TimeoutQueueMap<T>::generateId()
 
 template<typename T> uint16_t TC_TimeoutQueueMap<T>::push(T& ptr, uint16_t id, int64_t timeout, bool hasSend)
 {
-    //cerr<<"push:"<<id<<endl;
+    //cerr<<"push:"<<id<<std::endl;
     assert(id < _dataSize);
     if(id >= _dataSize)
     {
@@ -396,7 +393,7 @@ template<typename T> uint16_t TC_TimeoutQueueMap<T>::push(T& ptr, uint16_t id, i
     node.timeoutPrev = timeoutPtr;
     _timeoutHead[timeoutPtr] = id;
     
-    //没有发送放到list队列里面
+    //没有发送放到std::list队列里面
     if(!hasSend)
     {
         _noSendSize ++;
@@ -462,7 +459,7 @@ template<typename T> bool TC_TimeoutQueueMap<T>::timeout(T & t)
 
 template<typename T> bool TC_TimeoutQueueMap<T>::erase(uint16_t id, T & t)
 {
-    //cerr<<"line:"<<__LINE__<<" erase:"<<id<<endl;
+    //cerr<<"line:"<<__LINE__<<" erase:"<<id<<std::endl;
     assert(id < _dataSize);
     if(id >= _dataSize)
     {
@@ -490,7 +487,7 @@ template<typename T> void TC_TimeoutQueueMap<T>::delFromTimeout(uint16_t delId)
     //从超时里面删除
     if(_data[delId].timeoutPrevEnd)
     {
-        //cerr<<"line:"<<__LINE__<<endl;
+        //cerr<<"line:"<<__LINE__<<std::endl;
         uint16_t nextId;
         uint16_t timeoutId;
         timeoutId = _data[delId].timeoutPrev;
@@ -505,7 +502,7 @@ template<typename T> void TC_TimeoutQueueMap<T>::delFromTimeout(uint16_t delId)
     }
     else
     {
-        //cerr<<"line:"<<__LINE__<<endl;
+        //cerr<<"line:"<<__LINE__<<std::endl;
         uint16_t prevId,nextId;
         prevId = _data[delId].timeoutPrev;
         nextId = _data[delId].timeoutNext;

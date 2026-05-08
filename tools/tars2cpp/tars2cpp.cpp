@@ -620,7 +620,7 @@ std::string Tars2Cpp::tostrVector(const VectorPtr& pPtr) const
         return tostr(pPtr->getTypePtr()) + " *";
     }
 
-    std::string s = Builtin::builtinTable[Builtin::KindVector] + std::string("<") + tostr(pPtr->getTypePtr());
+    std::string s = std::string("std::vector<") + tostr(pPtr->getTypePtr());
 
     if (MapPtr::dynamicCast(pPtr->getTypePtr()) || VectorPtr::dynamicCast(pPtr->getTypePtr()))
     {
@@ -635,7 +635,7 @@ std::string Tars2Cpp::tostrVector(const VectorPtr& pPtr) const
 /*******************************MapPtr********************************/
 std::string Tars2Cpp::tostrMap(const MapPtr& pPtr) const
 {
-    std::string s = Builtin::builtinTable[Builtin::KindMap] + std::string("<") + tostr(pPtr->getLeftTypePtr()) + ", " + tostr(pPtr->getRightTypePtr());
+    std::string s = std::string("std::map<") + tostr(pPtr->getLeftTypePtr()) + ", " + tostr(pPtr->getRightTypePtr());
     if (MapPtr::dynamicCast(pPtr->getRightTypePtr()) || VectorPtr::dynamicCast(pPtr->getRightTypePtr()))
     {
         s += " >";

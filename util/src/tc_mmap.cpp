@@ -31,6 +31,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_Mmap::TC_Mmap(bool bOwner)
 : _bOwner(bOwner)
 , _pAddr(NULL)

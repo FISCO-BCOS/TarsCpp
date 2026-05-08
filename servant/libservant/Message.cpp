@@ -5,6 +5,8 @@
 namespace tars
 {
 
+using namespace std;
+
 void ReqMessage::init(CallType eCallType, ServantProxy *prx)
 {
 	eStatus        = ReqMessage::REQ_REQ;

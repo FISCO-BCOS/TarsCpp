@@ -14,9 +14,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_thread_pool.h
@@ -30,7 +27,7 @@ using namespace std;
  * //第二种, 启动时指定初始化函数, 比如定义函数
  * void testFunction(int i)
  * {
- *     cout << i << endl;
+ *     cout << i << std::endl;
  * }
  * tpool.start(testFunction, 5);    //start的第一函数是std::bind返回的函数(std::function), 后面跟参数
  * //将任务丢到线程池中
@@ -49,7 +46,7 @@ using namespace std;
  *     return i;
  * }
  * auto f = tpool.exec(testInt, 5);
- * cout << f.get() << endl;   //当testInt在线程池中执行后, f.get()会返回数值5
+ * cout << f.get() << std::endl;   //当testInt在线程池中执行后, f.get()会返回数值5
  *
  * class Test
  * {
@@ -59,7 +56,7 @@ using namespace std;
  * Test t;
  * auto f = tpool.exec(std::bind(&Test::test, &t, std::placeholders::_1), 10);
  * //返回的future对象, 可以检查是否执行
- * cout << f.get() << endl;
+ * cout << f.get() << std::endl;
  * @author  jarodruan@upchina.com
  */
 /////////////////////////////////////////////////
@@ -68,8 +65,8 @@ using namespace std;
 */
 struct TC_ThreadPool_Exception : public TC_Exception
 {
-    TC_ThreadPool_Exception(const string& buffer) : TC_Exception(buffer) {};
-    TC_ThreadPool_Exception(const string& buffer, bool err) : TC_Exception(buffer, err) {};
+    TC_ThreadPool_Exception(const std::string& buffer) : TC_Exception(buffer) {};
+    TC_ThreadPool_Exception(const std::string& buffer, bool err) : TC_Exception(buffer, err) {};
     ~TC_ThreadPool_Exception() throw() {};
 };
 
@@ -90,7 +87,7 @@ protected:
         std::function<void()>   _func;
         uint64_t                _expireTime = 0;	//超时的绝对时间
     };
-    typedef shared_ptr<TaskFunc> TaskFuncPtr;
+    typedef std::shared_ptr<TaskFunc> TaskFuncPtr;
 public:
     /**
     * @brief 构造函数
@@ -144,7 +141,7 @@ public:
     void start();
 
     /**
-    * @brief 用线程池启用任务(F是function, Args是参数)
+    * @brief 用线程池启用任务(F是std::function, Args是参数)
     *
     * @param ParentFunctor
     * @param tf
@@ -157,10 +154,10 @@ public:
     }
 
     /**
-    * @brief 用线程池启用任务(F是function, Args是参数)
+    * @brief 用线程池启用任务(F是std::function, Args是参数)
     *
     * @param 超时时间 ，单位ms (为0时不做超时控制) ；若任务超时，此任务将被丢弃
-    * @param bind function
+    * @param bind std::function
     * @return 返回任务的future对象, 可以通过这个对象来获取返回值
     */
     template <class F, class... Args>
@@ -215,7 +212,7 @@ protected:
     /**
     * 任务队列
     */
-    queue<TaskFuncPtr> _tasks;
+    std::queue<TaskFuncPtr> _tasks;
 
     /**
     * 工作线程
@@ -263,32 +260,32 @@ public:
     void start();
 
     /**
-    * @brief 用线程池启用任务(F是function, Args是参数)
+    * @brief 用线程池启用任务(F是std::function, Args是参数)
     *
     * @param hashkey 根据次key保证将同样的任务hash到同样的队列中处理
     * @param tf
     * @return 返回任务的future对象, 可以通过这个对象来获取返回值
     */
     template <class F, class... Args>
-    auto exec(const string& hashkey, F&& f, Args&&... args)->std::future<decltype(f(args...))>
+    auto exec(const std::string& hashkey, F&& f, Args&&... args)->std::future<decltype(f(args...))>
     {
         return exec(hashkey,0, f, args...);
     }
 
     /**
-    * @brief 用线程池启用任务(F是function, Args是参数)
+    * @brief 用线程池启用任务(F是std::function, Args是参数)
     * @param 超时时间 ，单位ms (为0时不做超时控制) ；若任务超时，此任务将被丢弃
     * @param hashkey 根据次key保证将同样的任务hash到同样的队列中处理
     * @param tf
     * @return 返回任务的future对象, 可以通过这个对象来获取返回值
     */
     template <class F, class... Args>
-    auto exec(const string& hashkey,int64_t timeoutMs, F&& f, Args&&... args)->std::future<decltype(f(args...))>
+    auto exec(const std::string& hashkey,int64_t timeoutMs, F&& f, Args&&... args)->std::future<decltype(f(args...))>
     {
-        TC_ThreadPool* thread = selectThread(hashkey);
-        if (thread)
+        TC_ThreadPool* threadPool = selectThread(hashkey);
+        if (threadPool)
         {
-            return thread->exec(timeoutMs,f, args...);
+            return threadPool->exec(timeoutMs,f, args...);
         }
         else
         {
@@ -297,11 +294,11 @@ public:
     }
 
 protected:
-    TC_ThreadPool* selectThread(const string& hashkey);
+    TC_ThreadPool* selectThread(const std::string& hashkey);
 
 protected:
 private:
-    vector<TC_ThreadPool*> _pools;
+    std::vector<TC_ThreadPool*> _pools;
 
 };
 
