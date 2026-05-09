@@ -29,12 +29,12 @@ void usage()
     std::cout << "  --check-default=<true,false>                optional field with default value not do package(default: true)"  << std::endl;
     std::cout << "  --unjson                                    not json interface"  << std::endl;
     std::cout << "  --os                                        only create struct(not create interface) "  << std::endl;
-    std::cout << "  --include=\"dir1;dir2;dir3\"                std::set search path of tars protocol"  << std::endl;
+    std::cout << "  --include=\"dir1;dir2;dir3\"                set search path of tars protocol"  << std::endl;
     // std::cout << "  --unknown                                   create unkown field"  << std::endl;
     std::cout << "  --tarsMaster                                create get registry info interface"  << std::endl;
     std::cout << "  --currentPriority						   use current path first."  << std::endl;
     std::cout << "  --without-trace                             不需要调用链追踪逻辑"  << std::endl;
-    std::cout << "  tars2cpp support type: bool byte short int long float double std::vector std::map"  << std::endl;
+    std::cout << "  tars2cpp support type: bool byte short int long float double vector map"  << std::endl;
     exit(0);
 }
 
