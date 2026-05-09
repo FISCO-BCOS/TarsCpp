@@ -28,6 +28,8 @@
 namespace tars
 {
 
+using namespace std;
+
 shared_ptr<ServantProxyThreadData::Immortal> ServantProxyThreadData::g_immortal;
 
 thread_local shared_ptr<ServantProxyThreadData> ServantProxyThreadData::g_sp;

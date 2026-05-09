@@ -24,8 +24,6 @@
 
 namespace tars
 {
-    using namespace std;
-    
     /////////////////////////////////////////////////
     /**  
     * @file tc_mem_chunk.h
@@ -276,7 +274,7 @@ namespace tars
             /*Number of spans in TC_Span memory area*/
             size_t       _iShmSpanNum;            /*TC_Span内存区中span的个数*/
             /*Number of maps in PageMap memory area*/
-            size_t       _iShmPageMapNum;        /*PageMap内存区中map的个数*/
+            size_t       _iShmPageMapNum;        /*PageMap内存区中std::map的个数*/
             /*Number of pages in Data memory area*/
             size_t       _iShmPageNum;            /*Data内存区中页的个数*/
         };
@@ -461,8 +459,8 @@ namespace tars
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /**
-         * 初始化list双向链表
-         * Initialize list bi-directional list
+         * 初始化std::list双向链表
+         * Initialize std::list bi-directional std::list
          */
         inline void DLL_Init(TC_Span* list, size_t iIndex);
 
@@ -473,18 +471,18 @@ namespace tars
         inline void DLL_Remove(TC_Span* span);
 
         /**
-         * 将span指向的节点加入到双向链表list中
-         * Add the node span points to to the two-way list of chains
+         * 将span指向的节点加入到双向链表std::list中
+         * Add the node span points to to the two-way std::list of chains
          */
         inline void DLL_Prepend(TC_Span* list, TC_Span* span);
 
         /**
-         * 双向链表list是否为空
-         * Is the bi-directional list empty
+         * 双向链表std::list是否为空
+         * Is the bi-directional std::list empty
          */
-        inline bool DLL_IsEmpty(TC_Span* list, size_t iIndex) 
+                inline bool DLL_IsEmpty(TC_Span* list, size_t iIndex) 
         {
-          return list->next == iIndex;
+                    return list->next == iIndex;
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -517,7 +515,7 @@ namespace tars
         //////////////////////////////////////////////////////////////////////////////////////////////////
         /**
          * create或rebuild的时候会调用，用于初始化时将所有的内存页映射到_pLarge上
-         * Called when creating or rebuild to map all memory pages to _pLarge during initialization
+         * Called when creating or rebuild to std::map all memory pages to _pLarge during initialization
          */
         bool UseShmMem();
 
@@ -535,7 +533,7 @@ namespace tars
 
         /**
          * 分配n块连续的内存页，通过TC_Span返回，里面会调用SearchFreeAndLargeLists函数
-         * Allocate n contiguous memory pages via TC_Span returns, which calls the SearchFreeAndLargeLists function
+         * Allocate n contiguous memory pages via TC_Span returns, which calls the SearchFreeAndLargeLists std::function
          */
         TC_Span* New(size_t n);
 
@@ -553,19 +551,19 @@ namespace tars
 
         /**
          * 根据span所管理的内存页的数目，将该span插入到_pLarge或_pFree链表中
-         * Insert a span into an _pLarge or _pFree list based on the number of memory pages it manages
+         * Insert a span into an _pLarge or _pFree std::list based on the number of memory pages it manages
          */
         void PrependToFreeList(TC_Span* span);
 
         /**
          * 将span从它所属的链表中删除，里面调用MergeIntoFreeList
-         * Delete the span from the list to which it belongs, calling MergeIntoFreeList
+         * Delete the span from the std::list to which it belongs, calling MergeIntoFreeList
          */
         void Delete(TC_Span* span);
 
         /**
          * 将span从它所属的链表中删除，并且查看该span所管理的内存页前后连续的内存页是否空闲，若是，则进行合并操作
-         * Delete a span from the list of chains to which it belongs and see if successive pages of memory managed by the span are free, and if so, merge.
+         * Delete a span from the std::list of chains to which it belongs and see if successive pages of memory managed by the span are free, and if so, merge.
          */
         void MergeIntoFreeList(TC_Span* span);
 
@@ -641,7 +639,7 @@ namespace tars
         TC_CenterList             *_pCenterCache;
         /**
          * 大块内存页的链表指针（大于等于1MB内存块的链表）
-         * Chain list pointer for large memory pages (chains greater than or equal to 1 MB of memory blocks)
+         * Chain std::list pointer for large memory pages (chains greater than or equal to 1 MB of memory blocks)
          */
         TC_Span                   *_pLarge;
         /**
@@ -747,9 +745,9 @@ namespace tars
          * 每个chunk的大小, 包括后续增加的内存块的大小
          * Size of each chunk, including subsequent increases in memory block size
          *
-         * vector<size_t>
+         * std::vector<size_t>
          */
-        void   getSingleCapacity(vector<size_t> &vec_capacity);
+        void   getSingleCapacity(std::vector<size_t> &vec_capacity);
 
         /**
          * 根据该内存所属TC_Span的起始页和该TC_Span按大小类别划分后的第iIndex个，换算成绝对地址
@@ -838,7 +836,7 @@ namespace tars
 
         /**
          * 传递给此内存分配器的内存块大小要不小于函数的返回值
-         * The size of the memory block passed to this memory allocator is no smaller than the return value of the function
+         * The size of the memory block passed to this memory allocator is no smaller than the return value of the std::function
          */
         static size_t getNeedMinSize() { return sizeof(tagChunkAllocatorHead) + TC_Page::getMinMemSize(); }
     protected:

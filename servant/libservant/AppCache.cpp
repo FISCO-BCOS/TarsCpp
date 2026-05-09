@@ -20,6 +20,8 @@
 namespace tars
 {
 
+using namespace std;
+
 //////////////////////////////////////////////////////////////////////
 // 缓存
 void AppCache::setCacheInfo(const string &sFile,int32_t iSynInterval)

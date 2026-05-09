@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_Shm::TC_Shm(size_t iShmSize, key_t iKey, bool bOwner) : _pshm(NULL)
 {
     init(iShmSize, iKey, bOwner);

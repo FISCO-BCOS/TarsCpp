@@ -14,6 +14,7 @@
 namespace tars
 {
 
+    using namespace std;
 #ifndef WORD32
 typedef unsigned int WORD32;
 #endif

@@ -42,7 +42,7 @@ namespace tars
 */
 struct TC_Shm_Exception : public TC_Exception
 {
-   TC_Shm_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+   TC_Shm_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
    ~TC_Shm_Exception() throw() {};
 };
 

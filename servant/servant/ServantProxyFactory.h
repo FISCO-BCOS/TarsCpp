@@ -47,7 +47,7 @@ public:
      * @param setName 指定set调用的setid
      * @return ServantPrx
      */
-    ServantPrx::element_type* getServantProxy(const string& name,const string& setName="");
+    ServantPrx::element_type* getServantProxy(const std::string& name,const std::string& setName="");
 
 private:
     /**
@@ -58,7 +58,7 @@ private:
     /**
      * 已创建的对象
      */
-    map<string, ServantPrx> _servantProxy;
+    std::map<std::string, ServantPrx> _servantProxy;
 };
 //////////////////////////////////////////////////////
 }

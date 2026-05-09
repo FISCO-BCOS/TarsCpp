@@ -25,6 +25,8 @@
 namespace tars
 {
 
+using namespace std;
+
 bool TC_GZip::compress(const char *src, size_t length, string& buffer)
 {
     z_stream stream;

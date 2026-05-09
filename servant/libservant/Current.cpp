@@ -23,6 +23,8 @@
 
 namespace tars
 {
+
+using namespace std;
 //////////////////////////////////////////////////////////////////
 Current::Current(ServantHandle *pServantHandle)
     : _servantHandle(pServantHandle)

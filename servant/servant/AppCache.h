@@ -32,9 +32,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 //////////////////////////////////////////////////////////////////////
 /**
  * 缓存
@@ -58,24 +55,24 @@ public:
      * @param sFilePath, cache文件路径
      * @param iSynInterval(ms), 同步间隔时间
      */
-    void setCacheInfo(const string &sFile,int32_t iSynInterval = 1000);
+    void setCacheInfo(const std::string &sFile,int32_t iSynInterval = 1000);
 
     /**
      * 从cache文件获取服务列表
      * @param sObjName 
      * @param sDomain 
-     * @return string
+     * @return std::string
      */
-    string get(const string & sName,const string sDomain = ""/*=APPCACHE_ROOT_PATH*/);
+    std::string get(const std::string & sName,const std::string sDomain = ""/*=APPCACHE_ROOT_PATH*/);
 
     /**
      * 获取域下面的参数值对 
-     * 不存则返回空map 
+     * 不存则返回空std::map 
      * @param path: 域名称, 域标识, 例如: /Main/Domain
      * 
-     * @return map<string,string>
+     * @return std::map<std::string,std::string>
      */
-    map<string, string> getDomainMap(const string &path);
+    std::map<std::string, std::string> getDomainMap(const std::string &path);
     
      /**
      * 设置数据到cache文件
@@ -84,13 +81,13 @@ public:
      * @param sDomain
      * @return int
      */
-    int set(const string &sName,const string &sValue,const string sDomain = ""/*=APPCACHE_ROOT_PATH*/);
+    int set(const std::string &sName,const std::string &sValue,const std::string sDomain = ""/*=APPCACHE_ROOT_PATH*/);
 
 private:
     /*
      * 缓存文件
      */
-    string      _file;
+    std::string      _file;
 
     /*
      * 缓存文件的内存cache

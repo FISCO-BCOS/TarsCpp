@@ -5,6 +5,7 @@
 namespace tars
 {
 
+    using namespace std;
 TC_HttpAsync::AsyncRequest::~AsyncRequest()
 {
 }

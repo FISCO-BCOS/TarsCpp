@@ -24,6 +24,7 @@
 #include <string>
 
 using namespace tars;
+using namespace std;
 
 #if 0
 #include "util/tc_md5.h"

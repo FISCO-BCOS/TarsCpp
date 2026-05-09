@@ -21,6 +21,8 @@
 namespace tars
 {
 
+using namespace std;
+
 int TC_HashMap::Block::getBlockData(TC_HashMap::BlockData &data)
 {
     data._dirty = isDirty();

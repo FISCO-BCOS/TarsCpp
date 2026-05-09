@@ -22,9 +22,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
  * @file tc_hash_fun.h 
@@ -59,9 +56,9 @@ inline size_t hash_string(const char* s)
  */
 //////////////////////////////////////////////////////////
 template <>
-struct hash<string>
+struct hash<std::string>
 {
-    size_t operator()(const string &s) const
+    size_t operator()(const std::string &s) const
     {
         size_t h = 0, g;
         const char *arKey = s.c_str();
@@ -81,9 +78,9 @@ struct hash<string>
 };
 
 template <>
-struct hash_new<string>
+struct hash_new<std::string>
 {
-    size_t operator()(const string &s) const
+    size_t operator()(const std::string &s) const
     {
         const char *ptr= s.c_str();
         size_t key_length = s.length();
@@ -179,7 +176,7 @@ struct hash<unsigned long>
 */
 struct magic_string_hash
 {
-    size_t operator()(const string &s) const
+    size_t operator()(const std::string &s) const
     {
         const char *ptr= s.c_str();
         size_t key_length = s.length();

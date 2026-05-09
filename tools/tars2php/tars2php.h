@@ -22,6 +22,7 @@
 #include <string>
 
 using namespace tars;
+using namespace std;
 
 /**
  */

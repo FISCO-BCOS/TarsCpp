@@ -67,12 +67,12 @@ public:
     /*
      * 初始化
      */
-    bool init(const string & sObjName, const string& setName = "");
+    bool init(const std::string & sObjName, const std::string& setName = "");
 
     /*
      * 获取所有节点信息的回调处理
      */
-    void callback_findObjectById4All(tars::Int32 ret, const vector<tars::EndpointF>& activeEp, const vector<tars::EndpointF>& inactiveEp);
+    void callback_findObjectById4All(tars::Int32 ret, const std::vector<tars::EndpointF>& activeEp, const std::vector<tars::EndpointF>& inactiveEp);
 
     /*
      * 获取所有节点信息的异常回调处理
@@ -82,7 +82,7 @@ public:
     /*
      * 获取所有节点信息的回调处理
      */
-    void callback_findObjectById4Any(tars::Int32 ret, const vector<tars::EndpointF>& activeEp, const vector<tars::EndpointF>& inactiveEp);
+    void callback_findObjectById4Any(tars::Int32 ret, const std::vector<tars::EndpointF>& activeEp, const std::vector<tars::EndpointF>& inactiveEp);
 
     /*
      * 获取所有节点信息的异常回调处理
@@ -92,7 +92,7 @@ public:
     /*
      * 按idc获取的节点信息的回调处理
      */
-    void callback_findObjectByIdInSameGroup(tars::Int32 ret, const vector<tars::EndpointF>& activeEp, const vector<tars::EndpointF>& inactiveEp);
+    void callback_findObjectByIdInSameGroup(tars::Int32 ret, const std::vector<tars::EndpointF>& activeEp, const std::vector<tars::EndpointF>& inactiveEp);
 
     /*
      * 按idc分组获取的节点信息的异常回调处理
@@ -102,7 +102,7 @@ public:
     /*
      * 按set获取的节点信息的回调处理
      */
-    void callback_findObjectByIdInSameSet(tars::Int32 ret, const vector<tars::EndpointF>& activeEp, const vector<tars::EndpointF>& inactiveEp);
+    void callback_findObjectByIdInSameSet(tars::Int32 ret, const std::vector<tars::EndpointF>& activeEp, const std::vector<tars::EndpointF>& inactiveEp);
 
     /*
      * 按set获取的节点信息的异常回调处理
@@ -112,7 +112,7 @@ public:
     /*
      * 按地区获取的节点信息的回调处理
      */
-    void callback_findObjectByIdInSameStation(tars::Int32 ret, const vector<tars::EndpointF>& activeEp, const vector<tars::EndpointF>& inactiveEp);
+    void callback_findObjectByIdInSameStation(tars::Int32 ret, const std::vector<tars::EndpointF>& activeEp, const std::vector<tars::EndpointF>& inactiveEp);
 
     /*
      * 按地区获取的节点信息的异常回调处理
@@ -122,7 +122,7 @@ public:
     /*
      * 从主控请求到数据了 通知更新ip列表信息
      */
-    virtual void notifyEndpoints(const set<EndpointInfo> & active,const set<EndpointInfo> & inactive,bool bSync) = 0;
+    virtual void notifyEndpoints(const std::set<EndpointInfo> & active,const std::set<EndpointInfo> & inactive,bool bSync) = 0;
 
     /*
      * 从主控请求到数据了 最开始调用主控 要通知
@@ -144,7 +144,7 @@ protected:
     /*
      * 刷新主控
      */
-    void refreshReg(GetEndpointType type,const string & sName);
+    void refreshReg(GetEndpointType type,const std::string & sName);
 
 private:
     
@@ -153,22 +153,22 @@ private:
      * 如果是直接连接，则从obj名字中提取ip列表信息
      * 如果是间接连接，则设置主控代理，并从缓存中加载相应的列表
      */
-    void setObjName(const string & sObjName);
+    void setObjName(const std::string & sObjName);
 
     /*
      * 解析endpoint
      */
-    vector<string> sepEndpoint(const string& sEndpoints);
+    std::vector<std::string> sepEndpoint(const std::string& sEndpoints);
 
     /*
      * 从sEndpoints提取ip列表信息
      */
-    void setEndpoints(const string & sEndpoints, set<EndpointInfo> & setEndpoints);
+    void setEndpoints(const std::string & sEndpoints, std::set<EndpointInfo> & setEndpoints);
 
     /*
      * 主控的请求的响应到了,做相应的处理
      */
-    void doEndpoints(const vector<EndpointF>& activeEp, const vector<EndpointF>& inactiveEp, int iRet, bool bSync = false);
+    void doEndpoints(const std::vector<EndpointF>& activeEp, const std::vector<EndpointF>& inactiveEp, int iRet, bool bSync = false);
 
     /*
      * 请求主控异常,做相应的处理
@@ -212,18 +212,18 @@ protected:
     /*
      * 请求的后端服务的Obj对象名称
      */
-    string                    _objName;
+    std::string                    _objName;
 
     /*
      * 指定set调用的setid,默认为空
      * 如果有值，则说明是指定set调用
      */
-    string                    _invokeSetId;
+    std::string                    _invokeSetId;
 
     /*
      * 框架的主控地址
      */
-    string                    _locator;
+    std::string                    _locator;
 
     /*
      * 主控的路由代理
@@ -244,12 +244,12 @@ protected:
     /*
      * 活跃节点列表
      */
-    set<EndpointInfo>         _activeEndpoints;
+    std::set<EndpointInfo>         _activeEndpoints;
 
     /*
      * 不活跃节点列表
      */
-    set<EndpointInfo>         _inactiveEndpoints;
+    std::set<EndpointInfo>         _inactiveEndpoints;
 
     /**
      * 是否是root servant
@@ -342,21 +342,21 @@ public:
     /*
      * 重写基类的实现
      */
-    void notifyEndpoints(const set<EndpointInfo> & active, const set<EndpointInfo> & inactive, bool bSync = false);
+    void notifyEndpoints(const std::set<EndpointInfo> & active, const std::set<EndpointInfo> & inactive, bool bSync = false);
 
     /**
      * 更新
      * @param active
      * @param inactive
      */
-	void updateEndpoints(const set<EndpointInfo> & active, const set<EndpointInfo> & inactive);
+    void updateEndpoints(const std::set<EndpointInfo> & active, const std::set<EndpointInfo> & inactive);
 
 	/**
 	 * 外部其他通信过来的更新
 	 * @param active
 	 * @param inactive
 	 */
-    void updateEndpointsOutter(const set<EndpointInfo> & active, const set<EndpointInfo> & inactive);
+    void updateEndpointsOutter(const std::set<EndpointInfo> & active, const std::set<EndpointInfo> & inactive);
 
     /*
      * 重写基类的实现
@@ -371,7 +371,7 @@ public:
     /**
      * 获取所有的服务节点
      */
-    const vector<AdapterProxy*> & getAdapters()
+    const std::vector<AdapterProxy*> & getAdapters()
     {
         return _vAllProxys;
     }
@@ -403,7 +403,7 @@ private:
     /*
      * 根据hash值按取模方式，从静态权重节点中选取一个结点
      */
-    AdapterProxy* getHashProxyForWeight(int64_t hashCode, bool bStatic, vector<size_t> &vRouterCache);
+    AdapterProxy* getHashProxyForWeight(int64_t hashCode, bool bStatic, std::vector<size_t> &vRouterCache);
 
     /*
      * 根据hash值按一致性hash方式，从静态权重节点中选取一个结点
@@ -418,7 +418,7 @@ private:
     /*
      * 判断静态权重节点是否有变化
      */
-    bool checkConHashChange(bool bStatic, const vector<AdapterProxy*> &vLastConHashProxys);
+    bool checkConHashChange(bool bStatic, const std::vector<AdapterProxy*> &vLastConHashProxys);
 
     /*
      * 更新取模hash方法的静态权重节点信息
@@ -428,7 +428,7 @@ private:
     /*
      * 更新一致性hash方法的静态权重节点信息
      */
-    void updateConHashProxyWeighted(bool bStatic, vector<AdapterProxy*> &vLastConHashProxys, TC_ConsistentHashNew &conHash);
+    void updateConHashProxyWeighted(bool bStatic, std::vector<AdapterProxy*> &vLastConHashProxys, TC_ConsistentHashNew &conHash);
 
     /*
      * 根据后端服务的权重值选取一个结点
@@ -453,7 +453,7 @@ private:
     /*
      * 建立静态权重节点信息的缓存
      */
-    void dispatchEndpointCache(const vector<int> &vWeight);
+    void dispatchEndpointCache(const std::vector<int> &vWeight);
 
 private:
 
@@ -465,19 +465,19 @@ private:
     /*
      * 活跃的结点
      */
-    vector<AdapterProxy*>         _activeProxys;
+    std::vector<AdapterProxy*>         _activeProxys;
     
     /*
      * 部署的结点 包括活跃的和不活跃的
      */
-    map<string,AdapterProxy*>     _regProxys;
-    vector<AdapterProxy*>         _vRegProxys;
+    std::map<std::string,AdapterProxy*>     _regProxys;
+    std::vector<AdapterProxy*>         _vRegProxys;
 
     /*
      * 所有曾经create的结点
      */
-    map<string,AdapterProxy*>     _allProxys;
-    vector<AdapterProxy*>         _vAllProxys;
+    std::map<std::string,AdapterProxy*>     _allProxys;
+    std::vector<AdapterProxy*>         _vAllProxys;
 
     /*
      * 轮训访问_activeProxys的偏移
@@ -512,27 +512,27 @@ private:
     /**
      * 静态权重对应的节点路由缓存
      */
-    vector<size_t>                  _staticRouterCache;
+    std::vector<size_t>                  _staticRouterCache;
 
     /*
      * 静态权重的活跃节点
      */
-    vector<AdapterProxy*>          _activeWeightProxy;
+    std::vector<AdapterProxy*>          _activeWeightProxy;
 
     /*
      * hash静态权重的路由缓存
      */
-    vector<size_t>                  _hashStaticRouterCache;
+    std::vector<size_t>                  _hashStaticRouterCache;
 
     /*
      * hash静态权重的缓存节点
      */
-    vector<AdapterProxy*>         _lastHashStaticProxys;
+    std::vector<AdapterProxy*>         _lastHashStaticProxys;
 
     /*
      * 一致性hash静态权重时使用
      */
-    vector<AdapterProxy*>         _lastConHashWeightProxys;
+    std::vector<AdapterProxy*>         _lastConHashWeightProxys;
 
     /*
      * 一致性hash静态权重时使用
@@ -542,7 +542,7 @@ private:
     /*
      * 一致性hash普通使用
      */
-    vector<AdapterProxy*>         _lastConHashProxys;
+    std::vector<AdapterProxy*>         _lastConHashProxys;
 
     /*
      * 一致性hash普通使用
@@ -551,11 +551,11 @@ private:
 
     struct OutterUpdate
     {
-        set<EndpointInfo> active;
-        set<EndpointInfo> inactive;
+        std::set<EndpointInfo> active;
+        std::set<EndpointInfo> inactive;
     };
 
-    shared_ptr<OutterUpdate>    _outterUpdate;
+    std::shared_ptr<OutterUpdate>    _outterUpdate;
 
 };
 
@@ -569,7 +569,7 @@ public:
     /*
      * 构造函数
      */
-    EndpointThread(Communicator* pComm, const string & sObjName, GetEndpointType type, const string & sSetName, bool bFirstNetThread = false);
+    EndpointThread(Communicator* pComm, const std::string & sObjName, GetEndpointType type, const std::string & sSetName, bool bFirstNetThread = false);
 
     /*
      * 析构函数
@@ -579,17 +579,17 @@ public:
     /*
      * 用EndpointInfo存在可用与不可用的节点信息
      */
-    void getEndpoints(vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void getEndpoints(std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /*
      * 用TC_Endpoint存在可用与不可用的节点信息
      */
-    void getTCEndpoints(vector<TC_Endpoint> &activeEndPoint, vector<TC_Endpoint> &inactiveEndPoint);
+    void getTCEndpoints(std::vector<TC_Endpoint> &activeEndPoint, std::vector<TC_Endpoint> &inactiveEndPoint);
 
     /*
      * 重写基类的实现
      */
-    void notifyEndpoints(const set<EndpointInfo> & active, const set<EndpointInfo> & inactive, bool bSync);
+    void notifyEndpoints(const std::set<EndpointInfo> & active, const std::set<EndpointInfo> & inactive, bool bSync);
 
     /*
      * 重写基类的实现
@@ -603,7 +603,7 @@ private:
     /*
      * 更新缓存的ip列表信息
      */
-    void update(const set<EndpointInfo> & active, const set<EndpointInfo> & inactive);
+    void update(const std::set<EndpointInfo> & active, const std::set<EndpointInfo> & inactive);
 
 private:
 
@@ -615,7 +615,7 @@ private:
     /*
      * Obj名称
      */
-    string                   _name;
+    std::string                   _name;
 
     /*
      * 锁
@@ -625,14 +625,14 @@ private:
     /*
      * 活跃的结点
      */
-    vector<EndpointInfo>     _activeEndPoint;
-    vector<TC_Endpoint>      _activeTCEndPoint;
+    std::vector<EndpointInfo>     _activeEndPoint;
+    std::vector<TC_Endpoint>      _activeTCEndPoint;
 
     /*
      * 不活跃的结点
      */
-    vector<EndpointInfo>     _inactiveEndPoint;
-    vector<TC_Endpoint>      _inactiveTCEndPoint;
+    std::vector<EndpointInfo>     _inactiveEndPoint;
+    std::vector<TC_Endpoint>      _inactiveTCEndPoint;
     
 };
 
@@ -646,7 +646,7 @@ public:
     /*
      * 构造函数
      */
-    EndpointManagerThread(Communicator *pComm, const string &sObjName);
+    EndpointManagerThread(Communicator *pComm, const std::string &sObjName);
 
     /*
      * 析构函数
@@ -656,49 +656,49 @@ public:
     /*
      * 按idc获取可用与不可用的结点
      */
-    void getEndpoint(vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void getEndpoint(std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /*
      * 获取所有可用与不可用的结点
      */
-    void getEndpointByAll(vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void getEndpointByAll(std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /*
      * 根据set获取可用与不可用的结点
      */
-    void getEndpointBySet(const string sName, vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void getEndpointBySet(const std::string sName, std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /*
      * 根据地区获取可用与不可用的结点
      */
-    void getEndpointByStation(const string sName, vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void getEndpointByStation(const std::string sName, std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /*
      * 按idc获取可用与不可用的结点
      */
-    void getTCEndpoint( vector<TC_Endpoint> &activeEndPoint, vector<TC_Endpoint> &inactiveEndPoint);
+    void getTCEndpoint( std::vector<TC_Endpoint> &activeEndPoint, std::vector<TC_Endpoint> &inactiveEndPoint);
 
     /*
      * 获取所有可用与不可用的结点
      */
-    void getTCEndpointByAll(vector<TC_Endpoint> &activeEndPoint, vector<TC_Endpoint> &inactiveEndPoint);
+    void getTCEndpointByAll(std::vector<TC_Endpoint> &activeEndPoint, std::vector<TC_Endpoint> &inactiveEndPoint);
 
     /*
      * 根据set获取可用与不可用的结点
      */
-    void getTCEndpointBySet(const string sName, vector<TC_Endpoint> &activeEndPoint, vector<TC_Endpoint> &inactiveEndPoint);
+    void getTCEndpointBySet(const std::string sName, std::vector<TC_Endpoint> &activeEndPoint, std::vector<TC_Endpoint> &inactiveEndPoint);
 
     /*
      * 根据地区获取可用与不可用的结点
      */
-    void getTCEndpointByStation(const string sName, vector<TC_Endpoint> &activeEndPoint, vector<TC_Endpoint> &inactiveEndPoint);
+    void getTCEndpointByStation(const std::string sName, std::vector<TC_Endpoint> &activeEndPoint, std::vector<TC_Endpoint> &inactiveEndPoint);
 
 protected:
 
     /*
      * 根据type创建相应的EndpointThread
      */
-    EndpointThread * getEndpointThread(GetEndpointType type, const string & sName);
+    EndpointThread * getEndpointThread(GetEndpointType type, const std::string & sName);
 
 private:
     /*
@@ -709,7 +709,7 @@ private:
     /*
      * Obj名称
      */
-    string                         _objName;
+    std::string                         _objName;
 
     /*
      * 锁
@@ -718,9 +718,9 @@ private:
     TC_SpinLock                     _mutex;
 
     /*
-     * 保存对象的map
+     * 保存对象的std::map
      */
-    map<string,EndpointThread*>    _info;
+    std::map<std::string,EndpointThread*>    _info;
 };
 
 ////////////////////////////////////////////////////////////////////////

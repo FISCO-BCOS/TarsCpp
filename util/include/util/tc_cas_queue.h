@@ -9,9 +9,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_cas_queue.h
@@ -26,7 +23,7 @@ using namespace std;
  * @brief Thread Safe Queue
  * @brief 线程安全队列
  */
-template<typename T, typename D = deque<T> >
+template<typename T, typename D = std::deque<T> >
 class TC_CasQueue
 {
 public:
@@ -37,7 +34,7 @@ public:
     typedef D queue_type;
 
 	/**
-	 * @brief Getting data from the head without data throwing exception
+	 * @brief Getting data from the head without data throwing std::exception
      * @brief 从头部获取数据, 没有数据抛出异常
 	 *
 	 * @param t

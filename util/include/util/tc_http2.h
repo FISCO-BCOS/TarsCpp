@@ -43,19 +43,19 @@ public:
 	/**
 	 * @brief  buffer
 	 */
-	vector<char>& buffer() { return _buff; }
+	std::vector<char>& buffer() { return _buff; }
 
 	/**
 	 * buffer
 	 * @return
 	 */
-	const vector<char>& buffer() const { return _buff; }
+	const std::vector<char>& buffer() const { return _buff; }
 
 	/**
 	 * swap buff
 	 * @param buff
 	 */
-	void swap(vector<char> &buff) { _buff.swap(buff); }
+	void swap(std::vector<char> &buff) { _buff.swap(buff); }
 
 	/**
 	 * insert buff
@@ -88,7 +88,7 @@ protected:
 	/**
 	 * data buff
 	 */
-	vector<char>        _buff;
+	std::vector<char>        _buff;
 
 };
 
@@ -122,10 +122,10 @@ public:
 	/**
 	 * parse all request
 	 * @param request
-	 * @param vector<std::shared_ptr<TC_HttpRequest>>
+	 * @param std::vector<std::shared_ptr<TC_HttpRequest>>
 	 * @return
 	 */
-	vector<shared_ptr<Http2Context>> decodeRequest();
+	std::vector<std::shared_ptr<Http2Context>> decodeRequest();
 
 	/**
 	 *
@@ -134,7 +134,7 @@ public:
 	 * @param out
 	 * @return
 	 */
-	int encodeResponse(const shared_ptr<Http2Context> &context, vector<char> &out);
+	int encodeResponse(const std::shared_ptr<Http2Context> &context, std::vector<char> &out);
 
     /**
      * http2
@@ -142,17 +142,17 @@ public:
      * @param out
      * @return
      */
-    TC_NetWorkBuffer::PACKET_TYPE parse(TC_NetWorkBuffer&in, vector<char> &out);
+    TC_NetWorkBuffer::PACKET_TYPE parse(TC_NetWorkBuffer&in, std::vector<char> &out);
 
     void onHeaderCallback(int32_t streamId);
-    void onHeaderCallback(int32_t streamId, const string &skey, const string &svalue);
+    void onHeaderCallback(int32_t streamId, const std::string &skey, const std::string &svalue);
     void onFrameRecvCallback(int32_t streamId);
     void onDataChunkRecvCallback(int32_t streamId, const char *data, size_t len);
     void onStreamCloseCallback(int32_t streamId);
 
 protected:
 
-	shared_ptr<Http2Context> getContext(int32_t streamId);
+	std::shared_ptr<Http2Context> getContext(int32_t streamId);
 
 	void deleteContext(int32_t streamId);
 
@@ -160,11 +160,11 @@ protected:
 
 	TC_ThreadMutex _nghttpLock;
 
-	unordered_map<int32_t, shared_ptr<Http2Context>>  _context;
+	std::unordered_map<int32_t, std::shared_ptr<Http2Context>>  _context;
 
-	vector<shared_ptr<Http2Context>>  _contextFinished;
+	std::vector<std::shared_ptr<Http2Context>>  _contextFinished;
 
-    vector<char> _reqout;
+    std::vector<char> _reqout;
 
 };
 
@@ -188,7 +188,7 @@ public:
      * parse response
      * @param in
      */
-    TC_NetWorkBuffer::PACKET_TYPE parseResponse(TC_NetWorkBuffer &in, pair<int, shared_ptr<TC_HttpResponse>> &out);
+    TC_NetWorkBuffer::PACKET_TYPE parseResponse(TC_NetWorkBuffer &in, std::pair<int, std::shared_ptr<TC_HttpResponse>> &out);
 
     /**
      * submit, get net buffer to send
@@ -198,18 +198,18 @@ public:
      * @param buff
      * @return
      */
-//    int submit(const string &method, const string &path, const map<string, string> &header, const vector<char> &buff);
+//    int submit(const std::string &method, const std::string &path, const std::map<std::string, std::string> &header, const std::vector<char> &buff);
 	int submit(const TC_HttpRequest &request);
 
 	/**
 	 * @brief response
 	 */
-    std::unordered_map<int, shared_ptr<TC_HttpResponse>> &responses() { return _responses; }
+    std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> &responses() { return _responses; }
 
     /** 
      * @brief response finished
      */
-    std::unordered_map<int, shared_ptr<TC_HttpResponse>> &doneResponses() { return _doneResponses; }
+    std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> &doneResponses() { return _doneResponses; }
 
 private:
 
@@ -217,13 +217,13 @@ private:
      * 收到的响应
 	 * Responses received
      */
-    std::unordered_map<int, shared_ptr<TC_HttpResponse>> _responses;
+    std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> _responses;
 
     /**
      * 收到的完整响应
 	 * Complete response received
      */
-    std::unordered_map<int, shared_ptr<TC_HttpResponse>> _doneResponses;
+    std::unordered_map<int, std::shared_ptr<TC_HttpResponse>> _doneResponses;
 };
 
 }

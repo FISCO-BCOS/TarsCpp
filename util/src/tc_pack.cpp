@@ -10,6 +10,8 @@
 namespace tars
 {
 
+using namespace std;
+
 #if TARGET_PLATFORM_WINDOWS
 #pragma comment(lib,"ws2_32.lib")
 #endif

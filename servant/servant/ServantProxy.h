@@ -102,30 +102,30 @@ public:
         void add(ServantProxyThreadData *data);
         void erase(ServantProxyThreadData* data);
 		void erase(Communicator * comm);
-        unordered_set<ServantProxyThreadData *> getList();
+        std::unordered_set<ServantProxyThreadData *> getList();
 
         SeqManager *getSeqManager() { return _pSeq.get(); }
 
     protected:
-		unordered_set<ServantProxyThreadData*> _sp_list;
+		std::unordered_set<ServantProxyThreadData*> _sp_list;
 
 		TC_ThreadMutex _mutex;
 
-        unique_ptr<SeqManager> _pSeq;
+        std::unique_ptr<SeqManager> _pSeq;
       
     };
 
-    static shared_ptr<Immortal> g_immortal;
+    static std::shared_ptr<Immortal> g_immortal;
 
 public:
 
-    static thread_local shared_ptr<ServantProxyThreadData> g_sp;
+    static thread_local std::shared_ptr<ServantProxyThreadData> g_sp;
     static unsigned int _traceParamMaxLen;
 
     /**
      * global Immortal ptr, 避免Immortal提前被释放掉
      */
-     shared_ptr<Immortal> _sp_immortal;
+     std::shared_ptr<Immortal> _sp_immortal;
 
     /**
      * 构造函数
@@ -159,8 +159,8 @@ public:
      */
     struct CommunicatorEpollReqQueueInfo
 	{
-		weak_ptr<ReqInfoQueue>	_reqQueue;
-		weak_ptr<CommunicatorEpoll> _communicatorEpoll;
+		std::weak_ptr<ReqInfoQueue>	_reqQueue;
+		std::weak_ptr<CommunicatorEpoll> _communicatorEpoll;
 	};
 
 	//每发起调用的线程 记录的 公有网络通信器数据
@@ -171,7 +171,7 @@ public:
 		 * 每个线程跟客户端网络线程通信的队列
 		 * <网络线程序号, 网络通信信息>
 		 */
-		vector<CommunicatorEpollReqQueueInfo> _info;
+		std::vector<CommunicatorEpollReqQueueInfo> _info;
 		size_t         _netSeq = 0;                             //轮训选择网络线程的偏移量
 		Communicator   *_communicator = NULL;
 	};
@@ -189,7 +189,7 @@ public:
 	/**
 	 * 初始化当前业务线程和网络通信器之间的关系(构建发送队列)
 	 */
-	shared_ptr<ServantProxyThreadData::CommunicatorEpollInfo> addCommunicatorEpoll(const shared_ptr<CommunicatorEpoll> &ce);
+	std::shared_ptr<ServantProxyThreadData::CommunicatorEpollInfo> addCommunicatorEpoll(const std::shared_ptr<CommunicatorEpoll> &ce);
 
 	/**
 	 * 通信器析构时调用
@@ -202,25 +202,25 @@ public:
 	 * @param communicator
 	 * @return
 	 */
-	shared_ptr<CommunicatorEpollInfo> getCommunicatorEpollInfo(Communicator *communicator);
+	std::shared_ptr<CommunicatorEpollInfo> getCommunicatorEpollInfo(Communicator *communicator);
 
 	/**
 	 * 获取私有通信器对应的网络通信器等基本信息
 	 * @param communicator
 	 * @return
 	 */
-	shared_ptr<SchedCommunicatorEpollInfo> getSchedCommunicatorEpollInfo(Communicator *communicator);
+	std::shared_ptr<SchedCommunicatorEpollInfo> getSchedCommunicatorEpollInfo(Communicator *communicator);
 
 protected:
 	/**
 	 * communicator对应的公用网路通信器
 	 */
-	unordered_map<Communicator*, shared_ptr<CommunicatorEpollInfo>>    _communicatorEpollInfo;
+	std::unordered_map<Communicator*, std::shared_ptr<CommunicatorEpollInfo>>    _communicatorEpollInfo;
 
 	/**
 	 * 私有的网络通信器, 每个业务线程都对应一个, 业务线程是协程模式下使用
 	 */
-	unordered_map<Communicator*, shared_ptr<SchedCommunicatorEpollInfo>>    _schedCommunicatorEpollInfo;
+	std::unordered_map<Communicator*, std::shared_ptr<SchedCommunicatorEpollInfo>>    _schedCommunicatorEpollInfo;
 
 public:
 	//lock
@@ -232,7 +232,7 @@ public:
     /**
      * 协程调度
      */
-    shared_ptr<TC_CoroutineScheduler>  _sched;
+    std::shared_ptr<TC_CoroutineScheduler>  _sched;
 
 	/**
 	 * 线程私有数据
@@ -252,9 +252,9 @@ public:
     {
         int    traceType;               // 取值范围0-15， 0 不用打参数， 其他情况按位做控制开关，从低位到高位分别控制CS、CR、SR、SS，为1则输出对应参数
         unsigned int    paramMaxLen;    // 业务接口参数最大长度，如果超过该值，那么不输出参数，用特殊串标记 {"trace_param_over_max_len":true}
-        string traceID;         // traceID
-        string spanID;          // spanID
-        string parentSpanID;    // 父spanID
+        std::string traceID;         // traceID
+        std::string spanID;          // spanID
+        std::string parentSpanID;    // 父spanID
 
         enum E_SpanType
         {
@@ -276,9 +276,9 @@ public:
 
         // key 分两种情况，1.rpc调用； 2.异步回调
         // eg: f.2-ee824ad0eb4dacf56b29d230a229c584|030019ac000010796162bc5900000021|030019ac000010796162bc5900000021
-        bool init(const string& k)
+        bool init(const std::string& k)
         {
-            vector<string> vs = TC_Common::sepstr<string>(k, "|");
+            std::vector<std::string> vs = TC_Common::sepstr<std::string>(k, "|");
             if (vs.size() == 2)
             {
                 traceID = vs[0];
@@ -306,22 +306,22 @@ public:
             return false;
         }
 
-        static std::tuple<int, unsigned int> initType(const string& tid)
+        static std::tuple<int, unsigned int> initType(const std::string& tid)
         {
             int type = 0;
             unsigned int maxLen = ServantProxyThreadData::getTraceParamMaxLen();
 
-            string::size_type  pos = tid.find("-");
-            if (pos != string::npos)
+            std::string::size_type  pos = tid.find("-");
+            if (pos != std::string::npos)
             {
-                vector<string> flags = TC_Common::sepstr<string>(tid.substr(0, pos), ".");
+                std::vector<std::string> flags = TC_Common::sepstr<std::string>(tid.substr(0, pos), ".");
                 if (flags.size() >= 1)
                 {
                     type = strtol(flags[0].c_str(), NULL, 16);
                 }
                 if (flags.size() >= 2)
                 {
-                    maxLen = max(maxLen, TC_Common::strto<unsigned int>(flags[1]));
+                    maxLen = std::max(maxLen, TC_Common::strto<unsigned int>(flags[1]));
                 }
             
                 // type = strtol(tid.substr(0, pos).c_str(), NULL, 16);
@@ -330,7 +330,7 @@ public:
             {
                 type = 0;
             }
-            return make_tuple(type, maxLen);
+            return std::make_tuple(type, maxLen);
         }
 
         void reset()
@@ -345,7 +345,7 @@ public:
         TraceContext()
         {
         }
-        TraceContext(const string& k)
+        TraceContext(const std::string& k)
         {
             init(k);
         }
@@ -355,7 +355,7 @@ public:
             spanID = TC_UUIDGenerator::getInstance()->genID();
         }
 
-        string getKey(E_SpanType es) const
+        std::string getKey(E_SpanType es) const
         {
             switch (es)
             {
@@ -374,7 +374,7 @@ public:
             }
             return  "";
         }
-        string getKey(bool full) const
+        std::string getKey(bool full) const
         {
             return full ? (traceID + "|" + spanID + "|" + parentSpanID) : (traceID + "|" + spanID);
         }
@@ -406,11 +406,11 @@ public:
     bool           _traceCall = false;     //标识当前线程是否需要调用链追踪，默认不打开
     TraceContext _traceContext;    //调用链追踪信息
 
-    string getTraceKey(TraceContext::E_SpanType es) const
+    std::string getTraceKey(TraceContext::E_SpanType es) const
     {
         return _traceContext.getKey(es);
     }
-    string getTraceKey(bool full = false) const
+    std::string getTraceKey(bool full = false) const
     {
         return _traceContext.getKey(full);
     }
@@ -418,7 +418,7 @@ public:
     {
         _traceContext.newSpan();
     }
-    bool initTrace(const string& k)
+    bool initTrace(const std::string& k)
     {
         return _traceContext.init(k);
     }
@@ -430,7 +430,7 @@ public:
     {
         return _traceContext.needParam(es, _traceContext.traceType, len, _traceContext.paramMaxLen);
     }
-    static int needTraceParam(TraceContext::E_SpanType es, const string& k, size_t len)
+    static int needTraceParam(TraceContext::E_SpanType es, const std::string& k, size_t len)
     {
         auto flags = TraceContext::initType(k);
         int type = std::get<0>(flags);
@@ -491,9 +491,9 @@ class CoroParallelBase : virtual public TC_HandleBase
     /**
      * 获取所有请求回来的响应
      */
-    vector<ReqMessage*> getAllReqMessage()
+    std::vector<ReqMessage*> getAllReqMessage()
     {
-        vector<ReqMessage*> vRet;
+        std::vector<ReqMessage*> vRet;
 
         {
             TC_LockT<TC_SpinLock> lock(_mutex);
@@ -537,7 +537,7 @@ protected:
     /**
      * 请求的响应的容器
      */
-    vector<ReqMessage*>     _vReqMessage;
+    std::vector<ReqMessage*>     _vReqMessage;
 };
 typedef TC_AutoPtr<CoroParallelBase> CoroParallelBasePtr;
 
@@ -567,15 +567,15 @@ public:
 
     /**
      * 获取类型
-     * @return const string&
+     * @return const std::string&
      */
-    virtual const string& getType() { return _type; }
+    virtual const std::string& getType() { return _type; }
 
     /**
      * 设置类型
-     * @return const string&
+     * @return const std::string&
      */
-    virtual void setType(const string& type) { _type = type; }
+    virtual void setType(const std::string& type) { _type = type; }
 
     /**
      * 设置coro并行请求的共享智能指针
@@ -634,7 +634,7 @@ protected:
     /**
      * 同一链路多个cb的时候可以用来区分class类型
      */
-    string _type;
+    std::string _type;
 
     /**
      * 异步请求是否在网络线程处理
@@ -657,7 +657,7 @@ protected:
 class HttpCallback : public TC_HandleBase
 {
 public:
-    virtual int onHttpResponse(const shared_ptr<TC_HttpResponse> &rsp) = 0;
+    virtual int onHttpResponse(const std::shared_ptr<TC_HttpResponse> &rsp) = 0;
     virtual int onHttpResponseException(int expCode) = 0;
 };
 
@@ -708,17 +708,17 @@ public:
     /**
      * 通过status传递数据时用到的缺省字符串
      */
-    static string STATUS_DYED_KEY;  //需要染色的用户ID
+    static std::string STATUS_DYED_KEY;  //需要染色的用户ID
 
-    static string STATUS_GRID_KEY;  //需要灰度染色的用户ID
+    static std::string STATUS_GRID_KEY;  //需要灰度染色的用户ID
 
-    static string STATUS_RESULT_CODE; //处理结果码,tup使用
+    static std::string STATUS_RESULT_CODE; //处理结果码,tup使用
 
-    static string STATUS_RESULT_DESC; //处理结果描述,tup使用
+    static std::string STATUS_RESULT_DESC; //处理结果描述,tup使用
 
-    static string STATUS_SETNAME_VALUE; //set调用
+    static std::string STATUS_SETNAME_VALUE; //set调用
 
-    static string STATUS_TRACE_KEY; //trace信息
+    static std::string STATUS_TRACE_KEY; //trace信息
 
 ///////////////////////////////////////////////////////////////////
 /**
@@ -773,7 +773,7 @@ public:
      * 构造函数
      * @param op
      */
-    ServantProxy(Communicator * pCommunicator, const string& name,const string& setName);
+    ServantProxy(Communicator * pCommunicator, const std::string& name,const std::string& setName);
 
     /**
      * 析构函数
@@ -785,49 +785,49 @@ public:
      * 获取Object可用服务列表 如果启用set则获取本set的,如果启用分组,只返回同分组的服务端ip
      *  @return void
      */
-    void tars_endpoints(vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void tars_endpoints(std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /**
      * 获取Object可用服务列表 所有的列表
      *  @return void
      */
-    void tars_endpointsAll(vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void tars_endpointsAll(std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /**
      * 获取Object可用服务列表 根据set名字获取
      *  @return void
      */
-    void tars_endpointsBySet(const string & sName,vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void tars_endpointsBySet(const std::string & sName,std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /**
      * 获取Object可用服务列表 根据地区名字获取
      *  @return void
      */
-    void tars_endpointsByStation(const string & sName,vector<EndpointInfo> &activeEndPoint, vector<EndpointInfo> &inactiveEndPoint);
+    void tars_endpointsByStation(const std::string & sName,std::vector<EndpointInfo> &activeEndPoint, std::vector<EndpointInfo> &inactiveEndPoint);
 
     /**
      *  获取Object可用服务列表 包括指定归属地
-     *  @return vector<TC_Endpoint>
+     *  @return std::vector<TC_Endpoint>
      **/
-    vector<TC_Endpoint> tars_endpoints(const std::string & sStation);
+    std::vector<TC_Endpoint> tars_endpoints(const std::string & sStation);
 
     /**
      * 获取Object可用服务列表 包括指定归属地
      *  @return void
      */
-    void tars_endpoints(const std::string & sStation, vector<TC_Endpoint> & vecActive, vector<TC_Endpoint> & vecInactive);
+    void tars_endpoints(const std::string & sStation, std::vector<TC_Endpoint> & vecActive, std::vector<TC_Endpoint> & vecInactive);
 
     /**
      * 获取Object可用服务列表 如果启用分组,只返回同分组的服务端ip
-     * @return vector<TC_Endpoint>
+     * @return std::vector<TC_Endpoint>
      */
-    vector<TC_Endpoint> getEndpoint();
+    std::vector<TC_Endpoint> getEndpoint();
 
     /**
      * 获取Object可用服务列表 包括所有IDC
-     * @return vector<TC_Endpoint>
+     * @return std::vector<TC_Endpoint>
      */
-    vector<TC_Endpoint> getEndpoint4All();
+    std::vector<TC_Endpoint> getEndpoint4All();
 
     /**
      * 获取通信器
@@ -853,7 +853,7 @@ public:
 	 * @param user
 	 * @param pass
 	 */
-    void tars_set_proxy(SERVANT_PROXY type, const TC_Endpoint &ep, const string &user, const string &pass);
+    void tars_set_proxy(SERVANT_PROXY type, const TC_Endpoint &ep, const std::string &user, const std::string &pass);
 
     /**
 	 * 设置同步调用超时时间，对该proxy上所有方法都有效
@@ -887,25 +887,25 @@ public:
 
     /**
      * 获取所属的Object名称
-     * @return string
+     * @return std::string
      */
-    const string &tars_name() const;
+    const std::string &tars_name() const;
 
     /**
      * set name
      * @return
      */
-	const string &tars_setName() const;
+	const std::string &tars_setName() const;
 
 	/**
 	 * 获取所属的Object名称#hash@address(即传入stringToProxy中的地址)
-	 * @return string
+	 * @return std::string
 	 */
-	string tars_full_name() const;
+	std::string tars_full_name() const;
 
     /**
      * 获取最近一次调用的IP地址和端口
-     * @return string
+     * @return std::string
      */
     static TC_Endpoint tars_invoke_endpoint();
 
@@ -946,7 +946,7 @@ public:
     /**
      * 获取套接字选项
      */
-    vector<SocketOpt> tars_get_sockopt() const;
+    std::vector<SocketOpt> tars_get_sockopt() const;
 
     /**
      * 设置超时检查参数
@@ -1009,7 +1009,7 @@ public:
      * @param active
      * @param inactive
      */
-    void tars_update_endpoints(const set<EndpointInfo> &active, const set<EndpointInfo> &inactive);
+    void tars_update_endpoints(const std::set<EndpointInfo> &active, const std::set<EndpointInfo> &inactive);
 
     /**
 	 * 设置自定义回调(注意不在异步回调线程执行, 而是在网络线程中回调, 注意不要阻塞)
@@ -1049,13 +1049,13 @@ public:
     /**
      * 普通协议同步远程调用
      */
-    virtual void rpc_call(uint32_t requestId, const string& sFuncName,
+    virtual void rpc_call(uint32_t requestId, const std::string& sFuncName,
                           const char* buff, uint32_t len, ResponsePacket &rsp);
 
     /**
      * 普通协议异步调用
      */
-    virtual void rpc_call_async(uint32_t requestId, const string& sFuncName,
+    virtual void rpc_call_async(uint32_t requestId, const std::string& sFuncName,
                                 const char* buff, uint32_t len,
                                 const ServantProxyCallbackPtr& callback,
                                 bool bCoro = false);
@@ -1064,40 +1064,40 @@ public:
 	 * http1/2协议同步远程调用
 	 * @param funcName: 调用名称, 这里只是做统计用
 	 */
-    void http_call(const string &funcName, shared_ptr<TC_HttpRequest> &request, shared_ptr<TC_HttpResponse> &response);
+    void http_call(const std::string &funcName, std::shared_ptr<TC_HttpRequest> &request, std::shared_ptr<TC_HttpResponse> &response);
 
     /**
 	 * http1/2协议异步远程调用
 	 * @param funcName: 调用名称, 这里只是做统计用
 	 */
-	void http_call_async(const string &funcName, shared_ptr<TC_HttpRequest> &request, const HttpCallbackPtr &cb, bool bCoro = false);
+	void http_call_async(const std::string &funcName, std::shared_ptr<TC_HttpRequest> &request, const HttpCallbackPtr &cb, bool bCoro = false);
 
     /**
      * TARS协议同步方法调用
      */
-    shared_ptr<ResponsePacket> tars_invoke(char cPacketType,
-                            const string& sFuncName,
+    std::shared_ptr<ResponsePacket> tars_invoke(char cPacketType,
+                            const std::string& sFuncName,
                             tars::TarsOutputStream<tars::BufferWriterVector>& buf,
-                            const map<string, string>& context,
-                            const map<string, string>& status);
+                            const std::map<std::string, std::string>& context,
+                            const std::map<std::string, std::string>& status);
 
     /**
      * TARS协议同步方法调用
      */
-    shared_ptr<ResponsePacket> tars_invoke(char cPacketType,
-                            const string& sFuncName,
-                            const vector<char>& buf,
-                            const map<string, string>& context,
-                            const map<string, string>& status);
+    std::shared_ptr<ResponsePacket> tars_invoke(char cPacketType,
+                            const std::string& sFuncName,
+                            const std::vector<char>& buf,
+                            const std::map<std::string, std::string>& context,
+                            const std::map<std::string, std::string>& status);
 
     /**
      * TARS协议异步方法调用
      */
     void tars_invoke_async(char cPacketType,
-                                  const string& sFuncName,
+                                  const std::string& sFuncName,
                                   tars::TarsOutputStream<tars::BufferWriterVector> &buf,
-                                  const map<string, string>& context,
-                                  const map<string, string>& status,
+                                  const std::map<std::string, std::string>& context,
+                                  const std::map<std::string, std::string>& status,
                                   const ServantProxyCallbackPtr& callback,
                                   bool bCoro = false);
 
@@ -1105,17 +1105,17 @@ public:
      * TARS协议异步方法调用
      */
     void tars_invoke_async(char cPacketType,
-                                  const string& sFuncName,
-                                  const vector<char> &buf,
-                                  const map<string, string>& context,
-                                  const map<string, string>& status,
+                                  const std::string& sFuncName,
+                                  const std::vector<char> &buf,
+                                  const std::map<std::string, std::string>& context,
+                                  const std::map<std::string, std::string>& status,
                                   const ServantProxyCallbackPtr& callback,
                                   bool bCoro = false);
 	/**
 	 * 获取所有objectproxy(包括子servant), 该函数主要给自动测试使用!
 	 * @return
 	 */
-    vector<ObjectProxy*> getObjectProxys();
+    std::vector<ObjectProxy*> getObjectProxys();
 protected:
     /**
 	 * 获得可以复用的servant
@@ -1138,7 +1138,7 @@ protected:
      * @param prx
      * @param f
      */
-	void travelObjectProxys(ServantProxy *prx, function<void(ObjectProxy*)> f);
+	void travelObjectProxys(ServantProxy *prx, std::function<void(ObjectProxy*)> f);
 
     friend class ServantProxyCallback;
 	friend class Communicator;
@@ -1178,7 +1178,7 @@ private:
      * @param pSptd
      * @return void
      */
-    void selectNetThreadInfo(ServantProxyThreadData *pSptd, ObjectProxy *&pObjProxy, shared_ptr<ReqInfoQueue> &pReqQ);
+    void selectNetThreadInfo(ServantProxyThreadData *pSptd, ObjectProxy *&pObjProxy, std::shared_ptr<ReqInfoQueue> &pReqQ);
     /**
      * 检查是否需要设置染色消息
      * @param  req
@@ -1196,7 +1196,7 @@ private:
      * @param active
      * @param inactive
      */
-	void onNotifyEndpoints(CommunicatorEpoll *communicatorEpoll, const set<EndpointInfo> & active,const set<EndpointInfo> & inactive);
+    void onNotifyEndpoints(CommunicatorEpoll *communicatorEpoll, const std::set<EndpointInfo> & active,const std::set<EndpointInfo> & inactive);
 
 	/**
 	 * 端口不活跃
@@ -1276,7 +1276,7 @@ private:
 	/**
 	 *
 	 */
-	vector<ServantPrx>          _servantList;
+	std::vector<ServantPrx>          _servantList;
 
 	/**
 	 * 代理的基本信息
@@ -1316,7 +1316,7 @@ private:
 	/*
 	 * socket选项
 	 */
-	vector<SocketOpt>                     _socketOpts;
+	std::vector<SocketOpt>                     _socketOpts;
 
 };
 }

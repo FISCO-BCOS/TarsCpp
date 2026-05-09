@@ -39,6 +39,7 @@
 namespace tars
 {
 
+    using namespace std;
 #if TARGET_PLATFORM_WINDOWS
 
 // x86_64

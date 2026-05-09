@@ -22,6 +22,8 @@
 #include "util/tc_encoder.h"
 #include <set>
 
+using namespace std;
+
 #ifndef TAB
     #define TAB     g_parse->getTab()
 #endif

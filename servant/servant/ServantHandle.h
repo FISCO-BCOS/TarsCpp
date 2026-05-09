@@ -76,25 +76,25 @@ protected:
      * 逻辑处理
      * @param stRecvData
      */
-    virtual void handle(const shared_ptr<TC_EpollServer::RecvContext> &data);
+    virtual void handle(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
     /**
      * 超时处理
      * @param stRecvData
      */
-    virtual void handleTimeout(const shared_ptr<TC_EpollServer::RecvContext> &data);
+    virtual void handleTimeout(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
     /**
      * overload 处理
      * @param stRecvData
      */
-    virtual void handleOverload(const shared_ptr<TC_EpollServer::RecvContext> &data);
+    virtual void handleOverload(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
     /**
      * close 事件处理
      * @param stRecvData
      */
-    virtual void handleClose(const shared_ptr<TC_EpollServer::RecvContext> &data);
+    virtual void handleClose(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
 	/**
 	 * handleFilter拆分的第一部分，处理异步调用队列
@@ -123,14 +123,14 @@ protected:
      * @param stRecvData
      * @return Current*
      */
-	CurrentPtr createCurrent(const shared_ptr<TC_EpollServer::RecvContext> &data);
+	CurrentPtr createCurrent(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
 	/**
      * 创建闭连接时的关上下文
      * @param stRecvData
      * @return JceCurrent*
      */
-    CurrentPtr createCloseCurrent(const shared_ptr<TC_EpollServer::RecvContext> &data);
+    CurrentPtr createCloseCurrent(const std::shared_ptr<TC_EpollServer::RecvContext> &data);
 
     /**
      * 处理Tars协议
@@ -163,7 +163,7 @@ protected:
      *
      * @param current
      */
-    bool processDye(const CurrentPtr &current, string& dyeingKey);
+    bool processDye(const CurrentPtr &current, std::string& dyeingKey);
 
     /**
      * 处理TARS下的调用链追踪
@@ -175,7 +175,7 @@ protected:
     /**
      * 处理cookie
      */
-    bool processCookie(const CurrentPtr &current, map<string, string> &cookie);
+    bool processCookie(const CurrentPtr &current, std::map<std::string, std::string> &cookie);
 
     /**
      * 检查set调用合法性
@@ -193,11 +193,11 @@ protected:
     /**
      * 处理对象
      */
-    unordered_map<string, ServantPtr> _servants;
+    std::unordered_map<std::string, ServantPtr> _servants;
 
 
 // #ifdef TARS_OPENTRACKING
-//     map<int,std::unique_ptr<opentracing::Span>> _spanMap;
+//     std::map<int,std::unique_ptr<opentracing::Span>> _spanMap;
 // #endif
 };
 

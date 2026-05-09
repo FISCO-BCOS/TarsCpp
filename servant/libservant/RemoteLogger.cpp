@@ -21,6 +21,7 @@
 namespace tars
 {
 
+    using namespace std;
 //int RollWriteT::_dyeingThread = 0;
 int TimeWriteT::_dyeing = 0;
 

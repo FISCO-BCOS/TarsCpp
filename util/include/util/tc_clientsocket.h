@@ -37,7 +37,7 @@ namespace tars
 */
 struct TC_EndpointParse_Exception : public TC_Exception
 {
-    TC_EndpointParse_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_EndpointParse_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_EndpointParse_Exception() throw() {};
 };
 
@@ -84,17 +84,17 @@ public:
      * @param type, SOCK_STREAM或SOCK_DGRAM
      * @param type, SOCK_STREAM or SOCK_DGRAM
      */
-    TC_Endpoint(const string& host, int port, int timeout, EType type = TCP, int grid = 0, int qos = 0, int weight = -1, unsigned int weighttype = 0, AUTH_TYPE authType = AUTH_TYPENONE)
+    TC_Endpoint(const std::string& host, int port, int timeout, EType type = TCP, int grid = 0, int qos = 0, int weight = -1, unsigned int weighttype = 0, AUTH_TYPE authType = AUTH_TYPENONE)
     {
         init(host, port, timeout, type, grid, qos, weight, weighttype, authType);
     }
 
     /**
      * @brief 用字符串描述来构造
-     * @brief Use string to describe the constructor
+     * @brief Use std::string to describe the constructor
      * @param desc
      */
-    TC_Endpoint(const string& desc)
+    TC_Endpoint(const std::string& desc)
     {
         parse(desc);
     }
@@ -162,15 +162,15 @@ public:
      * @brief Set IP
      * @param str
      */
-    void setHost(const string& host)    { _host = host; _isIPv6 = TC_Socket::addressIsIPv6(_host); }
+    void setHost(const std::string& host)    { _host = host; _isIPv6 = TC_Socket::addressIsIPv6(_host); }
 
     /**
      * @brief 获取ip
      * @brief Get IP
      *
-     * @return const string&
+     * @return const std::string&
      */
-    const string &getHost() const      { return _host; }
+    const std::string &getHost() const      { return _host; }
 
     /**
      * @brief 设置端口
@@ -321,13 +321,13 @@ public:
 
     /**
      * @brief 字符串描述
-     * @brief the string description
+     * @brief the std::string description
      *
-     * @return string
+     * @return std::string
      */
-    string toString() const
+    std::string toString() const
     {
-        ostringstream os;
+        std::ostringstream os;
         if (_type == TCP)
             os << "tcp";
         else if (_type == UDP)
@@ -347,7 +347,7 @@ public:
 
     /**
      * @brief  字符串形式的端口
-     * @brief  Port in string
+     * @brief  Port in std::string
      * tcp:SOCK_STREAM
      *
      * udp:SOCK_DGRAM
@@ -367,10 +367,10 @@ public:
      *
      * @param desc
      */
-    void parse(const string &desc);
+    void parse(const std::string &desc);
 
 private:
-    void init(const string& host, int port, int timeout, EType type, int grid, int qos, int weight, unsigned int weighttype, AUTH_TYPE authType);
+    void init(const std::string& host, int port, int timeout, EType type, int grid, int qos, int weight, unsigned int weighttype, AUTH_TYPE authType);
 
 protected:
     /**
@@ -464,7 +464,7 @@ public:
     * @param iTimeout 超时时间, 毫秒
     * @param iTimeout timeout, unit: ms
     */
-    TC_ClientSocket(const string &sIp, int iPort, int iTimeout) { init(sIp, iPort, iTimeout); }
+    TC_ClientSocket(const std::string &sIp, int iPort, int iTimeout) { init(sIp, iPort, iTimeout); }
 
     /**
     * @brief 初始化函数
@@ -476,7 +476,7 @@ public:
     * @param iTimeout 超时时间, 毫秒
     * @param iTimeout timeout, unit: ms
     */
-    void init(const string &sIp, int iPort, int iTimeout);
+    void init(const std::string &sIp, int iPort, int iTimeout);
 
     /**
     * @brief 发送到服务器
@@ -552,7 +552,7 @@ protected:
      * ip或文件路径
      * IP or File Path 
      */
-    string          _ip;
+    std::string          _ip;
 
     /**
      * 端口或-1:表示是本地套接字
@@ -598,7 +598,7 @@ public:
     * @param iTimeout  超时时间, 毫秒
     * @param iTimeout  Timeout, unit: ms
     */
-    TC_TCPClient(const string &sIp, int iPort, int iTimeout) : TC_ClientSocket(sIp, iPort, iTimeout)
+    TC_TCPClient(const std::string &sIp, int iPort, int iTimeout) : TC_ClientSocket(sIp, iPort, iTimeout)
     {
     }
 
@@ -638,7 +638,7 @@ public:
     * @return            int 0 成功,<0 失败
     * @return             int: 0 success, <0 fail
     */
-    int recvBySep(string &sRecvBuffer, const string &sSep);
+    int recvBySep(std::string &sRecvBuffer, const std::string &sSep);
 
     /**
      * @brief 接收到服务器关闭连接为止
@@ -648,7 +648,7 @@ public:
      * @return int 0 成功,<0 失败
      * @return int: 0 success, <0 fail
      */
-    int recvAll(string &sRecvBuffer);
+    int recvAll(std::string &sRecvBuffer);
 
     /**
      * @brief  从服务器返回iRecvLen的字节
@@ -700,7 +700,7 @@ public:
     * @return             int 0 成功,<0 失败
     * @return             int: 0 success, <0 fail
     */
-    int sendRecvBySep(const char* sSendBuffer, size_t iSendLen, string &sRecvBuffer, const string &sSep);
+    int sendRecvBySep(const char* sSendBuffer, size_t iSendLen, std::string &sRecvBuffer, const std::string &sSep);
 
     /**
     * @brief  发送到服务器, 并等待服务器直到结尾字符(\r\n), 包含\r\n
@@ -722,7 +722,7 @@ public:
     * @return             int 0 成功,<0 失败
     * @return             int: 0 success, <0 fail
     */
-    int sendRecvLine(const char* sSendBuffer, size_t iSendLen, string &sRecvBuffer);
+    int sendRecvLine(const char* sSendBuffer, size_t iSendLen, std::string &sRecvBuffer);
 
     /**
      * @brief  发送到服务器, 接收直到服务器关闭连接为止
@@ -734,7 +734,7 @@ public:
      *
      * @return int
      */
-    int sendRecvAll(const char* sSendBuffer, size_t iSendLen, string &sRecvBuffer);
+    int sendRecvAll(const char* sSendBuffer, size_t iSendLen, std::string &sRecvBuffer);
 
 protected:
     /**
@@ -771,7 +771,7 @@ public:
     * @param iTimeout  超时时间, 毫秒
     * @param iTimeout  Timeout, unit: ms
     */
-    TC_UDPClient(const string &sIp, int iPort, int iTimeout) : TC_ClientSocket(sIp, iPort, iTimeout)
+    TC_UDPClient(const std::string &sIp, int iPort, int iTimeout) : TC_ClientSocket(sIp, iPort, iTimeout)
     {
     }
 
@@ -815,7 +815,7 @@ public:
      * @return int 0 成功,<0 失败
      * @return int: 0 success, <0 fail
      */
-    int recv(char *sRecvBuffer, size_t &iRecvLen, string &sRemoteIp, uint16_t &iRemotePort);
+    int recv(char *sRecvBuffer, size_t &iRecvLen, std::string &sRemoteIp, uint16_t &iRemotePort);
 
     /**
      * @brief  发送并接收数据
@@ -853,7 +853,7 @@ public:
      * @return int 0 成功,<0 失败
      * @return int: 0 success, <0 fail
      */
-    int sendRecv(const char *sSendBuffer, size_t iSendLen, char *sRecvBuffer, size_t &iRecvLen, string &sRemoteIp, uint16_t &iRemotePort);
+    int sendRecv(const char *sSendBuffer, size_t iSendLen, char *sRecvBuffer, size_t &iRecvLen, std::string &sRemoteIp, uint16_t &iRemotePort);
 
 protected:
     /**

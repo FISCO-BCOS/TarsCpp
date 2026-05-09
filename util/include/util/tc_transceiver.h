@@ -33,8 +33,8 @@ class TC_OpenSSL;
 */
 struct TC_Transceiver_Exception : public TC_Exception
 {
-    TC_Transceiver_Exception(const string &sBuffer) : TC_Exception(sBuffer){};
-    TC_Transceiver_Exception(const string &sBuffer, int err) : TC_Exception(sBuffer, err){};
+    TC_Transceiver_Exception(const std::string &sBuffer) : TC_Exception(sBuffer){};
+    TC_Transceiver_Exception(const std::string &sBuffer, int err) : TC_Exception(sBuffer, err){};
     ~TC_Transceiver_Exception() throw(){};    
 };
 
@@ -138,11 +138,11 @@ public:
     };
 
     //发起连接前, 创建网络句柄后的回调(只对客户端有效)
-    using oncreate_callback = std::function<shared_ptr<TC_ProxyInfo>(TC_Transceiver*)>;
+    using oncreate_callback = std::function<std::shared_ptr<TC_ProxyInfo>(TC_Transceiver*)>;
     //开启openssl对象的回调
     using onopenssl_callback = std::function<std::shared_ptr<TC_OpenSSL>(TC_Transceiver*)>;
     //关闭句柄的回调
-    using onclose_callback = std::function<void(TC_Transceiver*, CloseReason reason, const string &err)> ;
+    using onclose_callback = std::function<void(TC_Transceiver*, CloseReason reason, const std::string &err)> ;
     //建立连接上的回调(只对客户端有效)
     using onconnect_callback = std::function<void(TC_Transceiver*)> ;
     //可以发出业务请求了(对客户端: 连接建立完成, 对SSL: 握手完成, 可以发业务数据的回调)
@@ -152,11 +152,11 @@ public:
 	//完整解析完一个包之后的回调
 	using oncompletepackage_callback = std::function<void(TC_Transceiver*)> ;
 	//cient侧: 发送鉴权包的回调, 业务层在回调里面组织鉴权包
-	using onclientsendauth_callback = std::function<shared_ptr<TC_NetWorkBuffer::Buffer>(TC_Transceiver*)> ;
+	using onclientsendauth_callback = std::function<std::shared_ptr<TC_NetWorkBuffer::Buffer>(TC_Transceiver*)> ;
     //client侧: 收到鉴权包的的回调, 业务层解包(注意返回PACKET_FULL, 表示鉴权成功)
 	using onclientverifyauth_callback = std::function<TC_NetWorkBuffer::PACKET_TYPE(TC_NetWorkBuffer &, TC_Transceiver*)> ;
     //server侧: 验证鉴权包并返回验证包的回调
-	using onserververifyauth_callback = std::function<pair<TC_NetWorkBuffer::PACKET_TYPE, shared_ptr<TC_NetWorkBuffer::Buffer>>(TC_NetWorkBuffer &, TC_Transceiver*)> ;
+	using onserververifyauth_callback = std::function<std::pair<TC_NetWorkBuffer::PACKET_TYPE, std::shared_ptr<TC_NetWorkBuffer::Buffer>>(TC_NetWorkBuffer &, TC_Transceiver*)> ;
 
     /**
      * 构造函数
@@ -234,7 +234,7 @@ public:
      * @param fd
      * @return TC_Epoller::EpollInfo*
      */ 
-    shared_ptr<TC_Epoller::EpollInfo> bindFd(int fd);
+    std::shared_ptr<TC_Epoller::EpollInfo> bindFd(int fd);
 
     /**
      * 设置udp接收buffer大小(只对udp有效)
@@ -244,7 +244,7 @@ public:
     /**
      * 设置socket opt
      */
-    void setSocketOpt(const vector<SocketOpt> &socketOpts) { _socketOpts = socketOpts; }
+    void setSocketOpt(const std::vector<SocketOpt> &socketOpts) { _socketOpts = socketOpts; }
 
     /**
      * 是否ssl
@@ -276,14 +276,14 @@ public:
     /**
      * get epoll info
      */ 
-    inline const shared_ptr<TC_Epoller::EpollInfo> &getEpollInfo() { return _epollInfo; }
+    inline const std::shared_ptr<TC_Epoller::EpollInfo> &getEpollInfo() { return _epollInfo; }
 
     /**
      * 发送buffer
      * @param buff, buffer内容
      * @param addr, 发送地址(注意如果udp server, 回包一定要指向客户端的地址, 其他情况可以不传入这个地址)
      */ 
-    virtual ReturnStatus sendRequest(const shared_ptr<TC_NetWorkBuffer::Buffer> &buff, const TC_Socket::addr_type& addr = TC_Socket::addr_type());
+    virtual ReturnStatus sendRequest(const std::shared_ptr<TC_NetWorkBuffer::Buffer> &buff, const TC_Socket::addr_type& addr = TC_Socket::addr_type());
 
     /**
      * 是否鉴权成功
@@ -352,7 +352,7 @@ public:
     /**
      * 端口描述
      */ 
-    inline const string& getConnectionString() const { return _desc; }
+    inline const std::string& getConnectionString() const { return _desc; }
 
 	/**
 	 * @brief is ipv6 socket or not
@@ -455,7 +455,7 @@ protected:
     /*
      * 内部关闭连接, udp连接不关闭
      */
-    void tcpClose(bool deconstructor, CloseReason reason, const string &err);
+    void tcpClose(bool deconstructor, CloseReason reason, const std::string &err);
 
     /**
      * udp Close
@@ -512,7 +512,7 @@ protected:
     /*
      * 端口描述
      */
-    string                  _desc;
+    std::string                  _desc;
 
     /*
      * 套接字
@@ -527,12 +527,12 @@ protected:
     /**
      * socket选项
      */ 
-    vector<SocketOpt>       _socketOpts;
+    std::vector<SocketOpt>       _socketOpts;
 
     /*
      * 事件注册信息
      */
-    shared_ptr<TC_Epoller::EpollInfo>   _epollInfo;
+    std::shared_ptr<TC_Epoller::EpollInfo>   _epollInfo;
     
     /*
      * 连接状态
@@ -557,7 +557,7 @@ protected:
 	/**
 	 * 代理
 	 */
-	shared_ptr<TC_ProxyInfo> _proxyInfo;
+	std::shared_ptr<TC_ProxyInfo> _proxyInfo;
 
     /* 
      * 鉴权状态 
@@ -572,7 +572,7 @@ protected:
     /*
      * 接收缓存(udp情况才有效)
      */
-    shared_ptr<TC_NetWorkBuffer::Buffer> _pRecvBuffer;
+    std::shared_ptr<TC_NetWorkBuffer::Buffer> _pRecvBuffer;
 
     /*
      * 接收缓存大小(udp情况才有效)

@@ -22,9 +22,6 @@
 #include "util/tc_singleton.h"
 namespace tars
 {
-
-using namespace std;
-
 /**
  * 上报信息给Notify服务
  * 异步上报给notify服务
@@ -42,26 +39,26 @@ public:
      *
      * @return int
      */
-    int setNotifyInfo(const CommunicatorPtr &comm, const string &obj, const string & app, const string &serverName, const string &sSetName, const string &nodeName);
+    int setNotifyInfo(const CommunicatorPtr &comm, const std::string &obj, const std::string & app, const std::string &serverName, const std::string &sSetName, const std::string &nodeName);
 
     /**
      * 通知, 一定是异步上报的
      * @param message
      */
-    void notify(NOTIFYLEVEL level, const string &sMesage);
+    void notify(NOTIFYLEVEL level, const std::string &sMesage);
 
     /**
      * 上报
      * @param sResult
      * @param bSync
      */
-    void report(const string &sResult, bool bSync = false);
+    void report(const std::string &sResult, bool bSync = false);
 
     /**
      * 指定通知到某个服务, 一定是异步上报的
      * @param message
      */
-    void report(const string &sMesage, const string & app, const string &serverName, const string &sNodeName);
+    void report(const std::string &sMesage, const std::string & app, const std::string &serverName, const std::string &sNodeName);
 
 protected:
     /**
@@ -77,22 +74,22 @@ protected:
     /**
      * 应用
      */
-    string          _app;
+    std::string          _app;
 
     /**
      * 服务名称
      */
-    string          _serverName;
+    std::string          _serverName;
 
     /*
-    *set 名字
+    *std::set 名字
     */
-    string          _setName;
+    std::string          _setName;
 
     /*
     *节点
     */
-    string          _nodeName;
+    std::string          _nodeName;
 };
 
 }

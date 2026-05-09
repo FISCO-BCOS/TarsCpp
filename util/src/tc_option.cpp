@@ -20,6 +20,8 @@
 namespace tars
 {
 
+using namespace std;
+
 void TC_Option::decode(int argc, char *argv[])
 {
     _mParam.clear();

@@ -63,7 +63,7 @@ struct FDInfo
         }
     }
     size_t iSeq;
-    shared_ptr<ReqInfoQueue> msgQueue;
+    std::shared_ptr<ReqInfoQueue> msgQueue;
     TC_Epoller::NotifyInfo notify;
     bool autoDestroy = false;
 };
@@ -72,7 +72,7 @@ struct FDInfo
 /**
  * 客户端网络处理的线程类
  */
-class CommunicatorEpoll : public TC_Thread, public enable_shared_from_this<CommunicatorEpoll>
+class CommunicatorEpoll : public TC_Thread, public std::enable_shared_from_this<CommunicatorEpoll>
 {
 public:
 
@@ -133,12 +133,12 @@ public:
      * @param setName
      * @return
      */
-	ObjectProxy * hasObjectProxy(const string & sObjectProxyName,const string& setName="");
+	ObjectProxy * hasObjectProxy(const std::string & sObjectProxyName,const std::string& setName="");
 
     /*
      * 获取本epoll的代理对象
      */
-    ObjectProxy * createObjectProxy(ServantProxy *servantProxy, const string & sObjectProxyName,const string& setName="");
+    ObjectProxy * createObjectProxy(ServantProxy *servantProxy, const std::string & sObjectProxyName,const std::string& setName="");
 
     /**
      * 循环监听网络事件
@@ -163,11 +163,11 @@ public:
     void notify(size_t iSeq);
 
     /**
-     * 主动更新ip list
+     * 主动更新ip std::list
      * @param active
      * @param inactive
      */
-    void notifyUpdateEndpoints(ServantProxy *servantProxy, const set<EndpointInfo> & active,const set<EndpointInfo> & inactive);
+    void notifyUpdateEndpoints(ServantProxy *servantProxy, const std::set<EndpointInfo> & active,const std::set<EndpointInfo> & inactive);
 
     /**
      * 数据加入到异步线程队列里面
@@ -185,7 +185,7 @@ public:
 	 * communicator resource desc
 	 * @return
 	 */
-	void getResourcesInfo(ostringstream &desc);
+	void getResourcesInfo(std::ostringstream &desc);
 
     /**
      * 所有对象代理加载locator信息
@@ -208,7 +208,7 @@ public:
 	/**
 	 * 初始化notify
 	 */
-    void initNotify(size_t iSeq, const shared_ptr<ReqInfoQueue> &msgQueue);
+    void initNotify(size_t iSeq, const std::shared_ptr<ReqInfoQueue> &msgQueue);
 
     /**
      * 直接通知
@@ -266,24 +266,24 @@ protected:
      * 输入事件
      * @param pi
      */
-    bool handleCloseImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
+    bool handleCloseImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
 
     /**
      * 输入事件
      * @param pi
      */
-    bool handleInputImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
+    bool handleInputImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
 
     /**
      * 输出事件
      * @param pi
      */
-    bool handleOutputImp(const shared_ptr<TC_Epoller::EpollInfo> &data);
+    bool handleOutputImp(const std::shared_ptr<TC_Epoller::EpollInfo> &data);
 
     /**
      * 处理notify
      */
-    bool handleNotify(const shared_ptr<TC_Epoller::EpollInfo> & data);
+    bool handleNotify(const std::shared_ptr<TC_Epoller::EpollInfo> & data);
 
     /**
      * 处理超时
@@ -314,7 +314,7 @@ protected:
     }
 
     /**
-     * 获取所有对象的个数，为了不加锁不用map
+     * 获取所有对象的个数，为了不加锁不用std::map
      */
     inline size_t getObjNum()
     {
@@ -356,7 +356,7 @@ protected:
     /**
      * schedule
      */
-    shared_ptr<TC_CoroutineScheduler>  _scheduler;
+    std::shared_ptr<TC_CoroutineScheduler>  _scheduler;
 
     /**
      * 独立的网络线程存在, 线程私有数据
@@ -376,7 +376,7 @@ protected:
 	/**
 	 * 保存已创建的objectproxy
 	 */
-    unordered_map<string, ObjectProxy*>    _objectProxys;
+    std::unordered_map<std::string, ObjectProxy*>    _objectProxys;
 
     /**
      * _vObjectProxys读写锁
@@ -386,7 +386,7 @@ protected:
     /**
      * 保存已经创建的obj 取的时候可以不用加锁
      */
-    vector<ObjectProxy *>       	_vObjectProxys;
+    std::vector<ObjectProxy *>       	_vObjectProxys;
 
     /**
      * 读写锁
@@ -396,7 +396,7 @@ protected:
     /**
      * servant对应的objectProxy
      */
-    unordered_map<ServantProxy*, ObjectProxy*>  _servantObjectProxy;
+    std::unordered_map<ServantProxy*, ObjectProxy*>  _servantObjectProxy;
 
     /*
      *保存已经创建obj的数量
@@ -422,7 +422,7 @@ protected:
     /**
      * auto reconnect TC_Transceiver
      */
-	unordered_map<int64_t, TC_Transceiver*> _reconnect;
+	std::unordered_map<int64_t, TC_Transceiver*> _reconnect;
 
 	/**
 	 * 统计数据
@@ -437,7 +437,7 @@ protected:
     /**
      * 定时器的id
      */
-    vector<int64_t> _timerIds;
+    std::vector<int64_t> _timerIds;
 
 	/**
 	 * 锁

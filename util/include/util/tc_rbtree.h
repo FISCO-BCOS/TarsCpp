@@ -28,23 +28,20 @@
 
 namespace tars
 {
-    
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
 * @file tc_rbtree.h 
-* @brief rbtree map类
+* @brief rbtree std::map类
 *  
 * @author  ruanshudong@qq.com
 */           
 /////////////////////////////////////////////////
 /**
-* @brief RBTree map异常类
+* @brief RBTree std::map异常类
 */
 struct TC_RBTree_Exception : public TC_Exception
 {
-    TC_RBTree_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_RBTree_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_RBTree_Exception() throw(){};
 };
  /**
@@ -80,8 +77,8 @@ public:
 	*/
     struct BlockData
     {
-        string  _key;       /**数据Key*/
-        string  _value;     /**数据value*/
+        std::string  _key;       /**数据Key*/
+        std::string  _value;     /**数据value*/
         bool    _dirty;     /**是否是脏数据*/
         time_t  _synct;     /**sync time, 不一定是真正的回写时间*/
         BlockData()
@@ -272,7 +269,7 @@ public:
          *          TC_RBTree::RT_OK, 正常
          *          其他异常
          */
-        int get(string &s);
+        int get(std::string &s);
 
         /**
          * 设置数据
@@ -280,7 +277,7 @@ public:
          * @param iDatalen
          * @param vtData, 淘汰的数据
          */
-        int set(const string& k, const string& v, bool bNewBlock, bool bOnlyKey, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, bool bNewBlock, bool bOnlyKey, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 是否是脏数据
@@ -320,7 +317,7 @@ public:
          * @param i 
          * @param k 
          */
-        void insertRBTree(tagBlockHead *i, const string &k);
+        void insertRBTree(tagBlockHead *i, const std::string &k);
 
         /**
          * 从Block链表中删除当前Block
@@ -330,7 +327,7 @@ public:
         void erase();
 
         /**
-         * 刷新set链表, 放在Set链表头部
+         * 刷新std::set链表, 放在Set链表头部
          */
         void refreshSetList();
 
@@ -374,7 +371,7 @@ public:
          *
          * @return int,
          */
-        int allocate(uint32_t iDataLen, vector<TC_RBTree::BlockData> &vtData);
+        int allocate(uint32_t iDataLen, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 挂接chunk, 如果core则挂接失败, 保证内存块还可以用
@@ -383,7 +380,7 @@ public:
          *
          * @return int
          */
-        int joinChunk(tagChunkHead *pChunk, const vector<uint32_t> chunks);
+        int joinChunk(tagChunkHead *pChunk, const std::vector<uint32_t> chunks);
 
         /**
          * 分配n个chunk地址, 注意释放内存的时候不能释放正在分配的对象
@@ -392,7 +389,7 @@ public:
          * @param vtData, 淘汰的数据
          * @return int
          */
-        int allocateChunk(uint32_t fn, vector<uint32_t> &chunks, vector<TC_RBTree::BlockData> &vtData);
+        int allocateChunk(uint32_t fn, std::vector<uint32_t> &chunks, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 获取数据长度
@@ -437,7 +434,7 @@ public:
         void insertFixUp(tagBlockHead *i, uint32_t iAddr);
 
         /**
-         * 插入到get/set链表中
+         * 插入到get/std::set链表中
          */
         void insertGetSetList(TC_RBTree::Block::tagBlockHead *i);
 
@@ -534,7 +531,7 @@ public:
          *
          * @return TC_MemChunk::tagChunkHead
          */
-        vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
+        std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() const  { return _pChunkAllocator->getBlockDetail(); }
 
         /**
          * 内存大小
@@ -553,9 +550,9 @@ public:
         /**
          * 每种block中的chunk个数(每种block中的chunk个数相同)
          *
-         * @return vector<size_t>
+         * @return std::vector<size_t>
          */
-        vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
+        std::vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
 
         /**
          * 所有block的chunk个数
@@ -571,7 +568,7 @@ public:
          * @param vtData, 返回释放的内存块数据
          * @return uint32_t, 相对地址,0表示没有空间可以分配
          */
-        uint32_t allocateMemBlock(uint32_t &iAllocSize, vector<TC_RBTree::BlockData> &vtData);
+        uint32_t allocateMemBlock(uint32_t &iAllocSize, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 为地址为iAddr的Block分配一个chunk
@@ -581,13 +578,13 @@ public:
          * @param vtData 返回释放的内存块数据
          * @return uint32_t, 相对地址,0表示没有空间可以分配
          */
-        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, vector<TC_RBTree::BlockData> &vtData);
+        uint32_t allocateChunk(uint32_t iAddr, uint32_t &iAllocSize, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 释放Block
          * @param v
          */
-        void deallocateMemBlock(const vector<uint32_t> &v);
+        void deallocateMemBlock(const std::vector<uint32_t> &v);
 
         /**
          * 释放Block
@@ -605,7 +602,7 @@ public:
 
     public:
         /**
-         * map
+         * std::map
          */
         TC_RBTree                  *_pMap;
 
@@ -616,7 +613,7 @@ public:
     };
 
     ////////////////////////////////////////////////////////////////
-    // map的数据项
+    // std::map的数据项
     class RBTreeLockItem
     {
     public:
@@ -692,7 +689,7 @@ public:
          *          其他值, 异常
          *
          */
-        int get(string& k, string& v);
+        int get(std::string& k, std::string& v);
 
         /**
          * 获取值
@@ -700,7 +697,7 @@ public:
          *          RT_OK:数据获取OK
          *          其他值, 异常
          */
-        int get(string& k);
+        int get(std::string& k);
 
         /**
          * 数据块相对地址
@@ -718,7 +715,7 @@ public:
          * @param vtData, 淘汰的数据
          * @return int
          */
-        int set(const string& k, const string& v, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, const std::string& v, bool bNewBlock, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          * 设置Key, 无数据
@@ -727,7 +724,7 @@ public:
          *
          * @return int
          */
-        int set(const string& k, bool bNewBlock, vector<TC_RBTree::BlockData> &vtData);
+        int set(const std::string& k, bool bNewBlock, std::vector<TC_RBTree::BlockData> &vtData);
 
         /**
          *
@@ -736,7 +733,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string &k, string &k1, string &v, int &ret);
+        bool equal(const std::string &k, std::string &k1, std::string &v, int &ret);
 
         /**
          *
@@ -745,7 +742,7 @@ public:
          *
          * @return bool
          */
-        bool equal(const string& k, string &k1, int &ret);
+        bool equal(const std::string& k, std::string &k1, int &ret);
 
         /**
          * 下一个item
@@ -765,7 +762,7 @@ public:
 
     private:
         /**
-         * map
+         * std::map
          */
         TC_RBTree *_pMap;
 
@@ -895,7 +892,7 @@ public:
     };
 
     ////////////////////////////////////////////////////////////////
-    // map的数据项
+    // std::map的数据项
     class RBTreeItem
     {
     public:
@@ -905,7 +902,7 @@ public:
          * @param pMap
          * @param key
          */
-        RBTreeItem(TC_RBTree *pMap, const string &key, bool bEnd);
+        RBTreeItem(TC_RBTree *pMap, const std::string &key, bool bEnd);
 
         /**
          *
@@ -959,9 +956,9 @@ public:
         /**
          * 获取key
          * 
-         * @return string
+         * @return std::string
          */
-        string getKey() const { return _key; }
+        std::string getKey() const { return _key; }
 
         /**
          * 空数据
@@ -987,14 +984,14 @@ public:
 
     private:
         /**
-         * map
+         * std::map
          */
         TC_RBTree *_pMap;
 
         /**
          * block的地址
          */
-        string    _key;
+        std::string    _key;
 
         /**
          * 是否是结尾
@@ -1025,7 +1022,7 @@ public:
          * @param iAddr, 地址
          * @param type
          */
-        RBTreeIterator(TC_RBTree *pMap, const string &key, bool bEnd, int iOrder);
+        RBTreeIterator(TC_RBTree *pMap, const std::string &key, bool bEnd, int iOrder);
 
         /**
          * copy
@@ -1104,10 +1101,10 @@ public:
 
 public:
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    // map定义
+    // std::map定义
     //
     /**
-     * map头
+     * std::map头
      */
 #pragma pack(1) 
 
@@ -1169,16 +1166,16 @@ public:
     //定义版本号
     enum
     {
-        MAX_VERSION         = 2,    //当前map的大版本号
-        MIN_VERSION         = 1,    //当前map的小版本号
+        MAX_VERSION         = 2,    //当前std::map的大版本号
+        MIN_VERSION         = 1,    //当前std::map的小版本号
     };
 
 #else
     //定义版本号
     enum
     {
-        MAX_VERSION         = 2,    //当前map的大版本号
-        MIN_VERSION         = 0,    //当前map的小版本号
+        MAX_VERSION         = 2,    //当前std::map的大版本号
+        MIN_VERSION         = 0,    //当前std::map的小版本号
     };
 
 #endif
@@ -1194,7 +1191,7 @@ public:
     const static char BLACK     = 1;    //黑色节点
 
     /**
-     * get, set等int返回值
+     * get, std::set等int返回值
      */
     enum
     {
@@ -1204,7 +1201,7 @@ public:
         RT_NEED_SYNC            = 3,    //需要回写
         RT_NONEED_SYNC          = 4,    //不需要回写
         RT_ERASE_OK             = 5,    //淘汰数据成功
-        RT_READONLY             = 6,    //map只读
+        RT_READONLY             = 6,    //std::map只读
         RT_NO_MEMORY            = 7,    //内存不够
         RT_ONLY_KEY             = 8,    //只有Key, 没有Value
         RT_NEED_BACKUP          = 9,    //需要备份
@@ -1223,21 +1220,21 @@ public:
     typedef RBTreeIterator nolock_iterator;
 
     //定义key比较处理器
-    using less_functor = std::function<bool (const string& , const string& )>;
+    using less_functor = std::function<bool (const std::string& , const std::string& )>;
 
     /**
      * 缺省的小写比较符号
      */
     struct default_less
     {
-        bool operator()(const string &k1, const string &k2)
+        bool operator()(const std::string &k1, const std::string &k2)
         {
             return k1 < k2;
         }
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    //map的接口定义
+    //std::map的接口定义
     /**
      * 构造函数
      */
@@ -1291,9 +1288,9 @@ public:
     /**
      * 获取每种大小内存块的头部信息
      *
-     * @return vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
+     * @return std::vector<TC_MemChunk::tagChunkHead>: 不同大小内存块头部信息
      */
-    vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
+    std::vector<TC_MemChunk::tagChunkHead> getBlockDetail() { return _pDataAllocator->getBlockDetail(); }
 
     /**
      * 所有block中chunk的个数
@@ -1305,9 +1302,9 @@ public:
     /**
      * 每种block中chunk的个数(不同大小内存块的个数相同)
      *
-     * @return vector<size_t>
+     * @return std::vector<size_t>
      */
-    vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
+    std::vector<size_t> singleBlockChunkCount()          { return _pDataAllocator->singleBlockChunkCount(); }
 
     /**
      * 元素的个数
@@ -1412,7 +1409,7 @@ public:
      *          RT_DUMP_FILE_ERR: dump到文件出错
      *          RT_OK: dump到文件成功
      */
-    int dump2file(const string &sFile);
+    int dump2file(const std::string &sFile);
 
     /**
      * 从文件load
@@ -1423,11 +1420,11 @@ public:
      *          RT_VERSION_MISMATCH_ERR: 版本不一致
      *          RT_OK: load成功
      */
-    int load5file(const string &sFile);
+    int load5file(const std::string &sFile);
 
     /**
      * 清空hashmap
-     * 所有map的数据恢复到初始状态
+     * 所有std::map的数据恢复到初始状态
      */
     void clear();
 
@@ -1442,7 +1439,7 @@ public:
      *          RT_OK: 是干净数据
      *          其他返回值: 错误
      */
-    int checkDirty(const string &k);
+    int checkDirty(const std::string &k);
 
     /**
      * 设置为脏数据, 修改SET时间链, 会导致数据回写
@@ -1455,7 +1452,7 @@ public:
      *          RT_OK: 设置脏数据成功
      *          其他返回值: 错误
      */
-    int setDirty(const string& k);
+    int setDirty(const std::string& k);
 
     /**
      * 设置为干净数据, 修改SET链, 导致数据不回写
@@ -1468,7 +1465,7 @@ public:
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int setClean(const string& k);
+    int setClean(const std::string& k);
 
     /**
      * 获取数据, 修改GET时间链
@@ -1482,7 +1479,7 @@ public:
      *          RT_OK:获取数据成功
      *          其他返回值: 错误
      */
-    int get(const string& k, string &v, time_t &iSyncTime);
+    int get(const std::string& k, std::string &v, time_t &iSyncTime);
 
     /**
      * 获取数据, 修改GET时间链
@@ -1495,7 +1492,7 @@ public:
      *          RT_OK:获取数据成功
      *          其他返回值: 错误
      */
-    int get(const string& k, string &v);
+    int get(const std::string& k, std::string &v);
 
     /**
      * 设置数据, 修改时间链, 内存不够时会自动淘汰老的数据
@@ -1504,12 +1501,12 @@ public:
      * @param bDirty: 是否是脏数据
      * @param vtData: 被淘汰的记录
      * @return int:
-     *          RT_READONLY: map只读
+     *          RT_READONLY: std::map只读
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const string& k, const string& v, bool bDirty, vector<BlockData> &vtData);
+    int set(const std::string& k, const std::string& v, bool bDirty, std::vector<BlockData> &vtData);
 
     /**
      * 设置key, 但无数据
@@ -1517,25 +1514,25 @@ public:
      * @param vtData
      *
      * @return int
-     *          RT_READONLY: map只读
+     *          RT_READONLY: std::map只读
      *          RT_NO_MEMORY: 没有空间(不淘汰数据情况下会出现)
      *          RT_OK: 设置成功
      *          其他返回值: 错误
      */
-    int set(const string& k, vector<BlockData> &vtData);
+    int set(const std::string& k, std::vector<BlockData> &vtData);
 
     /**
      * 删除数据
      * @param k, 关键字
      * @param data, 被删除的记录
      * @return int:
-     *          RT_READONLY: map只读
+     *          RT_READONLY: std::map只读
      *          RT_NO_DATA: 没有当前数据
      *          RT_ONLY_KEY:只有Key, 删除成功
      *          RT_OK: 删除数据成功
      *         其他返回值: 错误
      */
-    int del(const string& k, BlockData &data);
+    int del(const std::string& k, BlockData &data);
 
     /**
      * 淘汰数据, 每次删除一条, 根据Get时间淘汰
@@ -1544,7 +1541,7 @@ public:
      * @param radio: 共享内存chunks使用比例 0< radio < 100
      * @param data: 当前被删除的一条记录
      * @return int:
-     *          RT_READONLY: map只读
+     *          RT_READONLY: std::map只读
      *          RT_OK: 不用再继续淘汰了
      *          RT_ONLY_KEY:只有Key, 删除成功
      *          RT_DIRTY_DATA:数据是脏数据，当bCheckDirty=true时会有可能产生这种返回值
@@ -1559,7 +1556,7 @@ public:
      * _pHead->_iSyncTime由setSyncTime函数设定, 默认10分钟
 
      * 外部循环调用该函数进行回写
-     * map只读时仍然可以回写
+     * std::map只读时仍然可以回写
      * @param iNowTime: 当前时间
      *                  回写时间与当前时间相差_pHead->_iSyncTime都需要回写
      * @param data : 回写的数据
@@ -1611,7 +1608,7 @@ public:
     less_functor &getLessFunctor()                  { return _lessf; }
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // 以下是遍历map函数, 无需要对map加大面积锁, 但是遍历效率有一定影响
+    // 以下是遍历std::map函数, 无需要对std::map加大面积锁, 但是遍历效率有一定影响
     // (只在get以及迭代器++的时候加锁)
     // 获取的迭代器和数据不保证实时有效,可能已经被删除了,获取数据时需要判断数据的合法性
     
@@ -1637,7 +1634,7 @@ public:
     nolock_iterator nolock_rbegin();
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // 以下是遍历map函数, 需要对map加大面积锁(及迭代器存在有效范围内全部都加锁)
+    // 以下是遍历std::map函数, 需要对std::map加大面积锁(及迭代器存在有效范围内全部都加锁)
     // 获取的数据以及迭代器都是实时有效
 
     /**
@@ -1668,7 +1665,7 @@ public:
      * 
      * @return lock_iterator 
      */
-    lock_iterator find(const string& k);
+    lock_iterator find(const std::string& k);
 
     /**
      * 查找(++表示逆序)
@@ -1677,34 +1674,34 @@ public:
      * 
      * @return lock_iterator 
      */
-    lock_iterator rfind(const string& k);
+    lock_iterator rfind(const std::string& k);
 
     /**
      * 返回查找关键字的下界(返回键值>=给定元素的第一个位置)
-     * map中已经插入了1,2,3,4的话，如果lower_bound(2)的话，返回的2，而upper-bound(2)的话，返回的就是3
+     * std::map中已经插入了1,2,3,4的话，如果lower_bound(2)的话，返回的2，而upper-bound(2)的话，返回的就是3
      * @param k
      * 
      * @return lock_iterator
      */
-    lock_iterator lower_bound(const string &k);
+    lock_iterator lower_bound(const std::string &k);
 
     /**
      * 返回查找关键字的上界(返回键值>给定元素的第一个位置)
-     * map中已经插入了1,2,3,4的话，如果lower_bound(2)的话，返回的2，而upper-bound(2)的话，返回的就是3
+     * std::map中已经插入了1,2,3,4的话，如果lower_bound(2)的话，返回的2，而upper-bound(2)的话，返回的就是3
      * @param k
      * 
      * @return lock_iterator
      */
-    lock_iterator upper_bound(const string &k);
+    lock_iterator upper_bound(const std::string &k);
 
     /**
      * 查找
      * @param k1
      * @param k2
      * 
-     * @return pair<lock_iterator,lock_iterator>
+     * @return std::pair<lock_iterator,lock_iterator>
      */
-    pair<lock_iterator, lock_iterator> equal_range(const string& k1, const string &k2);
+    std::pair<lock_iterator, lock_iterator> equal_range(const std::string& k1, const std::string &k2);
 
     //////////////////////////////////////////////////////////////////////////////////////
     // 
@@ -1749,9 +1746,9 @@ public:
     /**
      * 描述
      *
-     * @return string
+     * @return std::string
      */
-    string desc();
+    std::string desc();
 
 protected:
 
@@ -1848,10 +1845,10 @@ protected:
      * 淘汰iNowAddr之外的数据(根据淘汰策略淘汰)
      * @param iNowAddr, 当前Block不能正在分配空间, 不能被淘汰
      *                  0表示做直接根据淘汰策略淘汰
-     * @param vector<BlockData>, 被淘汰的数据
+     * @param std::vector<BlockData>, 被淘汰的数据
      * @return uint32_t,淘汰的数据个数
      */
-    uint32_t eraseExcept(uint32_t iNowAddr, vector<BlockData> &vtData);
+    uint32_t eraseExcept(uint32_t iNowAddr, std::vector<BlockData> &vtData);
 
     /**
      * 根据key获得最后一个大于当前key的block
@@ -1859,7 +1856,7 @@ protected:
      * 
      * @return size_t
      */
-    Block getLastBlock(const string &k);
+    Block getLastBlock(const std::string &k);
 
     /**
      * 从某个地址开始超找
@@ -1870,7 +1867,7 @@ protected:
      * 
      * @return lock_iterator 
      */
-    lock_iterator find(uint32_t iAddr, const string& k, int &ret, bool bOrder = true);
+    lock_iterator find(uint32_t iAddr, const std::string& k, int &ret, bool bOrder = true);
 
     /**
      * 从某个地址开始查找
@@ -1882,7 +1879,7 @@ protected:
      * 
      * @return lock_iterator 
      */
-    lock_iterator find(uint32_t iAddr, const string& k, string &v, int &ret);
+    lock_iterator find(uint32_t iAddr, const std::string& k, std::string &v, int &ret);
 
     /**
      * 修改具体的值

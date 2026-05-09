@@ -75,14 +75,14 @@ public:
      * @param verifyClient
      * @return
      */
-	static shared_ptr<CTX> newCtx(const std::string& cafile, const std::string& certfile, const std::string& keyfile, bool verifyClient, const string &ciphers);
+	static std::shared_ptr<CTX> newCtx(const std::string& cafile, const std::string& certfile, const std::string& keyfile, bool verifyClient, const std::string &ciphers);
 
 	/**
 	 * new ssl
 	 * @param ctx
 	 * @return
 	 */
-	static shared_ptr<TC_OpenSSL> newSSL(const std::shared_ptr<TC_OpenSSL::CTX> &ctx);
+	static std::shared_ptr<TC_OpenSSL> newSSL(const std::shared_ptr<TC_OpenSSL::CTX> &ctx);
 
 	static void getMemData(BIO* bio, TC_NetWorkBuffer& buf);
 	static int doSSLRead(SSL* ssl, TC_NetWorkBuffer& out);
@@ -121,7 +121,7 @@ public:
      * get error message
      * @return
      */
-	string getErrMsg() const;
+	std::string getErrMsg() const;
 
 	/**
      * @brief  get recv buffer

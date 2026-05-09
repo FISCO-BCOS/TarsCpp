@@ -510,7 +510,7 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 1 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 /**
  * Tencent is pleased to support the open source community by making Tars available.
  *
@@ -526,7 +526,7 @@ char *yytext;
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the 
  * specific language governing permissions and limitations under the License.
  */
-#line 20 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 20 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 #include <map>
 #include <string>
 #include <sstream>
@@ -537,8 +537,6 @@ char *yytext;
 
 #include "parse.h"
 #include "tars.tab.hpp"
-
-using namespace std;
 
 extern "C"
 {
@@ -551,7 +549,7 @@ extern "C"
 struct include_file_state
 {
     YY_BUFFER_STATE state;
-    string file;
+    std::string file;
 };
 
 #define MAX_INCLUDE_DEPTH 200
@@ -563,9 +561,9 @@ int isatty(int)
 	return 0;
 }
 
-#line 567 "tars.lex.cpp"
+#line 565 "tars.lex.cpp"
 
-#line 569 "tars.lex.cpp"
+#line 567 "tars.lex.cpp"
 
 #define INITIAL 0
 #define INCL 1
@@ -775,10 +773,10 @@ YY_DECL
 		}
 
 	{
-#line 67 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 65 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 
 
-#line 782 "tars.lex.cpp"
+#line 780 "tars.lex.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -847,19 +845,19 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 69 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 67 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 { BEGIN(INCL); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 71 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 69 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     if ( include_file_stack_ptr >= MAX_INCLUDE_DEPTH )
     {
         g_parse->error("Includes nested too deeply" );
     }
 
-    string file;
+    std::string file;
     bool b = g_parse->getFilePath( yytext, file);
     g_parse->currentContextPtr()->addInclude(file);
 
@@ -885,7 +883,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(INCL):
-#line 101 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 99 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     --include_file_stack_ptr;
     if ( include_file_stack_ptr < 0 )
@@ -904,14 +902,14 @@ case YY_STATE_EOF(INCL):
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 117 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 115 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     return TARS_SCOPE_DELIMITER;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 121 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 119 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     // C++ comment
     bool e = false;
@@ -932,11 +930,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 139 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 137 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     // C comment
     bool e = false;
-    string comment = yytext + 2;
+    std::string comment = yytext + 2;
     while(!e)
     {
         int input = yyinput();
@@ -983,7 +981,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 187 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 185 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     StringGrammarPtr ident  = new StringGrammar;
     ident->v            = yytext;
@@ -994,7 +992,7 @@ YY_RULE_SETUP
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 194 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 192 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     StringGrammarPtr ident  = new StringGrammar;
     ident->v            = yytext;
@@ -1007,7 +1005,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 204 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 202 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     StringGrammarPtr str = new StringGrammar;
     bool e = false;
@@ -1023,38 +1021,38 @@ YY_RULE_SETUP
     	    }
     	    case '\n':
     	    {
-    	        g_parse->error("newline in string");
+    	        g_parse->error("newline in std::string");
     	        break;
     	    }
     	    case EOF:
     	    {
-    	        g_parse->error("EOF in string");
+    	        g_parse->error("EOF in std::string");
     	        break;
     	    }
     	    case '\\':
     	    {
-    	        static string specialChars = "nrtvfab?";
-    	        static string octalChars = "0123";
+    	        static std::string specialChars = "nrtvfab?";
+    	        static std::string octalChars = "0123";
     	        
     	        char nextInput = static_cast<char>(yyinput());
     	        if(nextInput == '\\' || nextInput == '"' || nextInput == '\'')
     	        {
     	            str->v += nextInput;
     	        }
-    	        else if(specialChars.find(nextInput) != string::npos)
+    	        else if(specialChars.find(nextInput) != std::string::npos)
                 {
                     str->v += '\\';
                     str->v += nextInput;
                 }
-                else if(octalChars.find(nextInput) != string::npos)
+                else if(octalChars.find(nextInput) != std::string::npos)
                 {
-                    static string octalDigits = "01234567";
+                    static std::string octalDigits = "01234567";
                     
                     unsigned short us = nextInput - '0';
-                    if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != string::npos)
+                    if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != std::string::npos)
                     {
                         us = us * 8 + nextInput - '0';
-                        if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != string::npos)
+                        if(octalDigits.find_first_of(nextInput = static_cast<char>(yyinput())) != std::string::npos)
                         {
                             us = us * 8 + nextInput - '0';
                         }
@@ -1070,7 +1068,7 @@ YY_RULE_SETUP
 
                     if(us == 0)
                     {
-                        g_parse->error("illegal NUL character in string constant");
+                        g_parse->error("illegal NUL character in std::string constant");
                     }
                     str->v += static_cast<char>(us);
                 }
@@ -1098,7 +1096,7 @@ YY_RULE_SETUP
 
                     if(ull == 0)
                     {
-                        g_parse->error("illegal NUL character in string constant");
+                        g_parse->error("illegal NUL character in std::string constant");
                     }
                     str->v += static_cast<char>(ull);
                 }
@@ -1122,13 +1120,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 316 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 314 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     errno = 0;
     IntergerGrammarPtr ptr = new IntergerGrammar;
     yylval = ptr;
     
-    string value = yytext;
+    std::string value = yytext;
     const char* beg = value.c_str();
     char* e = 0;
 
@@ -1136,7 +1134,7 @@ YY_RULE_SETUP
     if(!(errno == 0 && beg != e))
     {
         assert(ptr->v != 0);
-        string err = "integer constant `";
+        std::string err = "integer constant `";
         err += value;
         err += "' out of range";
         g_parse->error(err);
@@ -1147,13 +1145,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 338 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 336 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     errno = 0;
     FloatGrammarPtr ptr = new FloatGrammar;
     yylval = ptr;
     
-    string value(yytext);
+    std::string value(yytext);
     
     char lastChar = value[value.size() - 1];
     if(lastChar == 'f' || lastChar == 'F')
@@ -1164,14 +1162,14 @@ YY_RULE_SETUP
     ptr->v = strtod(value.c_str(), 0);
     if((errno == ERANGE) && (ptr->v == HUGE_VAL || ptr->v == -HUGE_VAL))
     {
-        string err = "float point constant `";
+        std::string err = "float point constant `";
         err += value;
         err += "' too large (overflow)";
         g_parse->error(err);
     }
     else if(errno == ERANGE && ptr->v == 0)
     {
-        string err = "float point constant `";
+        std::string err = "float point constant `";
         err += value;
         err += "' too small (underflow)";
         g_parse->error(err);
@@ -1182,7 +1180,7 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 369 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 367 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     if(yytext[0] == '\n')
     {
@@ -1192,15 +1190,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 376 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 374 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 {
     if(yytext[0] < 32 || yytext[0] > 126)
     {
-        stringstream s;
+        std::stringstream s;
         s << "illegal input character: '\\";
         s.width(3);
         s.fill('0');
-        s << oct << static_cast<int>(static_cast<unsigned char>(yytext[0]));
+        s << std::oct << static_cast<int>(static_cast<unsigned char>(yytext[0]));
         s << "'";
         
         g_parse->error(s.str());
@@ -1211,10 +1209,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 392 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 390 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 ECHO;
 	YY_BREAK
-#line 1218 "tars.lex.cpp"
+#line 1216 "tars.lex.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2229,7 +2227,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 392 "/data/TarsCpp/tools/tarsgrammar/tars.l"
+#line 390 "/home/more/FISCO-BCOS-dev/TarsCpp/tools/tarsgrammar/tars.l"
 
 
 

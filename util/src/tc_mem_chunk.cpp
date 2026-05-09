@@ -26,6 +26,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_MemChunk::TC_MemChunk()
 : _pHead(NULL)
 , _pData(NULL)

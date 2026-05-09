@@ -24,9 +24,6 @@
 
 namespace tars
 {
-    
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
  * @file tc_option.h 
@@ -82,7 +79,7 @@ public:
      * @return bool 存在返回true，否则返回false
      * @return bool Existence returns true, otherwise false
      */
-    bool hasParam(const string &sName) const;
+    bool hasParam(const std::string &sName) const;
 
     /**
      * @brief 获取某个--表示的参数，如果参数不存在或者参数值为空 , 
@@ -90,73 +87,73 @@ public:
      * @brief Gets the parameter represented by an -- and returns "" if it does not exist or if the parameter value is empty
      * @param sName   标识
      * @param sName   Identification
-     * @return string 标识的参数值
-     * @return string Identified parameter values
+     * @return std::string 标识的参数值
+     * @return std::string Identified parameter values
      */
-    string getValue(const string &sName, const string &def = "") const;
+    std::string getValue(const std::string &sName, const std::string &def = "") const;
 
     /**
      * @brief 获取所有--标识的参数.
      * @brief Get all--identified parameters.
      *
-     * @return map<string,string> map类型的标识和参数值的对应关系
-     * @return Map<string, string> map type identity and corresponding relationship to parameter values
+     * @return std::map<std::string,std::string> std::map类型的标识和参数值的对应关系
+     * @return Map<std::string, std::string> std::map type identity and corresponding relationship to parameter values
      */
-    const map<string, string>& getMulti() const;
+    const std::map<std::string, std::string>& getMulti() const;
 
     /**
      * @brief 获取所有普通的参数, 例子中的abc, 
-     *        def，参数按照顺序在vector中
+     *        def，参数按照顺序在std::vector中
      * @brief Get all the common parameters, abc, 
      *        def in the example, in vectors in order
-     * @return vector<string> 顺序存放参数的vector
-     * @return Vector<string>Sequential vector holding parameters
+     * @return std::vector<std::string> 顺序存放参数的std::vector
+     * @return Vector<std::string>Sequential std::vector holding parameters
      */
-    const vector<string>& getSingle() const;
+    const std::vector<std::string>& getSingle() const;
 
     /**
      * @brief 获取所有--标识的参数.
      * @brief Get all--identified parameters.
      *
-     * @return map<string,string> map类型的标识和参数值的对应关系
-     * @return Map<string, string> map type identity and corresponding relationship to parameter values
+     * @return std::map<std::string,std::string> std::map类型的标识和参数值的对应关系
+     * @return Map<std::string, std::string> std::map type identity and corresponding relationship to parameter values
      */
-    map<string, string>& getMulti();
+    std::map<std::string, std::string>& getMulti();
 
     /**
      * @brief 获取所有普通的参数, 例子中的abc, 
-     *        def，参数按照顺序在vector中
+     *        def，参数按照顺序在std::vector中
      * @brief Get all the common parameters, abc, 
      *        def in the example, in vectors in order
-     * @return vector<string> 顺序存放参数的vector
-     * @return vector<string> Vector that stores parameters sequentially
+     * @return std::vector<std::string> 顺序存放参数的std::vector
+     * @return std::vector<std::string> Vector that stores parameters sequentially
      */
-    vector<string>& getSingle();
+    std::vector<std::string>& getSingle();
 
 protected:
 
     /**
      * @brief 解析字符串，取出标识和其对应的参数值， 
      *        对型如--name=value 的字符串进行解析，取出name和vaue
-     * @brief Parse the string, take out the identity and its corresponding parameter values, 
+     * @brief Parse the std::string, take out the identity and its corresponding parameter values, 
      *        Parse strings of type--name=value, take out name and vaue
      * @param s 要解析的字符串
      * @param s String to parse
      */
-    void parse(const string &s);
+    void parse(const std::string &s);
 
 protected:
     /**
      *存放标识和其对应参数的对应关系，例如：对于--name=value，存放name和value
      *Store the relationship between the identity and its corresponding parameters, for example, for --name=value, name and value
      */
-    map<string, string> _mParam;
+    std::map<std::string, std::string> _mParam;
 
     /**
      *存放普通参数的vetor
      *Vetor holding common parameters
      */
-    vector<string>      _vSingle;
+    std::vector<std::string>      _vSingle;
 };
 
 }

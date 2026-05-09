@@ -45,11 +45,11 @@ public:
      * @param name
      * @return ServantPrx
      */
-    CommunicatorPtr getCommunicator(const string& name = "default")
+    CommunicatorPtr getCommunicator(const std::string& name = "default")
     {
         TC_LockT<TC_ThreadRecMutex> lock(*this);
 
-        map<string, CommunicatorPtr>::iterator it = _comms.find(name);
+        std::map<std::string, CommunicatorPtr>::iterator it = _comms.find(name);
 
         if (it == _comms.end())
         {
@@ -66,11 +66,11 @@ public:
      * @param name
      * @return ServantPrx
      */
-    CommunicatorPtr getCommunicator(TC_Config& conf, const string& name = "default")
+    CommunicatorPtr getCommunicator(TC_Config& conf, const std::string& name = "default")
     {
         TC_LockT<TC_ThreadRecMutex> lock(*this);
 
-        map<string, CommunicatorPtr>::iterator it = _comms.find(name);
+        std::map<std::string, CommunicatorPtr>::iterator it = _comms.find(name);
 
         if (it == _comms.end())
         {
@@ -81,7 +81,7 @@ public:
             return it->second;
         }
 
-        string s = "";
+        std::string s = "";
 
         it->second->setProperty(conf);
 
@@ -95,7 +95,7 @@ private:
     /**
      * 已创建的对象
      */
-    map<string, CommunicatorPtr> _comms;
+    std::map<std::string, CommunicatorPtr> _comms;
 };
 //////////////////////////////////////////////////////
 }

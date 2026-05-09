@@ -27,6 +27,8 @@
 namespace tars
 {
 
+using namespace std;
+
 ifstream::pos_type TC_File::getFileSize(const string &sFullFileName)
 {
     ifstream ifs(sFullFileName.c_str());

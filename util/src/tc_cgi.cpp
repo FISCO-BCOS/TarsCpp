@@ -26,6 +26,8 @@ extern char **environ;
 namespace tars
 {
 
+using namespace std;
+
 ostream &operator<<(ostream &os, const TC_Cgi_Upload &tcCgiUpload)
 {
     os << tcCgiUpload.tostr();

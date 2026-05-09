@@ -19,6 +19,8 @@
 namespace tars
 {
 
+using namespace std;
+
 #define ENCODE_TABLE "=&%\r\n"
 
 TC_Parsepara::TC_Parsepara(const string &sParam)

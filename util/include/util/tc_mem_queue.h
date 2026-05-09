@@ -21,9 +21,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
  * @file   tc_mem_queue.h 
@@ -87,7 +84,7 @@ public:
      * @return       bool,true:正确, false: 错误,无数据输出,队列空
      * @return       Bool, true: correct, false: error, no data output, empty queue
      */
-    bool front(string &sOut);
+    bool front(std::string &sOut);
 
     /**
     * @brief 弹出数据
@@ -97,7 +94,7 @@ public:
     * @return       bool,true:正确, false: 错误,无数据输出,队列空 
     * @return       Bool, true: correct, false: error, no data output, empty queue
     */
-    bool pop_front(string &sOut);
+    bool pop_front(std::string &sOut);
 
     /**
     * @brief 进入数据
@@ -107,7 +104,7 @@ public:
     * @return     bool,true:正确, false: 错误, 队列满
     * @return     Bool, true: correct, false: error, the queue is full
     */
-    bool push_back(const string &sIn);
+    bool push_back(const std::string &sIn);
 
     /**
     * @brief 进入数据

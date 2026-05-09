@@ -21,6 +21,8 @@
 namespace tars
 {
 
+using namespace std;
+
 //////////////////////////////////////////////////////////////////////////
 void TarsException::throwException(int ret, const string& desc)
 {

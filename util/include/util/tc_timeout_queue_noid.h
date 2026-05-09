@@ -27,10 +27,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
-
 /////////////////////////////////////////////////
 /**
  * @file tc_timeout_queue_noid.h
@@ -47,8 +43,8 @@ public:
     struct PtrInfo;
     struct NodeInfo;
 
-    typedef multimap<uint64_t,NodeInfo>      time_type;
-    typedef list<PtrInfo>                   list_type;
+    typedef std::multimap<uint64_t,NodeInfo>      time_type;
+    typedef std::list<PtrInfo>                   list_type;
 
     struct PtrInfo
     {
@@ -181,7 +177,7 @@ template<typename T> bool TC_TimeoutQueueNoID<T>::push(T& ptr, uint64_t timeout)
 
     NodeInfo stNodeInfo;
     stNodeInfo.listIter = _list.begin();
-    pinfo.timeIter = _time.insert(make_pair(timeout,stNodeInfo));
+    pinfo.timeIter = _time.insert(std::make_pair(timeout, stNodeInfo));
 
     return true;
 }

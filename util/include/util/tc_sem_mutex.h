@@ -46,7 +46,7 @@ namespace tars
 */
 struct TC_SemMutex_Exception : public TC_Exception
 {
-    TC_SemMutex_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_SemMutex_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_SemMutex_Exception() throw() {};
 };
 

@@ -22,8 +22,6 @@
 
 namespace tars
 {
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
 * @file  tc_ex.h 
@@ -36,7 +34,7 @@ using namespace std;
 * @brief 异常类.
 * @brief Exception Class
 */
-class TC_Exception : public exception
+class TC_Exception : public std::exception
 {
 public:
     /**
@@ -48,14 +46,14 @@ public:
 	 * @param buffer 异常的告警信息 
      * @param buffer alert information of exceptions
      */
-	explicit TC_Exception(const string &buffer);
+	explicit TC_Exception(const std::string &buffer);
 
     /**
 	 * @brief 构造函数,提供了一个可以传入errno的构造函数，
      * @brief Constructor , provider a constructor to pass errno 
 	 *  
 	 *  	  异常抛出时直接获取的错误信息
-     *        get error message directly when throw exception
+     *        get error message directly when throw std::exception
 	 *  
      * @param buffer 异常的告警信息
      * @param buffer alert information of exceptions
@@ -63,7 +61,7 @@ public:
      * @param errno  传入:errno, windows版本 传入:GetLastError()
      * @param errno  pass:errno, windows version pass:GetLastError()
      */
-	TC_Exception(const string &buffer, int err);
+	TC_Exception(const std::string &buffer, int err);
 
     /**
      * @brief 析够数函
@@ -90,12 +88,12 @@ public:
 
     /**
      * @brief 获取错误字符串(linux是errno, windows是GetLastError())
-     * @brief Get the error string (linux: errno, windows: GetLastError())
+     * @brief Get the error std::string (linux: errno, windows: GetLastError())
      * 
      * @return 成功获取返回0
      * @return if get successfully , return 0
      */
-    static string parseError(int err);
+    static std::string parseError(int err);
 
     /**
      * @brief 获取系统错误码(linux是errno, windows是GetLastError)
@@ -111,7 +109,7 @@ public:
      *
      * @return 获取系统错误描述
      */
-    static string getSystemError();
+    static std::string getSystemError();
 
 private:
     void getBacktrace();
@@ -127,14 +125,14 @@ private:
 	 * 异常的相关信息
      * Information about exceptions
      */
-    string  _buffer;
+    std::string  _buffer;
 
 };
 
 //为了避免windows平台GetLastError()获取不对的问题, 因为抛异常, throw TC_Exception("xxxx", TC_Exception::getSystemCode())时
 //In order to avoid getting the wrong getlasterror() on Windows platform, throw TC_ Exception("xxxx", TC_ Exception:: getsystemcode())
 //回调用系统函数分配内存, 导致错误码被改写, 因此专门定义宏来抛出异常
-//Callback uses system function to allocate memory, which causes error code to be rewritten, so it specially defines macro to throw exception
+//Callback uses system std::function to allocate memory, which causes error code to be rewritten, so it specially defines macro to throw std::exception
 //先获取到错误码, 再throw
 //Get the error code first, and then throw
 #define THROW_EXCEPTION_SYSCODE(EX_CLASS, buffer) \

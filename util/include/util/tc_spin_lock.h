@@ -8,9 +8,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /**
  * 自旋锁
  * 不能阻塞wait, 只能快速加解锁, 适用于锁粒度非常小的情况, 减小线程切换的开销

@@ -21,9 +21,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_consistent_hash.h
@@ -92,7 +89,7 @@ class  TC_ConsistentHash
          * @return      节点的hash值
          * @return      node hash value
          */
-        unsigned addNode(const string & node, unsigned int index)
+        unsigned addNode(const std::string & node, unsigned int index)
         {
             node_T stItem;
             stItem.iHashCode = hash_md5(TC_MD5::md5bin(node));
@@ -113,10 +110,10 @@ class  TC_ConsistentHash
          * @return       0 : 删除成功  -1 : 没有对应节点
          * @return       0 : delete successfully   -1 : no corresponding nodes
          */
-        int removeNode(const string & node)
+        int removeNode(const std::string & node)
         {
             unsigned iHashCode = hash_md5(TC_MD5::md5bin(node));
-            vector<node_T>::iterator it;
+            std::vector<node_T>::iterator it;
             for(it=vHashList.begin() ; it!=vHashList.end(); it++)
             {
                 if(it->iHashCode == iHashCode)
@@ -139,7 +136,7 @@ class  TC_ConsistentHash
          * @return        0:获取成功   -1:没有被添加的节点
          * @return        0:obtain successfully   -1:no added nodes
          */
-        int getIndex(const string & key, unsigned int & iIndex)
+        int getIndex(const std::string & key, unsigned int & iIndex)
         {
             unsigned iCode = hash_md5(TC_MD5::md5bin(key));
             if(vHashList.size() == 0)
@@ -183,13 +180,13 @@ class  TC_ConsistentHash
          * @return      hash值
          * @return      hash value
          */
-        unsigned int hash_md5(const string & sMd5)
+        unsigned int hash_md5(const std::string & sMd5)
         {
             char *p = (char *) sMd5.c_str();
             return (*(int*)(p)) ^ (*(int*)(p+4)) ^ (*(int*)(p+8)) ^ (*(int*)(p+12));
         }
 
-        vector<node_T> vHashList;
+        std::vector<node_T> vHashList;
 
 };
 

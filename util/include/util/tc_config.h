@@ -57,8 +57,8 @@ const char TC_CONFIG_PARAM_END = '>';
 */
 struct TC_Config_Exception : public TC_Exception
 {
-    TC_Config_Exception(const string &buffer) : TC_Exception(buffer){};
-    TC_Config_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_Config_Exception(const std::string &buffer) : TC_Exception(buffer){};
+    TC_Config_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_Config_Exception() throw(){};
 };
 
@@ -68,7 +68,7 @@ struct TC_Config_Exception : public TC_Exception
  */
 struct TC_ConfigNoParam_Exception : public TC_Exception
 {
-    TC_ConfigNoParam_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_ConfigNoParam_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_ConfigNoParam_Exception() throw(){};
 };
 
@@ -89,7 +89,7 @@ public:
     * @param sLine  指配置文件中的一行，按行读取
     * @param sLine  Refers to a line in the configuration file, read by line
     */
-    TC_ConfigDomain(const string &sLine);
+    TC_ConfigDomain(const std::string &sLine);
 
     /**
     *  @brief 析够函数.
@@ -118,8 +118,8 @@ public:
 
     struct DomainPath
     {
-        vector<string>  _domains;
-        string          _param;
+        std::vector<std::string>  _domains;
+        std::string          _param;
     };
 
     /**
@@ -132,7 +132,7 @@ public:
      * including the path'_domains' and the corresponding configuration item in the path '_param'
      * 
      * @param path       一个经过处理的字符串，必须符合一定的要求
-     * @param path       A processed string must meet certain requirements
+     * @param path       A processed std::string must meet certain requirements
      * @param bWithParam "/Main/Domain<Name>"时bWithParam为ture 
      *                   "/Main/Domain"时bWithParam为false
      * @param bWithParam bool: true, when'/Main/Domain<Name>'; 
@@ -140,7 +140,7 @@ public:
      * @return DomainPath 一个DomainPath对象，解析出域中的域名和参数
      * @return DomainPath A DomainPath object that resolves domain names and parameters in a domain
      */
-    static DomainPath parseDomainName(const string& path, bool bWithParam);
+    static DomainPath parseDomainName(const std::string& path, bool bWithParam);
 
     /**
     * @brief 增加子域名称
@@ -157,7 +157,7 @@ public:
     * @return TC_ConfigDomain*  the pointer which points to the subdomain 
     * @throws TC_Config_Exception 
     */
-    TC_ConfigDomain* addSubDomain(const string& name);
+    TC_ConfigDomain* addSubDomain(const std::string& name);
 
     /**
     * @brief 递归搜索子域 Sub Domain. 
@@ -170,8 +170,8 @@ public:
     * @return TC_ConfigDomain* 指向目标子域的指针
     * @return TC_ConfigDomain* a point point to the target subdomain
     */
-    TC_ConfigDomain *getSubTcConfigDomain(vector<string>::const_iterator itBegin, vector<string>::const_iterator itEnd);
-    const TC_ConfigDomain *getSubTcConfigDomain(vector<string>::const_iterator itBegin, vector<string>::const_iterator itEnd) const;
+    TC_ConfigDomain *getSubTcConfigDomain(std::vector<std::string>::const_iterator itBegin, std::vector<std::string>::const_iterator itEnd);
+    const TC_ConfigDomain *getSubTcConfigDomain(std::vector<std::string>::const_iterator itBegin, std::vector<std::string>::const_iterator itEnd) const;
 
     /**
     * @brief Get Param Value 获取参数/值对. 
@@ -182,25 +182,25 @@ public:
     * @return      配置项对应的值
     * @return      the value of the configration item
     */
-    string getParamValue(const string &sName) const;
+    std::string getParamValue(const std::string &sName) const;
 
     /**
-    * @brief Get Param Map 获取map
-    * map是参数/值对，是配置项和配置项的值对应的键值对, 
+    * @brief Get Param Map 获取std::map
+    * std::map是参数/值对，是配置项和配置项的值对应的键值对, 
     * eg. SyncThreadNum = 2
-    * Map is a parameter/value pair, a key-value pair corresponding to the value of the configuration item and the configuration item, 
+    * Map is a parameter/value std::pair, a key-value std::pair corresponding to the value of the configuration item and the configuration item, 
     * eg. SyncThreadNum = 2
-    * @return 一个域中的参数和其对应的值的map 
-    * @return a map of parameters and their corresponding values in a domain
+    * @return 一个域中的参数和其对应的值的std::map 
+    * @return a std::map of parameters and their corresponding values in a domain
     */
-    const map<string, string>& getParamMap() const { return _param; }
+    const std::map<std::string, std::string>& getParamMap() const { return _param; }
 
     /**
-    * @brief Get Domain Map 获取map. 
+    * @brief Get Domain Map 获取std::map. 
     *  
-    * @return map
+    * @return std::map
     */
-    const map<string, TC_ConfigDomain*>& getDomainMap() const { return _subdomain; }
+    const std::map<std::string, TC_ConfigDomain*>& getDomainMap() const { return _subdomain; }
 
     /**
     * @brief Set Param Value 设置参数/值对. 
@@ -209,15 +209,15 @@ public:
     * @param sLine line
     * @return 
     */
-    void setParamValue(const string &sLine);
+    void setParamValue(const std::string &sLine);
 
     /**
      * @brief 插入参数，把key里没有的配置项添加到最后 
      * @brief Insert a parameter to add a configuration item that is not in the key to the last
      *  
-     * @param 存配置项和对应配置项值的map
+     * @param 存配置项和对应配置项值的std::map
      */
-    void insertParamValue(const map<string, string> &m);
+    void insertParamValue(const std::map<std::string, std::string> &m);
 
     /**
     * @brief Destroy 释放. 
@@ -233,7 +233,7 @@ public:
     * @return 域名称
     * @return the domain name
     */
-    string getName() const;
+    std::string getName() const;
 
     /**
      * @brief 设置域名称 
@@ -242,45 +242,45 @@ public:
      * @param 域名称
      * @param name domain name
      */
-    void setName(const string& name);
+    void setName(const std::string& name);
 
     /**
      * @brief 按照文件中的顺序获取key
      * @brief Get keys in the order they appear in the file
      * 
-     * @return vector<string>存放key的vector
-     * @return the vector which stores keys in vector<string>
+     * @return std::vector<std::string>存放key的std::vector
+     * @return the std::vector which stores keys in std::vector<std::string>
      */
-    vector<string> getKey() const;
+    std::vector<std::string> getKey() const;
 
     /**
      * @brief 按照文件中的顺序获取line
      * @brief Get 'line' in the order they appear in the file
      * 
-     * @return vector<string>存放key的vector
-     * @return the vector which stores keys in vector<string>
+     * @return std::vector<std::string>存放key的std::vector
+     * @return the std::vector which stores keys in std::vector<std::string>
      */
-    vector<string> getLine() const;
+    std::vector<std::string> getLine() const;
 
     /**
      * @brief 按照文件中的顺序获取子Domain
      * @brief Get subdomains in the order they appear in the file
      * 
-     * @return vector<string>存放域名字的vector
-     * @return the vector which stores keys in vector<string>
+     * @return std::vector<std::string>存放域名字的std::vector
+     * @return the std::vector which stores keys in std::vector<std::string>
      */
-    vector<string> getSubDomain() const;
+    std::vector<std::string> getSubDomain() const;
 
     /**
     * @brief 转换成配置文件的字符串格式. 
-    * @brief Convert to the string format of the configuration file.
+    * @brief Convert to the std::string format of the configuration file.
     *  
     * @param i  tab的层数
     * @param i  number of layers of 'tab'
-    * @return   string类型配置字符串
-    * @return   string type configuration string
+    * @return   std::string类型配置字符串
+    * @return   std::string type configuration std::string
     */
-    string tostr(int i) const;
+    std::string tostr(int i) const;
 
     /**
      * @brief 克隆.
@@ -298,18 +298,18 @@ public:
      * @brief Escape.
      *  
      * @param name 
-     * @return string
+     * @return std::string
      */
-    static string parse(const string& s);
+    static std::string parse(const std::string& s);
 
     /**
      * @brief 方向转义. 
      * @brief Direction escaping
      *  
      * @param s 
-     * @return string
+     * @return std::string
      */
-    static string reverse_parse(const string &s);
+    static std::string reverse_parse(const std::string &s);
 
     /**
     * @brief 设置参数/值对 
@@ -322,7 +322,7 @@ public:
     * @return 无
     * @return void
     */
-    void setParamValue(const string &sName, const string &sValue);
+    void setParamValue(const std::string &sName, const std::string &sValue);
 
 protected:
 
@@ -330,61 +330,61 @@ protected:
     * 域名称
     * Domain Name
     */
-    string                  _name;
+    std::string                  _name;
 
     /**
     * name/value对，配置项的名称和配置项的值
-    * name/value pair, the name and value of the configuration item 
+    * name/value std::pair, the name and value of the configuration item 
     */
-    map<string, string>     _param;
+    std::map<std::string, std::string>     _param;
 
     /**
      * key也就是配置项的插入顺序
      * key, the insertion order of configuration items
      */
-    vector<string>          _key;
+    std::vector<std::string>          _key;
 
     /**
     * 子域
     * Subdomain
     */
-    map<string, TC_ConfigDomain*>        _subdomain;
+    std::map<std::string, TC_ConfigDomain*>        _subdomain;
 
     /**
      * 域的插入顺序
      * the insertion order of the domain
      */
-    vector<string>          _domain;
+    std::vector<std::string>          _domain;
  
     /**
      * 整行的配置列表
-     * Configuration list for the whole row
+     * Configuration std::list for the whole row
      */
-    vector<string>          _line;
+    std::vector<std::string>          _line;
 };
 
 /**
  * @brief 定义配置文件的类（兼容wbl模式）.
  * @brief Define the class of the profile (compatible with WBL mode).
  
- * 支持从string中解析配置文件；
+ * 支持从std::string中解析配置文件；
  * Support parsing configuration files from strings;
  
  * 支持生成配置文件；
  * Support the generation of configuration files;
  
  * 解析出错抛出异常；
- * Parse error and throw exception;
+ * Parse error and throw std::exception;
 
  
  * 采用[]获取配置，如果无配置则抛出异常；
- * Use [] to get the configuration and throw an exception if there is no configuration;
+ * Use [] to get the configuration and throw an std::exception if there is no configuration;
  
  * 采用get获取配置，不存在则返回空；
  * Use 'get' to get the configuration, and return null if it doesn't exist
  
  * 读取配置文件是线程安全的，insert域等函数非线程安全；
- * Reading configuration files is thread-safe, functions such as insert fields are not thread-safe;
+ * Reading configuration files is std::thread-safe, functions such as insert fields are not std::thread-safe;
  
  * 例如：
  * For example:
@@ -401,9 +401,9 @@ protected:
  *  获取参数:conf["/Main/Domain<Name>"] 获取域Map:
  *  Get parameter: conf ["/Main/Domain<Name>"] Get domain Map:
  *  getDomainMap("/Main/Domain", m); m得到Name/Value对
- *  getDomainMap("/Main/Domain", m); 'm' can get the Name/Value pair
+ *  getDomainMap("/Main/Domain", m); 'm' can get the Name/Value std::pair
  * 获取域Vector: getDomainVector("/Main", v); v得到Domain列表 可以增加域或域下面的值对
- * Get Domain Vector: getDomainVector ('/Main', v); 'v' can get a list of Domains to increase the number of the value pairs under the domain or domain
+ * Get Domain Vector: getDomainVector ('/Main', v); 'v' can get a std::list of Domains to increase the number of the value pairs under the domain or domain
  
  */
 class TC_Config
@@ -445,43 +445,43 @@ public:
     * @return void
     * @throws TC_Config_Exception 
     */
-    void parseFile(const string& sFileName);
+    void parseFile(const std::string& sFileName);
 
     /**
     * @brief 解析字符串.
-    * @brief Parse string 
+    * @brief Parse std::string 
     *  
-    * 把string 类型先转化为输入流后调用parse对其进行解析 
-    * Convert string type to input stream and call parse to parse it
+    * 把std::string 类型先转化为输入流后调用parse对其进行解析 
+    * Convert std::string type to input stream and call parse to parse it
     * @return void 
     * @throws TC_Config_Exception 
     */
-    void parseString(const string& buffer);
+    void parseString(const std::string& buffer);
 
     /**
     * @brief 获取值, 如果没有则抛出异常， 
     * 对于型如/Main/Domain<Param>的字符串，获取域/Main/Domain下的配置项名字为Param的值
     * @brief Get value. 
-    * If no exception is thrown, for strings of which type like /Main/Domain<Param>, get the value of the configuration item named 'Param' under the domain '/Main/Domain'
+    * If no std::exception is thrown, for strings of which type like /Main/Domain<Param>, get the value of the configuration item named 'Param' under the domain '/Main/Domain'
     * @param sName 参数名称,例如: /Main/Domain<Param>
     * @param sName param name, like: /Main/Domain<Param>
     * @return      配置项对应的值
     * @return      the value of the configuration file 
     *  @throws     TC_Config_Exception 
     */
-    string operator[](const string &sName) const;
+    std::string operator[](const std::string &sName) const;
 
     /**
      * @brief 获取值, 注意如果没有不抛出异常,返回空字符串. 
      * 对于型如/Main/Domain<Param>的字符串，获取域/Main/Domain下的配置项名字为Param的值
-     * @brief Get value. Note that if no exception is thrown, an empty string is returned.
+     * @brief Get value. Note that if no std::exception is thrown, an empty std::string is returned.
      * For strings of type like'/main/domain<param>', get the value of the configuration item named 'Param' under the domain '/Main/Domain'
      * @param sName 参数名称,  例如: /Main/Domain<Param>
      * @param sName param name, like: /Main/Domain<Param>
      * @return     配置项对应的值
      * @return     the value of the configuration file 
      */
-    string get(const string &sName, const string &sDefault="") const;
+    std::string get(const std::string &sName, const std::string &sDefault="") const;
 
     /**
 	 * @brief 设置值.
@@ -489,42 +489,42 @@ public:
 	 * @param sName 参数名称,  例如: /Main/Domain<Param>
      * @param sName param name, like: /Main/Domain<Param>
      */
-    void set(const string &sName, const string &value);
+    void set(const std::string &sName, const std::string &value);
 
     /**
     * @brief GetDomainParamMap获取域下面的参数值对. 
-    * @brief GetDomainParamMap Get the parameter-value pair under the domain
+    * @brief GetDomainParamMap Get the parameter-value std::pair under the domain
 
     *  
     * @param path 域名称, 域标识, 例如: /Main/Domain
     * @param path domain name, domain identifier, such as: '/Main/Domain'
-    * @param m    map<string, string>类型，域内的map列表
-    * @param m    map<string, string> type, the map list in the domain
+    * @param m    std::map<std::string, std::string>类型，域内的std::map列表
+    * @param m    std::map<std::string, std::string> type, the std::map std::list in the domain
     * @return     bool, 返回域下面的参数值对
-    * @return     bool, return the parameter-value pair under the domain
+    * @return     bool, return the parameter-value std::pair under the domain
     */
-    bool getDomainMap(const string &path, map<string, string> &m) const;
+    bool getDomainMap(const std::string &path, std::map<std::string, std::string> &m) const;
 
     /**
-     * @brief 获取域下面的参数值对,不存则返回空map. 
-     * @brief Get the parameter value pair under the domain. If it is not saved, an empty map will be returned.
+     * @brief 获取域下面的参数值对,不存则返回空std::map. 
+     * @brief Get the parameter value std::pair under the domain. If it is not saved, an empty std::map will be returned.
      *  
      * @param path 域名称, 域标识, 例如: /Main/Domain 
      * @param path domain name, domain identifier, such as: '/Main/Domain'
-     * @return     map<string,string>,对应域下面的所有参数值对
-     * @return     bool, return the parameter-value pair under the domain
+     * @return     std::map<std::string,std::string>,对应域下面的所有参数值对
+     * @return     bool, return the parameter-value std::pair under the domain
      */
-    map<string, string> getDomainMap(const string &path) const;
+    std::map<std::string, std::string> getDomainMap(const std::string &path) const;
 
     /**
      * @brief 获取域下面的所有key, 按照文件的行顺序返回
      * @brief Get all the keys under the domain and return them in line order
      * @param path 域名称, 域标识, 例如: /Main/Domain 
      * @param path domain name, domain identifier, such as: '/Main/Domain'
-     * @return     vector<string>，某个标识下的所有key
-     * @return     vector<string>，All keys under a certain ID
+     * @return     std::vector<std::string>，某个标识下的所有key
+     * @return     std::vector<std::string>，All keys under a certain ID
      */
-    vector<string> getDomainKey(const string &path) const;
+    std::vector<std::string> getDomainKey(const std::string &path) const;
 
     /**
      * @brief 获取域下面的所有非域行, 按照文件的行顺序返回 
@@ -533,10 +533,10 @@ public:
      * The difference is that this interface getDomainKey, which can only get the key, also returns the whole line for the configuration with "=".
      * @param path 域名称, 域标识, 例如: /Main/Domain 
      * @param path domain name, domain identifier, such as: '/Main/Domain'
-     * @return     vector<string>，某个标识下的所有非域行
-     * @return     vector<string>，All non domain lines under a certain ID
+     * @return     std::vector<std::string>，某个标识下的所有非域行
+     * @return     std::vector<std::string>，All non domain lines under a certain ID
      */
-    vector<string> getDomainLine(const string &path) const;
+    std::vector<std::string> getDomainLine(const std::string &path) const;
 
     /**
     * @brief getDomainMap 获取域下面的子域. 
@@ -544,23 +544,23 @@ public:
     *  
     * @param path  域名称, 域标识, 例如: /Main/Domain
     * @param path domain name, domain identifier, such as: '/Main/Domain'
-    * @param v     要获取的子域名字， vector<string>下的域名
-    * @param v     the target subdomian name，the domain name under vector<string>
+    * @param v     要获取的子域名字， std::vector<std::string>下的域名
+    * @param v     the target subdomian name，the domain name under std::vector<std::string>
     * @return      成功获取返回true，否则返回false
     * @return      bool: true, successful , false, failed
     */
-    bool getDomainVector(const string &path, vector<string> &v) const;
+    bool getDomainVector(const std::string &path, std::vector<std::string> &v) const;
 
     /**
      * @brief 获取域下面的子域, 
-     *        不存在则返回空vector按照在文件中的顺序返回
+     *        不存在则返回空std::vector按照在文件中的顺序返回
      * @brief Get the subdomain under the domain
      * @param path 域名称, 域标识, 例如: /Main/Domain 
      * @param path domain name, domain identifier, such as: '/Main/Domain'
-     * @return     vector<string>目标域下面的子域
-     * @return     vector<string> the subdomain under the target domain
+     * @return     std::vector<std::string>目标域下面的子域
+     * @return     std::vector<std::string> the subdomain under the target domain
      */
-    vector<string> getDomainVector(const string &path) const;
+    std::vector<std::string> getDomainVector(const std::string &path) const;
 
     /**
      * @brief 是否存在域. 
@@ -571,7 +571,7 @@ public:
      * @return     存在返回true，否则返回false
      * @return     If the domain does exist, return true, else return false.
      */
-    bool hasDomainVector(const string &path) const;
+    bool hasDomainVector(const std::string &path) const;
 
     /** 
      * @brief 增加域，在当前域下面增加域, 如果已经存在sAddDomain域, 
@@ -588,7 +588,7 @@ Add domain. Add a domain under the current domain. If the sadddomain domain alre
      * @return           0-成功增加, 1-sCurDomain不存在 
      * @return           0 - add successfull, 1 - sCurDomain doesn't exist.
      */
-    int insertDomain(const string &sCurDomain, const string &sAddDomain, bool bCreate);
+    int insertDomain(const std::string &sCurDomain, const std::string &sAddDomain, bool bCreate);
 
 
     /** 
@@ -597,14 +597,14 @@ Add domain. Add a domain under the current domain. If the sadddomain domain alre
      * @brief Add parameter, i.e. configuration item. Add configuration item parameter under the current domain. If there are already related parameters, ignore (do not replace).
      * @param sCurDomain  域标识符, 例如:/Main/Domain
      * @param sCurDomain domain identifier, such as: '/Main/Domain'
-     * @param m           map类型，存参数值对
-     * @param m           map type, save parameter-value pairs
+     * @param m           std::map类型，存参数值对
+     * @param m           std::map type, save parameter-value pairs
      * @param bCreate     sCurDomain域不存在的情况下, 是否自动创建
      * @param bCreate     When the domain sCurDomain does not exist, determine wheter it needs to be created automatically.
      * @return            0: 成功, 1:sCurDomain不存在 
      * @return            0 - add successfull, 1 - sCurDomain doesn't exist.
      */
-    int insertDomainParam(const string &sCurDomain, const map<string, string> &m, bool bCreate);
+    int insertDomainParam(const std::string &sCurDomain, const std::map<std::string, std::string> &m, bool bCreate);
 
     /**
      * @brief 合并配置文件到当前配置文件. 
@@ -618,25 +618,25 @@ Add domain. Add a domain under the current domain. If the sadddomain domain alre
 
     /**
     * @brief 转换成配置文件的字符串格式. 
-    * @brief convert to the string format of the configuration file
+    * @brief convert to the std::string format of the configuration file
     *  
     * @return 配置字符串
-    * @return the configuration string
+    * @return the configuration std::string
     */
-    string tostr() const;
+    std::string tostr() const;
 
 protected:
     /**
     * @brief Parse输入流， 
-    * 最终把输入流解析成为一个TC_ConfigDomain装入stack中 
+    * 最终把输入流解析成为一个TC_ConfigDomain装入std::stack中 
     * @brief Parse Input Stream
-    * Finally, the input stream is parsed into a TC_ ConfigDomain and is loaded into the stack.
+    * Finally, the input stream is parsed into a TC_ ConfigDomain and is loaded into the std::stack.
     * @param  要解析的输入流，按行解析 
     * @param  the input stream, parsed by line
     * @throws TC_Config_Exception
     * @return
     */
-    void parse(istream &is);
+    void parse(std::istream &is);
 
     /**
     * @brief create New Domain 生成子域. 
@@ -648,7 +648,7 @@ protected:
     * @return      Pointer to the newly generated subfield
     * @throws TC_Config_Exception 
     */
-    TC_ConfigDomain *newTcConfigDomain(const string& sName);
+    TC_ConfigDomain *newTcConfigDomain(const std::string& sName);
 
     /**
     * @brief Search Domain 搜索域. 
@@ -657,8 +657,8 @@ protected:
     * @param sDomainName param name, support the subdomain search
     * @return value
     */
-    TC_ConfigDomain *searchTcConfigDomain(const vector<string>& domains);
-    const TC_ConfigDomain *searchTcConfigDomain(const vector<string>& domains) const;
+    TC_ConfigDomain *searchTcConfigDomain(const std::vector<std::string>& domains);
+    const TC_ConfigDomain *searchTcConfigDomain(const std::vector<std::string>& domains) const;
 
 protected:
 

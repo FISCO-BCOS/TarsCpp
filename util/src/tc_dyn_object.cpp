@@ -19,6 +19,8 @@
 
 namespace tars
 {
+
+using namespace std;
 /**********************************TC_DYN_RuntimeClass定义***********************************/
 
 TC_DYN_RuntimeClass* TC_DYN_RuntimeClass::pFirstClass = NULL;

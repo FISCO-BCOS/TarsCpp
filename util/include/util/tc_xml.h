@@ -13,9 +13,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 // 说明: Xml编解码的公共库
 // Author : linfengchen@tencent.com
@@ -26,8 +23,8 @@ using namespace std;
 */
 struct TC_Xml_Exception : public TC_Exception
 {
-    TC_Xml_Exception(const string &buffer) : TC_Exception(buffer){};
-    TC_Xml_Exception(const string &buffer, int err) : TC_Exception(buffer, err){};
+    TC_Xml_Exception(const std::string &buffer) : TC_Exception(buffer){};
+    TC_Xml_Exception(const std::string &buffer, int err) : TC_Exception(buffer, err){};
     ~TC_Xml_Exception() throw(){};
 };
 
@@ -53,12 +50,12 @@ typedef tars::TC_AutoPtr<XmlValue> XmlValuePtr;
 
 
 /*
- * Xml类型 string类型
+ * Xml类型 std::string类型
  */
 class XmlValueString : public XmlValue
 {
 public:
-    XmlValueString(const string & s, bool _cdata = false):value(s), cdata(_cdata)
+    XmlValueString(const std::string & s, bool _cdata = false):value(s), cdata(_cdata)
     {
     }
     XmlValueString(bool _cdata = false):cdata(_cdata)
@@ -70,7 +67,7 @@ public:
         return eXmlTypeString;
     }
     virtual ~XmlValueString(){}
-    string value;
+    std::string value;
     bool   cdata;
 };
 typedef tars::TC_AutoPtr<XmlValueString> XmlValueStringPtr;
@@ -88,7 +85,7 @@ public:
     }
     virtual ~XmlValueObj(){}
 public:
-    map<string,	XmlValuePtr> value;
+    std::map<std::string,	XmlValuePtr> value;
 };
 typedef tars::TC_AutoPtr<XmlValueObj> XmlValueObjPtr;
 
@@ -108,7 +105,7 @@ public:
     }
     virtual ~XmlValueArray(){}
 public:
-    vector<XmlValuePtr> value;
+    std::vector<XmlValuePtr> value;
 };
 typedef tars::TC_AutoPtr<XmlValueArray> XmlValueArrayPtr;
 
@@ -197,25 +194,25 @@ class TC_Xml
 {
 public:
     //Xml类型到字符串的转换
-    static string writeValue(const XmlValuePtr& p, bool bHead = true);
-	static void writeValue(const XmlValuePtr& p, vector<char>& buf, bool bHead = true);
+    static std::string writeValue(const XmlValuePtr& p, bool bHead = true);
+	static void writeValue(const XmlValuePtr& p, std::vector<char>& buf, bool bHead = true);
     //Xml字符串到Xml结构的转换
-    static XmlValuePtr getValue(const string& str);
-	static XmlValuePtr getValue(const vector<char>& buf);
+    static XmlValuePtr getValue(const std::string& str);
+	static XmlValuePtr getValue(const std::vector<char>& buf);
 private:
-    static XmlValuePtr getNode(BufferXmlReader& reader, const string& nodename = "");
+    static XmlValuePtr getNode(BufferXmlReader& reader, const std::string& nodename = "");
     static XmlValueStringPtr getValue(BufferXmlReader& reader);
     static XmlValueStringPtr getCdata(BufferXmlReader& reader);
 
-    static void insertArray(const string& name, XmlValuePtr& v, XmlValueObjPtr& p);
-    static bool isEndNode(BufferXmlReader& reader, const string& nodename);
+    static void insertArray(const std::string& name, XmlValuePtr& v, XmlValueObjPtr& p);
+    static bool isEndNode(BufferXmlReader& reader, const std::string& nodename);
     static void ignoreDeclaration(BufferXmlReader& reader);
     static bool ignoreComment(BufferXmlReader& reader);
 
 
-    static void writeArray(std::ostream& os, const string& name, const XmlValuePtr& p);
+    static void writeArray(std::ostream& os, const std::string& name, const XmlValuePtr& p);
     static void writeString(std::ostream& os, const XmlValuePtr& p);
-    static void writeEChar(std::ostream& os, const string& data);
+    static void writeEChar(std::ostream& os, const std::string& data);
     static void writeObj(std::ostream& os, const XmlValuePtr& p);
 
     //判断一个字符是否符合Xml定义的空白字符

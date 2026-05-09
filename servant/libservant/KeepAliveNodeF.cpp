@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 void KeepAliveNodeFHelper::setNodeInfo(const CommunicatorPtr &comm, const string &obj, const string &app, const string &server)
 {
     _comm           = comm;

@@ -39,12 +39,12 @@ public:
      * @param app
      * @param server
      */
-    void setNodeInfo(const CommunicatorPtr &comm, const string &obj, const string &app, const string &server);
+    void setNodeInfo(const CommunicatorPtr &comm, const std::string &obj, const std::string &app, const std::string &server);
 
     /**
      * keepAlive
      */
-    void keepAlive(const string &adapter = "");
+    void keepAlive(const std::string &adapter = "");
 
     /**
      * Activing状态
@@ -55,7 +55,7 @@ public:
      * 上报TARS的编译版本
      * @param version
      */
-    void reportVersion(const string &version);
+    void reportVersion(const std::string &version);
 
 protected:
     /**
@@ -73,7 +73,7 @@ protected:
      */
     ServerInfo      _si;
 
-    set<string>     _adapterSet;
+    std::set<std::string>     _adapterSet;
 
 };
 

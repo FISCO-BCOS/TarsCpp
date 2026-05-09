@@ -36,6 +36,8 @@
 namespace tars
 {
 
+using namespace std;
+
 #define MATCH_DOUBLE  \
 if (vx.size() != vy.size()) { return false; } \
 auto it1 = vx.begin(); auto it2 = vy.end(); \

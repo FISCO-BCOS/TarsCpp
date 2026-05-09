@@ -22,9 +22,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /** 
 * @file tc_parsepara.h 
@@ -37,15 +34,15 @@ using namespace std;
 
 /** 
 * @brief  提供name=value&name1=value1形式的解析函数.
-* @brief  Provides an analytic function in the form name=value&name1=value1.
+* @brief  Provides an analytic std::function in the form name=value&name1=value1.
 * 
-* 可以和map互相转换,不是标准的cgi参数的解析
-* Convertible with map, not parsing standard CGI parameters
+* 可以和std::map互相转换,不是标准的cgi参数的解析
+* Convertible with std::map, not parsing standard CGI parameters
 * 
 * （标准cgi参数解析会把空格和+互转）,非线程安全；
-* (Standard CGI parameter parsing will swap spaces and +), non-thread safe;
+* (Standard CGI parameter parsing will swap spaces and +), non-std::thread safe;
 * @param 型如name=value&name=value字符串
-* @param : Types such as name=value&name=value string
+* @param : Types such as name=value&name=value std::string
 */
 class TC_Parsepara
 {
@@ -57,16 +54,16 @@ public:
     * @brief  构造函数
     * @brief  Constructor
     * @param 型如name=value&name=value字符串
-    * @param : Types such as name=value&name=value string
+    * @param : Types such as name=value&name=value std::string
     */
-    TC_Parsepara(const string &sParam);
+    TC_Parsepara(const std::string &sParam);
 
     /**
     * @brief  copy contructor
     * @param : name=value&name=value字符串
-    * @param : Types such as name=value&name=value string
+    * @param : Types such as name=value&name=value std::string
     */
-    TC_Parsepara(const map<string, string> &mpParam);
+    TC_Parsepara(const std::map<std::string, std::string> &mpParam);
 
     /**
     * @brief  copy contructor
@@ -100,56 +97,56 @@ public:
 
     /**
     * @brief  遍历函数
-    * @brief  Traversal function
+    * @brief  Traversal std::function
     * @param 参数名称
     * @param : Parameter Name
     * @param 参数值
     * @param : parameter values
     */
-    typedef int (*TC_ParseparaTraverseFunc)(string, string, void *);
+    typedef int (*TC_ParseparaTraverseFunc)(std::string, std::string, void *);
 
     /**
     *@brief  重载[], 获取参数值
     *@brief  Overload [], get parameter values
-    *@return string &参数值
-    *@return string &parameter values
+    *@return std::string &参数值
+    *@return std::string &parameter values
     */
-    string &operator[](const string &sName);
+    std::string &operator[](const std::string &sName);
 
     /**
     * @brief  读入字符串,并解析
     * @brief  Overload [], get parameter values
     * @param sParam:字符串函数
-    * @param sParam:String function
+    * @param sParam:String std::function
     * @return 无
     * @return none
     */
-    void load(const string &sParam);
+    void load(const std::string &sParam);
 
     /**
-    * @brief  读入map,并解析
-    * @brief  Read in the map and parse it
+    * @brief  读入std::map,并解析
+    * @brief  Read in the std::map and parse it
     * @param mpParam:字符串函数
-    * @param mpParam:String function
+    * @param mpParam:String std::function
     * @return void
     */
-    void load(const map<string, string> &mpParam);
+    void load(const std::map<std::string, std::string> &mpParam);
 
     /**
     * @brief  转成字符串
     * @brief  Convert to String
-    * @return string
+    * @return std::string
     */
-    string tostr() const;
+    std::string tostr() const;
 
     /**
     * @brief  获取参数值
     * @brief  Get parameter values
     * @param sName 参数名称
     * @param sName Parameter Name
-    * @return string
+    * @return std::string
     */
-    string getValue(const string &sName) const;
+    std::string getValue(const std::string &sName) const;
 
     /**
     * @brief  设置参数值
@@ -160,36 +157,36 @@ public:
     * @param sValue Parameter Value
     * @return void
     */
-    void setValue(const string &sName, const string &sValue);
+    void setValue(const std::string &sName, const std::string &sValue);
 
     /**
     * @brief  清除当前参数值对
-    * @brief  Clear current parameter value pair
+    * @brief  Clear current parameter value std::pair
     * return void
     */
     void clear();
 
     /**
-    * @brief  引用方式获取参数map
-    * @brief  Getting parameter map by reference
-    * @return map<string,string>& 返回参数map
-    * @return map<string,string>& return parameter map
+    * @brief  引用方式获取参数std::map
+    * @brief  Getting parameter std::map by reference
+    * @return std::map<std::string,std::string>& 返回参数std::map
+    * @return std::map<std::string,std::string>& return parameter std::map
     */
-    map<string,string> &toMap();
+    std::map<std::string,std::string> &toMap();
 
     /**
-    * @brief  引用方式获取参数map
-    * @brief  Getting parameter map by reference
-    * @return map<string,string>& 返回参数map
-    * @return map<string,string>& return parameter map
+    * @brief  引用方式获取参数std::map
+    * @brief  Getting parameter std::map by reference
+    * @return std::map<std::string,std::string>& 返回参数std::map
+    * @return std::map<std::string,std::string>& return parameter std::map
     */
-    const map<string,string> &toMap() const;
+    const std::map<std::string,std::string> &toMap() const;
 
     /**
     * @brief  遍历每个参数值对
-    * @brief  Traverse through each parameter value pair
+    * @brief  Traverse through each parameter value std::pair
     * @param func: 函数
-    * @param func: function
+    * @param func: std::function
     * @param pParam: 参数,传入func中
     * @param pParam: parameter, passed into func
     * @return void
@@ -198,60 +195,60 @@ public:
 
     /**
     * @brief  对字符串解码,%XX转成字符,类似于http协议的编码
-    * @brief  For string decoding,%XX is converted to character, similar to HTTP protocol encoding
+    * @brief  For std::string decoding,%XX is converted to character, similar to HTTP protocol encoding
     * @param sParam 参数
     * @param sParam paarameter
-    * @return string,解码后的字符串
-    * @return string,Decoded string
+    * @return std::string,解码后的字符串
+    * @return std::string,Decoded std::string
     */
-    static string decodestr(const string &sParam);
+    static std::string decodestr(const std::string &sParam);
 
     /**
     * @brief  对字符串编码,特殊字符转成%XX, 
     *         类似于http协议的编码(少了对空格=>+的特殊处理)
-    * @brief  For string encoding, special characters are converted to%XX,
+    * @brief  For std::string encoding, special characters are converted to%XX,
     *         Encoding similar to HTTP protocol (with less special handling of space=>+)
     * @param sParam 参数
     * @param sParam parameter
-    * @return string, 编码后的字符串
-    * @return string, encoded string
+    * @return std::string, 编码后的字符串
+    * @return std::string, encoded std::string
     */
-    static string encodestr(const string &sParam);
+    static std::string encodestr(const std::string &sParam);
 
 protected:
 
     /**
-    * @brief  字符串转换成map
-    * @brief  String to map
+    * @brief  字符串转换成std::map
+    * @brief  String to std::map
     * @param sParam 参数
     * @param sParam parameter
-    * @param mpParam map
+    * @param mpParam std::map
     * @return void
     */
-    void decodeMap(const string &sParam, map<string, string> &mpParam) const;
+    void decodeMap(const std::string &sParam, std::map<std::string, std::string> &mpParam) const;
 
     /**
-    * @brief  map转换成字符串
-    * @brief  Map to string
-    * @param mpParam map
-    * @return string, 转换后的字符串
-    * @return string, Converted string
+    * @brief  std::map转换成字符串
+    * @brief  Map to std::string
+    * @param mpParam std::map
+    * @return std::string, 转换后的字符串
+    * @return std::string, Converted std::string
     */
-    string encodeMap(const map<string, string> &mpParam) const;
+    std::string encodeMap(const std::map<std::string, std::string> &mpParam) const;
 
     /**
     * @brief  "%xx" 转换为字符
     * @brief  "%xx" Convert to Character
     * @param sWhat: %xx字符串后面的两个字符
-    * @param sWhat: Two characters after the%xx string
+    * @param sWhat: Two characters after the%xx std::string
     * @return char 返回字符
     * @return char return characters
     */
-    static char x2c(const string &sWhat);
+    static char x2c(const std::string &sWhat);
 
 protected:
 
-    map<string, string> _param;
+    std::map<std::string, std::string> _param;
 };
 
 }

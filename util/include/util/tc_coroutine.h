@@ -32,9 +32,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file  tc_coroutine.h
@@ -77,8 +74,8 @@ using namespace std;
  */
 struct TC_CoroutineException : public TC_Exception
 {
-	TC_CoroutineException(const string &buffer) : TC_Exception(buffer){};
-	TC_CoroutineException(const string &buffer, int err) : TC_Exception(buffer, err){};
+	TC_CoroutineException(const std::string &buffer) : TC_Exception(buffer){};
+	TC_CoroutineException(const std::string &buffer, int err) : TC_Exception(buffer, err){};
 	~TC_CoroutineException() throw() {};
 };
 
@@ -348,19 +345,19 @@ private:
 class TC_CoroutineScheduler
 {    
 protected:
-    static thread_local shared_ptr<TC_CoroutineScheduler> g_scheduler;
+    static thread_local std::shared_ptr<TC_CoroutineScheduler> g_scheduler;
 
 public:
 
     /**
      * 如果没有, 则创建(线程私有变量, 每个线程有一个)
      */ 
-    static const shared_ptr<TC_CoroutineScheduler> &create();
+    static const std::shared_ptr<TC_CoroutineScheduler> &create();
 
     /**
      * 获取scheduler, 没有则返回null, (线程私有变量, 每个线程有一个)
      */ 
-    static const shared_ptr<TC_CoroutineScheduler> &scheduler();
+    static const std::shared_ptr<TC_CoroutineScheduler> &scheduler();
 
     /**
      * 释放协程调度器
@@ -646,17 +643,17 @@ private:
     /*
      * 需要激活的协程队列，其他线程使用，用来激活等待结果的协程
      */
-	deque<uint32_t>        _activeCoroQueue;
+	std::deque<uint32_t>        _activeCoroQueue;
 
 	/*
 	 * 需要激活的协程队列，本线程使用
 	 */
-    list<uint32_t>        _needActiveCoroId;
+    std::list<uint32_t>        _needActiveCoroId;
 
     /*
      * 存放超时的协程
      */
-    multimap<int64_t, uint32_t> _timeoutCoroId;
+    std::multimap<int64_t, uint32_t> _timeoutCoroId;
 
     /**
      * epoller
@@ -774,7 +771,7 @@ protected:
     virtual void handleCoro();
 
 protected:
-    shared_ptr<TC_CoroutineScheduler> _coroSched;
+    std::shared_ptr<TC_CoroutineScheduler> _coroSched;
     uint32_t            _num;
     uint32_t            _maxNum;
     size_t              _stackSize;

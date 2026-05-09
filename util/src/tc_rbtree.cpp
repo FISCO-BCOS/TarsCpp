@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 bool TC_RBTree::Block::hasLeft()
 {
     return _pHead->_iLeftChild != 0;

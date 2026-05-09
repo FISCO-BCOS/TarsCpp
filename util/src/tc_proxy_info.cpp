@@ -21,6 +21,8 @@
 namespace tars
 {
 
+using namespace std;
+
 shared_ptr<TC_ProxyInfo> TC_ProxyInfo::createProxyInfo(const TC_ProxyInfo::ProxyBaseInfo &baseInfo)
 {
     shared_ptr<TC_ProxyInfo> proxyInfo;

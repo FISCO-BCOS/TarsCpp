@@ -20,6 +20,8 @@
 namespace tars
 {
 
+using namespace std;
+
 ServantProxyFactory::ServantProxyFactory(Communicator* cm)
 : _comm(cm)
 {

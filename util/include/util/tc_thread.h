@@ -29,7 +29,7 @@ namespace tars
 /////////////////////////////////////////////////
 /** 
  * @file tc_thread.h 
- * @brief  线程类(兼容TARS4.x版本, 底层直接封装了c++11 thread, 从而跨平台兼容)
+ * @brief  线程类(兼容TARS4.x版本, 底层直接封装了c++11 std::thread, 从而跨平台兼容)
  *
  * 使用说明:
  * - TC_Thread定义一个线程, 继承TC_Thread, 实现run方法, 调用start即可启动线程
@@ -45,7 +45,7 @@ namespace tars
  */
 struct TC_ThreadThreadControl_Exception : public TC_Exception
 {
-    TC_ThreadThreadControl_Exception(const string &buffer) : TC_Exception(buffer){};
+    TC_ThreadThreadControl_Exception(const std::string &buffer) : TC_Exception(buffer){};
     ~TC_ThreadThreadControl_Exception() throw() {};
 };
 
@@ -121,7 +121,7 @@ public:
 	/**
      * @brief  构造函数
 	 */
-	TC_Thread(const string &threadName = "");
+	TC_Thread(const std::string &threadName = "");
 
 	/**
      * @brief  析构函数
@@ -132,7 +132,7 @@ public:
 	 * 设置线程名称(一般调试方便)
 	 * @param threadName
 	 */
-	void setThreadName(const string &threadName);
+	void setThreadName(const std::string &threadName);
 
 	/**
      * @brief  线程运行
@@ -199,7 +199,7 @@ public:
      * 协程模式下, 获取调度器, 非协程模式下则为NULL
      * @return
      */
-	const shared_ptr<TC_CoroutineScheduler> &getScheduler() { return _scheduler; }
+	const std::shared_ptr<TC_CoroutineScheduler> &getScheduler() { return _scheduler; }
 
 	/**
      * @brief  获取当前线程ID, 用size_t返回
@@ -235,7 +235,7 @@ protected:
     /**
      * 线程名称
      */
-    string          _threadName;
+    std::string          _threadName;
 
     /**
      * 是否在运行
@@ -253,7 +253,7 @@ protected:
     /**
      * 协程调度器
      */
-	shared_ptr<TC_CoroutineScheduler> _scheduler;
+	std::shared_ptr<TC_CoroutineScheduler> _scheduler;
 };
 
 }

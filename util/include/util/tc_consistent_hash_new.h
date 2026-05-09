@@ -146,7 +146,7 @@ public:
      * @return      是否成功
      * @return      whether it is successfull or not
      */
-    int addNode(const string & node, unsigned int index, int weight = 1);
+    int addNode(const std::string & node, unsigned int index, int weight = 1);
 
     /**
      * @brief 获取某key对应到的节点node的下标.
@@ -159,7 +159,7 @@ public:
      * @return        0:获取成功   -1:没有被添加的节点
      * @return        0:obtain successfully  -1:no nodes added
      */
-    int getIndex(const string & key, unsigned int & iIndex);
+    int getIndex(const std::string & key, unsigned int & iIndex);
 
     /**
      * @brief 获取某hashcode对应到的节点node的下标.
@@ -175,7 +175,7 @@ public:
 
     /**
      * @brief 获取当前hash列表的长度.
-     * @brief Get the length of the current hash list
+     * @brief Get the length of the current hash std::list
      *
      * @return        长度值
      * @return        length
@@ -184,13 +184,13 @@ public:
 
     /**
      * @brief 清空当前的hash列表.
-     * @brief Empty the current hash list.
+     * @brief Empty the current hash std::list.
      *
      */
     void clear() { _vHashList.clear(); }
 
 protected:
-    vector<node_T_new>    _vHashList;
+    std::vector<node_T_new>    _vHashList;
     TC_HashAlgorithmPtr _ptrHashAlg;
 
 };

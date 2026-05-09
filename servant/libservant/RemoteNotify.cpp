@@ -22,6 +22,8 @@
 namespace tars
 {
 
+using namespace std;
+
 int RemoteNotify::setNotifyInfo(const CommunicatorPtr &comm, const string &obj, const string & app, const string &serverName, const string &sSetName, const string &nodeName)
 {
     _comm           = comm;

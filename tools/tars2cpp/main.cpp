@@ -19,7 +19,6 @@
 #include "util/tc_common.h"
 #include "tars2cpp.h"
 
-using namespace std;
 using namespace tars;
 
 void usage()
@@ -80,7 +79,7 @@ int main(int argc, char* argv[])
     }
 
     // bool bCoder = option.hasParam("coder");
-    // vector<std::string> vCoder;
+    // std::vector<std::string> vCoder;
     // if(bCoder)
     // {
     //     vCoder = tars::TC_Common::sepstr<std::string>(option.getValue("coder"), ";", false);
@@ -132,8 +131,8 @@ int main(int argc, char* argv[])
 
     if (option.hasParam("xml"))
     {
-        vector<std::string> vXmlIntf;
-        string sXml = tars::TC_Common::trim(option.getValue("xml"));
+        std::vector<std::string> vXmlIntf;
+        std::string sXml = tars::TC_Common::trim(option.getValue("xml"));
         sXml = tars::TC_Common::trimleft(tars::TC_Common::trimright(sXml, "]"), "[");
         if (!sXml.empty())
         {
@@ -145,7 +144,7 @@ int main(int argc, char* argv[])
     // if (option.hasParam("json"))
     // {
     //     t2c.setJsonSupport(true);
-    //     string sJson = tars::TC_Common::trim(option.getValue("json"));
+    //     std::string sJson = tars::TC_Common::trim(option.getValue("json"));
     //     sJson = tars::TC_Common::trimleft(tars::TC_Common::trimright(sJson, "]"), "[");
     //     if (!sJson.empty())
     //     {
@@ -173,9 +172,9 @@ int main(int argc, char* argv[])
             t2c.createFile(vTars[i]);//, vCoder);
         }
     }
-    catch(exception& e)
+    catch(std::exception& e)
     {
-	    cerr<<e.what()<<endl;
+	    std::cerr<<e.what()<<std::endl;
     }
 
     return 0;

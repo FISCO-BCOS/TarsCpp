@@ -63,7 +63,7 @@ public:
      * 通知
      * @param command
      */
-    string notify(const string &command, CurrentPtr current);
+    std::string notify(const std::string &command, CurrentPtr current);
 
 };
 ////////////////////////////////////////////////////////////////

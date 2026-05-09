@@ -24,9 +24,6 @@
 
 namespace tars
 {
-
-using namespace std;
-
 /////////////////////////////////////////////////
 /**
  * @file tc_loop_queue.h 
@@ -40,7 +37,7 @@ template<typename T>
 class TC_LoopQueue
 {
 public:
-    typedef vector<T> queue_type;
+    typedef std::vector<T> queue_type;
 
     TC_LoopQueue(size_t iSize)
         : _iBegin(0)

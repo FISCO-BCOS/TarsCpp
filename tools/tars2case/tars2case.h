@@ -28,6 +28,7 @@
 
 
 using namespace tars;
+using namespace std;
 /**
  * 根据jce生成自动测试的字符串
  */

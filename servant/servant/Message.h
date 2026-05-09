@@ -112,7 +112,7 @@ struct ThreadPrivateData
      * 染色信息
      */
     bool           _dyeing      = false;                          //标识当前线程是否需要染色
-    string         _dyeingKey;                        //染色的key值
+    std::string         _dyeingKey;                        //染色的key值
 
     /**
      * 允许客户端设置接口级别的超时时间,包括同步和异步、单向
@@ -122,12 +122,12 @@ struct ThreadPrivateData
     /**
      * 保存调用后端服务的地址信息
      */
-    string         _szHost;                       //调用对端地址
+    std::string         _szHost;                       //调用对端地址
 
     /**
      * cookie
      */
-    map<string, string>  _cookie;          // cookie内容
+    std::map<std::string, std::string>  _cookie;          // cookie内容
 
 };
 
@@ -189,8 +189,8 @@ struct ReqMessage : public TC_HandleBase
     CallType                    eType;          //调用类型
     bool                        bFromRpc        = false;       //是否是第三方协议的rcp_call，缺省为false
     RequestPacket               request;        //请求消息体
-    shared_ptr<ResponsePacket>  response;       //响应消息体
-	shared_ptr<TC_NetWorkBuffer::Buffer> sReqData;       //请求消息体
+    std::shared_ptr<ResponsePacket>  response;       //响应消息体
+	std::shared_ptr<TC_NetWorkBuffer::Buffer> sReqData;       //请求消息体
     ServantProxyCallbackPtr     callback;       //异步调用时的回调对象
     ServantProxy                *proxy          = NULL;
     ObjectProxy                 *pObjectProxy   = NULL;  //调用端的proxy对象
@@ -204,9 +204,9 @@ struct ReqMessage : public TC_HandleBase
     bool                        bPush           = false;          //push back 消息
 
     bool                        bTraceCall;     // 是否需要调用链追踪
-    string                      sTraceKey;      // 调用链key
+    std::string                      sTraceKey;      // 调用链key
 
-    shared_ptr<TC_CoroutineScheduler>      sched;
+    std::shared_ptr<TC_CoroutineScheduler>      sched;
     int                         iCoroId         = 0;
 
     std::function<void()>       deconstructor;  //析构时调用

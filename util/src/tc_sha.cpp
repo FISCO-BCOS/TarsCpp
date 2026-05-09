@@ -35,6 +35,8 @@
 namespace tars
 {
 
+using namespace std;
+
 /*  Defines for suffixes to 32 and 64 bit unsigned numeric values   */
 #define sfx_lo(x,y) x##y
 #define sfx_hi(x,y) sfx_lo(x,y)

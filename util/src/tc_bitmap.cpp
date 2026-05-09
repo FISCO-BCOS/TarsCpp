@@ -23,6 +23,8 @@
 namespace tars
 {
 
+using namespace std;
+
 const int TC_BitMap::BitMap::_magic_bits[8]={0x80,0x40,0x20,0x10,0x8,0x4,0x2,0x1};
 
 size_t TC_BitMap::BitMap::calcMemSize(size_t iElementCount)

@@ -25,6 +25,8 @@
 namespace tars
 {
 
+using namespace std;
+
 TC_Http2::TC_Http2() : _session(NULL)
 {
 
